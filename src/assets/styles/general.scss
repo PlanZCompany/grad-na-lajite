@@ -1,0 +1,199 @@
+.react_slick_follow_height {
+  div {
+    height: 100% !important;
+  }
+}
+
+.gray_green_scrollbar {
+  z-index: 12 !important;
+  &::-webkit-scrollbar {
+    width: 8%;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #02020280;
+    border: 1px solid #eeeeee;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    padding-left: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff80;
+    border: 1px solid #eeeeee;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+.gray_green_scrollbar_plus_mobile {
+  @media all and (min-width: 768px) {
+    &::-webkit-scrollbar {
+      width: 18px;
+    }
+    &::-webkit-scrollbar-track {
+      border-radius: 8px;
+      background-color: #02020280;
+      border: 1px solid #eeeeee;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+      padding-left: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ffffff80;
+      border: 1px solid #eeeeee;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      border: 3px solid transparent;
+      background-clip: content-box;
+    }
+  }
+}
+
+.bg_fade_black {
+  background-image: linear-gradient(
+    to right,
+    #020202,
+    #020202,
+    #020202,
+    #020202,
+    #020202,
+    #02020295,
+    #02020290,
+    #02020280,
+    #02020270,
+    #02020250,
+    #02020220,
+    #02020200
+  );
+}
+
+.blob {
+  display: flex;
+  animation: fadeIn 500ms reverse;
+
+  .gooey {
+    background-image: linear-gradient(120deg, #3d3d3d 0%, #4f4f4f 100%);
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    animation: morph 3s linear infinite;
+    transform-style: preserve-3d;
+    outline: 1px solid transparent;
+    will-change: border-radius;
+  }
+  .gooey:before,
+  .gooey:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    box-shadow: 5px 5px 12px #4f4f4f20;
+    will-change: border-radius, transform, opacity;
+    animation-delay: 200ms;
+    background-image: linear-gradient(120deg, #4f4f4f 0%, #3d3d3d 100%);
+  }
+
+  .gooey:before {
+    animation: morph 3s linear infinite;
+    opacity: 0.21;
+    animation-duration: 1.5s;
+  }
+
+  @keyframes morph {
+    0%,
+    100% {
+      border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+      transform: translate3d(0, 0, 0) rotateZ(0.01deg);
+    }
+    34% {
+      border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+      transform: translate3d(0, 5px, 0) rotateZ(0.01deg);
+    }
+    50% {
+      opacity: 0.89;
+      transform: translate3d(0, 0, 0) rotateZ(0.01deg);
+    }
+    67% {
+      border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+      transform: translate3d(0, -3px, 0) rotateZ(0.01deg);
+    }
+  }
+
+  @keyframes fadeIn {
+    100% {
+      transform: scale(1.03);
+      opacity: 0;
+    }
+  }
+}
+
+.blobV2_wrapper {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+
+  .blobV2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    z-index: 1;
+    animation: move 10s ease-in-out infinite;
+    transform-origin: 50% 50%;
+  }
+
+  @keyframes move {
+    0% {
+      transform: scale(1) translate(10px, -30px);
+    }
+    38% {
+      transform: scale(0.8, 1) translate(80vw, 30vh) rotate(160deg);
+    }
+    40% {
+      transform: scale(0.8, 1) translate(80vw, 30vh) rotate(160deg);
+    }
+    78% {
+      transform: scale(1.3) translate(0vw, 50vh) rotate(-20deg);
+    }
+    80% {
+      transform: scale(1.3) translate(0vw, 50vh) rotate(-20deg);
+    }
+    100% {
+      transform: scale(1) translate(10px, -30px);
+    }
+  }
+}
+
+//DELAYS
+.delay_500 {
+  animation-delay: 500ms;
+}
+
+.delay_1000 {
+  animation-delay: 1000ms;
+}
+
+.delay_1500 {
+  animation-delay: 1500ms;
+}
+
+.delay_2000 {
+  animation-delay: 2000ms;
+}
+
+.red_background {
+  background: #ffc5ca;
+  background: radial-gradient(
+    circle,
+    rgba(164, 16, 29, 1) 0%,
+    rgba(164, 16, 29, 1) 43%,
+    rgba(109, 7, 16, 1) 100%
+  );
+}
