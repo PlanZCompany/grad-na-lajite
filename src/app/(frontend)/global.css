@@ -15,7 +15,7 @@
 }
 
 :root {
-  --font-base: var(--font-sansation), ui-sans-serif, system-ui, Arial;
+  --font-base: "Georgia", ui-sans-serif, system-ui, Arial;
 }
 
 *,
@@ -33,8 +33,10 @@ body,
 }
 
 body {
-  font-family: var(--font-base);
-  background-color: #ffffff;
+  font-family: 'Georgia', serif;
+  background-color: #F8F8F6;
+  color: #2d2d2d;
+  line-height: 1.6;
 }
 
 img {

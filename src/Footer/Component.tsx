@@ -29,27 +29,27 @@ export async function Footer() {
       })
     : []
 
-  const regulatoryItems = footerData.regulatoryLinks
-    ? footerData.regulatoryLinks.map((item, index) => {
-        const isItLast = index === footerData.regulatoryLinks!.length - 1
-        return (
-          <li key={item.id || item?.link?.label}>
-            <div className="w-fit flex items-center gap-4">
-              <Link
-                href={generateHref(item as LinkObject)}
-                aria-label={item?.link?.label}
-                target={item?.link?.newTab ? '_blank' : '_self'}
-                className="hover:opacity-75 transition-all duration-300 ease-in-out"
-                prefetch={true}
-              >
-                <span className="text-[14px] text-white leading-[120%]">{item?.link?.label}</span>
-              </Link>
-              {!isItLast && <span className="text-[14px] text-white leading-[120%]">|</span>}
-            </div>
-          </li>
-        )
-      })
-    : []
+  // const regulatoryItems = footerData.regulatoryLinks
+  //   ? footerData.regulatoryLinks.map((item, index) => {
+  //       const isItLast = index === footerData.regulatoryLinks!.length - 1
+  //       return (
+  //         <li key={item.id || item?.link?.label}>
+  //           <div className="w-fit flex items-center gap-4">
+  //             <Link
+  //               href={generateHref(item as LinkObject)}
+  //               aria-label={item?.link?.label}
+  //               target={item?.link?.newTab ? '_blank' : '_self'}
+  //               className="hover:opacity-75 transition-all duration-300 ease-in-out"
+  //               prefetch={true}
+  //             >
+  //               <span className="text-[14px] text-white leading-[120%]">{item?.link?.label}</span>
+  //             </Link>
+  //             {!isItLast && <span className="text-[14px] text-white leading-[120%]">|</span>}
+  //           </div>
+  //         </li>
+  //       )
+  //     })
+  //   : []
 
   const socialImages = footerData.socialLinks
     ? footerData.socialLinks.map((item, index) => {
@@ -155,9 +155,9 @@ export async function Footer() {
         </div>
       </div>
 
-      <ul className="flex flex-wrap w-full max-w-[90%] mx-auto justify-center items-center gap-2 md:gap-4 relative z-[5] mt-6">
+      {/* <ul className="flex flex-wrap w-full max-w-[90%] mx-auto justify-center items-center gap-2 md:gap-4 relative z-[5] mt-6">
         {regulatoryItems}
-      </ul>
+      </ul> */}
 
       <div className="absolute bottom-0 w-full border-t-[1px] border-white/20 flex flex-col md:flex-row justify-between items-center py-2 px-2 xl:px-4 z-[5]">
         <p className="font-montserrat-regular text-[16px] leading-[120%] text-white text-center md:text-left">

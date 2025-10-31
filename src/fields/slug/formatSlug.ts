@@ -66,12 +66,7 @@ export const formatSlugHook =
   (fallback: string): FieldHook =>
   ({ data, operation, value }) => {
     if (typeof value === 'string') {
-      if (!!data?.title && typeof data?.title === 'string') {
-        const currentSlug = formatSlugToEn(data?.title || 'продукт')
-        return currentSlug
-      } else {
-        return formatSlug(value)
-      }
+      return formatSlug(value)
     }
 
     if (operation === 'create' || !data?.slug) {

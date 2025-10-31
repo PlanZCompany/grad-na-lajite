@@ -43,12 +43,12 @@ const config = {
     },
     extend: {
       colors: {
-        whiteAccent: '#D1D5DB',
-        brown: '#574143',
-        pink: '#D19EA2',
+        purpleLight: '#4B0082',
+        purpleDark: '#2E1A47',
+        yellowLight: '#D4AF37',
         mixPink: '#A9636A',
         bordo: '#6D0710',
-        pinkShade: "#e6cbcd"
+        pinkShade: '#e6cbcd',
       },
       fontFamily: {
         sansation: ['var(--font-sansation)', 'ui-sans-serif', 'system-ui', 'Arial'],

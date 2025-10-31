@@ -190,6 +190,7 @@ export interface Media {
 export interface Page {
   id: number;
   title: string;
+  commonHero: CommonHero;
   layout?: (MediaBlock | ContentBlock)[] | null;
   meta?: {
     title?: string | null;
@@ -206,6 +207,69 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CommonHero".
+ */
+export interface CommonHero {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Дизайн на линк
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  media: number | Media;
+  mediaMobile?: (number | null) | Media;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -608,6 +672,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  commonHero?: T | CommonHeroSelect<T>;
   layout?:
     | T
     | {
@@ -628,6 +693,31 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CommonHero_select".
+ */
+export interface CommonHeroSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  media?: T;
+  mediaMobile?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
