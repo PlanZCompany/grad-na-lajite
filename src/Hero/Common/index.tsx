@@ -14,10 +14,6 @@ const HeroCommon: React.FC<CommonHero> = (props) => {
       className={`w-full min-h-[100svh] flex relative ${greatVibes.variable} flex pt-[80px] md:pt-[120px]`}
       id="hero"
     >
-      <div className="absolute top-0 left-0 right-0 bottom-0">
-        <Background />
-      </div>
-
       <div className="w-full content_wrapper flex flex-col z-[2] py-10 md:py-20">
         <div className="w-full min-h-[307px] bg-white flex flex-col-reverse md:flex-row">
           <div className="flex-1 bg-pink/20 flex flex-col justify-center items-center gap-2">
@@ -70,20 +66,22 @@ const HeroCommon: React.FC<CommonHero> = (props) => {
               fetchPriority="high"
             />
           </div>
-          <div className="w-full h-[400px] md:hidden">
-            <GenericImage
-              src={(mediaMobile as Media).url || ''}
-              alt={(mediaMobile as Media).alt || ''}
-              wrapperClassName="w-full h-full relative"
-              fill={true}
-              priority={true}
-              focalX={(mediaMobile as Media).focalX || 50}
-              focalY={(mediaMobile as Media).focalY || 50}
-              imageClassName="w-full h-full object-cover"
-              sizes="100vw"
-              fetchPriority="high"
-            />
-          </div>
+          {!!mediaMobile && (
+            <div className="w-full h-[400px] md:hidden">
+              <GenericImage
+                src={(mediaMobile as Media).url || ''}
+                alt={(mediaMobile as Media).alt || ''}
+                wrapperClassName="w-full h-full relative"
+                fill={true}
+                priority={true}
+                focalX={(mediaMobile as Media).focalX || 50}
+                focalY={(mediaMobile as Media).focalY || 50}
+                imageClassName="w-full h-full object-cover"
+                sizes="100vw"
+                fetchPriority="high"
+              />
+            </div>
+          )}
         </>
       </div>
     </section>

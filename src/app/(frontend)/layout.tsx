@@ -159,7 +159,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <body>
           <main id="content" className="min-h-[100svh] overflow-x-clip">
             {/* <Search products={productsForSearch.docs as Product[]} /> */}
-            {/* <Header /> */}
+            <Header />
             {children}
             {/* <Footer /> */}
             {/* <ShoppingCardAside /> */}
