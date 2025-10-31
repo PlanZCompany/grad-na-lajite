@@ -2,18 +2,16 @@
 
 import React, { useState } from 'react'
 import { GenericImage, GenericParagraph } from '../Generic'
-import { Product } from '@/payload-types'
 import { containsQuery } from '@/utils/translate'
 import { CloseCircle } from '@/assets/icons'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { setOpenSearch } from '@/store/features/root'
-import { PromotionsCardsGrid } from '../Product'
 
-const Search = ({ products }: { products: Product[] }) => {
+const Search = ({ products }: { products: any }) => {
   const dispatch = useAppDispatch()
   const searchOpen = useAppSelector((state) => state.root.openSearch)
   const [inputValue, setInputValue] = useState('')
-  const [searchResults, setSearchResults] = useState<null | Product[]>(null)
+  const [searchResults, setSearchResults] = useState<null | any[]>(null)
 
   const handleSearch = () => {
     if (inputValue === '') {
@@ -22,7 +20,7 @@ const Search = ({ products }: { products: Product[] }) => {
       return
     }
 
-    const productResults = products.filter((item) => containsQuery(item.title, inputValue))
+    const productResults = products.filter((item: any) => containsQuery(item.title, inputValue))
 
     setSearchResults(productResults)
   }
@@ -81,7 +79,7 @@ const Search = ({ products }: { products: Product[] }) => {
         className={`absolute top-full left-0 right-0 transition-[opacity] duration-700 ease-in-out
             ${!!searchResults && searchResults.length > 0 ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >
-        <PromotionsCardsGrid products={searchResults || []} heading={'Резултати от търсенето'} />
+        {/* <PromotionsCardsGrid products={searchResults || []} heading={'Резултати от търсенето'} /> */}
       </div>
 
       {!!searchResults && searchResults.length === 0 && (

@@ -61,7 +61,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
-    push: false,
+    push: true,
   }),
   sharp,
   plugins: [payloadCloudPlugin(), ...plugins],
@@ -73,8 +73,8 @@ export default buildConfig({
       port: 465,
       secure: '465',
       auth: {
-        user: "",
-        pass: ""
+        user: '',
+        pass: '',
       },
     },
   }),

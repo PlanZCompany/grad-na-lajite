@@ -102,31 +102,5 @@ export const Users: CollectionConfig = {
         condition: (data) => data.role === 'user',
       },
     },
-    {
-      name: 'phoneNumber',
-      type: 'text',
-      access: {
-        read: () => true,
-        update: () => false,
-        create: () => false,
-      },
-      admin: {
-        readOnly: true,
-        condition: (data) => data.role === 'user',
-      },
-    },
-    {
-      name: 'dateOfBirth',
-      type: 'text',
-      access: {
-        read: () => true,
-        update: () => false,
-        create: () => false,
-      },
-      admin: {
-        readOnly: true,
-        condition: (data) => data.role === 'user',
-      },
-    },
   ],
 }

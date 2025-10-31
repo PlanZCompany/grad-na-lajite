@@ -70,8 +70,6 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
-    category: Category;
-    product: Product;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -85,8 +83,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    category: CategorySelect<false> | CategorySelect<true>;
-    product: ProductSelect<false> | ProductSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -148,8 +144,6 @@ export interface User {
   role?: ('admin' | 'user') | null;
   firstName?: string | null;
   lastName?: string | null;
-  phoneNumber?: string | null;
-  dateOfBirth?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -196,15 +190,7 @@ export interface Media {
 export interface Page {
   id: number;
   title: string;
-  commonHero: CommonHero;
   layout?: (MediaBlock | ContentBlock)[] | null;
-  benefits?:
-    | {
-        title: string;
-        media: number | Media;
-        id?: string | null;
-      }[]
-    | null;
   meta?: {
     title?: string | null;
     /**
@@ -220,69 +206,6 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CommonHero".
- */
-export interface CommonHero {
-  /**
-   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
-   */
-  heading?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
-   */
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
-          newTab?: boolean | null;
-          reference?: {
-            relationTo: 'pages';
-            value: number | Page;
-          } | null;
-          url?: string | null;
-          label: string;
-          /**
-           * Дизайн на линк
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  media: number | Media;
-  mediaMobile?: (number | null) | Media;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -320,153 +243,6 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "category".
- */
-export interface Category {
-  id: number;
-  title: string;
-  /**
-   * Заглавие на секцията с Категории
-   */
-  heading?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Описание на Категорията (под заглавието)
-   */
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Снимка към Категорията (Секция в Начална страница)
-   */
-  media: number | Media;
-  /**
-   * Снимка към Категорията (мобилно)
-   */
-  mediaMobile: number | Media;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product".
- */
-export interface Product {
-  id: number;
-  title: string;
-  /**
-   * Заглавие на секцията с Продукта
-   */
-  heading: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  /**
-   * Описание на Продукта (под заглавието)
-   */
-  shortDescription: string;
-  /**
-   * Описание на Продукта (под заглавието)
-   */
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  mediaArray?:
-    | {
-        file: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  category: number | Category;
-  price?: number | null;
-  quantity: number;
-  promoPrice?: number | null;
-  /**
-   * Ако това поле бъде активирано, продуктър ще излиза в секция най-продавани
-   */
-  bestSeller?: boolean | null;
-  havePriceRange?: boolean | null;
-  /**
-   * Задължително, потребителя да раздели цената с тире Пример: 350-500 | 800-1200
-   */
-  priceRange?: string | null;
-  publishedAt?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -724,14 +500,6 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
-        relationTo: 'category';
-        value: number | Category;
-      } | null)
-    | ({
-        relationTo: 'product';
-        value: number | Product;
-      } | null)
-    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -797,8 +565,6 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   firstName?: T;
   lastName?: T;
-  phoneNumber?: T;
-  dateOfBirth?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -842,19 +608,11 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  commonHero?: T | CommonHeroSelect<T>;
   layout?:
     | T
     | {
         mediaBlock?: T | MediaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
-      };
-  benefits?:
-    | T
-    | {
-        title?: T;
-        media?: T;
-        id?: T;
       };
   meta?:
     | T
@@ -873,31 +631,6 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CommonHero_select".
- */
-export interface CommonHeroSelect<T extends boolean = true> {
-  heading?: T;
-  description?: T;
-  links?:
-    | T
-    | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
-            };
-        id?: T;
-      };
-  media?: T;
-  mediaMobile?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MediaBlock_select".
  */
 export interface MediaBlockSelect<T extends boolean = true> {
@@ -913,66 +646,6 @@ export interface ContentBlockSelect<T extends boolean = true> {
   content?: T;
   id?: T;
   blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "category_select".
- */
-export interface CategorySelect<T extends boolean = true> {
-  title?: T;
-  heading?: T;
-  description?: T;
-  media?: T;
-  mediaMobile?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
-  publishedAt?: T;
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product_select".
- */
-export interface ProductSelect<T extends boolean = true> {
-  title?: T;
-  heading?: T;
-  shortDescription?: T;
-  description?: T;
-  mediaArray?:
-    | T
-    | {
-        file?: T;
-        id?: T;
-      };
-  meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
-  category?: T;
-  price?: T;
-  quantity?: T;
-  promoPrice?: T;
-  bestSeller?: T;
-  havePriceRange?: T;
-  priceRange?: T;
-  publishedAt?: T;
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1154,22 +827,6 @@ export interface Header {
           url?: string | null;
           label: string;
         };
-        children?:
-          | {
-              link: {
-                type?: ('reference' | 'custom' | 'anchorSectionId') | null;
-                newTab?: boolean | null;
-                reference?: {
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null;
-                url?: string | null;
-                label: string;
-              };
-              id?: string | null;
-            }[]
-          | null;
-        media?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -1214,7 +871,7 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
-  regulatoryLinks?:
+  securityLinks?:
     | {
         link: {
           type?: ('reference' | 'custom' | 'anchorSectionId') | null;
@@ -1226,6 +883,23 @@ export interface Footer {
           url?: string | null;
           label: string;
         };
+        media?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  paymentLinks?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        media?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -1265,21 +939,6 @@ export interface HeaderSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
-        children?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                  };
-              id?: T;
-            };
-        media?: T;
         id?: T;
       };
   logo?: T;
@@ -1321,7 +980,7 @@ export interface FooterSelect<T extends boolean = true> {
         media?: T;
         id?: T;
       };
-  regulatoryLinks?:
+  securityLinks?:
     | T
     | {
         link?:
@@ -1333,6 +992,22 @@ export interface FooterSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        media?: T;
+        id?: T;
+      };
+  paymentLinks?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        media?: T;
         id?: T;
       };
   contacts?: T;
@@ -1349,19 +1024,10 @@ export interface TaskSchedulePublish {
   input: {
     type?: ('publish' | 'unpublish') | null;
     locale?: string | null;
-    doc?:
-      | ({
-          relationTo: 'pages';
-          value: number | Page;
-        } | null)
-      | ({
-          relationTo: 'category';
-          value: number | Category;
-        } | null)
-      | ({
-          relationTo: 'product';
-          value: number | Product;
-        } | null);
+    doc?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
     global?: string | null;
     user?: (number | null) | User;
   };

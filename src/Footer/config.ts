@@ -57,13 +57,46 @@ export const Footer: GlobalConfig = {
       },
     },
     {
-      name: 'regulatoryLinks',
+      name: 'securityLinks',
       type: 'array',
-      label: 'Линкове с регулатори',
+      label: 'Сигурностни',
       fields: [
         link({
           appearances: false,
         }),
+        {
+          name: 'media',
+          type: 'upload',
+          label: 'Media',
+          maxDepth: 2,
+          relationTo: 'media',
+          required: false,
+        } as Field,
+      ],
+      maxRows: 10,
+      admin: {
+        initCollapsed: true,
+        components: {
+          RowLabel: '@/Footer/RowLabel#RowLabel',
+        },
+      },
+    },
+    {
+      name: 'paymentLinks',
+      type: 'array',
+      label: 'Плащания и доставки',
+      fields: [
+        link({
+          appearances: false,
+        }),
+        {
+          name: 'media',
+          type: 'upload',
+          label: 'Media',
+          maxDepth: 2,
+          relationTo: 'media',
+          required: false,
+        } as Field,
       ],
       maxRows: 10,
       admin: {

@@ -14,8 +14,8 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { generatePreviewPath } from '@/utils/generatePreviewPath'
-import { heroCommon } from '@/Hero/Common/config'
 import { Content } from '@/blocks/Content/config'
+import { heroCommon } from '@/Hero/Common/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -25,9 +25,6 @@ export const Pages: CollectionConfig<'pages'> = {
     read: authenticatedOrPublished,
     update: authenticated,
   },
-  // This config controls what's populated by default when a page is referenced
-  // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
-  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'pages'>
   defaultPopulate: {
     title: true,
     slug: true,
@@ -64,7 +61,7 @@ export const Pages: CollectionConfig<'pages'> = {
       type: 'tabs',
       tabs: [
         {
-          fields: [],
+          fields: [heroCommon],
           label: 'Главна Секция',
         },
         {

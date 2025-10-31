@@ -8,3 +8,6 @@
 
 **TO DECIDE WITH CLIENT**
 - payment methods
+
+**QUESTIONS**
+- как процедираме на мобилно понеже в темплейтите не е добре

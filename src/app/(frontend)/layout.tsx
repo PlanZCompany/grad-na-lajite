@@ -2,7 +2,7 @@ import React from 'react'
 // import { Metadata } from 'next'
 import { StoreProvider } from '@/store/StoreProvider'
 import '../../assets/styles/general.scss'
-import "../../assets/styles/blog.scss"
+import '../../assets/styles/blog.scss'
 import { Header } from '@/Header/Component'
 import './global.css'
 import { kolka, sansation } from '@/app/fonts'
@@ -10,7 +10,6 @@ import { Footer } from '@/Footer/Component'
 import Search from '@/components/Search/Search'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { Product } from '@/payload-types'
 import ShoppingCardAside from '@/components/Checkout/ShoppingCardAside'
 import ScreenOverlay from '@/components/Custom/ScreenOverlay'
 import ScrollToTop from '@/components/Custom/ScrollToTop'
@@ -110,42 +109,42 @@ export const metadata: Metadata = {
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
   const payload = await getPayload({ config: configPromise })
-  const productsForSearch = await payload.find({
-    collection: 'product',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    where: {
-      and: [
-        {
-          _status: {
-            equals: 'published',
-          },
-        },
-        {
-          quantity: {
-            not_equals: 0,
-          },
-        },
-      ],
-    },
-    select: {
-      title: true,
-      slug: true,
-      // media: true,
-      description: true,
-      heading: true,
-      category: true,
-      price: true,
-      bestSeller: true,
-      promoPrice: true,
-      havePriceRange: true,
-      mediaArray: true,
-      priceRange: true,
-      shortDescription: true,
-    },
-  })
+  // const productsForSearch = await payload.find({
+  //   collection: 'product',
+  //   draft: false,
+  //   limit: 1000,
+  //   overrideAccess: false,
+  //   pagination: false,
+  //   where: {
+  //     and: [
+  //       {
+  //         _status: {
+  //           equals: 'published',
+  //         },
+  //       },
+  //       {
+  //         quantity: {
+  //           not_equals: 0,
+  //         },
+  //       },
+  //     ],
+  //   },
+  //   select: {
+  //     title: true,
+  //     slug: true,
+  //     // media: true,
+  //     description: true,
+  //     heading: true,
+  //     category: true,
+  //     price: true,
+  //     bestSeller: true,
+  //     promoPrice: true,
+  //     havePriceRange: true,
+  //     mediaArray: true,
+  //     priceRange: true,
+  //     shortDescription: true,
+  //   },
+  // })
 
   return (
     <StoreProvider>
@@ -159,17 +158,17 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         </head>
         <body>
           <main id="content" className="min-h-[100svh] overflow-x-clip">
-            <Search products={productsForSearch.docs as Product[]} />
-            <Header />
+            {/* <Search products={productsForSearch.docs as Product[]} /> */}
+            {/* <Header /> */}
             {children}
-            <Footer />
-            <ShoppingCardAside />
+            {/* <Footer /> */}
+            {/* <ShoppingCardAside /> */}
 
-            <ScreenOverlay />
+            {/* <ScreenOverlay /> */}
 
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
 
-            <GenericNotification />
+            {/* <GenericNotification /> */}
           </main>
         </body>
       </html>

@@ -17,19 +17,6 @@ export const Header: GlobalConfig = {
         link({
           appearances: false,
         }),
-        {
-          name: 'children',
-          label: 'Под Kатегории',
-          type: 'array',
-          fields: [link({ appearances: false })],
-        },
-        {
-          name: 'media',
-          type: 'upload',
-          maxDepth: 2,
-          relationTo: 'media',
-          required: false,
-        },
       ],
       admin: {
         components: {
