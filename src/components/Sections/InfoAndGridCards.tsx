@@ -15,7 +15,7 @@ const InfoAndGridCards = ({ data }: { data: HomeBlock['gameRules2'] }) => {
         key={card.id}
         aria-labelledby={`${card.id}-title`}
         className="group rounded-xl border-white/10 bg-[#0a010b]
-                 p-4 shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition
+                 px-4 pt-4 pb-5 shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition
                  hover:shadow-[0_8px_28px_rgba(0,0,0,0.7)] focus-within:outline-none
                  focus-within:ring-2 focus-within:ring-[#d4af37]/60 w-full md:max-w-[260px]
                  hover:translate-y-[-9px] duration-300"

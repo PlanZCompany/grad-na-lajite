@@ -48,7 +48,7 @@ export default function InfoAndListWithImage({ data }: { data: HomeBlock['gameRu
             </div>
           )}
 
-          <div className="mt-6 flex gap-8">{cardsContent}</div>
+          <div className="mt-6 flex flex-col md:flex-row gap-8">{cardsContent}</div>
         </article>
         {/* RIGHT: image */}
         <div className="relative min-h-[400px] flex-1 overflow-hidden rounded-[10px] w-full md:min-w-[45%]">

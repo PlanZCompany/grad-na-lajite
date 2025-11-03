@@ -15,7 +15,11 @@ export default function ProductPreview({ data }: { data: HomeBlock['singlePrevie
         <article
           itemScope
           itemType="https://schema.org/Product"
-          className="bg-[#d4af37] p-6 md:p-10 rounded-[24px] w-[480px] aspect-square shadow-sm m-auto flex flex-col items-center justify-center overflow-hidden relative"
+          className="bg-[#d4af37] p-6 md:p-10 
+          rounded-[24px] w-full md:w-[480px] 
+          md:aspect-square aspect-[2/2.5] shadow-sm m-auto 
+          flex flex-col items-center justify-center 
+          overflow-hidden relative"
           aria-labelledby="game-box-title"
         >
           <div className="h-full w-full relative">
