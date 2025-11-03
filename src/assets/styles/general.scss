@@ -4,6 +4,10 @@
   }
 }
 
+.background_overlay {
+  background: linear-gradient(90deg, rgba(10,5,25,0.85) 0%, rgba(20,10,40,0.5) 50%, rgba(0,0,0,0.7) 100%)
+}
+
 .gray_green_scrollbar {
   z-index: 12 !important;
   &::-webkit-scrollbar {

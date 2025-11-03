@@ -1,88 +1,79 @@
-import { greatVibes } from '@/app/fonts'
-import { FixedCheckboxIcon } from '@/assets/icons'
+'use client'
+
 import { RichText } from '@/components/Custom'
-import Background from '@/components/Custom/Background'
-import { GenericImage, GenericParagraph } from '@/components/Generic'
+import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
 import { CommonHero, Media } from '@/payload-types'
 import React from 'react'
 
 const HeroCommon: React.FC<CommonHero> = (props) => {
-  const { heading, description, mediaMobile, media } = props
+  const { heading, description, media, background, links } = props
 
   return (
     <section
-      className={`w-full min-h-[100svh] flex relative ${greatVibes.variable} flex pt-[80px] md:pt-[120px]`}
+      className={`w-full flex min-h-screen xxl:min-h-[780px] pt-[68px] md:pt-[130px]`}
       id="hero"
     >
-      <div className="w-full content_wrapper flex flex-col z-[2] py-10 md:py-20">
-        <div className="w-full min-h-[307px] bg-white flex flex-col-reverse md:flex-row">
-          <div className="flex-1 bg-pink/20 flex flex-col justify-center items-center gap-2">
+      <div className="content_wrapper_mobile-full w-full relative flex">
+        <div className="absolute z-[1] background_overlay inset-0"></div>
+        <GenericImage
+          src={(background as Media).url || ''}
+          alt={(background as Media).alt || ''}
+          wrapperClassName="w-full h-full absolute inset-0"
+          fill={true}
+          priority={true}
+          focalX={(background as Media).focalX || 50}
+          focalY={(background as Media).focalY || 50}
+          imageClassName="w-full h-full object-cover"
+          sizes="100vw"
+          fetchPriority="high"
+        />
+        <div className="w-full max-w-[920px] mx-auto my-auto flex flex-col md:flex-row gap-m items-center md:justify-between md:gap-[unset] relative z-[4]">
+          <GenericImage
+            src={(media as Media).url || ''}
+            alt={(media as Media).alt || ''}
+            wrapperClassName="w-[220px] h-[220px] md:w-[250px] md:h-[250px] relative"
+            fill={true}
+            priority={true}
+            focalX={(media as Media).focalX || 50}
+            focalY={(media as Media).focalY || 50}
+            imageClassName="w-full h-full object-contain"
+            sizes="100vw"
+            fetchPriority="high"
+          />
+
+          <div className="flex flex-col gap-m relative z-[3] pb-20 md:pb-[unset]">
+            {heading && (
+              <GenericHeading headingType="h1" align="text-center md:text-right">
+                <h1 className="!text-[#FFD700]">
+                  <RichText data={heading} />
+                </h1>
+              </GenericHeading>
+            )}
             {description && (
               <GenericParagraph
-                fontStyle="font-kolka font-[500]"
-                pType="semi"
-                textColor="text-brown"
-                extraClass="p-6"
+                pType="regular"
+                textColor="text-white"
+                fontStyle="font-georgia font-[400]"
+                extraClass="text-center md:text-right"
               >
-                <RichText data={description}></RichText>
+                <RichText data={description} />
               </GenericParagraph>
             )}
 
-            <div className="flex flex-col md:flex-row gap-2 w-full px-6 pb-6 md:pb-[unset]">
-              <div className="flex items-center gap-1">
-                <div className="flex justify-center items-center">
-                  <FixedCheckboxIcon />
-                </div>
-                <GenericParagraph>Бърза и сигурна доставка</GenericParagraph>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="flex justify-center items-center">
-                  <FixedCheckboxIcon />
-                </div>
-                <GenericParagraph>Изработка по твоя идея</GenericParagraph>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 flex justify-center items-center py-6 md:py-[unset]">
-            {!!heading && (
-              <h1 className="font-great-vibes text-[42px] xl:text-[84px] text-bordo text-center leading-[100%] rotate-[-6deg]">
-                <RichText data={heading}></RichText>
-              </h1>
+            {!!links?.length && (
+              <GenericButton
+                ariaLabel={'Купи сега'}
+                click={() => {
+                  //add to cart
+                }}
+                variant="primary"
+                styleClass="w-fit self-center md:self-end mt-6 md:mb-[unset]"
+              >
+                {links[0].link?.label}
+              </GenericButton>
             )}
           </div>
         </div>
-        <>
-          <div className="w-full h-[474px] hidden md:block">
-            <GenericImage
-              src={(media as Media).url || ''}
-              alt={(media as Media).alt || ''}
-              wrapperClassName="w-full h-full relative"
-              fill={true}
-              priority={true}
-              focalX={(media as Media).focalX || 50}
-              focalY={(media as Media).focalY || 50}
-              imageClassName="w-full h-full object-cover"
-              sizes="100vw"
-              fetchPriority="high"
-            />
-          </div>
-          {!!mediaMobile && (
-            <div className="w-full h-[400px] md:hidden">
-              <GenericImage
-                src={(mediaMobile as Media).url || ''}
-                alt={(mediaMobile as Media).alt || ''}
-                wrapperClassName="w-full h-full relative"
-                fill={true}
-                priority={true}
-                focalX={(mediaMobile as Media).focalX || 50}
-                focalY={(mediaMobile as Media).focalY || 50}
-                imageClassName="w-full h-full object-cover"
-                sizes="100vw"
-                fetchPriority="high"
-              />
-            </div>
-          )}
-        </>
       </div>
     </section>
   )

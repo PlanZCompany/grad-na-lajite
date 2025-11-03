@@ -269,6 +269,7 @@ export interface CommonHero {
       }[]
     | null;
   media: number | Media;
+  background?: (number | null) | Media;
   mediaMobile?: (number | null) | Media;
 }
 /**
@@ -717,6 +718,7 @@ export interface CommonHeroSelect<T extends boolean = true> {
         id?: T;
       };
   media?: T;
+  background?: T;
   mediaMobile?: T;
 }
 /**

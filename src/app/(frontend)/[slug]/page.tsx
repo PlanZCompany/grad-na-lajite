@@ -74,7 +74,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           <CategoriesItemList />
         </>
       )} */}
-      <article className="w-full">
+      <article className="w-full bg-[#200226]">
         <PayloadRedirects disableNotFound url={url} />
 
         {draft && <LivePreviewListener />}

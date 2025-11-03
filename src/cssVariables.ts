@@ -1,5 +1,5 @@
 export const COLORS = {
-  whiteAccent: '#D1D5DB',
+  primaryYellow: '#FFD700',
   brown: '#574143',
   pink: '#D19EA2',
   mixPink: '#A9636A',
@@ -17,5 +17,6 @@ export const SCREENS = {
 }
 
 export const ROOT = {
-  headerHeight: 82,
+  headerHeightMobile: 68,
+  headerHeightDesktop: 130,
 }

@@ -7,7 +7,7 @@
     @apply gap-2 md:gap-4;
   }
   .gap-m {
-    @apply gap-3 md:gap-6;
+    @apply gap-5 md:gap-6;
   }
   .gap-l {
     @apply gap-6 md:gap-8;

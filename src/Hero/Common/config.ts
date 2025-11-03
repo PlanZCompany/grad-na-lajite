@@ -61,6 +61,13 @@ export const heroCommon: Field = {
       required: true,
     },
     {
+      name: 'background',
+      type: 'upload',
+      maxDepth: 2,
+      relationTo: 'media',
+      required: false,
+    },
+    {
       name: 'mediaMobile',
       type: 'upload',
       maxDepth: 2,
