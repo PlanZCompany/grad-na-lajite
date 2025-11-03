@@ -396,6 +396,468 @@ export interface HomeBlock {
         }[]
       | null;
   };
+  historySection: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    media: number | Media;
+  };
+  whatIsTheGame?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media: number | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  gameRules: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Включа пълна свобода в richtext полето.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media: number | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media: number | Media;
+  };
+  gameRules2?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Включа пълна свобода в richtext полето.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media: number | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  singlePreview: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    media: number | Media;
+    price?: string | null;
+  };
+  galleryPreview?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    mediaArray?:
+      | {
+          media: number | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  histories?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media: number | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  testimonials?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media: number | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'homeBlock';
@@ -841,6 +1303,120 @@ export interface HomeBlockSelect<T extends boolean = true> {
     | {
         heading?: T;
         description?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+      };
+  historySection?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        media?: T;
+      };
+  whatIsTheGame?:
+    | T
+    | {
+        heading?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+      };
+  gameRules?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+      };
+  gameRules2?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+      };
+  singlePreview?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        media?: T;
+        price?: T;
+      };
+  galleryPreview?:
+    | T
+    | {
+        heading?: T;
+        mediaArray?:
+          | T
+          | {
+              media?: T;
+              id?: T;
+            };
+      };
+  histories?:
+    | T
+    | {
+        heading?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+      };
+  testimonials?:
+    | T
+    | {
+        heading?: T;
         cardsArray?:
           | T
           | {

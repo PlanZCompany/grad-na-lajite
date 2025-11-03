@@ -43,11 +43,11 @@ export type DESCRIPTION_TYPE =
 
 const HeadingPlusDescription = ({
   heading,
-  description,
+  description = null,
   headingTextShadow = true,
 }: {
   heading: HEADING_TYPE
-  description: DESCRIPTION_TYPE
+  description?: DESCRIPTION_TYPE
   headingTextShadow?: boolean
 }) => {
   return (

@@ -1,1 +1,5 @@
 export { default as FlipCardsAndInfo } from './FlipCardsAndInfo'
+export { default as InfoAndImage } from './InfoAndImage'
+export { default as ThreeCardsGrid } from './ThreeCardsGrid'
+export { default as InfoAndListWithImage } from './InfoAndListWIthImage'
+export { default as InfoAndGridCards } from './InfoAndGridCards'

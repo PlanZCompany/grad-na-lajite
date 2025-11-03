@@ -3,6 +3,8 @@ import {
   HeadingFeature,
   FixedToolbarFeature,
   InlineToolbarFeature,
+  UnorderedListFeature,
+  OrderedListFeature,
 } from '@payloadcms/richtext-lexical'
 import { Field, RichTextField, UploadField } from 'payload'
 
@@ -36,6 +38,24 @@ export const DescriptionConfig = {
   label: 'Описание на секцията',
   admin: {
     description: 'Моля, придържайте се към конвенцията за описанията.',
+  },
+} satisfies RichTextField
+
+export const DescriptionFullRichTextConfig = {
+  name: 'description',
+  type: 'richText',
+  editor: lexicalEditor({
+    features: ({ rootFeatures }) => [
+      ...rootFeatures,
+      FixedToolbarFeature(),
+      InlineToolbarFeature(),
+      UnorderedListFeature(),
+      OrderedListFeature(),
+    ],
+  }),
+  label: 'Описание на секцията',
+  admin: {
+    description: 'Включа пълна свобода в richtext полето.',
   },
 } satisfies RichTextField
 

@@ -13,6 +13,7 @@ type heading1Props = {
     | 'portrait:text-center landscape:text-left'
     | 'portrait:text-center landscape:text-right'
     | 'text-center md:text-right'
+    | 'text-center md:text-left'
   customStyles?: boolean
   textShadow?: boolean
 }

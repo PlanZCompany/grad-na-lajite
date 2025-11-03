@@ -54,8 +54,8 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
   })
 
   return (
-    <header className="fixed top-0 left-0 right-0 w-full bg-black/70 z-[12] py-[4px] md:py-[15px] px-4 lg:px-[40px] flex justify-center items-center">
-      <nav className="w-full flex justify-between items-center content_wrapper_mobile-full">
+    <header className="fixed backdrop_blur top-0 left-0 right-0 w-full bg-black/70 z-[12] py-[4px] md:py-[15px] px-4 lg:px-[40px] flex justify-center items-center">
+      <nav className="w-full flex justify-between items-center content_wrapper_mobile-full relative z-[2]">
         <Link href={'/'} aria-label="Отиди на начална страница">
           <GenericImage
             src={(logo as Media)?.url as string}

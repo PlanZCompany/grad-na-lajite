@@ -15,7 +15,7 @@ const classMap = {
   secondary:
     'bg-transparent border-[1px] border-primaryBlackAccent hover:bg-primaryWhite hover:text-primaryBlack !text-primaryBlack',
   colored:
-    'bg-gradient-to-tr from-[#023900] to-[#020202] border-[1px] border-primaryBlackAccent hover:from-[#020202] hover:to-[#023900]',
+    '!px-3 !py-2 bg-[#200226] text-white hover:scale-105 transition-all duration-300 ease-in-out',
   gray: 'bg-gradient-to-tr from-primaryGray to-primaryBlack border-[1px] border-primaryBlackAccent hover:from-primaryWhiteAccent hover:to-primaryWhite',
   outLined: 'bg-pink/50 border-[1px] border-white text-white hover:bg-white hover:text-pink',
   white:
