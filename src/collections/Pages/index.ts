@@ -16,6 +16,7 @@ import {
 import { generatePreviewPath } from '@/utils/generatePreviewPath'
 import { Content } from '@/blocks/Content/config'
 import { heroCommon } from '@/Hero/Common/config'
+import { HomeBlock } from '@/blocks/HomeBlock/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -69,7 +70,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [MediaBlock, Content],
+              blocks: [MediaBlock, Content, HomeBlock],
               defaultValue: [],
               required: false,
               admin: {

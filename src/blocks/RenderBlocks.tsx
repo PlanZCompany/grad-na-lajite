@@ -7,10 +7,12 @@ import type {
 
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ContentBlock } from './Content/Component'
+import { HomeBlockComponent } from './HomeBlock/HomeBlockComponent'
 
 const blockComponents = {
   mediaBlock: MediaBlock,
   content: ContentBlock,
+  homeBlock: HomeBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{

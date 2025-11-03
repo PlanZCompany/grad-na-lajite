@@ -80,8 +80,8 @@ export default async function Page({ params: paramsPromise }: Args) {
         {draft && <LivePreviewListener />}
         {!page.regulatoryPage && <HeroCommon {...hero} />}
 
-        <div className="pt-[52px] md:pt-[140px]">
-          <RenderBlocks blocks={layout} />
+        <div className="w-full">
+          <RenderBlocks blocks={layout as any} />
         </div>
       </article>
     </>

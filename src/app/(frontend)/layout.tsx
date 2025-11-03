@@ -16,7 +16,7 @@ import ScrollToTop from '@/components/Custom/ScrollToTop'
 import { Metadata } from 'next'
 import GenericNotification from '@/components/Generic/GenericNotification'
 
-const SITE_NAME = 'Обичайте се'
+const SITE_NAME = 'Град на Лъжите'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://obichaite-se-new.vercel.app/'),
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     default: SITE_NAME,
     template: `%s`,
   },
-  description: 'Обичайте се - подаръци, които се помнят',
-  keywords: ['подарък', 'изненада', 'близък', 'рожден ден', 'имен ден'],
+  description: 'Град на лъжите', //TODO
+  keywords: ['подарък', 'изненада', 'близък', 'рожден ден', 'имен ден'], //TODO
   authors: [{ name: 'Simeon Rudashki' }, { name: 'PlanZ' }, { name: 'Anatoli Vachev' }],
   creator: 'PlanZ',
   publisher: 'PlanZ',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: SITE_NAME,
     title: SITE_NAME,
-    description: 'Обичайте се - подаръци, които се помнят',
+    description: 'Град на лъжите - подаръци, които се помнят',
     url: '/',
     locale: 'bg_BG',
     images: [
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: SITE_NAME,
-    description: 'Обичайте се - подаръци, които се помнят',
+    description: 'Град на лъжите - подаръци, които се помнят',
     images: [
       {
         url: `/mobile-hero.jpg`,

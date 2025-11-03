@@ -92,7 +92,7 @@ export async function Footer() {
       >
         <div className="w-full justify-center items-center flex xl:justify-start xl:items-start xl:col-span-2">
           <Link href="/" className="flex items-center gap-4">
-            <span className="sr-only">(Обичайте се)</span>
+            <span className="sr-only">(Град на лъжите)</span>
             <GenericImage
               src={(footerData.logo as Media)?.url as string}
               alt={(footerData.logo as Media)?.alt as string}
@@ -107,7 +107,7 @@ export async function Footer() {
           <GenericHeading
             align="text-left"
             extraClass="uppercase border-b-[1px] border-white pb-2 w-fit"
-            fontStyle="font-sansation font-[700]"
+            fontStyle="font-georgia font-[700]"
             headingType="h5"
             textColor="text-white"
           >
@@ -128,7 +128,7 @@ export async function Footer() {
           <GenericHeading
             align="text-left"
             extraClass="uppercase border-b-[1px] border-white pb-2 w-fit"
-            fontStyle="font-sansation font-[700]"
+            fontStyle="font-georgia font-[700]"
             headingType="h5"
             textColor="text-white"
           >
@@ -144,7 +144,7 @@ export async function Footer() {
           <GenericHeading
             align="text-left"
             extraClass="uppercase border-b-[1px] border-white pb-2 w-fit"
-            fontStyle="font-sansation font-[700]"
+            fontStyle="font-georgia font-[700]"
             headingType="h5"
             textColor="text-white"
           >
@@ -164,7 +164,7 @@ export async function Footer() {
           &copy;{new Date().getFullYear()} Всички права запазени.
         </p>
         <div className="w-full bg-white/20 h-[1px] md:hidden my-2"></div>
-        <div className="font-sansation font-[400] text-[16px] leading-[120%] text-white flex items-center gap-2">
+        <div className="font-georgia font-[400] text-[16px] leading-[120%] text-white flex items-center gap-2">
           <p>Генерирано от </p>
           <div className="flex justify-center items-center">
             <svg

@@ -191,7 +191,7 @@ export interface Page {
   id: number;
   title: string;
   commonHero: CommonHero;
-  layout?: (MediaBlock | ContentBlock)[] | null;
+  layout?: (MediaBlock | ContentBlock | HomeBlock)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -308,6 +308,97 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeBlock".
+ */
+export interface HomeBlock {
+  whyToChoseUs?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media: number | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -679,6 +770,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         mediaBlock?: T | MediaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
+        homeBlock?: T | HomeBlockSelect<T>;
       };
   meta?:
     | T
@@ -736,6 +828,32 @@ export interface MediaBlockSelect<T extends boolean = true> {
  */
 export interface ContentBlockSelect<T extends boolean = true> {
   content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeBlock_select".
+ */
+export interface HomeBlockSelect<T extends boolean = true> {
+  whyToChoseUs?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+      };
   id?: T;
   blockName?: T;
 }
