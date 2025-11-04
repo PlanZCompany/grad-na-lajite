@@ -90,13 +90,13 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
               </Link>
             ) : (
               <button
-                className="w-[36px] h-[36px] md:w-[48px] md:h-[48px] flex justify-center items-center p-[5px]
+                className="w-[36px] h-[36px] md:w-[48px] md:h-[48px] rounded-full border-[1px] border-primaryYellow flex justify-center items-center p-[5px]
                 hover:opacity-80 transition-colors duration-300 ease-in-out"
                 aria-label="Потребител Меню"
                 title="Потребител Меню"
                 onClick={() => setOpenUserMenu((prev) => !prev)}
               >
-                <p className="md:text-[20px]">{user?.firstName?.[0]}</p>
+                <p className="md:text-[20px] text-primaryYellow">{user?.firstName?.[0]}</p>
               </button>
             )}
             {openUserMenu && !!user && (

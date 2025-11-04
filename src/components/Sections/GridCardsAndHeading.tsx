@@ -13,7 +13,7 @@ const GridCardsAndHeading = ({ data }: { data: HomeBlock['histories'] }) => {
 
     return (
       <article
-        className={`w-full bg-[rgba(20,10,40,0.85)] shadow-[0_0_20px_rgba(0,0,0,0.6)] h-[460px] md:h-[480px] flex flex-col
+        className={`w-full bg-[rgba(20,10,40,0.85)] shadow-[0_0_20px_rgba(0,0,0,0.6)] md:h-[480px] flex flex-col
             hover:translate-y-[-9px] duration-300 transition-transform rounded-[12px] overflow-hidden`}
         key={card.id}
       >
@@ -30,7 +30,7 @@ const GridCardsAndHeading = ({ data }: { data: HomeBlock['histories'] }) => {
           />
         </div>
 
-        <div className="w-full flex flex-col p-4 gap-3">
+        <div className="w-full flex flex-col p-4 gap-3 mb-6 md:mb-[unset]">
           {heading && (
             <GenericHeading
               textShadow={true}
@@ -42,7 +42,10 @@ const GridCardsAndHeading = ({ data }: { data: HomeBlock['histories'] }) => {
             </GenericHeading>
           )}
           {description && (
-            <GenericParagraph pType="custom" extraClass="text-[16px] leading-[150%] line-clamp-4">
+            <GenericParagraph
+              pType="custom"
+              extraClass="text-[16px] leading-[150%] md:line-clamp-4"
+            >
               <RichText data={description} />
             </GenericParagraph>
           )}

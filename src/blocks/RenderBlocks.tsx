@@ -8,11 +8,13 @@ import type {
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ContentBlock } from './Content/Component'
 import { HomeBlockComponent } from './HomeBlock/HomeBlockComponent'
+import { SubscriptionFormBlock } from './SubsciptionForm/Component'
 
 const blockComponents = {
   mediaBlock: MediaBlock,
   content: ContentBlock,
   homeBlock: HomeBlockComponent,
+  subscriptionForm: SubscriptionFormBlock,
 }
 
 export const RenderBlocks: React.FC<{

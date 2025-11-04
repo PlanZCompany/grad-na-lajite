@@ -15,6 +15,8 @@ import { plugins } from './plugins'
 import { getServerSideURL } from './utils/getServerSideUrl'
 import { Header } from './Header/config'
 import { Footer } from './Footer/config'
+import { Subscriptions } from './collections/Subscriptions'
+import { Aside } from './Aside/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -49,8 +51,8 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Pages],
-  globals: [Header, Footer],
+  collections: [Users, Media, Pages, Subscriptions],
+  globals: [Header, Footer, Aside],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   cors: [getServerSideURL()].filter(Boolean),

@@ -213,3 +213,37 @@
     transform 0.3s ease,
     box-shadow 0.3s ease;
 }
+
+.footer-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 40px 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin: 0 auto;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* inside glow */
+  box-shadow:
+    inset 0 0 30px rgba(255, 215, 0, 0.15),
+    inset 0 0 60px rgba(255, 215, 0, 0.08);
+}
+
+.badge {
+  display: inline-block;
+  background: #d4af37;
+  color: #fff;
+  border-radius: 12px;
+  margin: 0.5rem;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.badge:hover {
+  box-shadow:
+    0 0 10px #ffd966,
+    0 0 20px #ffd966,
+    0 0 30px #d4af37;
+  color: #2e1a47;
+}

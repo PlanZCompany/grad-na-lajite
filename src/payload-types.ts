@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
+    subscriptions: Subscription;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -83,6 +84,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -97,10 +99,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    aside: Aside;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    aside: AsideSelect<false> | AsideSelect<true>;
   };
   locale: null;
   user: User & {
@@ -144,6 +148,8 @@ export interface User {
   role?: ('admin' | 'user') | null;
   firstName?: string | null;
   lastName?: string | null;
+  subscribed?: boolean | null;
+  discountCode?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -191,7 +197,7 @@ export interface Page {
   id: number;
   title: string;
   commonHero: CommonHero;
-  layout?: (MediaBlock | ContentBlock | HomeBlock)[] | null;
+  layout?: (MediaBlock | ContentBlock | HomeBlock | SubscriptionForm)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -864,6 +870,67 @@ export interface HomeBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SubscriptionForm".
+ */
+export interface SubscriptionForm {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'subscriptionForm';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: number;
+  email: string;
+  /**
+   * Абонаментът може да е свързан с потребител
+   */
+  user?: (number | null) | User;
+  discountCode?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1118,6 +1185,10 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
+        relationTo: 'subscriptions';
+        value: number | Subscription;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1183,6 +1254,8 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   firstName?: T;
   lastName?: T;
+  subscribed?: T;
+  discountCode?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1233,6 +1306,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         homeBlock?: T | HomeBlockSelect<T>;
+        subscriptionForm?: T | SubscriptionFormSelect<T>;
       };
   meta?:
     | T
@@ -1432,6 +1506,28 @@ export interface HomeBlockSelect<T extends boolean = true> {
       };
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SubscriptionForm_select".
+ */
+export interface SubscriptionFormSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions_select".
+ */
+export interface SubscriptionsSelect<T extends boolean = true> {
+  email?: T;
+  user?: T;
+  discountCode?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1710,6 +1806,31 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aside".
+ */
+export interface Aside {
+  id: number;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        media: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1798,6 +1919,30 @@ export interface FooterSelect<T extends boolean = true> {
       };
   contacts?: T;
   logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aside_select".
+ */
+export interface AsideSelect<T extends boolean = true> {
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        media?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

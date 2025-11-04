@@ -63,7 +63,7 @@ const HeadingPlusDescription = ({
         </GenericHeading>
       )}
       {description && (
-        <GenericParagraph>
+        <GenericParagraph extraClass="text-center md:text-left">
           <RichText data={description} />
         </GenericParagraph>
       )}

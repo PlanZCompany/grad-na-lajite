@@ -43,7 +43,11 @@ const HeroCommon: React.FC<CommonHero> = (props) => {
 
           <div className="flex flex-col gap-m relative z-[3] pb-20 md:pb-[unset]">
             {heading && (
-              <GenericHeading headingType="h1" align="text-center md:text-right">
+              <GenericHeading
+                headingType="h1"
+                align="text-center md:text-right"
+                extraClass="max-w-[90%] mx-auto"
+              >
                 <h1 className="!text-[#FFD700]">
                   <RichText data={heading} />
                 </h1>

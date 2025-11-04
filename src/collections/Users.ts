@@ -102,5 +102,23 @@ export const Users: CollectionConfig = {
         condition: (data) => data.role === 'user',
       },
     },
+    {
+      name: 'subscribed',
+      label: 'Subscribed',
+      type: 'checkbox',
+      admin: {
+        readOnly: true,
+        condition: (data) => data.role === 'user',
+      },
+    },
+    {
+      name: 'discountCode',
+      label: 'Код за отстъпка',
+      type: 'text',
+      admin: {
+        readOnly: true,
+        condition: (data) => data.role === 'user',
+      },
+    },
   ],
 }

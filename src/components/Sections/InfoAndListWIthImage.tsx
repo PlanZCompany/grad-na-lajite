@@ -11,7 +11,7 @@ export default function InfoAndListWithImage({ data }: { data: HomeBlock['gameRu
 
     return (
       <div key={card.id} className="flex-1 min-w-[90px] text-center">
-        <div className="relative mx-auto mb-2 h-20 w-20">
+        <div className="relative mx-auto mb-2 h-12 w-12 md:h-20 md:w-20">
           <GenericImage
             src={media?.url || ''}
             alt={media?.alt || ''}
@@ -22,7 +22,7 @@ export default function InfoAndListWithImage({ data }: { data: HomeBlock['gameRu
             fill={true}
           />
         </div>
-        <div className="m-0 font-bold text-[#d4af37]">
+        <div className="m-0 font-bold text-[#d4af37] text-[12px] md:text-base">
           <RichText data={card?.basicComponent?.heading as any} />
         </div>
       </div>
@@ -48,7 +48,7 @@ export default function InfoAndListWithImage({ data }: { data: HomeBlock['gameRu
             </div>
           )}
 
-          <div className="mt-6 flex flex-col md:flex-row gap-8">{cardsContent}</div>
+          <div className="mt-6 flex gap-3 md:gap-8">{cardsContent}</div>
         </article>
         {/* RIGHT: image */}
         <div className="relative min-h-[400px] flex-1 overflow-hidden rounded-[10px] w-full md:min-w-[45%]">

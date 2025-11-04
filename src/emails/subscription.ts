@@ -1,0 +1,184 @@
+type SubscriptionEmailInput = {
+  toEmail: string
+  name?: string | null
+  discountCode: string
+  logoUrl: string
+  siteName: string
+  siteUrl: string
+  supportEmail: string
+}
+
+export function buildSubscriptionEmail({
+  toEmail,
+  name,
+  discountCode,
+  logoUrl,
+  siteName,
+  siteUrl,
+  supportEmail,
+}: SubscriptionEmailInput) {
+  const subject = `✅ Успешен абонамент в ${siteName}`
+
+  const preheader = `Благодарим за абонамента! Вашият код за отстъпка: ${discountCode}`
+
+  const safeName = name?.trim() || ''
+  const greeting = safeName ? `Здравей, ${safeName}!` : 'Здравей!'
+
+  const text = [
+    `${subject}`,
+    '',
+    `${greeting}`,
+    '',
+    `Успешно се абонирахте за новини и оферти от ${siteName}.`,
+    `Получавате и еднократен код за отстъпка: ${discountCode}`,
+    '',
+    `Използвайте кода при следващата си поръчка на ${siteUrl}.`,
+    '',
+    `Благодарим за доверието!`,
+    `${siteName}`,
+    '',
+    `Имате въпроси? Пишете ни на gradnalujite@gmail.com.`,
+    '',
+    `Ако не сте инициирали този абонамент, игнорирайте този имейл.`,
+  ].join('\n')
+
+  // Bulletproof, responsive, dark-mode respectful HTML
+  const html = `<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
+  <title>${escapeHtml(subject)}</title>
+  <style>
+    /* Prevent iOS auto-link colors, etc. */
+    a { text-decoration: none; }
+    /* Dark mode tweaks (limited client support but harmless) */
+    @media (prefers-color-scheme: dark) {
+      .bg { background: #2E1A47 !important; }
+      .card { background: #2E1A47 !important; }
+      .txt { color:#FFD700 !important; }
+      .muted { color: #FFD700 !important; }
+      .code { background: #181a20 !important; color: #ffffff !important; border-color: #2a2f3a !important; }
+      .btn { background: #2f6fec !important; color: #ffffff !important; }
+    }
+    @media screen and (max-width: 600px) {
+      .container { width: 100% !important; }
+      .px { padding-left: 16px !important; padding-right: 16px !important; }
+      .py { padding-top: 20px !important; padding-bottom: 20px !important; }
+      .logo img { max-width: 140px !important; }
+    }
+  </style>
+</head>
+<body class="bg" style="margin:0; padding:0; background: #FFF;">
+  <!-- Preheader (hidden) -->
+  <div style="display:none; opacity:0; overflow:hidden; line-height:1px; max-height:0; max-width:0;">
+    ${escapeHtml(preheader)}
+  </div>
+
+  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background:#FFF;">
+    <tr>
+      <td align="center" style="padding:24px;">
+        <table role="presentation" class="container" width="600" border="0" cellspacing="0" cellpadding="0" style="width:600px; max-width:600px; ">
+          <!-- Header / Logo -->
+          <tr>
+            <td class="px py card" style="background:#2E1A47; padding:24px; border-radius:12px; box-shadow:0 1px 3px rgba(16,24,40,.06);">
+              <table role="presentation" width="100%">
+                <tr>
+                  <td class="logo" align="left" style="padding-bottom:16px;">
+                    <a href="${siteUrl}">
+                      <img src="${logoUrl}" alt="${escapeHtml(siteName)}" width="160" style="border:0; display:block; max-width:160px; height:auto;" />
+                    </a>
+                  </td>
+                </tr>
+                <!-- Hero / Title -->
+                <tr>
+                  <td class="txt" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#FFD700; font-size:20px; font-weight:700; padding-bottom:8px;">
+                    Успешен абонамент 🎉
+                  </td>
+                </tr>
+                <tr>
+                  <td class="txt" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#FFD700; font-size:16px; line-height:24px; padding-bottom:16px;">
+                    ${escapeHtml(greeting)}<br />
+                    Успешно се абонирахте за нашия бюлетин в <strong>${escapeHtml(siteName)}</strong>.
+                  </td>
+                </tr>
+
+                <!-- Discount info -->
+                <tr>
+                  <td class="txt" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#FFD700; font-size:16px; line-height:24px; padding-bottom:8px;">
+                    Като благодарност получавате <strong>еднократен код за отстъпка</strong>:
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="code" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; font-size:22px; letter-spacing:1px; text-align:center; padding:14px 18px; border:1px solid #e5e7eb; border-radius:10px; background:#f8fafc; color:#111827;">
+                      ${escapeHtml(discountCode)}
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="muted" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#48506a; font-size:13px; line-height:20px; padding-top:8px; padding-bottom:16px;">
+                    Използвайте кода при следващата си поръчка. Ако копирате/поставяте, проверете за празни интервали.
+                  </td>
+                </tr>
+
+                <!-- Body text -->
+                <tr>
+                  <td class="txt" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#FFD700; font-size:16px; line-height:24px; padding-bottom:16px;">
+                    Оттук нататък ще получавате новини, оферти и полезни материали от нас. Можете да посетите сайта ни:
+                  </td>
+                </tr>
+
+                <!-- CTA Button -->
+                <tr>
+                  <td align="left" style="padding-bottom:24px;">
+                    <a class="btn" href="${siteUrl}" style="display:inline-block; padding:12px 18px; border-radius:10px; background:#111827; color:#ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size:15px; font-weight:600;">
+                      Към сайта
+                    </a>
+                  </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                  <td class="muted" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#6b7280; font-size:12px; line-height:18px;">
+                    Благодарим за доверието!<br />
+                    Екипът на ${escapeHtml(siteName)}<br />
+                    Въпроси? Пишете ни на <a href="mailto:${supportEmail}" style="color:#6b7280; text-decoration:underline;">${supportEmail}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="muted" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#9ca3af; font-size:11px; line-height:17px; padding-top:12px;">
+                    Ако не сте инициирали този абонамент, игнорирайте този имейл.
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center" style="padding:16px 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#9ca3af; font-size:11px;">
+              © ${new Date().getFullYear()} ${escapeHtml(siteName)} — <a href="${siteUrl}" style="color:#9ca3af; text-decoration:underline;">${siteUrl}</a>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
+
+  return { toEmail, subject, html, text }
+}
+
+/** Minimal HTML escaping for dynamic text nodes */
+function escapeHtml(input: string) {
+  return input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}

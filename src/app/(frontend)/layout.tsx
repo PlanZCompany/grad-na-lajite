@@ -15,6 +15,8 @@ import ScreenOverlay from '@/components/Custom/ScreenOverlay'
 import ScrollToTop from '@/components/Custom/ScrollToTop'
 import { Metadata } from 'next'
 import GenericNotification from '@/components/Generic/GenericNotification'
+import { Aside } from '@/Aside/config'
+import { AsideComponent } from '@/Aside/Component'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -108,7 +110,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
-  const payload = await getPayload({ config: configPromise })
+  // const payload = await getPayload({ config: configPromise })
   // const productsForSearch = await payload.find({
   //   collection: 'product',
   //   draft: false,
@@ -159,9 +161,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <body>
           <main id="content" className="min-h-[100svh] overflow-x-clip">
             {/* <Search products={productsForSearch.docs as Product[]} /> */}
+            <AsideComponent />
             <Header />
             {children}
-            {/* <Footer /> */}
+            <Footer />
             {/* <ShoppingCardAside /> */}
 
             {/* <ScreenOverlay /> */}
