@@ -46,7 +46,7 @@ const HeroCommon: React.FC<CommonHero> = (props) => {
               <GenericHeading
                 headingType="h1"
                 align="text-center md:text-right"
-                extraClass="max-w-[90%] mx-auto"
+                extraClass="max-w-[90%] mx-auto md:max-w-[unset] md:mx-[unset]"
               >
                 <h1 className="!text-[#FFD700]">
                   <RichText data={heading} />
