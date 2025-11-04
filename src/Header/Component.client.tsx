@@ -26,11 +26,12 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
   const [openMenu, setOpenMenu] = useState(false)
 
   useEffect(() => {
-    if (openMenu) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    console.log('//TODO')
+    // if (openMenu) {
+    //   document.body.style.overflow = 'hidden'
+    // } else {
+    //   document.body.style.overflow = ''
+    // }
   }, [openMenu])
 
   const linksContent = categoryItems?.map((item, i) => {
