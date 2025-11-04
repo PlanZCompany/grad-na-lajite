@@ -13,7 +13,7 @@ const Testimonials = ({ data }: { data: HomeBlock['testimonials'] }) => {
     return (
       <article
         className={`w-full bg-[rgba(20,10,40,0.85)] shadow-[0_0_20px_rgba(0,0,0,0.6)] max-w-[280px] flex flex-col gap-4
-            hover:translate-y-[-9px] duration-300 transition-transform rounded-[12px] overflow-hidden p-5`}
+            hover:translate-y-[-9px] duration-300 transition-transform rounded-[12px] overflow-hidden p-5 md:h-[240px]`}
         key={card.id}
       >
         <div className="w-full h-[80px] relative flex justify-center items-center">

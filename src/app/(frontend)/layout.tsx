@@ -156,7 +156,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 
           {/* TODO prefetch to domain */}
-          <link rel="preconnect prefetch" href="https://grad-na-lujite.vercel.app/" />
+          <link rel="preconnect prefetch" href="https://grad-na-lajite.vercel.app/" />
         </head>
         <body>
           <main id="content" className="min-h-[100svh] overflow-x-clip">
