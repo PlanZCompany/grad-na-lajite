@@ -28,7 +28,7 @@ const GenericNotification = () => {
     >
       <div className="w-full pb-6">
         <div className="content_wrapper red_background flex w-full glass rounded-[8px] py-3 bg-primaryBlack px-4">
-          <p className="w-full text-center text-base font-kolka font-500 lg:text-xl text-white">
+          <p className="w-full text-center text-base font-georgia font-500 lg:text-xl text-white">
             {message}
           </p>
         </div>

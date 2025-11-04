@@ -17,7 +17,7 @@ export default function NotFound() {
           <GenericHeading
             align="text-center"
             // fontStyle="font-lobster"
-            fontStyle="font-kolka font-[500]"
+            fontStyle="font-georgia font-[400]"
             headingType="h1"
             // textColor="text-primaryWhite"
             textColor="text-white"
@@ -28,7 +28,7 @@ export default function NotFound() {
           <GenericHeading
             align="text-center"
             // fontStyle="font-montserrat-semibold"
-            fontStyle="font-kolka font-[500]"
+            fontStyle="font-georgia font-[400]"
             headingType="h2"
             // textColor="text-primaryWhite"
             textColor="text-white"

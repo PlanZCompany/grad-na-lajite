@@ -6,7 +6,7 @@ import { RichText } from '../Custom'
 import Link from 'next/link'
 
 const GridCardsAndHeading = ({ data }: { data: HomeBlock['histories'] }) => {
-  const cardsContent = data?.cardsArray?.map((card, index) => {
+  const cardsContent = data?.cardsArray?.map((card) => {
     const media = card?.basicComponent.media as Media
 
     const { heading, description } = card?.basicComponent

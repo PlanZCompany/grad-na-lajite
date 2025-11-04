@@ -10,14 +10,14 @@ import { GenericImage, GenericParagraph } from '@/components/Generic'
 import { MenuIcon, SearchLogo, ShoppingCartIcon, UserProfileIcon } from '@/assets/icons'
 import { setOpenSearch, setUser } from '@/store/features/root'
 import { setShoppingCardOpen } from '@/store/features/checkout'
-import { useCheckout } from '@/hooks/useCheckout'
+// import { useCheckout } from '@/hooks/useCheckout'
 import { useTransition } from 'react'
 import { logout } from '@/action/auth/logout'
 
 const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'> }) => {
   const dispatch = useAppDispatch()
-  const { calculateTotalPrice } = useCheckout()
-  const shoppingCartProducts = useAppSelector((state) => state.checkout.products)
+  // const { calculateTotalPrice } = useCheckout()
+  // const shoppingCartProducts = useAppSelector((state) => state.checkout.products)
   const user = useAppSelector((state) => state.root.user)
   const { categoryItems, logo } = headerData as Header
   const [pending, start] = useTransition()
@@ -71,7 +71,15 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
         <ul className="flex items-center gap-2 px-2">
           <li className="relative">
             {!user ? (
-              <Link href={'/auth/login'} aria-label="Към вход" className="flex items-center gap-2">
+              <Link
+                href={'/auth/login'}
+                aria-label="Към вход"
+                className="flex items-center gap-2"
+                onClick={(e) => {
+                  e.preventDefault()
+                  //TODO
+                }}
+              >
                 <GenericParagraph
                   pType="regular"
                   extraClass="hidden md:block hover:!text-white transition-colors duration-300 ease-in-out"
@@ -102,7 +110,7 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
             {openUserMenu && !!user && (
               <button
                 className="absolute top-full right-0 px-4 py-2 bg-brown z-[3] rounded-[4px] border-[1px] text-white border-white flex
-              hover:text-brown hover:bg-white transition-colors duration-500"
+              hover:text-black hover:bg-white transition-colors duration-500"
                 onClick={() =>
                   start(async () => {
                     await logout()
@@ -143,7 +151,7 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
               flex justify-center items-center"
               >
                 <p className="text-white font-sensation font-[700] text-[10px] md:text-[12px]">
-                  {shoppingCartProducts.length}
+                  {/* {shoppingCartProducts.length} */} 0
                 </p>
               </div>
               <ShoppingCartIcon />

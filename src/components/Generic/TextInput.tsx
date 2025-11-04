@@ -56,7 +56,7 @@ const TextInput = <T,>({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <label htmlFor={name} className="font-kolka font-[500] text-brown">
+      <label htmlFor={name} className="font-georgia font-[400] text-black">
         {label}
         {required && <span className="text-primaryBlue"> *</span>}
       </label>
@@ -72,8 +72,8 @@ const TextInput = <T,>({
           autoFocus={autoFocus}
           className={`${
             type === 'password' ? 'pl-10' : ''
-          } w-full rounded-[12px] border bg-brown/20 border-brown/20 p-3 font-sansation font-[400] !text-brown outline-none 
-          placeholder:text-brown/80
+          } w-full rounded-[12px] border bg-brown/20 border-brown/20 p-3 font-georgia font-[400] !text-black outline-none 
+          placeholder:text-black/80
           ${extraClass}`}
           maxLength={50}
         />

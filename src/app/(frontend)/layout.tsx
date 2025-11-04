@@ -7,21 +7,21 @@ import { Header } from '@/Header/Component'
 import './global.css'
 import { kolka, sansation } from '@/app/fonts'
 import { Footer } from '@/Footer/Component'
-import Search from '@/components/Search/Search'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
-import ShoppingCardAside from '@/components/Checkout/ShoppingCardAside'
-import ScreenOverlay from '@/components/Custom/ScreenOverlay'
-import ScrollToTop from '@/components/Custom/ScrollToTop'
+// import Search from '@/components/Search/Search'
+// import { getPayload } from 'payload'
+// import configPromise from '@payload-config'
+// import ShoppingCardAside from '@/components/Checkout/ShoppingCardAside'
+// import ScreenOverlay from '@/components/Custom/ScreenOverlay'
+// import ScrollToTop from '@/components/Custom/ScrollToTop'
 import { Metadata } from 'next'
-import GenericNotification from '@/components/Generic/GenericNotification'
-import { Aside } from '@/Aside/config'
+// import GenericNotification from '@/components/Generic/GenericNotification'
+// import { Aside } from '@/Aside/config'
 import { AsideComponent } from '@/Aside/Component'
 
 const SITE_NAME = 'Град на Лъжите'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://obichaite-se-new.vercel.app/'),
+  metadataBase: new URL('https://grad-na-lajite.vercel.app/'),
   applicationName: SITE_NAME,
   title: {
     default: SITE_NAME,
@@ -156,7 +156,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 
           {/* TODO prefetch to domain */}
-          <link rel="preconnect prefetch" href="https://obichaite-se-new.vercel.app/" />
+          <link rel="preconnect prefetch" href="https://grad-na-lujite.vercel.app/" />
         </head>
         <body>
           <main id="content" className="min-h-[100svh] overflow-x-clip">

@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react'
 
 export type DateInputProps<T> = {
-  name: string;
-  label: string;
-  formValues: object;
-  setFormValues: React.Dispatch<React.SetStateAction<T>>;
-  placeholder: string;
+  name: string
+  label: string
+  formValues: object
+  setFormValues: React.Dispatch<React.SetStateAction<T>>
+  placeholder: string
   error?: {
-    [key: string]: string | null;
-  };
-  extraClass?: string;
-  required?: boolean;
-  voice?: boolean;
-};
+    [key: string]: string | null
+  }
+  extraClass?: string
+  required?: boolean
+  voice?: boolean
+}
 
 const DateInput = <T,>({
   name,
@@ -26,11 +26,11 @@ const DateInput = <T,>({
     setFormValues((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
-    }));
-  };
+    }))
+  }
   return (
     <div className="flex w-full flex-col gap-2">
-      <label htmlFor="date" className="font-kolka font-[500] text-brown">
+      <label htmlFor="date" className="font-georgia font-[400] text-black">
         {label}
         {required && <span className="text-primaryBlue"> *</span>}
       </label>
@@ -40,10 +40,10 @@ const DateInput = <T,>({
         id="date"
         value={formValues[name as keyof object]}
         onChange={(e) => onChangeHandler(e)}
-        className={`w-full rounded-lg border border-brown/80 bg-brown/20 p-[10px] font-clash-medium text-brown outline-none ${extraClass}`}
+        className={`w-full rounded-lg border border-brown/80 bg-brown/20 p-[10px] font-clash-medium text-black outline-none ${extraClass}`}
       />
     </div>
-  );
-};
+  )
+}
 
-export default DateInput;
+export default DateInput

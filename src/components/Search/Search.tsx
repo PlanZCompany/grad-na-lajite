@@ -55,8 +55,8 @@ const Search = ({ products }: { products: any }) => {
 
         <div className="flex flex-col md:flex-row gap-4 md:gap-[unset] justify-center items-start w-full">
           <input
-            className="w-full md:min-w-[300px] h-[48px] xl:min-w-[400px] p-1 outline-none bg-transparent placeholder:text-brown font-sansation font-[400] 
-        text-[16px] xl:text-[18px] placeholder:font-sansation placeholder:text-brown/80 border-b-[1px] border-brown"
+            className="w-full md:min-w-[300px] h-[48px] xl:min-w-[400px] p-1 outline-none bg-transparent placeholder:text-black font-georgia font-[400] 
+        text-[16px] xl:text-[18px] placeholder:font-georgiaplaceholder:text-black/80 border-b-[1px] border-brown"
             type="text"
             placeholder="Потърси артикул.."
             value={inputValue}
@@ -85,9 +85,9 @@ const Search = ({ products }: { products: any }) => {
       {!!searchResults && searchResults.length === 0 && (
         <div className="border-t-[1px] border-brown w-full mt-8 py-4">
           <GenericParagraph
-            fontStyle="font-sansation font-[400]"
+            fontStyle="font-georgia font-[400]"
             pType="regular"
-            textColor="text-brown"
+            textColor="text-black"
             extraClass="w-full text-center"
           >
             Няма намерeни резултати

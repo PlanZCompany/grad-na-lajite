@@ -4,7 +4,6 @@ import type { Footer, Media } from '@/payload-types'
 
 import { getCachedGlobal } from '@/utils/getGlobals'
 import { GenericImage, GenericParagraph } from '@/components/Generic'
-import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
 import { generateHref, LinkObject } from '@/utils/generateHref'
 

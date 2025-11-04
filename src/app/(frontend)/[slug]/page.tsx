@@ -58,9 +58,9 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  const payload = await getPayload({ config: configPromise })
+  // const payload = await getPayload({ config: configPromise })
 
-  const itIsHome = slug === 'home'
+  // const itIsHome = slug === 'home'
 
   const hero = page.commonHero
   const layout = page.layout

@@ -75,10 +75,10 @@ const LoginComponent = () => {
           />
 
           <div className="mt-2 flex w-full items-center gap-1">
-            <p className="font-kolka font-[400] text-[14px] text-brown/80">Забравена парола?</p>
+            <p className="font-georgia font-[400] text-[14px] text-black/80">Забравена парола?</p>
 
             <Link href="/auth/forgot-password">
-              <p className="font-kolka font-[500] text-[14px] text-brown">натиснете тук</p>
+              <p className="font-georgia font-[400] text-[14px] text-black">натиснете тук</p>
             </Link>
           </div>
         </div>
@@ -101,8 +101,8 @@ const LoginComponent = () => {
       {error && <p className="text-red-600">{error}</p>}
 
       <div className="flex w-full items-center justify-center gap-2">
-        <p className="text-[14px] text-brown/80">{`Нямаш акаунт?`}</p>
-        <Link href="/auth/register" className="font-kolka font-[500] text-brown">
+        <p className="text-[14px] text-black/80">{`Нямаш акаунт?`}</p>
+        <Link href="/auth/register" className="font-georgia font-[400] text-black">
           Регистрирай се
         </Link>
       </div>

@@ -21,28 +21,6 @@ const Menu = ({
   const linksContent = categoryItems?.map((item, i) => {
     if (!item?.link?.label) return null
 
-    const childrenContent = !!item.children
-      ? item.children.map((childItem) => {
-          return (
-            <li key={childItem.id} className="w-full py-2 bg-pink/20 my-[2px]">
-              <Link
-                href={generateHref(childItem as LinkObject)}
-                aria-label={childItem?.link?.label}
-                target={childItem?.link?.newTab ? '_blank' : '_self'}
-                prefetch={true}
-                className="w-full h-full"
-              >
-                <button className="w-fit pl-4 h-full">
-                  <span className="text-[16px] text-right font-kolka font-[500] text-brown transition-colors duration-500">
-                    {childItem?.link?.label}
-                  </span>
-                </button>
-              </Link>
-            </li>
-          )
-        })
-      : []
-
     return (
       <li className="w-full px-2 py-2 flex flex-col" key={`${item?.link?.label}${i}`}>
         <div className="flex justify-between items-center border-b-[1px] border-dashed border-brown/80">
@@ -53,7 +31,7 @@ const Menu = ({
             className=""
             prefetch={true}
           >
-            <p className="font-sansation font-[700] italic text-[18px] text-brown">
+            <p className="font-georgia font-[400] italic text-[18px] text-black">
               {item?.link?.label}
             </p>
           </Link>
@@ -78,10 +56,6 @@ const Menu = ({
             <ArrowIcon />
           </button>
         </div>
-
-        {openCategoryIndex === i + 1 && (
-          <ul className="w-full flex flex-col mt-2">{childrenContent}</ul>
-        )}
       </li>
     )
   })
@@ -93,11 +67,7 @@ const Menu = ({
     `}
     >
       <div className="w-full flex items-center justify-between py-2 px-4 border-b-[1px] border-bordo/80">
-        <GenericParagraph
-          fontStyle="font-sansation font-[700]"
-          pType="large"
-          textColor="text-bordo"
-        >
+        <GenericParagraph fontStyle="font-georgia font-[400]" pType="large" textColor="text-black">
           Меню
         </GenericParagraph>
 

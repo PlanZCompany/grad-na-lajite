@@ -35,9 +35,9 @@ const NumberInput = <T,>({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <label htmlFor={name} className="font-kolka font-[500] text-brown">
+      <label htmlFor={name} className="font-georgia font-[400] text-black">
         {label}
-        {required && <span className="text-brown"> *</span>}
+        {required && <span className="text-black"> *</span>}
       </label>
 
       <div className="relative flex w-full items-center justify-between">
@@ -49,8 +49,8 @@ const NumberInput = <T,>({
           value={formValues[name as keyof object]}
           onChange={(e) => onChangeHandler(e)}
           autoFocus={autoFocus}
-          className={` w-full rounded-lg border border-brown/20 bg-brown/20 p-3 font-sansation font-[400] text-brown outline-none ${extraClass}
-          placeholder:text-brown/80`}
+          className={` w-full rounded-lg border border-brown/20 bg-brown/20 p-3 font-georgia font-[400] text-black outline-none ${extraClass}
+          placeholder:text-black/80`}
         />
       </div>
 

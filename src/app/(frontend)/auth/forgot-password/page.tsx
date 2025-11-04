@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
 
       <div className="m-auto white_background_bubble w-fit md:py-10 relative z-[1] rounded-[24px] flex flex-col-reverse md:flex-row">
         <div className="py-6 px-6 md:px-20 md:translate-x-[80px] flex flex-col justify-center items-center">
-          <p className="mt-2 text-sm text-brown/80">Въведете имейл адрес</p>
+          <p className="mt-2 text-sm text-black/80">Въведете имейл адрес</p>
           <form onSubmit={onSubmit} className="mt-4 space-y-3">
             <TextInput
               name="email"
@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
             </div>
           </form>
           {ok && (
-            <p className="mt-3 text-brown">
+            <p className="mt-3 text-black">
               Ако Акаунт съществува, ще получите имейл с инструкции за възстановяване на паролата.
             </p>
           )}
@@ -78,7 +78,7 @@ export default function ForgotPasswordPage() {
             <GenericParagraph
               pType="regular"
               textColor="text-white"
-              fontStyle="font-sansation font-[700]"
+              fontStyle="font-georgia font-[400]"
               extraClass="uppercase w-full text-center"
             >
               <span>Забравена парола</span>
@@ -95,7 +95,7 @@ export default function ForgotPasswordPage() {
 
           <div className="absolute z-[2] bg-black/20 py-[2px] left-0 right-0 bottom-[0px] border-t-[1px] flex justify-center items-center border-b-[1px] border-white/20">
             <Link href="/terms" className="w-full text-white text-center">
-              <span className="font-kolka font-[400] text-white text-center text-[14px] w-full">
+              <span className="font-georgia font-[400] text-white text-center text-[14px] w-full">
                 Политика за поверителност
               </span>
             </Link>

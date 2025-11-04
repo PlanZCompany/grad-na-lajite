@@ -26,7 +26,7 @@ const Login = () => {
             <GenericParagraph
               pType="regular"
               textColor="text-white"
-              fontStyle="font-sansation font-[700]"
+              fontStyle="font-georgia font-[400]"
               extraClass="uppercase w-full text-center"
             >
               <span>Потребител Вход</span>
@@ -42,8 +42,8 @@ const Login = () => {
           />
 
           <div className="absolute z-[2] bg-black/20 py-[2px] left-0 right-0 bottom-[0px] border-t-[1px] flex justify-center items-center border-b-[1px] border-white/20">
-            <Link href="/terms" className='w-full text-white text-center'>
-              <span className='font-kolka font-[400] text-white text-center text-[14px] w-full'>
+            <Link href="/terms" className="w-full text-white text-center">
+              <span className="font-georgia font-[400] text-white text-center text-[14px] w-full">
                 Политика за поверителност
               </span>
             </Link>

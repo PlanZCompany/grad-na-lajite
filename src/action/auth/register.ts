@@ -19,8 +19,6 @@ export async function registerUser(values: {
     data: {
       firstName: values.firstName,
       lastName: values.lastName,
-      phoneNumber: values.phoneNumber ?? '',
-      dateOfBirth: values.dateOfBirth ?? null,
       email: values.email.toLowerCase(),
       password: values.password,
       role: 'user',

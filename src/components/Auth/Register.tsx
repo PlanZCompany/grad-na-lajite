@@ -54,7 +54,7 @@ const RegisterComponent = () => {
   return (
     <>
       {ok ? (
-        <p className="mt-3 text-[20px] font-sansation text-center">
+        <p className="mt-3 text-[20px] font-georgiatext-center">
           Успешна регистрация! <br />
           Проверете своя email, за потвърждение на профила
         </p>
@@ -156,8 +156,8 @@ const RegisterComponent = () => {
           {error && <p className="text-red-600">{error}</p>}
 
           <div className="flex w-full items-center justify-center gap-2">
-            <p className="text-[14px] text-brown/80">{`Имаш акаунт?`}</p>
-            <Link href="/auth/login" className="font-kolka font-[500] text-brown">
+            <p className="text-[14px] text-black/80">{`Имаш акаунт?`}</p>
+            <Link href="/auth/login" className="font-georgia font-[400] text-black">
               Вход
             </Link>
           </div>
