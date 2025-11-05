@@ -4,11 +4,14 @@ import { subscribeAction } from '@/action/subscribe'
 import subscribeEmail from '@/action/subscribe/subscribeEmail'
 import { CloseCircle, DiscountIcon } from '@/assets/icons'
 import { GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
+import { useAppDispatch } from '@/hooks/redux-hooks'
 import { Media, SubscriptionModal } from '@/payload-types'
+import { setNotification } from '@/store/features/notifications'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import React, { useState, useTransition } from 'react'
 
 const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
+  const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState(false)
   const { heading, description, media } = data
 
@@ -36,7 +39,14 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
         if (res.ok && !!res.discountCode) {
           subscribeEmail(email, res.userName, res.discountCode)
         }
-        //TODO Notification
+
+        dispatch(
+          setNotification({
+            showNotification: true,
+            message: 'Успешен абонамент',
+            type: 'success',
+          }),
+        )
       } catch (err) {
         console.log(err)
       }

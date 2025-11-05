@@ -14,8 +14,7 @@ import { Footer } from '@/Footer/Component'
 // import ScreenOverlay from '@/components/Custom/ScreenOverlay'
 import ScrollToTop from '@/components/Custom/ScrollToTop'
 import { Metadata } from 'next'
-// import GenericNotification from '@/components/Generic/GenericNotification'
-// import { Aside } from '@/Aside/config'
+import GenericNotification from '@/components/Generic/GenericNotification'
 import { AsideComponent } from '@/Aside/Component'
 import { SubscriptionModalComponent } from '@/SubsciptionModal/Component'
 
@@ -172,7 +171,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
             {/* <ScreenOverlay /> */}
 
-            {/* <GenericNotification /> */}
+            <GenericNotification />
           </main>
         </body>
       </html>

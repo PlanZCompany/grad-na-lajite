@@ -4,12 +4,14 @@ import { subscribeAction } from '@/action/subscribe'
 import subscribeEmail from '@/action/subscribe/subscribeEmail'
 import { GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
 import SectionWrapper from '@/components/Wrappers/SectionWrapper'
-import { useAppSelector } from '@/hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { Media, SubscriptionForm } from '@/payload-types'
+import { setNotification } from '@/store/features/notifications'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import React, { useState, useTransition } from 'react'
 
 export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
+  const dispatch = useAppDispatch()
   const { heading, description, media } = props
   const user = useAppSelector((state) => state.root.user)
 
@@ -37,7 +39,13 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
         if (res.ok && !!res.discountCode) {
           subscribeEmail(email, res.userName, res.discountCode)
         }
-        //TODO Notification
+        dispatch(
+          setNotification({
+            showNotification: true,
+            message: 'Успешен абонамент',
+            type: 'success',
+          }),
+        )
       } catch (err) {
         console.log(err)
       }
