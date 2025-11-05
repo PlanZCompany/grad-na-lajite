@@ -27,7 +27,7 @@ export const HomeBlockComponent: React.FC<HomeBlock> = (props) => {
 
   return (
     <section className="w-full flex">
-      <div className="content_wrapper w-full my-auto">
+      <div className="w-full my-auto">
         <FlipCardsAndInfo data={whyToChoseUs} />
         <InfoAndImage data={historySection} />
         <ThreeCardsGrid data={whatIsTheGame} />

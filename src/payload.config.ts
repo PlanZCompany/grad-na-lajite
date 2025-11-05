@@ -17,6 +17,7 @@ import { Header } from './Header/config'
 import { Footer } from './Footer/config'
 import { Subscriptions } from './collections/Subscriptions'
 import { Aside } from './Aside/config'
+import { SubscriptionModal } from './SubsciptionModal/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -52,7 +53,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Pages, Subscriptions],
-  globals: [Header, Footer, Aside],
+  globals: [Header, Footer, Aside, SubscriptionModal],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   cors: [getServerSideURL()].filter(Boolean),
@@ -63,7 +64,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
-    push: false,
+    push: true,
   }),
   sharp,
   plugins: [payloadCloudPlugin(), ...plugins],

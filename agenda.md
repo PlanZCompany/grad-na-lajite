@@ -12,6 +12,9 @@
 **QUESTIONS**
 - как процедираме на мобилно понеже в темплейтите не е добре
 
+***FROM_CLIENT***
+https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/edit?tab=t.0
+
 **CURRENT**
 - add notification for subscription
 - mobile menu
@@ -40,3 +43,6 @@
 - Shopping aside
 - Checkout page
 - all required collections 
+
+**WEEK - 03.11 - 10.11 - DONE**
+- неща от документа

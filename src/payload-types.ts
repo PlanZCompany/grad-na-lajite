@@ -100,11 +100,13 @@ export interface Config {
     header: Header;
     footer: Footer;
     aside: Aside;
+    subscriptionModal: SubscriptionModal;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     aside: AsideSelect<false> | AsideSelect<true>;
+    subscriptionModal: SubscriptionModalSelect<false> | SubscriptionModalSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1831,6 +1833,52 @@ export interface Aside {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptionModal".
+ */
+export interface SubscriptionModal {
+  id: number;
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media: number | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1943,6 +1991,18 @@ export interface AsideSelect<T extends boolean = true> {
         media?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptionModal_select".
+ */
+export interface SubscriptionModalSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

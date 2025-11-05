@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { DataFromGlobalSlug } from 'payload'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { GenericImage, GenericParagraph } from '@/components/Generic'
-import { MenuIcon, SearchLogo, ShoppingCartIcon, UserProfileIcon } from '@/assets/icons'
+import { MenuIcon, ShoppingCartIcon, UserProfileIcon } from '@/assets/icons'
 import { setOpenSearch, setUser } from '@/store/features/root'
 import { setShoppingCardOpen } from '@/store/features/checkout'
 // import { useCheckout } from '@/hooks/useCheckout'
@@ -70,20 +70,12 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
         <ul className="hidden justify-center items-center gap-4 md:flex">{linksContent}</ul>
 
         <ul className="flex items-center gap-2 px-2">
-          <li className="relative">
+          <li className="relative [&_a_div]:hover:text-white [&_div_svg_path]:hover:fill-white">
             {!user ? (
-              <Link
-                href={'/auth/login'}
-                aria-label="Към вход"
-                className="flex items-center gap-2"
-                onClick={(e) => {
-                  e.preventDefault()
-                  //TODO
-                }}
-              >
+              <Link href={'/auth/login'} aria-label="Към вход" className="flex items-center gap-2">
                 <GenericParagraph
                   pType="regular"
-                  extraClass="hidden md:block hover:!text-white transition-colors duration-300 ease-in-out"
+                  extraClass="hidden md:block transition-colors duration-300 ease-in-out"
                   fontStyle="font-georgia font-[400]"
                   textColor="text-primaryYellow"
                 >
@@ -91,7 +83,7 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
                 </GenericParagraph>
                 <div
                   className="w-[36px] h-[36px] md:w-[48px] md:h-[48px] flex justify-center items-center p-[5px]
-                [&_svg_path]:hover:fill-white transition-colors duration-300 ease-in-out
+                 transition-colors duration-300 ease-in-out
                 [&_svg_path]:transition-colors [&_svg_path]:duration-300 [&_svg_path]:ease-in-out"
                 >
                   <UserProfileIcon />
@@ -124,20 +116,7 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
               </button>
             )}
           </li>
-          <li>
-            <button
-              className="w-[36px] h-[36px] md:w-[48px] md:h-[48px] rounded-full flex justify-center items-center  pb-[7px] pt-[7px]
-              [&_svg_path]:hover:fill-white transition-colors duration-300 ease-in-out
-                [&_svg_path]:transition-colors [&_svg_path]:duration-300 [&_svg_path]:ease-in-out"
-              aria-label="Търсене на продукт"
-              title="Търсене на продукт"
-              onClick={() => {
-                dispatch(setOpenSearch(true))
-              }}
-            >
-              <SearchLogo />
-            </button>
-          </li>
+
           <li className="flex items-center gap-2">
             <button
               className="w-[36px] h-[36px] md:w-[48px] md:h-[48px] rounded-full flex justify-center items-center p-[3px] relative
@@ -156,6 +135,24 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
                 </p>
               </div>
               <ShoppingCartIcon />
+            </button>
+          </li>
+          <li>
+            <button
+              className="w-[36px] h-[36px] md:w-[48px] md:h-[48px] flex justify-center items-center"
+              aria-label="Търсене на продукт"
+              title="Търсене на продукт"
+              onClick={() => {
+                dispatch(setOpenSearch(true))
+              }}
+            >
+              <GenericImage
+                src={`/static/search-image.png`}
+                alt={'search'}
+                wrapperClassName="flex items-center justify-center relative w-full h-full"
+                imageClassName="w-full h-full object-contain"
+                fill={true}
+              />
             </button>
           </li>
           <li className="md:hidden">

@@ -36,12 +36,12 @@ export default function ScrollToTop() {
 
   return (
     <div
-      className={`fixed bottom-2 right-2 md:bottom-4 md:right-4 w-10 h-10 md:w-12 md:h-12 flex rounded-full overflow-hidden z-10
+      className={`fixed bottom-3 left-2 md:bottom-4 md:left-4 w-10 h-10 md:w-12 md:h-12 flex rounded-full overflow-hidden z-10
         transform transition-[transform,opacity] duration-500 ease-in-out
         ${
           isActive
             ? progress === 100
-              ? 'md:translate-y-[-24px] opacity-100 pointer-events-auto'
+              ? 'opacity-100 pointer-events-auto'
               : 'translate-y-0 opacity-100 pointer-events-auto'
             : 'translate-y-5 md:translate-y-6 opacity-0 pointer-events-none'
         }`}
@@ -49,14 +49,14 @@ export default function ScrollToTop() {
       <div className="absolute inset-0 rounded-full bg-gray-400" />
 
       <div
-        className="absolute inset-x-0 top-0 rounded-b-full bg-bordo"
+        className="absolute inset-x-0 top-0 rounded-b-full bg-purpleDark"
         style={{ height: `${progress}%` }}
       />
 
       <button
         aria-label="Scroll to top"
         onClick={scrollToTop}
-        className="relative z-10 m-auto w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-pink"
+        className="relative z-10 m-auto w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-primaryYellow"
         type="button"
       >
         <div className="w-full h-full rounded-full flex items-center justify-center">

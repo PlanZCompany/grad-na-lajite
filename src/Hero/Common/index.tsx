@@ -13,7 +13,7 @@ const HeroCommon: React.FC<CommonHero> = (props) => {
       className={`w-full flex min-h-screen xxl:min-h-[780px] pt-[68px] md:pt-[130px]`}
       id="hero"
     >
-      <div className="content_wrapper_mobile-full w-full relative flex">
+      <div className="w-full relative flex">
         <div className="absolute z-[1] background_overlay inset-0"></div>
         <GenericImage
           src={(background as Media).url || ''}
@@ -31,7 +31,7 @@ const HeroCommon: React.FC<CommonHero> = (props) => {
           <GenericImage
             src={(media as Media).url || ''}
             alt={(media as Media).alt || ''}
-            wrapperClassName="w-[220px] h-[220px] md:w-[250px] md:h-[250px] relative"
+            wrapperClassName="w-[220px] h-[220px] md:w-[250px] md:h-[250px] xl:w-[300px] xl:h-[300px] relative"
             fill={true}
             priority={true}
             focalX={(media as Media).focalX || 50}

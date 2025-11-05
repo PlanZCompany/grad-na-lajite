@@ -121,7 +121,8 @@ export async function subscribeAction(userEmail: string): Promise<SubscribeResul
       discountCode: userRes.docs.length > 0 ? discountCodeToReturn : anonimousDiscountCodeToReturn,
       userName: userId ? ((userRes.docs[0] as User).firstName as string) : 'Играч',
     }
-  } catch (err: any) {
+  } catch (error: unknown) {
+    const err = error as { data: { errors: { message: string }[] } }
     if (err?.data?.errors?.[0]?.message?.includes('unique')) {
       return { ok: true, message: 'Вече сте абонирани с този имейл.', userName: 'Играч' }
     }

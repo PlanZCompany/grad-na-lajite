@@ -24,8 +24,6 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
       return
     }
 
-    return //TODO
-
     startTransition(async () => {
       try {
         const res = await subscribeAction(email)

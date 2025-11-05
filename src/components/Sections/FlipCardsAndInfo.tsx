@@ -59,9 +59,11 @@ const FlipCardsAndInfo = ({ data }: { data: HomeBlock['whyToChoseUs'] }) => {
 
   return (
     <section className="w-full flex flex-col gap-m py-10 md:py-20">
-      <HeadingPlusDescription heading={data?.heading} description={data?.description} />
-      <div className="modes-container mt-8 flex flex-wrap justify-center gap-[30px]">
-        {cardsContent}
+      <div className="content_wrapper flex flex-col gap-m">
+        <HeadingPlusDescription heading={data?.heading} description={data?.description} />
+        <div className="modes-container mt-8 flex flex-wrap justify-center gap-[30px]">
+          {cardsContent}
+        </div>
       </div>
     </section>
   )

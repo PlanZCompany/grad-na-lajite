@@ -2,6 +2,7 @@ import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
 import { MediaConfig } from '@/blocks/Reusable'
+import { revalidateAside } from './hooks/revalidateAside'
 
 export const Aside: GlobalConfig = {
   slug: 'aside',
@@ -21,4 +22,7 @@ export const Aside: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [revalidateAside],
+  },
 }

@@ -12,11 +12,12 @@ import { Footer } from '@/Footer/Component'
 // import configPromise from '@payload-config'
 // import ShoppingCardAside from '@/components/Checkout/ShoppingCardAside'
 // import ScreenOverlay from '@/components/Custom/ScreenOverlay'
-// import ScrollToTop from '@/components/Custom/ScrollToTop'
+import ScrollToTop from '@/components/Custom/ScrollToTop'
 import { Metadata } from 'next'
 // import GenericNotification from '@/components/Generic/GenericNotification'
 // import { Aside } from '@/Aside/config'
 import { AsideComponent } from '@/Aside/Component'
+import { SubscriptionModalComponent } from '@/SubsciptionModal/Component'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -162,14 +163,14 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <main id="content" className="min-h-[100svh] overflow-x-clip">
             {/* <Search products={productsForSearch.docs as Product[]} /> */}
             <AsideComponent />
+            <ScrollToTop />
+            <SubscriptionModalComponent />
             <Header />
             {children}
             <Footer />
             {/* <ShoppingCardAside /> */}
 
             {/* <ScreenOverlay /> */}
-
-            {/* <ScrollToTop /> */}
 
             {/* <GenericNotification /> */}
           </main>
