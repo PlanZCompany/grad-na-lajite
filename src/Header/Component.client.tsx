@@ -139,7 +139,10 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
           </li>
           <li>
             <button
-              className="w-[28px] h-[28px] md:w-[36px] md:h-[36px] flex justify-center items-center ml-3"
+              className="w-[28px] h-[28px] md:w-[36px] md:h-[36px] flex justify-center items-center ml-3
+              [&_svg_path]:hover:fill-white transition-colors duration-300 ease-in-out
+                [&_svg_path]:transition-colors [&_svg_path]:duration-300 [&_svg_path]:ease-in-out
+              "
               aria-label="Търсене на продукт"
               title="Търсене на продукт"
               onClick={() => {
