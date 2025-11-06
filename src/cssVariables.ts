@@ -1,10 +1,6 @@
 export const COLORS = {
   primaryYellow: '#FFD700',
-  brown: '#574143',
-  pink: '#D19EA2',
-  mixPink: '#A9636A',
-  bordo: '#6D0710',
-  pinkShade: '#e6cbcd',
+  purpleBackground: '#200226',
 }
 
 export const SCREENS = {

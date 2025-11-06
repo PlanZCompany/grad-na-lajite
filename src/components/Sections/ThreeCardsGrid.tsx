@@ -5,7 +5,7 @@ import { RichText } from '../Custom'
 
 export default function ThreeCardsGrid({ data }: { data: HomeBlock['whatIsTheGame'] }) {
   const cardsContent = data?.cardsArray?.map((card) => {
-    const media = card?.basicComponent.media as Media
+    const media = card?.basicComponent?.media as Media
 
     return (
       <div

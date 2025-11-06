@@ -9,12 +9,20 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ContentBlock } from './Content/Component'
 import { HomeBlockComponent } from './HomeBlock/HomeBlockComponent'
 import { SubscriptionFormBlock } from './SubsciptionForm/Component'
+import { ProductBlockComponent } from './ProductBlock/Component'
+import { AboutBlockComponent } from './AboutBlock/Compoment'
+import { ContactBlockComponent } from './ContactBlock/Component'
+import { FaqBlockComponent } from './FaqBlock/Component'
 
 const blockComponents = {
   mediaBlock: MediaBlock,
   content: ContentBlock,
   homeBlock: HomeBlockComponent,
   subscriptionForm: SubscriptionFormBlock,
+  productBlock: ProductBlockComponent,
+  aboutBlock: AboutBlockComponent,
+  contactBlock: ContactBlockComponent,
+  faqBlock: FaqBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{

@@ -30,7 +30,7 @@ const DateInput = <T,>({
   }
   return (
     <div className="flex w-full flex-col gap-2">
-      <label htmlFor="date" className="font-georgia font-[400] text-black">
+      <label htmlFor="date" className="font-georgia font-[400] text-white">
         {label}
         {required && <span className="text-primaryBlue"> *</span>}
       </label>
@@ -40,7 +40,7 @@ const DateInput = <T,>({
         id="date"
         value={formValues[name as keyof object]}
         onChange={(e) => onChangeHandler(e)}
-        className={`w-full rounded-lg border border-brown/80 bg-brown/20 p-[10px] font-clash-medium text-black outline-none ${extraClass}`}
+        className={`w-full rounded-lg bg-[#200226]/50 focus:outline focus:outline-1 focus:outline-white p-[10px] font-clash-medium text-white outline-none ${extraClass}`}
       />
     </div>
   )

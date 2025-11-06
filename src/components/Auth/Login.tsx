@@ -75,10 +75,10 @@ const LoginComponent = () => {
           />
 
           <div className="mt-2 flex w-full items-center gap-1">
-            <p className="font-georgia font-[400] text-[14px] text-black/80">Забравена парола?</p>
+            <p className="font-georgia font-[400] text-[14px] text-white/80">Забравена парола?</p>
 
             <Link href="/auth/forgot-password">
-              <p className="font-georgia font-[400] text-[14px] text-black">натиснете тук</p>
+              <p className="font-georgia font-[400] text-[14px] text-white">натиснете тук</p>
             </Link>
           </div>
         </div>
@@ -88,7 +88,7 @@ const LoginComponent = () => {
         <GenericButton
           type={'submit'}
           // className="primary-button mx-auto w-full max-w-[300px] font-clash-semibold"
-          styleClass="w-full"
+          styleClass="w-full md:!px-3 md:!py-[10px]"
           variant="primary"
           click={() => {
             dispatch(setIsLoading(true))
@@ -101,8 +101,8 @@ const LoginComponent = () => {
       {error && <p className="text-red-600">{error}</p>}
 
       <div className="flex w-full items-center justify-center gap-2">
-        <p className="text-[14px] text-black/80">{`Нямаш акаунт?`}</p>
-        <Link href="/auth/register" className="font-georgia font-[400] text-black">
+        <p className="text-[14px] text-white/80">{`Нямаш акаунт?`}</p>
+        <Link href="/auth/register" className="font-georgia font-[400] text-white">
           Регистрирай се
         </Link>
       </div>

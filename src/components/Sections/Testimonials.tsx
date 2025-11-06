@@ -36,9 +36,10 @@ const Testimonials = ({ data }: { data: HomeBlock['testimonials'] }) => {
     ],
   }
   const cardsContent = data?.cardsArray?.map((card) => {
-    const media = card?.basicComponent.media as Media
+    const media = card?.basicComponent?.media as Media
 
-    const { heading, description } = card?.basicComponent
+    const heading = card?.basicComponent?.heading
+    const description = card?.basicComponent?.description
 
     return (
       <div className="w-full px-2 md:px-[unset]" key={card.id}>

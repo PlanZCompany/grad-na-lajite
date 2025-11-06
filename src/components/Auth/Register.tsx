@@ -54,7 +54,7 @@ const RegisterComponent = () => {
   return (
     <>
       {ok ? (
-        <p className="mt-3 text-[20px] font-georgiatext-center">
+        <p className="mt-3 text-[20px] font-georgia text-center">
           Успешна регистрация! <br />
           Проверете своя email, за потвърждение на профила
         </p>
@@ -143,7 +143,7 @@ const RegisterComponent = () => {
             <GenericButton
               type={'submit'}
               // className="primary-button mx-auto w-full max-w-[300px] font-clash-semibold"
-              styleClass="w-full"
+              styleClass="w-full md:!px-4 md:!py-[10px]"
               variant="primary"
               click={() => {
                 dispatch(setIsLoading(true))
@@ -156,8 +156,8 @@ const RegisterComponent = () => {
           {error && <p className="text-red-600">{error}</p>}
 
           <div className="flex w-full items-center justify-center gap-2">
-            <p className="text-[14px] text-black/80">{`Имаш акаунт?`}</p>
-            <Link href="/auth/login" className="font-georgia font-[400] text-black">
+            <p className="text-[14px] text-white/80">{`Имаш акаунт?`}</p>
+            <Link href="/auth/login" className="font-georgia font-[400] text-white">
               Вход
             </Link>
           </div>

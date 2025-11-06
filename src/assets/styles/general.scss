@@ -81,7 +81,7 @@
   animation: fadeIn 500ms reverse;
 
   .gooey {
-    background-image: linear-gradient(120deg, #3d3d3d 0%, #4f4f4f 100%);
+    background-image: linear-gradient(120deg, #2e1a47 0%, #910096 100%);
     border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
     animation: morph 3s linear infinite;
     transform-style: preserve-3d;
@@ -101,7 +101,7 @@
     box-shadow: 5px 5px 12px #4f4f4f20;
     will-change: border-radius, transform, opacity;
     animation-delay: 200ms;
-    background-image: linear-gradient(120deg, #4f4f4f 0%, #3d3d3d 100%);
+    background-image: linear-gradient(120deg, #2e1a47 0%, #910096 100%);
   }
 
   .gooey:before {
@@ -246,4 +246,66 @@
     0 0 20px #ffd966,
     0 0 30px #d4af37;
   color: #2e1a47;
+}
+
+.auth_forms {
+  .form_container {
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  }
+
+  .shape1 {
+    background: linear-gradient(to right, #d4af37, #ffd700);
+    left: -80px;
+    top: -80px;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+  }
+  .shape2 {
+    background: linear-gradient(#4b0082, #2e1a47);
+    right: -30px;
+    bottom: -80px;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+  }
+}
+
+.divider_section {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #d4af37, transparent);
+  margin-inline: auto;
+  width: 70%;
+}
+
+.purple_background {
+  background-image:
+    radial-gradient(
+      circle at 17% 77%,
+      rgba(17, 17, 17, 0.04) 0%,
+      rgba(17, 17, 17, 0.04) 50%,
+      rgba(92, 85, 85, 0.04) 50%,
+      rgba(92, 85, 85, 0.04) 100%
+    ),
+    radial-gradient(
+      circle at 26% 17%,
+      rgba(64, 64, 64, 0.04) 0%,
+      rgba(64, 64, 64, 0.04) 50%,
+      rgba(129, 123, 123, 0.04) 50%,
+      rgba(129, 123, 123, 0.04) 100%
+    ),
+    radial-gradient(
+      circle at 44% 60%,
+      rgba(65, 65, 65, 0.04) 0%,
+      rgba(65, 65, 65, 0.04) 50%,
+      rgba(3, 3, 3, 0.04) 50%,
+      rgba(3, 3, 3, 0.04) 100%
+    ),
+    linear-gradient(19deg, rgb(75, 0, 130), rgb(32, 2, 38));
 }

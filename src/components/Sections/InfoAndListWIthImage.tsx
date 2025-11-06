@@ -3,11 +3,13 @@ import { RichText, RichTextFull } from '../Custom'
 import { GenericHeading, GenericImage } from '../Generic'
 
 export default function InfoAndListWithImage({ data }: { data: HomeBlock['gameRules'] }) {
-  const { heading, description, cardsArray } = data
+  const heading = data?.heading
+  const description = data?.description
+  const cardsArray = data?.cardsArray
   const media = data?.media as Media
 
   const cardsContent = cardsArray?.map((card) => {
-    const media = card?.basicComponent.media as Media
+    const media = card?.basicComponent?.media as Media
 
     return (
       <div key={card.id} className="flex-1 min-w-[90px] text-center">

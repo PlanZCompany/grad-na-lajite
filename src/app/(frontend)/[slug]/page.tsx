@@ -62,7 +62,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   // const itIsHome = slug === 'home'
 
-  const hero = page.commonHero
+  const hero = page?.commonHero
   const layout = page.layout
 
   return (
@@ -74,11 +74,11 @@ export default async function Page({ params: paramsPromise }: Args) {
           <CategoriesItemList />
         </>
       )} */}
-      <article className="w-full bg-[#200226]">
+      <article className="w-full bg-[#200226] min-h-[100svh]">
         <PayloadRedirects disableNotFound url={url} />
 
         {draft && <LivePreviewListener />}
-        {!page.regulatoryPage && <HeroCommon {...hero} />}
+        {!!hero.heading && !page.regulatoryPage && <HeroCommon {...hero} />}
 
         <div className="w-full">
           <RenderBlocks blocks={layout as any} />

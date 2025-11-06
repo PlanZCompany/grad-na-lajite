@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function NotFound() {
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-primaryBlack">
+    <div className="w-full h-screen flex flex-col justify-center items-center bg-purpleBackground">
       <div className="w-fit mx-auto mb-6 relative">
         <Blob wrapperClassName="absolute top-[-50px] left-0 z-[2]" position="left-top" />
         <Blob

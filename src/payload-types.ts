@@ -199,7 +199,9 @@ export interface Page {
   id: number;
   title: string;
   commonHero: CommonHero;
-  layout?: (MediaBlock | ContentBlock | HomeBlock | SubscriptionForm)[] | null;
+  layout?:
+    | (MediaBlock | ContentBlock | HomeBlock | SubscriptionForm | ProductBlock | AboutBlock | ContactBlock | FaqBlock)[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -361,7 +363,7 @@ export interface HomeBlock {
     } | null;
     cardsArray?:
       | {
-          basicComponent: {
+          basicComponent?: {
             /**
              * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
              */
@@ -398,13 +400,13 @@ export interface HomeBlock {
               };
               [k: string]: unknown;
             } | null;
-            media: number | Media;
+            media?: (number | null) | Media;
           };
           id?: string | null;
         }[]
       | null;
   };
-  historySection: {
+  historySection?: {
     /**
      * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
      */
@@ -441,7 +443,7 @@ export interface HomeBlock {
       };
       [k: string]: unknown;
     } | null;
-    media: number | Media;
+    media?: (number | null) | Media;
   };
   whatIsTheGame?: {
     /**
@@ -464,7 +466,7 @@ export interface HomeBlock {
     } | null;
     cardsArray?:
       | {
-          basicComponent: {
+          basicComponent?: {
             /**
              * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
              */
@@ -501,13 +503,13 @@ export interface HomeBlock {
               };
               [k: string]: unknown;
             } | null;
-            media: number | Media;
+            media?: (number | null) | Media;
           };
           id?: string | null;
         }[]
       | null;
   };
-  gameRules: {
+  gameRules?: {
     /**
      * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
      */
@@ -546,7 +548,7 @@ export interface HomeBlock {
     } | null;
     cardsArray?:
       | {
-          basicComponent: {
+          basicComponent?: {
             /**
              * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
              */
@@ -583,12 +585,12 @@ export interface HomeBlock {
               };
               [k: string]: unknown;
             } | null;
-            media: number | Media;
+            media?: (number | null) | Media;
           };
           id?: string | null;
         }[]
       | null;
-    media: number | Media;
+    media?: (number | null) | Media;
   };
   gameRules2?: {
     /**
@@ -629,7 +631,7 @@ export interface HomeBlock {
     } | null;
     cardsArray?:
       | {
-          basicComponent: {
+          basicComponent?: {
             /**
              * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
              */
@@ -666,13 +668,13 @@ export interface HomeBlock {
               };
               [k: string]: unknown;
             } | null;
-            media: number | Media;
+            media?: (number | null) | Media;
           };
           id?: string | null;
         }[]
       | null;
   };
-  singlePreview: {
+  singlePreview?: {
     /**
      * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
      */
@@ -709,7 +711,7 @@ export interface HomeBlock {
       };
       [k: string]: unknown;
     } | null;
-    media: number | Media;
+    media?: (number | null) | Media;
     price?: string | null;
   };
   galleryPreview?: {
@@ -733,7 +735,7 @@ export interface HomeBlock {
     } | null;
     mediaArray?:
       | {
-          media: number | Media;
+          media?: (number | null) | Media;
           id?: string | null;
         }[]
       | null;
@@ -759,7 +761,7 @@ export interface HomeBlock {
     } | null;
     cardsArray?:
       | {
-          basicComponent: {
+          basicComponent?: {
             /**
              * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
              */
@@ -796,7 +798,7 @@ export interface HomeBlock {
               };
               [k: string]: unknown;
             } | null;
-            media: number | Media;
+            media?: (number | null) | Media;
           };
           id?: string | null;
         }[]
@@ -823,7 +825,7 @@ export interface HomeBlock {
     } | null;
     cardsArray?:
       | {
-          basicComponent: {
+          basicComponent?: {
             /**
              * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
              */
@@ -860,7 +862,7 @@ export interface HomeBlock {
               };
               [k: string]: unknown;
             } | null;
-            media: number | Media;
+            media?: (number | null) | Media;
           };
           id?: string | null;
         }[]
@@ -911,10 +913,763 @@ export interface SubscriptionForm {
     };
     [k: string]: unknown;
   } | null;
-  media: number | Media;
+  media?: (number | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'subscriptionForm';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductBlock".
+ */
+export interface ProductBlock {
+  hero: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    media?: (number | null) | Media;
+    /**
+     * Пример: (4.9/5 от 128 отзива)
+     */
+    reviews: string;
+    /**
+     * Пример: 49.99лв. | 25.12€.
+     */
+    price: string;
+    /**
+     * * Абонирай се за новини и получи -10% код
+     */
+    discountText: string;
+    /**
+     * Пример: 🚚 Доставка 2-3 дни със Спиди – 4.90 лв....
+     */
+    extraDescription?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  box?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent?: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media?: (number | null) | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    orderButton?: boolean | null;
+  };
+  play?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent?: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media?: (number | null) | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    orderButton?: boolean | null;
+  };
+  roles?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent?: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media?: (number | null) | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    orderButton?: boolean | null;
+  };
+  toWho?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    media?: (number | null) | Media;
+  };
+  reviews?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent?: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media?: (number | null) | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    orderButton?: boolean | null;
+  };
+  faq?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    media?: (number | null) | Media;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Дизайн на линк
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'productBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutBlock".
+ */
+export interface AboutBlock {
+  hero?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    media?: (number | null) | Media;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Дизайн на линк
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  mission?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    media?: (number | null) | Media;
+  };
+  values?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    media?: (number | null) | Media;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock".
+ */
+export interface ContactBlock {
+  hero?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  contactForm?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock".
+ */
+export interface FaqBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1309,6 +2064,10 @@ export interface PagesSelect<T extends boolean = true> {
         content?: T | ContentBlockSelect<T>;
         homeBlock?: T | HomeBlockSelect<T>;
         subscriptionForm?: T | SubscriptionFormSelect<T>;
+        productBlock?: T | ProductBlockSelect<T>;
+        aboutBlock?: T | AboutBlockSelect<T>;
+        contactBlock?: T | ContactBlockSelect<T>;
+        faqBlock?: T | FaqBlockSelect<T>;
       };
   meta?:
     | T
@@ -1517,6 +2276,209 @@ export interface SubscriptionFormSelect<T extends boolean = true> {
   heading?: T;
   description?: T;
   media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductBlock_select".
+ */
+export interface ProductBlockSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        media?: T;
+        reviews?: T;
+        price?: T;
+        discountText?: T;
+        extraDescription?: T;
+      };
+  box?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+        orderButton?: T;
+      };
+  play?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+        orderButton?: T;
+      };
+  roles?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+        orderButton?: T;
+      };
+  toWho?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        media?: T;
+      };
+  reviews?:
+    | T
+    | {
+        heading?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+        orderButton?: T;
+      };
+  faq?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        media?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutBlock_select".
+ */
+export interface AboutBlockSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        media?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+      };
+  mission?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        media?: T;
+      };
+  values?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        media?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock_select".
+ */
+export interface ContactBlockSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+      };
+  contactForm?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock_select".
+ */
+export interface FaqBlockSelect<T extends boolean = true> {
+  heading?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1824,7 +2786,7 @@ export interface Aside {
           url?: string | null;
           label: string;
         };
-        media: number | Media;
+        media?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -1873,7 +2835,7 @@ export interface SubscriptionModal {
     };
     [k: string]: unknown;
   } | null;
-  media: number | Media;
+  media?: (number | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }

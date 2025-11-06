@@ -45,6 +45,7 @@ const config = {
       colors: {
         purpleLight: '#4B0082',
         purpleDark: '#2E1A47',
+        purpleBackground: '#200226',
         yellowLight: '#D4AF37',
         primaryYellow: '#FFD700',
         mixPink: '#A9636A',

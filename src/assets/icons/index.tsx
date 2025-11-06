@@ -333,7 +333,7 @@ export const PlusIcon = () => {
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 24 24"
       fill="none"
-      stroke={COLORS.brown}
+      stroke={COLORS.primaryYellow}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

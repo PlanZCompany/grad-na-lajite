@@ -6,9 +6,10 @@ import { RichText } from '../Custom'
 
 const FlipCardsAndInfo = ({ data }: { data: HomeBlock['whyToChoseUs'] }) => {
   const cardsContent = data?.cardsArray?.map((card) => {
-    const media = card?.basicComponent.media as Media
+    const media = (card?.basicComponent?.media as Media) ?? {}
 
-    const { heading, description } = card?.basicComponent
+    const heading = card?.basicComponent?.heading
+    const description = card?.basicComponent?.description
 
     return (
       <div key={card.id} className="group w-[300px] h-[400px] bg-transparent [perspective:1000px]">

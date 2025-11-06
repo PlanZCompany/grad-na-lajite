@@ -6,9 +6,10 @@ import { RichText } from '../Custom'
 
 const InfoAndGridCards = ({ data }: { data: HomeBlock['gameRules2'] }) => {
   const cardsContent = data?.cardsArray?.map((card) => {
-    const media = card?.basicComponent.media as Media
+    const media = card?.basicComponent?.media as Media
 
-    const { heading, description } = card?.basicComponent
+    const heading = card?.basicComponent?.heading
+    const description = card?.basicComponent?.description
 
     return (
       <article

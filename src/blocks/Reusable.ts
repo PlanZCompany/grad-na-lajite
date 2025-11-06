@@ -5,6 +5,11 @@ import {
   InlineToolbarFeature,
   UnorderedListFeature,
   OrderedListFeature,
+  BoldFeature,
+  ItalicFeature,
+  UnderlineFeature,
+  LinkFeature,
+  ParagraphFeature,
 } from '@payloadcms/richtext-lexical'
 import { Field, RichTextField, UploadField } from 'payload'
 
@@ -12,10 +17,14 @@ export const HeadingConfig = {
   name: 'heading',
   type: 'richText',
   editor: lexicalEditor({
-    features: ({ rootFeatures }) => [
-      ...rootFeatures,
+    features: () => [
+      ParagraphFeature(),
+      BoldFeature(),
       HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
       FixedToolbarFeature(),
+      ItalicFeature(),
+      UnderlineFeature(),
+      LinkFeature(),
       InlineToolbarFeature(),
     ],
   }),
@@ -29,8 +38,13 @@ export const DescriptionConfig = {
   name: 'description',
   type: 'richText',
   editor: lexicalEditor({
-    features: ({ rootFeatures }) => [
-      ...rootFeatures,
+    features: () => [
+      ParagraphFeature(),
+      BoldFeature(),
+      HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+      ItalicFeature(),
+      UnderlineFeature(),
+      LinkFeature(),
       FixedToolbarFeature(),
       InlineToolbarFeature(),
     ],
@@ -45,8 +59,13 @@ export const DescriptionFullRichTextConfig = {
   name: 'description',
   type: 'richText',
   editor: lexicalEditor({
-    features: ({ rootFeatures }) => [
-      ...rootFeatures,
+    features: () => [
+      ParagraphFeature(),
+      BoldFeature(),
+      HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+      ItalicFeature(),
+      UnderlineFeature(),
+      LinkFeature(),
       FixedToolbarFeature(),
       InlineToolbarFeature(),
       UnorderedListFeature(),
@@ -63,7 +82,7 @@ export const MediaConfig = {
   name: 'media',
   type: 'upload',
   relationTo: 'media',
-  required: true,
+  required: false,
   maxDepth: 2,
 } satisfies UploadField
 
@@ -87,4 +106,11 @@ export const BasicComponentsArray = {
   type: 'array',
   label: 'Базов компонент (заглавие, описание и медия)',
   fields: [BasicComponentConfig],
+} satisfies Field
+
+export const OrderButtonCheckField = {
+  name: 'orderButton',
+  type: 'checkbox',
+  label: 'Показване на бутон за поръчка',
+  defaultValue: false,
 } satisfies Field

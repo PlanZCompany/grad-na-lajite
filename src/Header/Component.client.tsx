@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { DataFromGlobalSlug } from 'payload'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { GenericImage, GenericParagraph } from '@/components/Generic'
-import { MenuIcon, ShoppingCartIcon, UserProfileIcon } from '@/assets/icons'
+import { MenuIcon, SearchLogo, ShoppingCartIcon, UserProfileIcon } from '@/assets/icons'
 import { setOpenSearch, setUser } from '@/store/features/root'
 import { setShoppingCardOpen } from '@/store/features/checkout'
 // import { useCheckout } from '@/hooks/useCheckout'
@@ -139,20 +139,14 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
           </li>
           <li>
             <button
-              className="w-[36px] h-[36px] md:w-[48px] md:h-[48px] flex justify-center items-center"
+              className="w-[28px] h-[28px] md:w-[36px] md:h-[36px] flex justify-center items-center ml-3"
               aria-label="Търсене на продукт"
               title="Търсене на продукт"
               onClick={() => {
                 dispatch(setOpenSearch(true))
               }}
             >
-              <GenericImage
-                src={`/static/search-image.png`}
-                alt={'search'}
-                wrapperClassName="flex items-center justify-center relative w-full h-full"
-                imageClassName="w-full h-full object-contain"
-                fill={true}
-              />
+              <SearchLogo />
             </button>
           </li>
           <li className="md:hidden">

@@ -35,7 +35,7 @@ const NumberInput = <T,>({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <label htmlFor={name} className="font-georgia font-[400] text-black">
+      <label htmlFor={name} className="font-georgia font-[400] text-white">
         {label}
         {required && <span className="text-black"> *</span>}
       </label>

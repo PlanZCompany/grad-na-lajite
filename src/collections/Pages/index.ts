@@ -18,6 +18,10 @@ import { Content } from '@/blocks/Content/config'
 import { heroCommon } from '@/Hero/Common/config'
 import { HomeBlock } from '@/blocks/HomeBlock/config'
 import { SubscriptionForm } from '@/blocks/SubsciptionForm/config'
+import { ProductBlock } from '@/blocks/ProductBlock/config'
+import { AboutBlock } from '@/blocks/AboutBlock/config'
+import { ContactBlock } from '@/blocks/ContactBlock/config'
+import { FaqBlock } from '@/blocks/FaqBlock/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -65,13 +69,25 @@ export const Pages: CollectionConfig<'pages'> = {
         {
           fields: [heroCommon],
           label: 'Главна Секция',
+          admin: {
+            condition: (data) => data.slug === 'home',
+          },
         },
         {
           fields: [
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [MediaBlock, Content, HomeBlock, SubscriptionForm],
+              blocks: [
+                MediaBlock,
+                Content,
+                HomeBlock,
+                SubscriptionForm,
+                ProductBlock,
+                AboutBlock,
+                ContactBlock,
+                FaqBlock,
+              ],
               defaultValue: [],
               required: false,
               admin: {

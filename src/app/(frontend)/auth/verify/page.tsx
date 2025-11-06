@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { verifyUser } from '@/action/auth/verify'
+import { AuthWrapper } from '@/components/Wrappers'
 
 export default function VerifyPage() {
   const params = useSearchParams()
@@ -36,18 +37,21 @@ export default function VerifyPage() {
   }, [params, router])
 
   return (
-    <section className="px-6 pb-6 pt-[52px] md:pt-[140px] max-w-md">
-      <h1 className="text-xl font-semibold">Потвърди Имейл</h1>
-      <p className="mt-3">
-        {status === 'idle' && 'Preparing…'}
-        {status === 'verifying' && 'Verifying your email…'}
-        {(status === 'ok' || status === 'error' || status === 'missing') && message}
-      </p>
-      {status === 'error' && (
-        <p className="mt-3 text-sm text-gray-600">
-          You can request a new verification email by registering again or contacting support.
+    <AuthWrapper>
+      <section className="p-6">
+        <h1 className="text-xl font-semibold text-white">Потвърди Имейл</h1>
+        <p className="mt-3 text-white">
+          {status === 'idle' && 'Preparing…'}
+          {status === 'verifying' && 'Verifying your email…'}
+          {(status === 'ok' || status === 'error' || status === 'missing') && message}
         </p>
-      )}
-    </section>
+        {status === 'error' && (
+          <p className="mt-3 text-sm text-gray-600">
+            Можете да поискате нов имейл за потвърждение, като се регистрирате отново или се
+            свържете с поддръжката.
+          </p>
+        )}
+      </section>
+    </AuthWrapper>
   )
 }

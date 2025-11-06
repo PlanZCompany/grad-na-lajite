@@ -34,7 +34,7 @@ export default function ProductPreview({ data }: { data: HomeBlock['singlePrevie
           </div>
           <div className="mt-auto flex flex-col gap-s">
             <p className="text-[#1a0f2e] font-bold text-[24px]">
-              Цена <span className="font-normal">{data.price}</span>
+              Цена <span className="font-normal">{data?.price}</span>
             </p>
 
             <GenericButton

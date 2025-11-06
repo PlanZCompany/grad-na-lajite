@@ -3,7 +3,9 @@ import { GenericHeading, GenericImage, GenericParagraph } from '../Generic'
 import { RichText } from '../Custom'
 
 export default function InfoAndImage({ data }: { data: HomeBlock['historySection'] }) {
-  const { heading, description } = data
+  const heading = data?.heading
+  const description = data?.description
+
   const media = data?.media as Media
 
   return (

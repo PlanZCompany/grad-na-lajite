@@ -16,15 +16,16 @@
 https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/edit?tab=t.0
 
 **CURRENT**
-- add notification for subscription
+[done] add notification for subscription
+[done] subscription flow (with user/without user)
+[done] login page
+[done] register page
+[done] verify page
+[done] reset password page
+[done] logout
+[done] test auth flow
+[done] loading screen
 - mobile menu
-- test the subscription flow (with user/without user)
-- login page
-- register page
-- verify page
-- reset password page
-- logout
-- test auth flow
 - product page
 * config
 * add data
@@ -46,3 +47,14 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 
 **WEEK - 03.11 - 10.11 - DONE**
 - неща от документа
+Добавена нотификация за потребител като се абонира
+Възможност за абониране за потребител и анонимен
+Получаване на имейл с код и привестване
+- да се нулира при всяко пращаме към клиент
+[done] login page
+[done] register page
+[done] verify page
+[done] reset password page
+[done] logout
+[done] test auth flow
+[done] loading screen
