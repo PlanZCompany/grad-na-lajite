@@ -14,7 +14,7 @@ export const Users: CollectionConfig = {
         const url = `${process.env.NEXT_PUBLIC_APP_URL}auth/verify?token=${t}`
         const email = user?.email ?? ''
         return `<!doctype html><html><body style="font-family:system-ui,Segoe UI,Roboto">
-      <h1>Добре дошли, ${email ? `, ${email}` : ''}!</h1>
+      <h1>Добре дошли ${email ? `, ${email}` : ''}!</h1>
       <p>Потвърдете своя Имейл адрес, за да активирате аккаунта си.</p>
       <button><a href="${url}" style="cursor:pointer; display:inline-block;padding:10px 16px;text-decoration:none;border:1px solid #ddd;border-radius:8px">Потвърди</a>
       </button>

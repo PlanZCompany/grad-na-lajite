@@ -41,8 +41,8 @@ export default function VerifyPage() {
       <section className="p-6">
         <h1 className="text-xl font-semibold text-white">Потвърди Имейл</h1>
         <p className="mt-3 text-white">
-          {status === 'idle' && 'Preparing…'}
-          {status === 'verifying' && 'Verifying your email…'}
+          {status === 'idle' && 'Зареждане…'}
+          {status === 'verifying' && 'Верифициране на имейл…'}
           {(status === 'ok' || status === 'error' || status === 'missing') && message}
         </p>
         {status === 'error' && (

@@ -84,7 +84,7 @@ const RegisterComponent = () => {
           setError('Този email вече е регистриран')
           return
         }
-        setError((err as Error)?.message ?? 'Неуспешна регистрация, моля опитайте по-късно')
+        setError('Неуспешна регистрация, моля опитайте по-късно')
       }
     })
   }
@@ -92,7 +92,7 @@ const RegisterComponent = () => {
   return (
     <>
       {ok ? (
-        <p className="mt-3 text-[20px] font-georgia text-center">
+        <p className="mt-3 text-[20px] font-georgia text-center text-white">
           Успешна регистрация! <br />
           Проверете своя email, за потвърждение на профила
         </p>

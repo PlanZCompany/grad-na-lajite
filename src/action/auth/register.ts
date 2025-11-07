@@ -14,6 +14,14 @@ export async function registerUser(values: {
 }) {
   const payload = await getPayload({ config })
 
+  //first I need to find in "subscriptions" if the email exists
+  const subscription = await payload.find({
+    collection: 'subscriptions',
+    where: { email: { equals: values.email.toLowerCase() } },
+  })
+
+  const isSubscribed = subscription.docs.length > 0
+
   const user = await payload.create({
     collection: 'users',
     data: {
@@ -22,6 +30,8 @@ export async function registerUser(values: {
       email: values.email.toLowerCase(),
       password: values.password,
       role: 'user',
+      subscribed: isSubscribed,
+      discountCode: isSubscribed ? subscription.docs[0].discountCode : null,
     },
   })
 
