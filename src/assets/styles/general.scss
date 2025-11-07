@@ -309,3 +309,7 @@
     ),
     linear-gradient(19deg, rgb(75, 0, 130), rgb(32, 2, 38));
 }
+
+.radial_yellow {
+  background-image: radial-gradient(circle, #d4af37, #dfb930, #eac327, #f5cd1a, #ffd700);
+}

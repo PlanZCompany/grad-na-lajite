@@ -9,7 +9,7 @@ export default function InfoAndImage({ data }: { data: HomeBlock['historySection
   const media = data?.media as Media
 
   return (
-    <section className="w-full py-10 md:py-20 flex">
+    <section className="w-full py-10 md:py-20 flex relative z-[2]">
       <div className="flex flex-col items-center gap-8 md:flex-row content_wrapper">
         <GenericImage
           src={media?.url || ''}

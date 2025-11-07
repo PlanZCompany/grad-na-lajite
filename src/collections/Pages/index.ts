@@ -22,6 +22,7 @@ import { ProductBlock } from '@/blocks/ProductBlock/config'
 import { AboutBlock } from '@/blocks/AboutBlock/config'
 import { ContactBlock } from '@/blocks/ContactBlock/config'
 import { FaqBlock } from '@/blocks/FaqBlock/config'
+import { FormBlock } from '@/blocks/Form/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -87,6 +88,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 AboutBlock,
                 ContactBlock,
                 FaqBlock,
+                FormBlock,
               ],
               defaultValue: [],
               required: false,

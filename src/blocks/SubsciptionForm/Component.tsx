@@ -52,10 +52,6 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
     })
   }
 
-  if (!!user?.subscribed) {
-    return <></>
-  }
-
   return (
     <SectionWrapper>
       <div
@@ -91,38 +87,44 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
             )}
           </article>
 
-          <form>
-            <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4">
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full md:w-fit md:min-w-[250px] 2xl:min-w-[300px] p-2 text-[14px] md:text-[16px]
+          {!!user?.subscribed ? (
+            <GenericParagraph pType="large" textColor="text-white" extraClass="text-center">
+              Вече сте абониран. Благодарим!
+            </GenericParagraph>
+          ) : (
+            <form>
+              <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="w-full md:w-fit md:min-w-[250px] 2xl:min-w-[300px] p-2 text-[14px] md:text-[16px]
                 rounded-[10px] bg-white text-[#1a0f2e] placeholder:text-[#1a0f2e]/80 placeholder:font-bold"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <button
-                type="button"
-                className="w-fit px-5 py-[8px] rounded-[10px] text-[#1a0f2e] bg-[#d4af37] font-bold uppercase
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="w-fit px-5 py-[8px] rounded-[10px] text-[#1a0f2e] bg-[#d4af37] font-bold uppercase
                 hover:bg-[#b9972c] transition-all duration-300 ease-in-out md:text-[14px] 2xl:text-[16px]"
-                disabled={pending}
-                onClick={() => {
-                  subscriptionHandler()
-                }}
-              >
-                {pending ? 'Абониране...' : 'Абонирай ме'}
-              </button>
-            </div>
+                  disabled={pending}
+                  onClick={() => {
+                    subscriptionHandler()
+                  }}
+                >
+                  {pending ? 'Абониране...' : 'Абонирай ме'}
+                </button>
+              </div>
 
-            <p className="text-white/60 text-[12px] md:text-[14px] mt-4 text-center">
-              Записвайки се, сте съгласни с нашата политика за поверителност и условия за
-              използване.
-            </p>
+              <p className="text-white/60 text-[12px] md:text-[14px] mt-4 text-center">
+                Записвайки се, сте съгласни с нашата политика за поверителност и условия за
+                използване.
+              </p>
 
-            {message && (
-              <p className="text-base text-primaryYellow text-center md:text-left">{message}</p>
-            )}
-          </form>
+              {message && (
+                <p className="text-base text-primaryYellow text-center md:text-left">{message}</p>
+              )}
+            </form>
+          )}
         </div>
       </div>
     </SectionWrapper>

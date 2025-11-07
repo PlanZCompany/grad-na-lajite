@@ -7,9 +7,7 @@ export type NumberInputProps<T> = {
   formValues: object
   setFormValues: React.Dispatch<React.SetStateAction<T>>
   placeholder: string
-  error?: {
-    [key: string]: string | null
-  }
+  error?: string
   extraClass?: string
   required?: boolean
   autoFocus?: boolean
@@ -54,7 +52,7 @@ const NumberInput = <T,>({
         />
       </div>
 
-      {!!error && <ErrorMessageBox errors={error} />}
+      {!!error && <ErrorMessageBox error={error} />}
     </div>
   )
 }

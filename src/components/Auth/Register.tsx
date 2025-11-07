@@ -22,8 +22,46 @@ const RegisterComponent = () => {
     password: '',
   })
 
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    dateOfBirth: '',
+    email: '',
+    password: '',
+  })
+
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    const firsNameError = !formValues.firstName
+    const lastNameError = !formValues.lastName
+    const phoneNumberError = !formValues.phoneNumber
+    const dateOfBirthError = !formValues.dateOfBirth
+    const emailError =
+      !formValues.email || !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)
+    const passwordError = formValues.password.length < 6
+
+    if (
+      firsNameError ||
+      lastNameError ||
+      phoneNumberError ||
+      dateOfBirthError ||
+      emailError ||
+      passwordError
+    ) {
+      setErrors({
+        firstName: firsNameError ? 'Полето "Име" е задължително' : '',
+        lastName: lastNameError ? 'Полето "Фамилия" е задължително' : '',
+        phoneNumber: phoneNumberError ? 'Полето "Телефон" е задължително' : '',
+        dateOfBirth: dateOfBirthError ? 'Полето "Дата на раждане" е задължително' : '',
+        email: emailError ? 'Въведете валиден имейл' : '',
+        password: passwordError ? 'Полето "Парола" трябва да е поне 6 символа' : '',
+      })
+
+      return
+    }
+
     setError(null)
     start(async () => {
       try {
@@ -73,7 +111,7 @@ const RegisterComponent = () => {
               extraClass="w-full"
               placeholder="Иван"
               required={true}
-              // error={errors.title}
+              error={errors.firstName}
               autoFocus={false}
             />
             <TextInput
@@ -84,7 +122,7 @@ const RegisterComponent = () => {
               extraClass="w-full"
               placeholder="Иванов"
               required={true}
-              // error={errors.title}
+              error={errors.lastName}
               autoFocus={false}
             />
           </div>
@@ -98,7 +136,7 @@ const RegisterComponent = () => {
               extraClass="w-full"
               placeholder="DD-MM-YYYY"
               required={true}
-              // error={errors.title}
+              error={errors.dateOfBirth}
             />
             <TextInput
               name="phoneNumber"
@@ -108,7 +146,7 @@ const RegisterComponent = () => {
               extraClass="w-full"
               placeholder="+359888888888"
               required={true}
-              // error={errors.title}
+              error={errors.phoneNumber}
               autoFocus={false}
             />
           </div>
@@ -121,7 +159,7 @@ const RegisterComponent = () => {
               extraClass="w-full"
               placeholder="john_doe@gmail.com"
               required={true}
-              // error={errors.title}
+              error={errors.email}
               autoFocus={false}
             />
             <div>
@@ -134,7 +172,7 @@ const RegisterComponent = () => {
                 placeholder="******"
                 required={true}
                 type="password"
-                // error={errors.title}
+                error={errors.password}
               />
             </div>
           </div>

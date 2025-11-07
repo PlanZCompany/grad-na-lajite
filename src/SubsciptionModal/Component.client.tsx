@@ -56,7 +56,7 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
   return (
     <>
       <button
-        className="fixed bottom-4 md:bottom-4 right-[12px] md:right-[18px] z-[10]"
+        className="fixed bottom-4 md:bottom-4 right-[12px] md:right-[18px] z-[10] REF_SUBSCRIPTION_MODAL"
         onClick={() => setOpenModal(true)}
       >
         <div className="w-[32px] h-[32px] md:w-[36px] md:h-[36px]">

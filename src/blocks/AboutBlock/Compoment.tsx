@@ -1,4 +1,4 @@
-import { Background, RichText } from '@/components/Custom'
+import { RichText } from '@/components/Custom'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
 import { SectionWrapper } from '@/components/Wrappers'
 import { AboutBlock, Media } from '@/payload-types'
@@ -14,8 +14,10 @@ export const AboutBlockComponent: React.FC<AboutBlock> = (props) => {
   const valuesMedia = values?.media as Media
 
   return (
-    <section className="w-full flex flex-col pt-[68px] md:pt-[130px] relative" key={id}>
-      <Background />
+    <section
+      className="w-full flex flex-col pt-[68px] md:pt-[130px] relative bg-purpleBackground"
+      key={id}
+    >
       <SectionWrapper>
         <div className="m-auto content_wrapper">
           <div className="flex flex-col gap-10 md:flex-row">

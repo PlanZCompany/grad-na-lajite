@@ -10,7 +10,7 @@
 - payment methods
 
 **QUESTIONS**
-- как процедираме на мобилно понеже в темплейтите не е добре
+- none
 
 ***FROM_CLIENT***
 https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/edit?tab=t.0
@@ -25,25 +25,23 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 [done] logout
 [done] test auth flow
 [done] loading screen
-- mobile menu
-- product page
-* config
-* add data
-* render full page raw
-* all resolutions
-- about-us page
-- contact-us page
+[pending] about-us page
+[pending] product page
+[pending] contact-us page
+[pending] user in refresh
 - regulatory pages
 - faq page
-- payments
+- mobile menu
 - blog page
 * config with blocks - extract each block of html files
 * add data
 * styles and functionalities for each blog page
 * test blocks
+- payments
 - Shopping aside
 - Checkout page
-- all required collections 
+- all required collections (orders...)
+- email template fix (има го в папката в webrika pc)
 
 **WEEK - 03.11 - 10.11 - DONE**
 - неща от документа
@@ -58,3 +56,6 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 [done] logout
 [done] test auth flow
 [done] loading screen
+[pending] about-us page
+[pending] product page
+[pending] user in refresh

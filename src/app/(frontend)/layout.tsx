@@ -17,6 +17,8 @@ import { Metadata } from 'next'
 import GenericNotification from '@/components/Generic/GenericNotification'
 import { AsideComponent } from '@/Aside/Component'
 import { SubscriptionModalComponent } from '@/SubsciptionModal/Component'
+import SetCurrentUser from '@/components/Setters/SetCurrentUser'
+import SubscriptionModalActivator from '@/components/Setters/SubscriptionModalActivator'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -172,6 +174,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             {/* <ScreenOverlay /> */}
 
             <GenericNotification />
+            <SetCurrentUser />
+            <SubscriptionModalActivator />
           </main>
         </body>
       </html>

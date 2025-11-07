@@ -200,7 +200,17 @@ export interface Page {
   title: string;
   commonHero: CommonHero;
   layout?:
-    | (MediaBlock | ContentBlock | HomeBlock | SubscriptionForm | ProductBlock | AboutBlock | ContactBlock | FaqBlock)[]
+    | (
+        | MediaBlock
+        | ContentBlock
+        | HomeBlock
+        | SubscriptionForm
+        | ProductBlock
+        | AboutBlock
+        | ContactBlock
+        | FaqBlock
+        | FormBlock
+      )[]
     | null;
   meta?: {
     title?: string | null;
@@ -1673,39 +1683,15 @@ export interface FaqBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscriptions".
+ * via the `definition` "FormBlock".
  */
-export interface Subscription {
-  id: number;
-  email: string;
-  /**
-   * Абонаментът може да е свързан с потребител
-   */
-  user?: (number | null) | User;
-  discountCode?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "redirects".
- */
-export interface Redirect {
-  id: number;
-  /**
-   * You will need to rebuild the website when changing this field.
-   */
-  from: string;
-  to?: {
-    type?: ('reference' | 'custom') | null;
-    reference?: {
-      relationTo: 'pages';
-      value: number | Page;
-    } | null;
-    url?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
+export interface FormBlock {
+  typeOfForm: 'contactForm';
+  form: number | Form;
+  enableIntro?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'formBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1802,6 +1788,42 @@ export interface Form {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: number;
+  email: string;
+  /**
+   * Абонаментът може да е свързан с потребител
+   */
+  user?: (number | null) | User;
+  discountCode?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  /**
+   * You will need to rebuild the website when changing this field.
+   */
+  from: string;
+  to?: {
+    type?: ('reference' | 'custom') | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -2068,6 +2090,7 @@ export interface PagesSelect<T extends boolean = true> {
         aboutBlock?: T | AboutBlockSelect<T>;
         contactBlock?: T | ContactBlockSelect<T>;
         faqBlock?: T | FaqBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
       };
   meta?:
     | T
@@ -2479,6 +2502,17 @@ export interface FaqBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock_select".
+ */
+export interface FormBlockSelect<T extends boolean = true> {
+  typeOfForm?: T;
+  form?: T;
+  enableIntro?: T;
   id?: T;
   blockName?: T;
 }

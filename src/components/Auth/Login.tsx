@@ -98,7 +98,7 @@ const LoginComponent = () => {
         </GenericButton>
       </div>
 
-      {error && <p className="text-red-600">{error}</p>}
+      {error && <p className="text-red-600">Неправилен имейл или парола</p>}
 
       <div className="flex w-full items-center justify-center gap-2">
         <p className="text-[14px] text-white/80">{`Нямаш акаунт?`}</p>

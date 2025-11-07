@@ -1,6 +1,5 @@
 import React from 'react'
 import ErrorMessageBox from './ErrorMessage'
-import { EyeIcon } from '@/assets/icons'
 
 export type TextInputProps<T> = {
   name: string
@@ -16,7 +15,7 @@ export type TextInputProps<T> = {
   type?: 'text' | 'password' | 'number'
 }
 
-const TextInput = <T,>({
+const TextArea = <T,>({
   name,
   label,
   formValues,
@@ -26,31 +25,13 @@ const TextInput = <T,>({
   extraClass,
   required = false,
   autoFocus = false,
-  type = 'text',
 }: TextInputProps<T>) => {
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const validNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+']
-
-    if (name === 'phoneNumber') {
-      const isPass = e.target.value.split('').every((char) => validNumbers.includes(char))
-
-      if (isPass) {
-        setFormValues((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        }))
-      } else {
-        return
-      }
-    }
-
     setFormValues((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }))
   }
-
-  const [showResult, setShowResult] = React.useState(false)
 
   return (
     <div className="flex w-full flex-col gap-2">
@@ -60,31 +41,19 @@ const TextInput = <T,>({
       </label>
 
       <div className="relative flex w-full items-center justify-between">
-        <input
+        <textarea
           name={name}
           id={name}
-          type={type === 'password' && !showResult ? 'password' : 'text'}
           placeholder={placeholder}
           value={formValues[name as keyof object]}
-          onChange={(e) => onChangeHandler(e)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChangeHandler(e as any)}
           autoFocus={autoFocus}
-          className={`${
-            type === 'password' ? 'pl-10' : ''
-          } w-full rounded-[12px] bg-[#200226]/50 focus:outline focus:outline-1 focus:outline-white p-3 font-georgia font-[400] !text-white outline-none 
+          className={`w-full rounded-[12px] bg-[#200226]/50 
+            focus:outline focus:outline-1 focus:outline-white p-3 font-georgia font-[400] !text-white outline-none 
           placeholder:text-white/80
           ${extraClass}`}
-          maxLength={50}
+          rows={6}
         />
-
-        {type === 'password' && (
-          <button
-            className="absolute left-2 top-[50%] flex translate-y-[-50%] items-center justify-center"
-            type="button"
-            onClick={() => setShowResult((prev) => !prev)}
-          >
-            <EyeIcon />
-          </button>
-        )}
       </div>
 
       {!!error && <ErrorMessageBox error={error} />}
@@ -92,4 +61,4 @@ const TextInput = <T,>({
   )
 }
 
-export default TextInput
+export default TextArea
