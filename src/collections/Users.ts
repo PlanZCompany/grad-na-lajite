@@ -16,7 +16,8 @@ export const Users: CollectionConfig = {
         return `<!doctype html><html><body style="font-family:system-ui,Segoe UI,Roboto">
       <h1>Добре дошли, ${email ? `, ${email}` : ''}!</h1>
       <p>Потвърдете своя Имейл адрес, за да активирате аккаунта си.</p>
-      <p><a href="${url}" style="display:inline-block;padding:10px 16px;text-decoration:none;border:1px solid #ddd;border-radius:8px">Потвърди</a></p>
+      <button><a href="${url}" style="cursor:pointer; display:inline-block;padding:10px 16px;text-decoration:none;border:1px solid #ddd;border-radius:8px">Потвърди</a>
+      </button>
       <p>Или копирай линка в браузъра:<br>${url}</p>
     </body></html>`
       },

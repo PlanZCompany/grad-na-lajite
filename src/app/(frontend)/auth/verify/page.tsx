@@ -46,7 +46,7 @@ export default function VerifyPage() {
           {(status === 'ok' || status === 'error' || status === 'missing') && message}
         </p>
         {status === 'error' && (
-          <p className="mt-3 text-sm text-gray-600">
+          <p className="mt-3 text-base text-white">
             Можете да поискате нов имейл за потвърждение, като се регистрирате отново или се
             свържете с поддръжката.
           </p>

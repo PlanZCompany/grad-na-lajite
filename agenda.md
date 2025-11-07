@@ -44,18 +44,18 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 - email template fix (има го в папката в webrika pc)
 
 **WEEK - 03.11 - 10.11 - DONE**
-- неща от документа
-Добавена нотификация за потребител като се абонира
-Възможност за абониране за потребител и анонимен
-Получаване на имейл с код и привестване
-- да се нулира при всяко пращаме към клиент
-[done] login page
-[done] register page
-[done] verify page
-[done] reset password page
-[done] logout
-[done] test auth flow
-[done] loading screen
-[pending] about-us page
-[pending] product page
-[pending] user in refresh
+нещата със статут "for preview" от документа
+ - login page - страница и функционалност
+ - register page - страница функционалност
+ - verify page - страница, функционалност и емейл
+ - reset password page - страница, функционалност и емейл
+ - logout
+ * всичко от по-горе може да се тества 
+ - Възможност за абониране за потребител и анонимен
+ - Получаване на имейл с код и привестване (късно видях, че е даден темплейт, ще го променя)
+ - Добавена нотификация за потребител като се абонира
+ - loading screen
+ - about-us page
+ - product page
+ - use persist on refresh, ако си логнат като refresh-неш оставаш логнат
+ - контакнтна страница - страница, функционалност, към момента можеш да пускаш мнения и отиват в админа, предстои да бъдат визуализирани и в секция мнения...

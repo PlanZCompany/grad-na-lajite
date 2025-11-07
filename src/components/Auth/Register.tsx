@@ -97,11 +97,7 @@ const RegisterComponent = () => {
           Проверете своя email, за потвърждение на профила
         </p>
       ) : (
-        <form
-          className="flex w-full flex-col gap-4"
-          onSubmit={onSubmit}
-          // action={formAction}
-        >
+        <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
           <div className="w-full flex flex-col md:flex-row gap-4">
             <TextInput
               name="firstName"
