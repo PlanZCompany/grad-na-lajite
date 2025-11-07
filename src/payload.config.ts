@@ -70,7 +70,7 @@ export default buildConfig({
   plugins: [payloadCloudPlugin(), ...plugins],
   email: nodemailerAdapter({
     defaultFromAddress: 'Град на лъжите',
-    defaultFromName: 'no-reply@gradnaljite.bg',
+    defaultFromName: 'no-reply@grad-na-lajite',
     transportOptions: {
       host: 'smtp.gmail.com',
       port: 465,
