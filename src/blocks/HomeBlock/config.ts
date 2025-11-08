@@ -77,6 +77,12 @@ export const HomeBlock: Block = {
       fields: [HeadingConfig, BasicComponentsArray],
     },
     {
+      name: 'partners',
+      type: 'group',
+      label: 'Партньори - секция',
+      fields: [HeadingConfig, BasicComponentsArray],
+    },
+    {
       name: 'testimonials',
       label: 'Мнения на потребители',
       type: 'group',

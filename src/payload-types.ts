@@ -815,6 +815,70 @@ export interface HomeBlock {
         }[]
       | null;
   };
+  partners?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cardsArray?:
+      | {
+          basicComponent?: {
+            /**
+             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+             */
+            heading?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Моля, придържайте се към конвенцията за описанията.
+             */
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            media?: (number | null) | Media;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
   testimonials?: {
     /**
      * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
@@ -2257,6 +2321,23 @@ export interface HomeBlockSelect<T extends boolean = true> {
             };
       };
   histories?:
+    | T
+    | {
+        heading?: T;
+        cardsArray?:
+          | T
+          | {
+              basicComponent?:
+                | T
+                | {
+                    heading?: T;
+                    description?: T;
+                    media?: T;
+                  };
+              id?: T;
+            };
+      };
+  partners?:
     | T
     | {
         heading?: T;

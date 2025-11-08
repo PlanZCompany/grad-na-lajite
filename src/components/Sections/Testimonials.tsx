@@ -45,7 +45,7 @@ const Testimonials = ({ data }: { data: HomeBlock['testimonials'] }) => {
       <div className="w-full px-2 md:px-[unset]" key={card.id}>
         <article
           className={`w-full bg-[rgba(20,10,40,0.85)] shadow-[0_0_20px_rgba(0,0,0,0.6)] md:max-w-[280px] flex flex-col
-            hover:translate-y-[-9px] duration-300 transition-transform rounded-[12px] overflow-hidden p-5 md:h-[240px]`}
+           rounded-[12px] overflow-hidden p-5 md:h-[240px]`}
         >
           <div className="w-full h-[80px] relative flex justify-center items-center">
             <GenericImage

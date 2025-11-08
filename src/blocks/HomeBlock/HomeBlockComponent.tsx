@@ -8,6 +8,7 @@ import {
 import GalleryPreview from '@/components/Sections/GalleryPreview'
 import GridCardsAndHeading from '@/components/Sections/GridCardsAndHeading'
 import InfoAndGridCards from '@/components/Sections/InfoAndGridCards'
+import Partners from '@/components/Sections/Partners'
 import ProductPreview from '@/components/Sections/ProductPreview'
 import { HomeBlock } from '@/payload-types'
 import React from 'react'
@@ -23,6 +24,7 @@ export const HomeBlockComponent: React.FC<HomeBlock> = (props) => {
     galleryPreview,
     histories,
     testimonials,
+    partners,
   } = props
 
   return (
@@ -36,6 +38,7 @@ export const HomeBlockComponent: React.FC<HomeBlock> = (props) => {
         <ProductPreview data={singlePreview} />
         <GalleryPreview data={galleryPreview} />
         <GridCardsAndHeading data={histories} />
+        <Partners data={partners} />
         <Testimonials data={testimonials} />
       </div>
     </section>
