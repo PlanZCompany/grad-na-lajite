@@ -150,6 +150,7 @@ export interface User {
   role?: ('admin' | 'user') | null;
   firstName?: string | null;
   lastName?: string | null;
+  phoneNumber?: string | null;
   subscribed?: boolean | null;
   discountCode?: string | null;
   updatedAt: string;
@@ -2033,6 +2034,7 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   firstName?: T;
   lastName?: T;
+  phoneNumber?: T;
   subscribed?: T;
   discountCode?: T;
   updatedAt?: T;

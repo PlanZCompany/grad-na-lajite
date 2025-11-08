@@ -23,6 +23,7 @@ export default function ForgotPasswordPage() {
         if (res?.ok) setOk(true)
       } catch (err) {
         console.log(err)
+        setError('Моля опитайте по-късно')
         setOk(true)
       }
     })

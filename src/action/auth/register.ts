@@ -29,6 +29,7 @@ export async function registerUser(values: {
       lastName: values.lastName,
       email: values.email.toLowerCase(),
       password: values.password,
+      phoneNumber: values.phoneNumber,
       role: 'user',
       subscribed: isSubscribed,
       discountCode: isSubscribed ? subscription.docs[0].discountCode : null,

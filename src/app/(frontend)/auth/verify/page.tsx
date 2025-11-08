@@ -18,7 +18,7 @@ export default function VerifyPage() {
     const token = params.get('token')
     if (!token) {
       setStatus('missing')
-      setMessage('Verification link is missing or invalid.')
+      setMessage('Линкът е навалиден или изтекъл')
       return
     }
     ;(async () => {
@@ -26,7 +26,7 @@ export default function VerifyPage() {
         setStatus('verifying')
         await verifyUser(token)
         setStatus('ok')
-        setMessage('Email verified! You can now sign in.')
+        setMessage('Вашият имейл е верифициран. Може да се влезете.')
         setTimeout(() => router.replace('/auth/login'), 800)
       } catch (err) {
         console.error(err)

@@ -30,8 +30,17 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
       try {
         const res = await subscribeAction(email)
 
+        console.log(res, 'res')
+
         if (res.ok) {
           setMessage(res.message + (res.discountCode ? ` Код: ${res.discountCode}` : ''))
+          dispatch(
+            setNotification({
+              showNotification: true,
+              message: 'Успешен абонамент',
+              type: 'success',
+            }),
+          )
         } else {
           setMessage(res.fieldErrors?.email ?? res.message)
         }
@@ -39,13 +48,6 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
         if (res.ok && !!res.discountCode) {
           subscribeEmail(email, res.userName, res.discountCode)
         }
-        dispatch(
-          setNotification({
-            showNotification: true,
-            message: 'Успешен абонамент',
-            type: 'success',
-          }),
-        )
       } catch (err) {
         console.log(err)
       }

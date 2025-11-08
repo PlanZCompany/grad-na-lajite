@@ -4,9 +4,10 @@ import { useAppDispatch } from '@/hooks/redux-hooks'
 import { setIsLoading, setUser } from '@/store/features/root'
 
 import Link from 'next/link'
-import React, { useState, useTransition } from 'react'
-import { DateInput, GenericButton, TextInput } from '../Generic'
+import React, { useEffect, useState, useTransition } from 'react'
+import { GenericButton, TextInput } from '../Generic'
 import { registerUser } from '@/action/auth/register'
+import { checkPassword } from '@/utils/passwordValidatior'
 
 const RegisterComponent = () => {
   const dispatch = useAppDispatch()
@@ -17,19 +18,40 @@ const RegisterComponent = () => {
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    dateOfBirth: '',
     email: '',
     password: '',
+  })
+
+  const [validPasswordFields, setValidPasswordFields] = useState({
+    hasUppercase: false,
+    has8Chars: false,
+    hasNumber: false,
+    hasLowercase: false,
   })
 
   const [errors, setErrors] = useState({
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    dateOfBirth: '',
     email: '',
     password: '',
   })
+
+  useEffect(() => {
+    if (!formValues.password) return
+
+    const validateFields = checkPassword(formValues.password)
+
+    setValidPasswordFields((prev) => {
+      return {
+        ...prev,
+        hasUppercase: validateFields !== 'Password is valid!' && validateFields.hasUppercase,
+        has8Chars: validateFields !== 'Password is valid!' && validateFields.has8Chars,
+        hasNumber: validateFields !== 'Password is valid!' && validateFields.hasNumber,
+        hasLowercase: validateFields !== 'Password is valid!' && validateFields.hasLowercase,
+      }
+    })
+  }, [formValues.password])
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -37,26 +59,17 @@ const RegisterComponent = () => {
     const firsNameError = !formValues.firstName
     const lastNameError = !formValues.lastName
     const phoneNumberError = !formValues.phoneNumber
-    const dateOfBirthError = !formValues.dateOfBirth
     const emailError =
       !formValues.email || !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)
-    const passwordError = formValues.password.length < 6
+    const passwordError = Object.values(validPasswordFields).some((field) => field === false)
 
-    if (
-      firsNameError ||
-      lastNameError ||
-      phoneNumberError ||
-      dateOfBirthError ||
-      emailError ||
-      passwordError
-    ) {
+    if (firsNameError || lastNameError || phoneNumberError || emailError || passwordError) {
       setErrors({
         firstName: firsNameError ? 'Полето "Име" е задължително' : '',
         lastName: lastNameError ? 'Полето "Фамилия" е задължително' : '',
         phoneNumber: phoneNumberError ? 'Полето "Телефон" е задължително' : '',
-        dateOfBirth: dateOfBirthError ? 'Полето "Дата на раждане" е задължително' : '',
         email: emailError ? 'Въведете валиден имейл' : '',
-        password: passwordError ? 'Полето "Парола" трябва да е поне 6 символа' : '',
+        password: passwordError ? 'Полето "Парола" трябва да отговавя на критериите' : '',
       })
 
       return
@@ -124,16 +137,6 @@ const RegisterComponent = () => {
           </div>
 
           <div className="w-full flex flex-col gap-4">
-            <DateInput
-              name="dateOfBirth"
-              label="Дата на раждане"
-              formValues={formValues}
-              setFormValues={setFormValues}
-              extraClass="w-full"
-              placeholder="DD-MM-YYYY"
-              required={true}
-              error={errors.dateOfBirth}
-            />
             <TextInput
               name="phoneNumber"
               label="Телефонен номер"
@@ -170,6 +173,32 @@ const RegisterComponent = () => {
                 type="password"
                 error={errors.password}
               />
+
+              <ul className="w-full flex flex-col gap-2 list-disc list-inside pl-2 mt-2">
+                <li
+                  className={`w-full font-georgia font-medium text-[12px]  marker:text-[#797979] ${
+                    validPasswordFields.has8Chars ? 'text-green-600' : 'text-white'
+                  }`}
+                >
+                  Минимум 6 символа
+                </li>
+                <li
+                  className={`w-full font-georgia font-medium text-[12px]  marker:text-[#797979] ${
+                    validPasswordFields.hasNumber ? 'text-green-600' : 'text-white'
+                  }`}
+                >
+                  Поне едно число
+                </li>
+                <li
+                  className={`w-full font-georgia font-medium text-[12px]  marker:text-[#797979] ${
+                    validPasswordFields.hasUppercase && validPasswordFields.hasLowercase
+                      ? 'text-green-600'
+                      : 'text-white'
+                  }`}
+                >
+                  Поне една главна и една малка английска буква
+                </li>
+              </ul>
             </div>
           </div>
 

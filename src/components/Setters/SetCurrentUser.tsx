@@ -13,6 +13,8 @@ const SetCurrentUser = () => {
     const currentUser = await getCurrentUser()
 
     if (!!currentUser) {
+      if (currentUser?.role === 'admin') return
+
       dispatch(setUser(currentUser as User))
     }
   }
