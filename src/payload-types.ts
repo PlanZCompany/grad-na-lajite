@@ -211,6 +211,7 @@ export interface Page {
         | ContactBlock
         | FaqBlock
         | FormBlock
+        | RegulatoryBlock
       )[]
     | null;
   meta?: {
@@ -1700,7 +1701,7 @@ export interface FaqBlock {
   } | null;
   cardsArray?:
     | {
-        basicComponent?: {
+        basicComponentFull?: {
           /**
            * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
            */
@@ -1720,7 +1721,7 @@ export interface FaqBlock {
             [k: string]: unknown;
           } | null;
           /**
-           * Моля, придържайте се към конвенцията за описанията.
+           * Включа пълна свобода в richtext полето.
            */
           description?: {
             root: {
@@ -1737,7 +1738,6 @@ export interface FaqBlock {
             };
             [k: string]: unknown;
           } | null;
-          media?: (number | null) | Media;
         };
         id?: string | null;
       }[]
@@ -1855,6 +1855,69 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RegulatoryBlock".
+ */
+export interface RegulatoryBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  shortDescription?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Включа пълна свобода в richtext полето.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'regulatoryBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2157,6 +2220,7 @@ export interface PagesSelect<T extends boolean = true> {
         contactBlock?: T | ContactBlockSelect<T>;
         faqBlock?: T | FaqBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        regulatoryBlock?: T | RegulatoryBlockSelect<T>;
       };
   meta?:
     | T
@@ -2576,12 +2640,11 @@ export interface FaqBlockSelect<T extends boolean = true> {
   cardsArray?:
     | T
     | {
-        basicComponent?:
+        basicComponentFull?:
           | T
           | {
               heading?: T;
               description?: T;
-              media?: T;
             };
         id?: T;
       };
@@ -2596,6 +2659,17 @@ export interface FormBlockSelect<T extends boolean = true> {
   typeOfForm?: T;
   form?: T;
   enableIntro?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RegulatoryBlock_select".
+ */
+export interface RegulatoryBlockSelect<T extends boolean = true> {
+  heading?: T;
+  shortDescription?: T;
+  description?: T;
   id?: T;
   blockName?: T;
 }

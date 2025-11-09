@@ -5,7 +5,7 @@ import { GenericParagraph } from '@/components/Generic'
 import { Header } from '@/payload-types'
 import { generateHref, LinkObject } from '@/utils/generateHref'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 
 const Menu = ({
   openMenu,
@@ -16,64 +16,58 @@ const Menu = ({
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>
   categoryItems: Header['categoryItems']
 }) => {
-  const [openCategoryIndex, setOpenCategoryIndex] = useState(-1)
-
   const linksContent = categoryItems?.map((item, i) => {
     if (!item?.link?.label) return null
 
     return (
       <li className="w-full px-2 py-2 flex flex-col" key={`${item?.link?.label}${i}`}>
-        <div className="flex justify-between items-center border-b-[1px] border-dashed border-brown/80">
-          <Link
-            href={generateHref(item as LinkObject)}
-            aria-label={item?.link?.label}
-            target={item?.link?.newTab ? '_blank' : '_self'}
-            className=""
-            prefetch={true}
-          >
-            <p className="font-georgia font-[400] italic text-[18px] text-black">
+        <Link
+          href={generateHref(item as LinkObject)}
+          aria-label={item?.link?.label}
+          target={item?.link?.newTab ? '_blank' : '_self'}
+          className=""
+          prefetch={true}
+          onClick={() => setOpenMenu(false)}
+        >
+          <div className="flex justify-between items-center border-b-[1px] border-white/20">
+            <p className="font-georgia font-[400] italic text-[18px] text-white">
               {item?.link?.label}
             </p>
-          </Link>
 
-          <button
-            className={`w-[20px] h-[20px] flex justify-center items-center
-                transition-transform duration-300 ease-in-out ${
-                  openCategoryIndex === i + 1 ? 'rotate-[-90deg]' : 'rotate-[90deg]'
-                }`}
-            onClick={() => {
-              if (openCategoryIndex === i + 1) {
-                setOpenCategoryIndex(-1)
-              } else {
-                setOpenCategoryIndex(i + 1)
-              }
-            }}
-            aria-label="Избор на категория"
-            title="Избор на категория"
-            type="button"
-            tabIndex={-1}
-          >
-            <ArrowIcon />
-          </button>
-        </div>
+            <div
+              className={`w-[20px] h-[20px] flex justify-center items-center
+              transition-transform duration-300 ease-in-out `}
+              aria-label="Избор на категория"
+              title="Избор на категория"
+              tabIndex={-1}
+            >
+              <ArrowIcon color="white" />
+            </div>
+          </div>
+        </Link>
       </li>
     )
   })
 
   return (
     <div
-      className={`fixed right-0 top-0 w-[calc(100%-48px)] h-screen overflow-y-auto bg-white z-[13] white_background_bubble
+      className={`fixed right-0 top-0 w-[calc(100%-48px)] h-screen overflow-y-auto bg-purpleBackground z-[13]
      ${openMenu ? 'translate-x-0' : 'translate-x-full'} transition-[transform] duration-500 ease-in-out
     `}
     >
-      <div className="w-full flex items-center justify-between py-2 px-4 border-b-[1px] border-bordo/80">
-        <GenericParagraph fontStyle="font-georgia font-[400]" pType="large" textColor="text-black">
+      <div className="w-full flex items-center justify-between py-2 px-4 border-b-[1px] border-white/20">
+        <GenericParagraph
+          fontStyle="font-georgia font-[400]"
+          pType="large"
+          textColor="text-primaryYellow"
+        >
           Меню
         </GenericParagraph>
 
         <button
           onClick={() => setOpenMenu(false)}
-          className="w-[28px] h-[28px] flex justify-center items-center"
+          className="w-[28px] h-[28px] flex justify-center items-center
+          [&_svg_path]:stroke-white/50 [&_svg_rect]:stroke-white/50"
           aria-label="Затвори меню"
           title="Затвори меню"
           type="button"

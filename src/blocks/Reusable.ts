@@ -101,6 +101,13 @@ export const BasicComponentConfig = {
   label: 'Базов компонент (заглавие, описание и медия)',
 } satisfies Field
 
+export const BasicComponentFullRichTextConfig = {
+  name: 'basicComponentFull',
+  type: 'group',
+  fields: [HeadingConfig, DescriptionFullRichTextConfig, MediaConfig],
+  label: 'Базов компонент (заглавие, описание и медия)',
+}
+
 export const BasicComponentsArray = {
   name: 'cardsArray',
   type: 'array',

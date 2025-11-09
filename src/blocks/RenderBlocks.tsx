@@ -14,6 +14,7 @@ import { AboutBlockComponent } from './AboutBlock/Compoment'
 import { ContactBlockComponent } from './ContactBlock/Component'
 import { FaqBlockComponent } from './FaqBlock/Component'
 import { FormBlock } from './Form/Component'
+import { RegulatoryBlockComponent } from './RegulatoryBlock/Component'
 
 const blockComponents = {
   mediaBlock: MediaBlock,
@@ -25,6 +26,7 @@ const blockComponents = {
   contactBlock: ContactBlockComponent,
   faqBlock: FaqBlockComponent,
   formBlock: FormBlock,
+  regulatoryBlock: RegulatoryBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{
