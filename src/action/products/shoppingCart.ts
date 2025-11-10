@@ -96,17 +96,8 @@ export async function getCartProductsByUserId(userId: number) {
     pagination: false,
     select: {
       title: true,
-      slug: true,
-      description: true,
-      heading: true,
-      category: true,
       price: true,
-      bestSeller: true,
-      promoPrice: true,
-      havePriceRange: true,
       mediaArray: true,
-      priceRange: true,
-      shortDescription: true,
     },
     depth: 1, // no need to expand relationships here unless you want them
   })
