@@ -105,11 +105,11 @@ const GridCardsAndHeading = ({ data }: { data: HomeBlock['histories'] }) => {
       <div className="w-full content_wrapper_mobile-full flex flex-col gap-10">
         <HeadingPlusDescription heading={data?.heading} />
         <div className="w-full relative">
-          <div className="hidden md:block absolute top-0 bottom-0 left-0 w-[25%] z-[3] bg-gradient-to-r from-[#200226] to-transparent"></div>
+          <div className="hidden md:block absolute pointer-events-none top-0 bottom-0 left-0 w-[25%] z-[3] bg-gradient-to-r from-[#200226] to-transparent"></div>
           <GallerySlider extraClass="min-h-[320px]" refKey="gridCards" sliderSettings={settings}>
             {cardsContent}
           </GallerySlider>
-          <div className="hidden md:block absolute top-0 bottom-0 right-0 w-[25%] z-[3] bg-gradient-to-l from-[#200226] to-transparent"></div>
+          <div className="hidden md:block absolute pointer-events-none top-0 bottom-0 right-0 w-[25%] z-[3] bg-gradient-to-l from-[#200226] to-transparent"></div>
         </div>
       </div>
     </section>

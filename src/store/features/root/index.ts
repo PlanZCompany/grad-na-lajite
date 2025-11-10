@@ -9,6 +9,7 @@ export interface RootInitialState {
   heroAppearAnimationDone: boolean | 'pending'
   heroAnimationDone: boolean
   openSearch: boolean
+  extraComments: { name: string; comment: string }[]
 }
 
 const rootInitialState: RootInitialState = {
@@ -19,6 +20,7 @@ const rootInitialState: RootInitialState = {
   heroAppearAnimationDone: 'pending',
   heroAnimationDone: false,
   openSearch: false,
+  extraComments: [],
 }
 
 export const rootSlice = createSlice({
@@ -46,6 +48,9 @@ export const rootSlice = createSlice({
     setUser: (state, { payload }: PayloadAction<User | null>) => {
       state.user = payload
     },
+    setExtraComments: (state, { payload }: PayloadAction<{ name: string; comment: string }[]>) => {
+      state.extraComments = payload
+    },
   },
 })
 
@@ -57,6 +62,7 @@ export const {
   setHeroAppearAnimationDone,
   setOpenSearch,
   setUser,
+  setExtraComments,
 } = rootSlice.actions
 
 export default rootSlice.reducer

@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Metadata } from 'next'
 import { StoreProvider } from '@/store/StoreProvider'
 import '../../assets/styles/general.scss'
 import '../../assets/styles/blog.scss'
@@ -8,9 +7,8 @@ import './global.css'
 import { kolka, sansation } from '@/app/fonts'
 import { Footer } from '@/Footer/Component'
 // import Search from '@/components/Search/Search'
-// import { getPayload } from 'payload'
-// import configPromise from '@payload-config'
-// import ShoppingCardAside from '@/components/Checkout/ShoppingCardAside'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 // import ScreenOverlay from '@/components/Custom/ScreenOverlay'
 import ScrollToTop from '@/components/Custom/ScrollToTop'
 import { Metadata } from 'next'
@@ -19,6 +17,9 @@ import { AsideComponent } from '@/Aside/Component'
 import { SubscriptionModalComponent } from '@/SubsciptionModal/Component'
 import SetCurrentUser from '@/components/Setters/SetCurrentUser'
 import SubscriptionModalActivator from '@/components/Setters/SubscriptionModalActivator'
+import { ShoppingCardAside } from '@/components/Checkout'
+import ShoppingCartManager from '@/components/Setters/ShoppingCartManager'
+import BuyNowButton from '@/components/Custom/BuyNowButton'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -112,7 +113,19 @@ export const metadata: Metadata = {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
-  // const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
+
+  const product = await payload.find({
+    collection: 'product',
+    limit: 1,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+  })
+
+  const currentProduct = product?.docs?.[0]
   // const productsForSearch = await payload.find({
   //   collection: 'product',
   //   draft: false,
@@ -162,6 +175,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         </head>
         <body>
           <main id="content" className="min-h-[100svh] overflow-x-clip">
+            <a href="#content" className="sr-only focus:not-sr-only">
+              Към съдържанието
+            </a>
             {/* <Search products={productsForSearch.docs as Product[]} /> */}
             <AsideComponent />
             <ScrollToTop />
@@ -169,13 +185,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <Header />
             {children}
             <Footer />
-            {/* <ShoppingCardAside /> */}
+            <ShoppingCardAside />
+            <BuyNowButton product={currentProduct} />
 
             {/* <ScreenOverlay /> */}
 
             <GenericNotification />
             <SetCurrentUser />
             <SubscriptionModalActivator />
+            <ShoppingCartManager />
           </main>
         </body>
       </html>

@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     pages: Page;
     subscriptions: Subscription;
+    product: Product;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -85,6 +86,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
+    product: ProductSelect<false> | ProductSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -153,6 +155,7 @@ export interface User {
   phoneNumber?: string | null;
   subscribed?: boolean | null;
   discountCode?: string | null;
+  shoppingCartProducts?: (number | Product)[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -172,6 +175,26 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product".
+ */
+export interface Product {
+  id: number;
+  title: string;
+  mediaArray?:
+    | {
+        file: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  price?: number | null;
+  quantity: number;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -837,45 +860,8 @@ export interface HomeBlock {
     } | null;
     cardsArray?:
       | {
-          basicComponent?: {
-            /**
-             * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
-             */
-            heading?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            /**
-             * Моля, придържайте се към конвенцията за описанията.
-             */
-            description?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            media?: (number | null) | Media;
-          };
+          media?: (number | null) | Media;
+          url?: string | null;
           id?: string | null;
         }[]
       | null;
@@ -2096,6 +2082,10 @@ export interface PayloadLockedDocument {
         value: number | Subscription;
       } | null)
     | ({
+        relationTo: 'product';
+        value: number | Product;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -2164,6 +2154,7 @@ export interface UsersSelect<T extends boolean = true> {
   phoneNumber?: T;
   subscribed?: T;
   discountCode?: T;
+  shoppingCartProducts?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -2408,13 +2399,8 @@ export interface HomeBlockSelect<T extends boolean = true> {
         cardsArray?:
           | T
           | {
-              basicComponent?:
-                | T
-                | {
-                    heading?: T;
-                    description?: T;
-                    media?: T;
-                  };
+              media?: T;
+              url?: T;
               id?: T;
             };
       };
@@ -2683,6 +2669,25 @@ export interface SubscriptionsSelect<T extends boolean = true> {
   discountCode?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product_select".
+ */
+export interface ProductSelect<T extends boolean = true> {
+  title?: T;
+  mediaArray?:
+    | T
+    | {
+        file?: T;
+        id?: T;
+      };
+  price?: T;
+  quantity?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3168,10 +3173,15 @@ export interface TaskSchedulePublish {
   input: {
     type?: ('publish' | 'unpublish') | null;
     locale?: string | null;
-    doc?: {
-      relationTo: 'pages';
-      value: number | Page;
-    } | null;
+    doc?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'product';
+          value: number | Product;
+        } | null);
     global?: string | null;
     user?: (number | null) | User;
   };

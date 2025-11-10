@@ -10,15 +10,13 @@ import { GenericImage, GenericParagraph } from '@/components/Generic'
 import { MenuIcon, SearchLogo, ShoppingCartIcon, UserProfileIcon } from '@/assets/icons'
 import { setOpenSearch, setUser } from '@/store/features/root'
 import { setShoppingCardOpen } from '@/store/features/checkout'
-// import { useCheckout } from '@/hooks/useCheckout'
 import { useTransition } from 'react'
 import { logout } from '@/action/auth/logout'
 import Menu from './Menu'
 
 const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'> }) => {
   const dispatch = useAppDispatch()
-  // const { calculateTotalPrice } = useCheckout()
-  // const shoppingCartProducts = useAppSelector((state) => state.checkout.products)
+  const shoppingCartProducts = useAppSelector((state) => state.checkout.products)
   const user = useAppSelector((state) => state.root.user)
   const { categoryItems, logo } = headerData as Header
   const [pending, start] = useTransition()
@@ -139,7 +137,7 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
               flex justify-center items-center"
                 >
                   <p className="text-white font-sensation font-[700] text-[10px] md:text-[12px]">
-                    {/* {shoppingCartProducts.length} */} 0
+                    {shoppingCartProducts.length}
                   </p>
                 </div>
                 <ShoppingCartIcon />

@@ -6,86 +6,36 @@ import { Media, ProductBlock } from '@/payload-types'
 import { generateHref, LinkObject } from '@/utils/generateHref'
 import Link from 'next/link'
 import React from 'react'
+import ProductHero from './ProductHero'
+import { getPayload } from 'payload'
+import configPromise from '@/payload.config'
 
-export const ProductBlockComponent: React.FC<ProductBlock> = (props) => {
+export default async function ProductBlockComponent(props: ProductBlock) {
   const { hero, id, box, faq, play, reviews, roles, toWho } = props
 
-  const productMedia = hero?.media as Media
   const faqMedia = faq?.media as Media
+
+  const payload = await getPayload({ config: configPromise })
+
+  //get all products from payload
+  const product = await payload.find({
+    collection: 'product',
+    limit: 1,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+  })
+
+  const currentProduct = product?.docs?.[0]
 
   return (
     <section
       className="w-full flex flex-col pt-[68px] md:pt-[130px] relative bg-purpleBackground"
       key={id}
     >
-      <section className="w-full py-10 md:py-20 flex relative z-[2]">
-        <div className="m-auto content_wrapper flex flex-col gap-10 md:flex-row">
-          <GenericImage
-            src={productMedia?.url || ''}
-            alt={productMedia?.alt || ''}
-            wrapperClassName="w-full md:max-w-[40%] min-h-[300px] radial_yellow border-[#D4AF37] border-[8px] relative rounded-[16px] overflow-hidden"
-            fill={true}
-            priority={true}
-            focalX={productMedia?.focalX || 50}
-            focalY={productMedia?.focalY || 50}
-            imageClassName="w-full h-full object-contain rounded-[16px] overflow-hidden shadow-xl"
-            sizes="100vw"
-            fetchPriority="high"
-            updatedAt={productMedia?.updatedAt || ''}
-          />
-
-          {!!hero && (
-            <div className="flex-1 flex flex-col items-center justify-center">
-              <article className={`flex gap-m flex-col`}>
-                {hero.heading && (
-                  <GenericHeading
-                    textShadow={true}
-                    headingType="h2"
-                    extraClass={`self-center md:self-[unset] w-fit md:w-full border-b-[1px] border-primaryYellow pb-3 !text-center md:!text-left`}
-                  >
-                    <RichText data={hero.heading} />
-                  </GenericHeading>
-                )}
-                {hero.description && (
-                  <GenericParagraph extraClass="text-center md:text-left">
-                    <RichText data={hero.description} />
-                  </GenericParagraph>
-                )}
-                {hero.reviews && (
-                  <GenericParagraph
-                    extraClass="text-center md:text-left"
-                    textColor="text-primaryYellow"
-                  >
-                    <p>{hero.reviews}</p>
-                  </GenericParagraph>
-                )}
-                {hero.price && (
-                  <GenericParagraph
-                    pType="large"
-                    extraClass="text-center md:text-left"
-                    textColor="text-white"
-                  >
-                    <p>{hero.price}</p>
-                  </GenericParagraph>
-                )}
-                <GenericButton styleClass="w-full md:w-fit">Купи сега</GenericButton>
-                {hero.discountText && (
-                  <GenericParagraph extraClass="text-center md:text-left" textColor="text-white">
-                    <p>{hero.discountText}</p>
-                  </GenericParagraph>
-                )}
-                {hero.extraDescription && (
-                  <div className="mt-5 border-[1px] border-primaryYellow p-3 bg-primaryYellow/20 w-full md:w-fit rounded-[16px]">
-                    <GenericParagraph extraClass="text-center md:text-left" textColor="text-white">
-                      <RichText data={hero.extraDescription} />
-                    </GenericParagraph>
-                  </div>
-                )}
-              </article>
-            </div>
-          )}
-        </div>
-      </section>
+      <ProductHero hero={hero} product={currentProduct} />
 
       <div className="divider_section relative z-[2]"></div>
 

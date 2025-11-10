@@ -80,7 +80,22 @@ export const HomeBlock: Block = {
       name: 'partners',
       type: 'group',
       label: 'Партньори - секция',
-      fields: [HeadingConfig, BasicComponentsArray],
+      fields: [
+        HeadingConfig,
+        {
+          name: 'cardsArray',
+          type: 'array',
+          label: 'Базов компонент (заглавие, описание и медия)',
+          fields: [
+            MediaConfig,
+            {
+              name: 'url',
+              type: 'text',
+              label: 'Връзка',
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'testimonials',

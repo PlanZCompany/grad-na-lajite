@@ -9,6 +9,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import HeroCommon from '@/Hero/Common'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
+import SetExtraComments from '@/components/Setters/SetExtraComments'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -58,12 +59,46 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  // const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
 
-  // const itIsHome = slug === 'home'
+  const itIsHome = slug === 'home'
 
   const hero = page?.commonHero
   const layout = page.layout
+
+  let extraComments: {
+    name: string
+    comment: string
+  }[] = []
+  if (itIsHome) {
+    const comments = await payload.find({
+      collection: 'form-submissions',
+      limit: 1000,
+      select: {
+        form: true,
+        submissionData: true,
+        createdAt: true,
+      },
+      where: {
+        and: [
+          {
+            approved: {
+              equals: true,
+            },
+          },
+        ],
+      },
+    })
+
+    extraComments = comments.docs
+      ? comments.docs.map((doc) => {
+          return {
+            name: doc.submissionData?.[0]?.value || 'Потребител',
+            comment: doc.submissionData?.[2]?.value || 'Мнение',
+          }
+        })
+      : []
+  }
 
   return (
     <>
@@ -79,6 +114,8 @@ export default async function Page({ params: paramsPromise }: Args) {
 
         {draft && <LivePreviewListener />}
         {!!hero.heading && !page.regulatoryPage && <HeroCommon {...hero} />}
+
+        {!!itIsHome && <SetExtraComments extraComments={extraComments} />}
 
         <div className="w-full">
           <RenderBlocks blocks={layout as any} />

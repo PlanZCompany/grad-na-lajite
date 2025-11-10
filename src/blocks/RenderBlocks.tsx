@@ -9,12 +9,12 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ContentBlock } from './Content/Component'
 import { HomeBlockComponent } from './HomeBlock/HomeBlockComponent'
 import { SubscriptionFormBlock } from './SubsciptionForm/Component'
-import { ProductBlockComponent } from './ProductBlock/Component'
 import { AboutBlockComponent } from './AboutBlock/Compoment'
 import { ContactBlockComponent } from './ContactBlock/Component'
 import { FaqBlockComponent } from './FaqBlock/Component'
 import { FormBlock } from './Form/Component'
 import { RegulatoryBlockComponent } from './RegulatoryBlock/Component'
+import ProductBlockComponent from './ProductBlock/Component'
 
 const blockComponents = {
   mediaBlock: MediaBlock,

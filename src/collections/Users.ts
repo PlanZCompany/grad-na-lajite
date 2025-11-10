@@ -134,5 +134,20 @@ export const Users: CollectionConfig = {
         condition: (data) => data.role === 'user',
       },
     },
+    {
+      name: 'shoppingCartProducts',
+      type: 'relationship',
+      relationTo: 'product',
+      hasMany: true,
+      access: {
+        read: () => true,
+        update: () => false,
+        create: () => false,
+      },
+      admin: {
+        readOnly: true,
+        condition: (data) => data.role === 'user',
+      },
+    },
   ],
 }

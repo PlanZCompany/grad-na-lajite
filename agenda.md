@@ -4,15 +4,18 @@
 -- each new user "admin", needs to be verifiied manually
 
 **ADMIN**
+
 - blog collection (layout) to be block based - each blog can be unique
 
 **TO DECIDE WITH CLIENT**
+
 - payment methods
 
 **QUESTIONS**
+
 - none
 
-***FROM_CLIENT***
+**_FROM_CLIENT_**
 https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/edit?tab=t.0
 
 **CURRENT**
@@ -29,25 +32,31 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 [done] product page
 [done] contact-us page
 [done] user in refresh
-[pending] mobile menu
-[pending] faq page
-[pending] regulatory pages
+[done] mobile menu
+[done] faq page
+[done] regulatory pages
+
 - Shopping aside
+
+* persist for users and annonimous
+
 - blog page
+
 * config with blocks - extract each block of html files
 * add data
 * styles and functionalities for each blog page
 * test blocks
+
 - Checkout page
 - all required collections (orders...)
 - email template fix (има го в папката в webrika pc)
 - email SMTP to be the domain
 
 **WEEK - 9.11 - 16.11 - DONE**
-- mobile menu
-- faq page
-- terms and conditions
-- privacy policy
-- payments
-- cookie policy
-- политика за доставки и връщания
+
+- потребител може да добавя в количка продукт
+- може да променя бройки
+- може да изтрива
+- продуктова количка "aside"
+- запазване на продукти когато потребителя е анонимен
+- запазване на продукти в база данни когато има профил

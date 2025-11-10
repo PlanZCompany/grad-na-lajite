@@ -40,7 +40,7 @@ const AsideClient = ({ asideData }: { asideData: Aside }) => {
   })
 
   return (
-    <aside className="fixed bottom-14 md:bottom-16 md:right-4 right-2 flex flex-col gap-m z-[10]">
+    <aside className="fixed bottom-[104px] md:bottom-[112px] md:right-4 right-2 flex flex-col gap-m z-[10]">
       <button
         className="hover:scale-105 transition-transform duration-300 ease-in-out relative w-10 h-10"
         onClick={() => setShowNetwork(!showNetwork)}

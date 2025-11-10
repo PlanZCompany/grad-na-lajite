@@ -4,11 +4,14 @@
 import { resetPassword } from '@/action/auth/resetPassowrd'
 import { GenericButton, TextInput } from '@/components/Generic'
 import { AuthWrapper } from '@/components/Wrappers'
+import { useAppDispatch } from '@/hooks/redux-hooks'
+import { setNotification } from '@/store/features/notifications'
 import { checkPassword } from '@/utils/passwordValidatior'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState, useTransition } from 'react'
 
 export default function ResetPasswordPage() {
+  const dispatch = useAppDispatch()
   const params = useSearchParams()
   const router = useRouter()
   const token = params.get('token') ?? ''
@@ -60,7 +63,14 @@ export default function ResetPasswordPage() {
         const res = await resetPassword({ token, password: pass })
         if (res?.ok) {
           setOk(true)
-          router.replace('/')
+          dispatch(
+            setNotification({
+              showNotification: true,
+              message: 'Паролата е обновена успешно',
+              type: 'success',
+            }),
+          )
+          router.replace('/auth/login')
         }
       } catch (err: unknown) {
         console.log(err)

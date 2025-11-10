@@ -3,6 +3,8 @@
 import { RichText } from '@/components/Custom'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
 import { CommonHero, Media } from '@/payload-types'
+import { generateHref, LinkObject } from '@/utils/generateHref'
+import Link from 'next/link'
 import React from 'react'
 
 const HeroCommon: React.FC<CommonHero> = (props) => {
@@ -65,16 +67,20 @@ const HeroCommon: React.FC<CommonHero> = (props) => {
             )}
 
             {!!links?.length && (
-              <GenericButton
-                ariaLabel={'Купи сега'}
-                click={() => {
-                  //add to cart
-                }}
-                variant="primary"
-                styleClass="w-fit self-center md:self-end mt-6 md:mb-[unset]"
-              >
-                {links[0].link?.label}
-              </GenericButton>
+              <div className="w-fit self-center md:self-end mt-6 md:mb-[unset]">
+                <Link className="" href={generateHref(links[0] as LinkObject)}>
+                  <GenericButton
+                    ariaLabel={'Купи сега'}
+                    click={() => {
+                      //add to cart
+                    }}
+                    variant="primary"
+                    styleClass="w-full"
+                  >
+                    {links[0].link?.label}
+                  </GenericButton>
+                </Link>
+              </div>
             )}
           </div>
         </div>

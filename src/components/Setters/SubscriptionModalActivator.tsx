@@ -9,8 +9,6 @@ const SubscriptionModalActivator = () => {
   const needToShowModalHandler = async () => {
     const itIsSubscribed = await isUserSubscribed()
 
-    console.log(itIsSubscribed, 'itIsSubscribed')
-
     if (itIsSubscribed.data === true) return
 
     timeOut.current = setTimeout(() => {

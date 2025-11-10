@@ -4,6 +4,7 @@ import HeadingPlusDescription from '../Generic/HeadingPlusDescription'
 import { GenericImage } from '../Generic'
 import { GallerySlider } from '../Sliders'
 import { Settings } from 'react-slick'
+import Link from 'next/link'
 
 const Partners = ({ data }: { data: HomeBlock['partners'] }) => {
   const settings: Settings = {
@@ -35,25 +36,27 @@ const Partners = ({ data }: { data: HomeBlock['partners'] }) => {
     ],
   }
   const cardsContent = data?.cardsArray?.map((card) => {
-    const media = card?.basicComponent?.media as Media
+    const media = card?.media as Media
 
     return (
       <div className="w-full px-2 md:px-[unset]" key={card.id}>
-        <article
-          className={`w-full bg-white/20 md:max-w-[280px] border-[1px] border-primaryYellow flex flex-col relative
+        <Link href={`${card.url}`}>
+          <article
+            className={`w-full bg-white/20 md:max-w-[280px] border-[1px] border-primaryYellow flex flex-col relative
          rounded-[12px] overflow-hidden p-5 h-[240px]`}
-        >
-          <GenericImage
-            src={media?.url || ''}
-            alt={media?.alt || ''}
-            wrapperClassName="absolute inset-4"
-            imageClassName="object-contain w-full h-full"
-            sizes="(max-width: 1024px) 100vw, 33vw"
-            priority={false}
-            fill={true}
-            updatedAt={media?.updatedAt}
-          />
-        </article>
+          >
+            <GenericImage
+              src={media?.url || ''}
+              alt={media?.alt || ''}
+              wrapperClassName="absolute inset-4"
+              imageClassName="object-contain w-full h-full"
+              sizes="(max-width: 1024px) 100vw, 33vw"
+              priority={false}
+              fill={true}
+              updatedAt={media?.updatedAt}
+            />
+          </article>
+        </Link>
       </div>
     )
   })
@@ -64,11 +67,11 @@ const Partners = ({ data }: { data: HomeBlock['partners'] }) => {
         <HeadingPlusDescription heading={data?.heading} />
 
         <div className="w-full relative">
-          <div className="hidden md:block absolute top-0 bottom-0 left-0 w-[25%] z-[3] bg-gradient-to-r from-[#200226] to-transparent"></div>
+          <div className="hidden md:block pointer-events-none absolute top-0 bottom-0 left-0 w-[25%] z-[3] bg-gradient-to-r from-[#200226] to-transparent"></div>
           <GallerySlider refKey="partners" sliderSettings={settings}>
             {cardsContent}
           </GallerySlider>
-          <div className="hidden md:block absolute top-0 bottom-0 right-0 w-[25%] z-[3] bg-gradient-to-l from-[#200226] to-transparent"></div>
+          <div className="hidden md:block pointer-events-none absolute top-0 bottom-0 right-0 w-[25%] z-[3] bg-gradient-to-l from-[#200226] to-transparent"></div>
         </div>
       </div>
     </section>
