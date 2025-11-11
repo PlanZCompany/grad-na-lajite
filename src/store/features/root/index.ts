@@ -1,4 +1,4 @@
-import { User } from '@/payload-types'
+import { Product, User } from '@/payload-types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface RootInitialState {
@@ -10,6 +10,7 @@ export interface RootInitialState {
   heroAnimationDone: boolean
   openSearch: boolean
   extraComments: { name: string; comment: string }[]
+  mainProduct: Product | null
 }
 
 const rootInitialState: RootInitialState = {
@@ -21,6 +22,7 @@ const rootInitialState: RootInitialState = {
   heroAnimationDone: false,
   openSearch: false,
   extraComments: [],
+  mainProduct: null,
 }
 
 export const rootSlice = createSlice({
@@ -51,6 +53,9 @@ export const rootSlice = createSlice({
     setExtraComments: (state, { payload }: PayloadAction<{ name: string; comment: string }[]>) => {
       state.extraComments = payload
     },
+    setMainProduct: (state, { payload }: PayloadAction<Product | null>) => {
+      state.mainProduct = payload
+    },
   },
 })
 
@@ -63,6 +68,7 @@ export const {
   setOpenSearch,
   setUser,
   setExtraComments,
+  setMainProduct,
 } = rootSlice.actions
 
 export default rootSlice.reducer

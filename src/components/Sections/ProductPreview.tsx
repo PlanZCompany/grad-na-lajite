@@ -3,9 +3,13 @@
 import { HomeBlock, Media } from '@/payload-types'
 import HeadingPlusDescription from '../Generic/HeadingPlusDescription'
 import { GenericButton, GenericImage } from '../Generic'
+import { useCheckout } from '@/hooks/useCheckout'
+import { useAppSelector } from '@/hooks/redux-hooks'
 
 export default function ProductPreview({ data }: { data: HomeBlock['singlePreview'] }) {
   const media = data?.media as Media
+  const mainProduct = useAppSelector((state) => state.root.mainProduct)
+  const { addProductToShoppingCartFullProcess } = useCheckout()
 
   return (
     <section className="w-full py-10 md:py-20 flex">
@@ -41,7 +45,8 @@ export default function ProductPreview({ data }: { data: HomeBlock['singlePrevie
               type="button"
               ariaLabel={'Поръчай'}
               click={() => {
-                //TODO
+                if (!mainProduct) return
+                addProductToShoppingCartFullProcess(mainProduct)
               }}
               variant="colored"
             >

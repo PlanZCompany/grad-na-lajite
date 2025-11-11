@@ -1,18 +1,20 @@
 'use client'
 
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
+import { useAppSelector } from '@/hooks/redux-hooks'
 import { useCheckout } from '@/hooks/useCheckout'
-import { Media, Product, ProductBlock } from '@/payload-types'
+import { Media, ProductBlock } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import React, { useState } from 'react'
 
-const ProductHero = ({ hero, product }: { hero: ProductBlock['hero']; product: Product }) => {
+const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
+  const mainProduct = useAppSelector((state) => state.root.mainProduct)
   const { addProductToShoppingCartFullProcess } = useCheckout()
 
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0)
-  const productMedia = product?.mediaArray?.[currentMediaIndex]?.file as Media
+  const productMedia = mainProduct?.mediaArray?.[currentMediaIndex]?.file as Media
 
-  const mediaMenu = product?.mediaArray?.map((currentMedia, index) => {
+  const mediaMenu = mainProduct?.mediaArray?.map((currentMedia, index) => {
     const image = currentMedia.file as Media
     return (
       <li className="w-full h-full" key={index}>
@@ -100,7 +102,8 @@ const ProductHero = ({ hero, product }: { hero: ProductBlock['hero']; product: P
                 styleClass="w-full md:w-fit"
                 ariaLabel={'Добави в количка'}
                 click={() => {
-                  addProductToShoppingCartFullProcess(product)
+                  if (!mainProduct) return
+                  addProductToShoppingCartFullProcess(mainProduct)
                 }}
               >
                 Купи сега

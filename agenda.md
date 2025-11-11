@@ -38,8 +38,11 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 
 - Shopping aside
 
-* persist for users and annonimous
+- max width for error message in auth
+- error messages for contact form
 
+* persist for users and annonimous
+- да добавя BackgroundOverlay
 - blog page
 
 * config with blocks - extract each block of html files

@@ -12,6 +12,7 @@ import {
 import { useCheckout } from '@/hooks/useCheckout'
 import { priceToEuro } from '@/utils/calculatePriceFromLvToEuro'
 import { Media } from '@/payload-types'
+import { COLORS } from '@/cssVariables'
 
 const ShoppingCardAside = () => {
   const dispatch = useAppDispatch()
@@ -44,7 +45,7 @@ const ShoppingCardAside = () => {
               src={media.url as string}
               alt={media.alt}
               fill={true}
-              wrapperClassName="w-full aspect-square relative rounded-[12px] overflow-hidden"
+              wrapperClassName="w-full max-w-[150px] mx-auto md:max-w-[unset] aspect-square relative rounded-[12px] overflow-hidden"
               imageClassName="w-full h-full object-contain"
             />
           </div>
@@ -98,9 +99,10 @@ const ShoppingCardAside = () => {
 
               <div>
                 <GenericParagraph
-                  fontStyle="font-georgia font-[400]"
+                  fontStyle="custom"
                   pType="regular"
-                  textColor="text-white"
+                  textColor="text-primaryYellow"
+                  extraClass="font-georgia font-[700]"
                 >
                   <>
                     {(product.price! * product.orderQuantity).toFixed(2)} лв. (
@@ -125,9 +127,10 @@ const ShoppingCardAside = () => {
     >
       <div className="w-full flex relative justify-center items-center py-4">
         <GenericParagraph
-          fontStyle="font-georgia font-[400]"
-          pType="large"
+          fontStyle="custom"
+          pType="custom"
           textColor="text-primaryYellow"
+          extraClass="text-[22px] md:text-[24px] leading-[150%] tracking-[0.01em] font-georgia font-[700]"
         >
           Твоята Количка
         </GenericParagraph>
@@ -148,7 +151,7 @@ const ShoppingCardAside = () => {
       <div className="w-full flex justify-center bg-purpleDark items-center py-4 border-t-[1px] border-b-[1px] border-white/20">
         <GenericParagraph
           fontStyle="font-georgia font-[400]"
-          pType="small"
+          pType="regular"
           textColor="text-white"
           extraClass="px-1 text-center"
         >
@@ -180,7 +183,7 @@ const ShoppingCardAside = () => {
 
       <div className="w-full py-2 px-4 bg-black/20">
         <button
-          className="w-full rounded-[24px] flex  justify-between items-center py-4 px-4
+          className="w-full rounded-[24px] flex  justify-between items-center py-4 px-2
           [&>div>div>svg]:hover:animate-bounce disabled:cursor-not-allowed disabled:opacity-50
           "
           aria-label="Към поръчка"
@@ -188,24 +191,25 @@ const ShoppingCardAside = () => {
         >
           <div className="flex justify-center items-center">
             <GenericParagraph
-              fontStyle="font-georgia font-[400]"
-              pType="small"
-              textColor="text-white"
-              extraClass="uppercase"
+              fontStyle="custom"
+              pType="regular"
+              textColor="text-primaryYellow"
+              extraClass="font-georgia font-[700]"
             >
               Към поръчка
             </GenericParagraph>
 
             <div className="w-[20px] h-[20px] flex justify-center items-center ml-1">
-              <ArrowIcon color="white" />
+              <ArrowIcon color={COLORS.primaryYellow} />
             </div>
           </div>
 
           <div className="flex justify-center items-center">
             <GenericParagraph
-              fontStyle="font-georgia font-[400]"
-              pType="small"
-              textColor="text-white"
+              fontStyle="custom"
+              pType="regular"
+              textColor="text-primaryYellow"
+              extraClass="font-georgia font-[700]"
             >
               {calculateTotalPrice().toFixed(2)} лв ({priceToEuro(calculateTotalPrice())}€)
             </GenericParagraph>

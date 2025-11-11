@@ -20,6 +20,7 @@ import SubscriptionModalActivator from '@/components/Setters/SubscriptionModalAc
 import { ShoppingCardAside } from '@/components/Checkout'
 import ShoppingCartManager from '@/components/Setters/ShoppingCartManager'
 import BuyNowButton from '@/components/Custom/BuyNowButton'
+import SetMainProduct from '@/components/Setters/SetMainProduct'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -194,6 +195,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <SetCurrentUser />
             <SubscriptionModalActivator />
             <ShoppingCartManager />
+            <SetMainProduct product={currentProduct} />
           </main>
         </body>
       </html>
