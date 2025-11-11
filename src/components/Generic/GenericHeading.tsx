@@ -5,7 +5,7 @@ type heading1Props = {
   extraClass?: string
   headingType?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   fontStyle?: 'font-georgia font-[400]' | 'font-georgia font-[700]' | 'custom'
-  textColor?: 'text-white' | 'text-primaryYellow' | 'text-black'
+  textColor?: 'text-white' | 'text-primaryYellow' | 'text-black' | 'text-[#4B0082]'
   align?:
     | 'text-left'
     | 'text-center'

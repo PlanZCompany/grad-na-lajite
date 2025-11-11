@@ -39,8 +39,8 @@ export const generateHref = (linkObject: LinkObject) => {
     return `/produkt`
   }
 
-  if (linkValue?.slug === 'category') {
-    return `/kategorii`
+  if (linkValue?.slug === 'blogs') {
+    return `/blog`
   }
   //internal
   if (linkObject?.link?.type === 'reference') {

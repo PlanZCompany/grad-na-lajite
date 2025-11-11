@@ -19,6 +19,7 @@ import { Subscriptions } from './collections/Subscriptions'
 import { Aside } from './Aside/config'
 import { SubscriptionModal } from './SubsciptionModal/config'
 import { Product } from './collections/Product/Product'
+import { Blog } from './collections/Blog'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,7 +54,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Pages, Subscriptions, Product],
+  collections: [Users, Media, Pages, Subscriptions, Product, Blog],
   globals: [Header, Footer, Aside, SubscriptionModal],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

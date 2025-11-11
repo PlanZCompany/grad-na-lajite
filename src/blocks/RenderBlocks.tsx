@@ -1,8 +1,15 @@
 import React, { Fragment } from 'react'
 
 import type {
+  AboutBlock,
   ContentBlock as ContentBlockType,
+  FaqBlock,
+  HomeBlock,
+  InfoAndImageBlock,
   MediaBlock as MediaBlockType,
+  ProductBlock,
+  RegulatoryBlock,
+  SubscriptionForm,
 } from '@/payload-types'
 
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
@@ -15,6 +22,7 @@ import { FaqBlockComponent } from './FaqBlock/Component'
 import { FormBlock } from './Form/Component'
 import { RegulatoryBlockComponent } from './RegulatoryBlock/Component'
 import ProductBlockComponent from './ProductBlock/Component'
+import { InfoAndImageBlockComponent } from './InfoAndImageBlock/Component'
 
 const blockComponents = {
   mediaBlock: MediaBlock,
@@ -27,10 +35,24 @@ const blockComponents = {
   faqBlock: FaqBlockComponent,
   formBlock: FormBlock,
   regulatoryBlock: RegulatoryBlockComponent,
+  infoAndImageBlock: InfoAndImageBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{
-  blocks: (ContentBlockType | MediaBlockType)[] | null | undefined
+  blocks:
+    | (
+        | ContentBlockType
+        | MediaBlockType
+        | HomeBlock
+        | SubscriptionForm
+        | ProductBlock
+        | AboutBlock
+        | FaqBlock
+        | RegulatoryBlock
+        | InfoAndImageBlock
+      )[]
+    | null
+    | undefined
   observe?: boolean
 }> = (props) => {
   const { blocks } = props

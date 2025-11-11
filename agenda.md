@@ -36,24 +36,33 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 [done] faq page
 [done] regulatory pages
 
-- Shopping aside
+[done] Shopping aside
+[done] persist for users and annonimous
+[pending] max width for error message in auth
+[done] да добавя BackgroundOverlay
+[done] error messages for contact form
 
-- max width for error message in auth
-- error messages for contact form
+- Мета снимка за всички страници и за отделни
 
-* persist for users and annonimous
-- да добавя BackgroundOverlay
 - blog page
 
+* main blog page - /blog
+* slug page - /blog/[slug]
 * config with blocks - extract each block of html files
 * add data
 * styles and functionalities for each blog page
 * test blocks
 
 - Checkout page
+
+---
+
 - all required collections (orders...)
 - email template fix (има го в папката в webrika pc)
 - email SMTP to be the domain
+- sitemap
+- jsonld for required places
+- fill admin
 
 **WEEK - 9.11 - 16.11 - DONE**
 

@@ -313,3 +313,14 @@
 .radial_yellow {
   background-image: radial-gradient(circle, #d4af37, #dfb930, #eac327, #f5cd1a, #ffd700);
 }
+
+.blog_container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.blog_headings {
+  color: #4b0082;
+  text-shadow: 0 0 6px #d4af37;
+}

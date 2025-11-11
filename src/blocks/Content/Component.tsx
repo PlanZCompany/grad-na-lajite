@@ -7,12 +7,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
 
   return (
     <section className="w-full flex flex-col mx-auto py-[40px] xl:py-[80px] md:px-6 xl:px-[unset] relative">
-      <div className='fixed inset-0 red_background z-[-1]'></div>
-      <RichText
-        className="w-full blog_post_richtext relative z-[2]"
-        data={content}
-        enableGutter={false}
-      />
+      <RichText className="w-full relative z-[2]" data={content} enableGutter={false} />
     </section>
   )
 }

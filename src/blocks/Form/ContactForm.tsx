@@ -30,7 +30,6 @@ export const ContactForm: React.FC<
   } & FormBlockType
 > = (props) => {
   const dispatch = useAppDispatch()
-  //use transition for the button
   const [isPending, startTransition] = useTransition()
 
   const [formValues, setFormValues] = useState({

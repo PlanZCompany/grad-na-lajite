@@ -9,7 +9,7 @@ import { Footer } from '@/Footer/Component'
 // import Search from '@/components/Search/Search'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-// import ScreenOverlay from '@/components/Custom/ScreenOverlay'
+import ScreenOverlay from '@/components/Custom/ScreenOverlay'
 import ScrollToTop from '@/components/Custom/ScrollToTop'
 import { Metadata } from 'next'
 import GenericNotification from '@/components/Generic/GenericNotification'
@@ -189,7 +189,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <ShoppingCardAside />
             <BuyNowButton product={currentProduct} />
 
-            {/* <ScreenOverlay /> */}
+            <ScreenOverlay />
 
             <GenericNotification />
             <SetCurrentUser />

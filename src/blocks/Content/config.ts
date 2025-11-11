@@ -27,7 +27,7 @@ export const Content: Block = {
         features: ({ rootFeatures }) => {
           return [
             ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4', 'h5', 'h6'] }),
+            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
             BlocksFeature({ blocks: [MediaBlock] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
