@@ -1963,7 +1963,7 @@ export interface Blog {
    * Основна снимка на блога
    */
   media: number | Media;
-  layout?: (ContentBlock | InfoAndImageBlock)[] | null;
+  layout?: (ContentBlock | InfoAndImageBlock | TableBlock)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -2025,6 +2025,50 @@ export interface InfoAndImageBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'infoAndImageBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableBlock".
+ */
+export interface TableBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  tableHeadings?:
+    | {
+        heading: string;
+        id?: string | null;
+      }[]
+    | null;
+  tableRows?:
+    | {
+        row?:
+          | {
+              cell: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tableBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2813,6 +2857,7 @@ export interface BlogSelect<T extends boolean = true> {
     | {
         content?: T | ContentBlockSelect<T>;
         infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
+        tableBlock?: T | TableBlockSelect<T>;
       };
   meta?:
     | T
@@ -2837,6 +2882,32 @@ export interface InfoAndImageBlockSelect<T extends boolean = true> {
   description?: T;
   media?: T;
   reverse?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableBlock_select".
+ */
+export interface TableBlockSelect<T extends boolean = true> {
+  heading?: T;
+  tableHeadings?:
+    | T
+    | {
+        heading?: T;
+        id?: T;
+      };
+  tableRows?:
+    | T
+    | {
+        row?:
+          | T
+          | {
+              cell?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -3341,6 +3412,16 @@ export interface TaskSchedulePublish {
     user?: (number | null) | User;
   };
   output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DividerBlock".
+ */
+export interface DividerBlock {
+  media?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'dividerBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

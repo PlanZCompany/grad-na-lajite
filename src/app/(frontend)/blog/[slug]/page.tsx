@@ -18,14 +18,12 @@ export async function generateStaticParams() {
     select: {
       slug: true,
     },
+    pagination: false,
+    draft: false,
     where: {
-      and: [
-        {
-          _status: {
-            equals: 'published',
-          },
-        },
-      ],
+      _status: {
+        equals: 'published',
+      },
     },
   })
 
@@ -61,7 +59,7 @@ export default async function BlogSinglePage({ params: paramsPromise }: Args) {
 
         {draft && <LivePreviewListener />}
 
-        <div className="w-full content_wrapper h-fit my-auto blog_container px-4 md:px-10">
+        <div className="w-full h-fit my-auto blog_container px-4 md:px-10">
           {!!layout && <RenderBlocks blocks={layout} />}
         </div>
       </article>

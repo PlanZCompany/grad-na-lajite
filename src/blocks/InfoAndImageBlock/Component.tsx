@@ -1,5 +1,4 @@
 import { GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
-import { SectionWrapper } from '@/components/Wrappers'
 import { InfoAndImageBlock, Media } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import React from 'react'
@@ -10,10 +9,10 @@ export const InfoAndImageBlockComponent: React.FC<InfoAndImageBlock> = (props) =
   const isReversed = props.reverse
 
   return (
-    <SectionWrapper>
-      <div className="m-auto content_wrapper">
+    <section className="w-full py-6 md:py-10 flex relative z-[2]">
+      <div className="m-auto">
         <div
-          className={`flex flex-col-reverse gap-10 ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'}`}
+          className={`flex flex-col-reverse gap-10 ${isReversed ? 'xl:flex-row-reverse' : 'xl:flex-row'}`}
         >
           <div className="flex-1 flex justify-center items-center">
             <article className={`flex gap-m flex-col`}>
@@ -38,17 +37,17 @@ export const InfoAndImageBlockComponent: React.FC<InfoAndImageBlock> = (props) =
           <GenericImage
             src={faqMedia?.url || ''}
             alt={faqMedia?.alt || ''}
-            wrapperClassName="w-full max-w-[350px] aspect-square relative rounded-[16px] overflow-hidden"
+            wrapperClassName="w-full max-w-[350px] mx-auto xl:mx-[unset] aspect-square relative rounded-[16px] overflow-hidden"
             fill={true}
             priority={true}
             focalX={faqMedia?.focalX || 50}
             focalY={faqMedia?.focalY || 50}
-            imageClassName="w-full h-full object-contain rounded-[16px] overflow-hidden"
+            imageClassName="w-full h-full object-cover rounded-[16px] overflow-hidden"
             sizes="100vw"
             updatedAt={faqMedia?.updatedAt || ''}
           />
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   )
 }

@@ -10,6 +10,7 @@ import type {
   ProductBlock,
   RegulatoryBlock,
   SubscriptionForm,
+  TableBlock,
 } from '@/payload-types'
 
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
@@ -23,6 +24,7 @@ import { FormBlock } from './Form/Component'
 import { RegulatoryBlockComponent } from './RegulatoryBlock/Component'
 import ProductBlockComponent from './ProductBlock/Component'
 import { InfoAndImageBlockComponent } from './InfoAndImageBlock/Component'
+import { TableBLockComponent } from './TableBlock/Component'
 
 const blockComponents = {
   mediaBlock: MediaBlock,
@@ -36,6 +38,7 @@ const blockComponents = {
   formBlock: FormBlock,
   regulatoryBlock: RegulatoryBlockComponent,
   infoAndImageBlock: InfoAndImageBlockComponent,
+  tableBlock: TableBLockComponent,
 }
 
 export const RenderBlocks: React.FC<{
@@ -50,6 +53,7 @@ export const RenderBlocks: React.FC<{
         | FaqBlock
         | RegulatoryBlock
         | InfoAndImageBlock
+        | TableBlock
       )[]
     | null
     | undefined

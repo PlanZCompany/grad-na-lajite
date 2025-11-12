@@ -42,17 +42,11 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 [done] да добавя BackgroundOverlay
 [done] error messages for contact form
 
+[done] shoppingCart to have multiple quantity depending on main product
+
+[pending] blog page - need data in admin
+
 - Мета снимка за всички страници и за отделни
-
-- blog page
-
-* main blog page - /blog
-* slug page - /blog/[slug]
-* config with blocks - extract each block of html files
-* add data
-* styles and functionalities for each blog page
-* test blocks
-
 - Checkout page
 
 ---
@@ -72,3 +66,5 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 - продуктова количка "aside"
 - запазване на продукти когато потребителя е анонимен
 - запазване на продукти в база данни когато има профил
+- blog page overall e.g /blog
+- blog page single - създадени са различните сегменти и могат да се попълват и дубликират

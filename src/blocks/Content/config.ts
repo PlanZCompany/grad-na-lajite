@@ -11,6 +11,8 @@ import {
   UnorderedListFeature,
 } from '@payloadcms/richtext-lexical'
 import { MediaBlock } from '../MediaBlock/config'
+import { TableBlock } from '../TableBlock/config'
+import { DividerBlock } from '../DividerBlock/config'
 
 export const Content: Block = {
   slug: 'content',
@@ -28,7 +30,7 @@ export const Content: Block = {
           return [
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
-            BlocksFeature({ blocks: [MediaBlock] }),
+            BlocksFeature({ blocks: [MediaBlock, TableBlock, DividerBlock] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
             HorizontalRuleFeature(),

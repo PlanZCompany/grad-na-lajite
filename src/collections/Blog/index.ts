@@ -19,6 +19,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { Content } from '@/blocks/Content/config'
 import { InfoAndImageBlock } from '@/blocks/InfoAndImageBlock/config'
+import { TableBlock } from '@/blocks/TableBlock/config'
 
 export const Blog: CollectionConfig = {
   slug: 'blog',
@@ -122,7 +123,7 @@ export const Blog: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [Content, InfoAndImageBlock],
+              blocks: [Content, InfoAndImageBlock, TableBlock],
               required: false,
               admin: {
                 initCollapsed: true,

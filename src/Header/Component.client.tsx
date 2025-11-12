@@ -137,7 +137,7 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
               flex justify-center items-center"
                 >
                   <p className="text-white font-sensation font-[700] text-[10px] md:text-[12px]">
-                    {shoppingCartProducts.length}
+                    {shoppingCartProducts?.[0]?.orderQuantity || 0}
                   </p>
                 </div>
                 <ShoppingCartIcon />

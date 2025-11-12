@@ -10,8 +10,15 @@ import {
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
 
-import type { Media, MediaBlock as MediaBlockProps } from '@/payload-types'
+import type {
+  DividerBlock,
+  Media,
+  MediaBlock as MediaBlockProps,
+  TableBlock,
+} from '@/payload-types'
 import { GenericMedia } from '../Generic'
+import { DividerBlockComponent } from '@/blocks/DividerBlock/Component'
+import { TableBLockComponent } from '@/blocks/TableBlock/Component'
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<MediaBlockProps>
 
@@ -39,7 +46,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     mediaBlock: ({ node }) => {
       const { media } = node.fields
       return (
-        <div className="py-10 xl:py-[80px]">
+        <div className="pb-6 md:pb-10">
           <GenericMedia
             alt={(media as Media).alt as string}
             // id={(media as Media).id as string}
@@ -47,19 +54,22 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
             updatedAt={(media as Media).createdAt as string}
             createdAt={''}
             {...(node?.fields?.media as object)}
-            backgroundOverlay={false}
             imageClassName="w-full h-full object-cover"
-            priority={true}
             style={{ transformOrigin: 'center center' }}
-            wrapperClassName="m-auto content_wrapper_mobile-full min-h-[80svh] h-full w-full relative bg-red-500"
+            wrapperClassName="m-auto content_wrapper_mobile-full md:min-h-[80svh] h-full w-full aspect-video relative"
             fill={true}
             focalX={(media as Media).focalX || 50}
             focalY={(media as Media).focalY || 50}
-            mobileImage={true}
           />
         </div>
       )
     },
+    dividerBlock: (props: { node: SerializedBlockNode<DividerBlock> }) => (
+      <DividerBlockComponent {...props.node.fields} />
+    ),
+    tableBlock: (props: { node: SerializedBlockNode<TableBlock> }) => (
+      <TableBLockComponent {...props.node.fields} />
+    ),
   },
 })
 
