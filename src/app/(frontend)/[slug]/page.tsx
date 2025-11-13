@@ -10,6 +10,8 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import HeroCommon from '@/Hero/Common'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import SetExtraComments from '@/components/Setters/SetExtraComments'
+import { Blog } from '@/payload-types'
+import SetBlogs from '@/components/Setters/SetBlogs'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -70,6 +72,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     name: string
     comment: string
   }[] = []
+  let blogs: Blog[] = []
   if (itIsHome) {
     const comments = await payload.find({
       collection: 'form-submissions',
@@ -98,6 +101,29 @@ export default async function Page({ params: paramsPromise }: Args) {
           }
         })
       : []
+
+    const blogsToRender = await payload.find({
+      collection: 'blog',
+      limit: 100,
+      select: {
+        slug: true,
+        heading: true,
+        description: true,
+        media: true,
+        title: true,
+      },
+      where: {
+        and: [
+          {
+            _status: {
+              equals: 'published',
+            },
+          },
+        ],
+      },
+    })
+
+    blogs = blogsToRender.docs as Blog[]
   }
 
   return (
@@ -116,6 +142,8 @@ export default async function Page({ params: paramsPromise }: Args) {
         {!!hero.heading && !page.regulatoryPage && <HeroCommon {...hero} />}
 
         {!!itIsHome && <SetExtraComments extraComments={extraComments} />}
+
+        {!!itIsHome && <SetBlogs blogs={blogs} />}
 
         <div className="w-full">
           <RenderBlocks blocks={layout as any} />

@@ -10,7 +10,7 @@ export const getImageURL = (
 ) => {
   const serverUrl = getServerSideURL()
 
-  let url = serverUrl + '/website-template-OG.webp'
+  let url = serverUrl + 'Logo.png'
 
   if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl =

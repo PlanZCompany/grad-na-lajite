@@ -4,6 +4,7 @@ import {
   addProductToShoppingCart,
   ExtendedProduct,
   removeProductFromShoppingCart,
+  setShoppingCardOpen,
 } from '@/store/features/checkout'
 import { useAppDispatch, useAppSelector } from './redux-hooks'
 import { setNotification } from '@/store/features/notifications'
@@ -34,6 +35,7 @@ export function useCheckout() {
 
   const addProductToShoppingCartFullProcess = (product: Product) => {
     dispatch(addProductToShoppingCart({ ...product, orderQuantity: 1 }))
+    dispatch(setShoppingCardOpen(true))
     dispatch(
       setNotification({
         showNotification: true,
@@ -71,6 +73,7 @@ export function useCheckout() {
 
   const removeFromCartFullProcess = async (product: Product) => {
     dispatch(removeProductFromShoppingCart(product))
+    dispatch(setShoppingCardOpen(false))
     dispatch(
       setNotification({
         showNotification: true,

@@ -35,10 +35,6 @@ export const generateHref = (linkObject: LinkObject) => {
     return '/'
   }
 
-  if (linkValue?.slug === 'products') {
-    return `/produkt`
-  }
-
   if (linkValue?.slug === 'blogs') {
     return `/blog`
   }
