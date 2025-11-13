@@ -1,14 +1,54 @@
 import type { GlobalConfig } from 'payload'
 
-import { DescriptionConfig, HeadingConfig, MediaConfig } from '@/blocks/Reusable'
+import { MediaConfig } from '@/blocks/Reusable'
 import { revalidateSubscriptionModal } from './hooks/revalidateSubscriptionModal'
+import {
+  lexicalEditor,
+  HeadingFeature,
+  FixedToolbarFeature,
+  InlineToolbarFeature,
+} from '@payloadcms/richtext-lexical'
 
 export const SubscriptionModal: GlobalConfig = {
   slug: 'subscriptionModal',
   access: {
     read: () => true,
   },
-  fields: [HeadingConfig, DescriptionConfig, MediaConfig],
+  fields: [
+    {
+      name: 'heading',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          FixedToolbarFeature(),
+        ],
+      }),
+      label: 'Заглавие на секцията',
+      admin: {
+        description:
+          'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+      },
+    },
+    {
+      name: 'description',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
+      }),
+      label: 'Описание на секцията',
+      admin: {
+        description: 'Моля, придържайте се към конвенцията за описанията.',
+      },
+    },
+    MediaConfig,
+  ],
   hooks: {
     afterChange: [revalidateSubscriptionModal],
   },

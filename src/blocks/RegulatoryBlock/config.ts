@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { HeadingConfig } from '../Reusable'
 import {
   lexicalEditor,
   ParagraphFeature,
@@ -18,7 +17,22 @@ export const RegulatoryBlock: Block = {
   slug: 'regulatoryBlock',
   interfaceName: 'RegulatoryBlock',
   fields: [
-    HeadingConfig,
+    {
+      name: 'heading',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          FixedToolbarFeature(),
+        ],
+      }),
+      label: 'Заглавие на секцията',
+      admin: {
+        description:
+          'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+      },
+    },
     {
       name: 'shortDescription',
       type: 'richText',

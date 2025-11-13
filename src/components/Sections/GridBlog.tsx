@@ -14,48 +14,48 @@ const GridBlog = ({ data }: { data: Blog[] }) => {
 
     return (
       <div key={card.id} className="w-full px-2 md:px-4">
-        <article
-          className={`w-full bg-[rgba(20,10,40,0.85)] shadow-[0_0_20px_rgba(0,0,0,0.6)] md:h-[480px] flex flex-col
+        <Link href={`/blog/${card?.slug}`}>
+          <article
+            className={`w-full bg-[rgba(20,10,40,0.85)] shadow-[0_0_20px_rgba(0,0,0,0.6)] md:h-[480px] flex flex-col
             hover:translate-y-[-9px] duration-300 transition-transform rounded-[12px] overflow-hidden`}
-        >
-          {!!media && (
-            <div className="w-full h-[230px] relative">
-              <GenericImage
-                src={media?.url || ''}
-                alt={media?.alt || ''}
-                wrapperClassName="absolute inset-0 "
-                imageClassName="object-cover w-full h-full"
-                sizes="(max-width: 1024px) 100vw, 33vw"
-                priority={false}
-                fill={true}
-                updatedAt={media?.updatedAt}
-              />
+          >
+            {!!media && (
+              <div className="w-full h-[230px] relative">
+                <GenericImage
+                  src={media?.url || ''}
+                  alt={media?.alt || ''}
+                  wrapperClassName="absolute inset-0 "
+                  imageClassName="object-cover w-full h-full"
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  priority={false}
+                  fill={true}
+                  updatedAt={media?.updatedAt}
+                />
+              </div>
+            )}
+
+            <div className="w-full flex flex-col p-4 gap-3 mb-6 md:mb-[unset]">
+              {heading && (
+                <GenericHeading
+                  textShadow={true}
+                  headingType="h4"
+                  align="text-left"
+                  extraClass="line-clamp-3"
+                >
+                  <RichText data={heading} />
+                </GenericHeading>
+              )}
+              {description && (
+                <GenericParagraph
+                  pType="custom"
+                  extraClass="text-[16px] leading-[150%] md:line-clamp-4"
+                >
+                  <RichText data={description} />
+                </GenericParagraph>
+              )}
             </div>
-          )}
 
-          <div className="w-full flex flex-col p-4 gap-3 mb-6 md:mb-[unset]">
-            {heading && (
-              <GenericHeading
-                textShadow={true}
-                headingType="h4"
-                align="text-left"
-                extraClass="line-clamp-3"
-              >
-                <RichText data={heading} />
-              </GenericHeading>
-            )}
-            {description && (
-              <GenericParagraph
-                pType="custom"
-                extraClass="text-[16px] leading-[150%] md:line-clamp-4"
-              >
-                <RichText data={description} />
-              </GenericParagraph>
-            )}
-          </div>
-
-          <div className="w-full px-3 mt-auto pb-3">
-            <Link href={`/blog/${card?.slug}`} className="w-full">
+            <div className="w-full px-3 mt-auto pb-3">
               <GenericParagraph
                 pType="custom"
                 extraClass="text-[16px] leading-[120%] font-bold hover:text-white transition-colors duration-300 ease-in-out"
@@ -63,9 +63,9 @@ const GridBlog = ({ data }: { data: Blog[] }) => {
               >
                 Прочети повече →
               </GenericParagraph>
-            </Link>
-          </div>
-        </article>
+            </div>
+          </article>
+        </Link>
       </div>
     )
   })

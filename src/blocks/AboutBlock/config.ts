@@ -1,6 +1,12 @@
 import type { Block } from 'payload'
-import { DescriptionConfig, HeadingConfig, MediaConfig } from '../Reusable'
+import { MediaConfig } from '../Reusable'
 import { linkGroup } from '@/fields/linkGroup'
+import {
+  lexicalEditor,
+  HeadingFeature,
+  FixedToolbarFeature,
+  InlineToolbarFeature,
+} from '@payloadcms/richtext-lexical'
 
 export const AboutBlock: Block = {
   slug: 'aboutBlock',
@@ -11,8 +17,38 @@ export const AboutBlock: Block = {
       label: 'Oсновна секция',
       type: 'group',
       fields: [
-        HeadingConfig,
-        DescriptionConfig,
+        {
+          name: 'heading',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+            ],
+          }),
+          label: 'Заглавие на секцията',
+          admin: {
+            description:
+              'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+          },
+        },
+        {
+          name: 'description',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
+          }),
+          label: 'Описание на секцията',
+          admin: {
+            description: 'Моля, придържайте се към конвенцията за описанията.',
+          },
+        },
         MediaConfig,
         linkGroup({
           overrides: {
@@ -25,13 +61,81 @@ export const AboutBlock: Block = {
       name: 'mission',
       type: 'group',
       label: 'Мисия - секция',
-      fields: [HeadingConfig, DescriptionConfig, MediaConfig],
+      fields: [
+        {
+          name: 'heading',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+            ],
+          }),
+          label: 'Заглавие на секцията',
+          admin: {
+            description:
+              'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+          },
+        },
+        {
+          name: 'description',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
+          }),
+          label: 'Описание на секцията',
+          admin: {
+            description: 'Моля, придържайте се към конвенцията за описанията.',
+          },
+        },
+        MediaConfig,
+      ],
     },
     {
       name: 'values',
       type: 'group',
       label: 'Ценности - секция',
-      fields: [HeadingConfig, DescriptionConfig, MediaConfig],
+      fields: [
+        {
+          name: 'heading',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+            ],
+          }),
+          label: 'Заглавие на секцията',
+          admin: {
+            description:
+              'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+          },
+        },
+        {
+          name: 'description',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
+          }),
+          label: 'Описание на секцията',
+          admin: {
+            description: 'Моля, придържайте се към конвенцията за описанията.',
+          },
+        },
+        MediaConfig,
+      ],
     },
   ],
 }

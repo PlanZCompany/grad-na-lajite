@@ -5,11 +5,6 @@ import {
   InlineToolbarFeature,
   UnorderedListFeature,
   OrderedListFeature,
-  BoldFeature,
-  ItalicFeature,
-  UnderlineFeature,
-  LinkFeature,
-  ParagraphFeature,
 } from '@payloadcms/richtext-lexical'
 import { Field, RichTextField, UploadField } from 'payload'
 
@@ -17,15 +12,10 @@ export const HeadingConfig = {
   name: 'heading',
   type: 'richText',
   editor: lexicalEditor({
-    features: () => [
-      ParagraphFeature(),
-      BoldFeature(),
+    features: ({ rootFeatures }) => [
+      ...rootFeatures,
       HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
       FixedToolbarFeature(),
-      ItalicFeature(),
-      UnderlineFeature(),
-      LinkFeature(),
-      InlineToolbarFeature(),
     ],
   }),
   label: 'Заглавие на секцията',
@@ -38,13 +28,9 @@ export const DescriptionConfig = {
   name: 'description',
   type: 'richText',
   editor: lexicalEditor({
-    features: () => [
-      ParagraphFeature(),
-      BoldFeature(),
+    features: ({ rootFeatures }) => [
+      ...rootFeatures,
       HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
-      ItalicFeature(),
-      UnderlineFeature(),
-      LinkFeature(),
       FixedToolbarFeature(),
       InlineToolbarFeature(),
     ],
@@ -59,13 +45,9 @@ export const DescriptionFullRichTextConfig = {
   name: 'description',
   type: 'richText',
   editor: lexicalEditor({
-    features: () => [
-      ParagraphFeature(),
-      BoldFeature(),
+    features: ({ rootFeatures }) => [
+      ...rootFeatures,
       HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
-      ItalicFeature(),
-      UnderlineFeature(),
-      LinkFeature(),
       FixedToolbarFeature(),
       InlineToolbarFeature(),
       UnorderedListFeature(),
@@ -97,14 +79,84 @@ export const mediaMobileConfig = {
 export const BasicComponentConfig = {
   name: 'basicComponent',
   type: 'group',
-  fields: [HeadingConfig, DescriptionConfig, MediaConfig],
+  fields: [
+    {
+      name: 'heading',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          FixedToolbarFeature(),
+        ],
+      }),
+      label: 'Заглавие на секцията',
+      admin: {
+        description:
+          'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+      },
+    },
+    {
+      name: 'description',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
+      }),
+      label: 'Описание на секцията',
+      admin: {
+        description: 'Моля, придържайте се към конвенцията за описанията.',
+      },
+    },
+    MediaConfig,
+  ],
   label: 'Базов компонент (заглавие, описание и медия)',
 } satisfies Field
 
 export const BasicComponentFullRichTextConfig = {
   name: 'basicComponentFull',
   type: 'group',
-  fields: [HeadingConfig, DescriptionFullRichTextConfig, MediaConfig],
+  fields: [
+    {
+      name: 'heading',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          FixedToolbarFeature(),
+        ],
+      }),
+      label: 'Заглавие на секцията',
+      admin: {
+        description:
+          'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+      },
+    },
+    {
+      name: 'description',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+          UnorderedListFeature(),
+          OrderedListFeature(),
+        ],
+      }),
+      label: 'Описание на секцията',
+      admin: {
+        description: 'Включа пълна свобода в richtext полето.',
+      },
+    },
+    MediaConfig,
+  ],
   label: 'Базов компонент (заглавие, описание и медия)',
 }
 
@@ -112,7 +164,48 @@ export const BasicComponentsArray = {
   name: 'cardsArray',
   type: 'array',
   label: 'Базов компонент (заглавие, описание и медия)',
-  fields: [BasicComponentConfig],
+  fields: [
+    {
+      name: 'basicComponent',
+      type: 'group',
+      fields: [
+        {
+          name: 'heading',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+            ],
+          }),
+          label: 'Заглавие на секцията',
+          admin: {
+            description:
+              'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+          },
+        },
+        {
+          name: 'description',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
+          }),
+          label: 'Описание на секцията',
+          admin: {
+            description: 'Моля, придържайте се към конвенцията за описанията.',
+          },
+        },
+        MediaConfig,
+      ],
+      label: 'Базов компонент (заглавие, описание и медия)',
+    },
+  ],
 } satisfies Field
 
 export const OrderButtonCheckField = {

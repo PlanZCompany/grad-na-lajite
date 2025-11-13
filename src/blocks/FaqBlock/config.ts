@@ -1,11 +1,33 @@
 import type { Block } from 'payload'
-import { DescriptionFullRichTextConfig, HeadingConfig } from '../Reusable'
+import {
+  lexicalEditor,
+  HeadingFeature,
+  FixedToolbarFeature,
+  InlineToolbarFeature,
+  OrderedListFeature,
+  UnorderedListFeature,
+} from '@payloadcms/richtext-lexical'
 
 export const FaqBlock: Block = {
   slug: 'faqBlock',
   interfaceName: 'FaqBlock',
   fields: [
-    HeadingConfig,
+    {
+      name: 'heading',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          FixedToolbarFeature(),
+        ],
+      }),
+      label: 'Заглавие на секцията',
+      admin: {
+        description:
+          'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+      },
+    },
     {
       name: 'cardsArray',
       type: 'array',
@@ -14,7 +36,42 @@ export const FaqBlock: Block = {
         {
           name: 'basicComponentFull',
           type: 'group',
-          fields: [HeadingConfig, DescriptionFullRichTextConfig],
+          fields: [
+            {
+              name: 'heading',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ rootFeatures }) => [
+                  ...rootFeatures,
+                  HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+                  FixedToolbarFeature(),
+                ],
+              }),
+              label: 'Заглавие на секцията',
+              admin: {
+                description:
+                  'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+              },
+            },
+            {
+              name: 'description',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ rootFeatures }) => [
+                  ...rootFeatures,
+                  HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+                  FixedToolbarFeature(),
+                  InlineToolbarFeature(),
+                  UnorderedListFeature(),
+                  OrderedListFeature(),
+                ],
+              }),
+              label: 'Описание на секцията',
+              admin: {
+                description: 'Включа пълна свобода в richtext полето.',
+              },
+            },
+          ],
           label: 'Базов компонент (заглавие, описание и медия)',
         },
       ],
