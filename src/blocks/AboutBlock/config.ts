@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { MediaConfig } from '../Reusable'
 import { linkGroup } from '@/fields/linkGroup'
 import {
   lexicalEditor,
@@ -49,7 +48,13 @@ export const AboutBlock: Block = {
             description: 'Моля, придържайте се към конвенцията за описанията.',
           },
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
         linkGroup({
           overrides: {
             maxRows: 1,
@@ -94,7 +99,13 @@ export const AboutBlock: Block = {
             description: 'Моля, придържайте се към конвенцията за описанията.',
           },
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
       ],
     },
     {
@@ -134,7 +145,13 @@ export const AboutBlock: Block = {
             description: 'Моля, придържайте се към конвенцията за описанията.',
           },
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
       ],
     },
   ],

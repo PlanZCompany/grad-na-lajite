@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { MediaConfig, OrderButtonCheckField } from '../Reusable'
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -49,7 +48,13 @@ export const ProductBlock: Block = {
             description: 'Моля, придържайте се към конвенцията за описанията.',
           },
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
         {
           name: 'reviews',
           type: 'text',
@@ -74,6 +79,11 @@ export const ProductBlock: Block = {
             description: '* Абонирай се за новини и получи -10% код',
           },
         },
+        linkGroup({
+          overrides: {
+            maxRows: 1,
+          },
+        }),
         {
           name: 'extraDescription',
           type: 'richText',
@@ -88,6 +98,23 @@ export const ProductBlock: Block = {
           admin: {
             description: 'Пример: 🚚 Доставка 2-3 дни със Спиди – 4.90 лв....',
           },
+        },
+        {
+          name: 'conditions',
+          type: 'array',
+          fields: [
+            {
+              name: 'condition',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'icon',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+          ],
         },
       ],
     },
@@ -169,13 +196,29 @@ export const ProductBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
           ],
         },
-        OrderButtonCheckField,
+        {
+          name: 'orderButton',
+          type: 'checkbox',
+          label: 'Показване на бутон за поръчка',
+          defaultValue: false,
+        },
+        linkGroup({
+          overrides: {
+            maxRows: 1,
+          },
+        }),
       ],
     },
     {
@@ -256,13 +299,24 @@ export const ProductBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
           ],
         },
-        OrderButtonCheckField,
+        {
+          name: 'orderButton',
+          type: 'checkbox',
+          label: 'Показване на бутон за поръчка',
+          defaultValue: false,
+        },
       ],
     },
     {
@@ -343,13 +397,24 @@ export const ProductBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
           ],
         },
-        OrderButtonCheckField,
+        {
+          name: 'orderButton',
+          type: 'checkbox',
+          label: 'Показване на бутон за поръчка',
+          defaultValue: false,
+        },
       ],
     },
     {
@@ -389,7 +454,13 @@ export const ProductBlock: Block = {
             description: 'Моля, придържайте се към конвенцията за описанията.',
           },
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
       ],
     },
     {
@@ -454,13 +525,24 @@ export const ProductBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
           ],
         },
-        OrderButtonCheckField,
+        {
+          name: 'orderButton',
+          type: 'checkbox',
+          label: 'Показване на бутон за поръчка',
+          defaultValue: false,
+        },
       ],
     },
     {
@@ -500,7 +582,13 @@ export const ProductBlock: Block = {
             description: 'Моля, придържайте се към конвенцията за описанията.',
           },
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
         linkGroup({
           overrides: {
             maxRows: 1,

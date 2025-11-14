@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { MediaConfig } from '../Reusable'
 import {
   lexicalEditor,
   HeadingFeature,
@@ -47,7 +46,13 @@ export const InfoAndImageBlock: Block = {
         description: 'Включа пълна свобода в richtext полето.',
       },
     },
-    MediaConfig,
+    {
+      name: 'media',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      maxDepth: 2,
+    },
     {
       name: 'reverse',
       type: 'checkbox',

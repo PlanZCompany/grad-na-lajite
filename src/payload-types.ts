@@ -361,6 +361,64 @@ export interface ContentBlock {
  * via the `definition` "HomeBlock".
  */
 export interface HomeBlock {
+  sh?: {
+    /**
+     * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+     */
+    heading?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Моля, придържайте се към конвенцията за описанията.
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Дизайн на линк
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+  };
   whyToChoseUs?: {
     /**
      * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
@@ -1037,6 +1095,25 @@ export interface ProductBlock {
      * * Абонирай се за новини и получи -10% код
      */
     discountText: string;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Дизайн на линк
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Пример: 🚚 Доставка 2-3 дни със Спиди – 4.90 лв....
      */
@@ -1055,6 +1132,13 @@ export interface ProductBlock {
       };
       [k: string]: unknown;
     } | null;
+    conditions?:
+      | {
+          condition: string;
+          icon: number | Media;
+          id?: string | null;
+        }[]
+      | null;
   };
   box?: {
     /**
@@ -1138,6 +1222,25 @@ export interface ProductBlock {
         }[]
       | null;
     orderButton?: boolean | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Дизайн на линк
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
   };
   play?: {
     /**
@@ -2431,6 +2534,28 @@ export interface ContentBlockSelect<T extends boolean = true> {
  * via the `definition` "HomeBlock_select".
  */
 export interface HomeBlockSelect<T extends boolean = true> {
+  sh?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+      };
   whyToChoseUs?:
     | T
     | {
@@ -2603,7 +2728,29 @@ export interface ProductBlockSelect<T extends boolean = true> {
         reviews?: T;
         price?: T;
         discountText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
         extraDescription?: T;
+        conditions?:
+          | T
+          | {
+              condition?: T;
+              icon?: T;
+              id?: T;
+            };
       };
   box?:
     | T
@@ -2623,6 +2770,21 @@ export interface ProductBlockSelect<T extends boolean = true> {
               id?: T;
             };
         orderButton?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
       };
   play?:
     | T

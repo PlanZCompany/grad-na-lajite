@@ -16,7 +16,11 @@ const classMap = {
     'bg-transparent border-[1px] border-primaryBlackAccent hover:bg-primaryWhite hover:text-primaryBlack !text-primaryBlack',
   colored:
     '!px-3 !py-2 bg-[#200226] text-white hover:scale-105 transition-all duration-300 ease-in-out',
-  gray: 'bg-gradient-to-tr from-primaryGray to-primaryBlack border-[1px] border-primaryBlackAccent hover:from-primaryWhiteAccent hover:to-primaryWhite',
+  gray: `bg-[rgba(20,10,40,0.85)] shadow-[0_0_20px_rgba(0,0,0,0.6)] text-primaryYellow text-xl font-bold cursor-pointer
+         transition-all duration-300 ease-in-out
+         shadow-[0_0_15px_rgba(212,175,55,0.4)]
+         hover:from-[#e8c85c] hover:to-[#d4af37]
+         hover:shadow-[0_0_25px_rgba(212,175,55,0.7)]`,
   outLined: 'bg-pink/50 border-[1px] border-white text-white hover:bg-white hover:text-pink',
   white:
     'bg-transparent border-[1px] border-white text-white hover:bg-white hover:!text-bordo !font-[700] transition-all duration-300 ease-in-out',

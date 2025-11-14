@@ -153,6 +153,21 @@ export const Pages: CollectionConfig<'pages'> = {
     afterChange: [revalidatePage],
     beforeChange: [populatePublishedAt],
     afterDelete: [revalidateDelete],
+    beforeValidate: [
+      ({ data }) => {
+        const blocks = data?.blocks ?? data?.content ?? null
+        if (Array.isArray(blocks)) {
+          for (const b of blocks) {
+            if (b?.blockType === 'productBlock' /* your slug here */) {
+              if (Array.isArray(b.mediaArray)) {
+                b.mediaArray = b.mediaArray.filter((row: any) => !!row?.media)
+              }
+            }
+          }
+        }
+        return data
+      },
+    ],
   },
   versions: {
     drafts: {

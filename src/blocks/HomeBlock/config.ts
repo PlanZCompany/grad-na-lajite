@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { MediaConfig } from '../Reusable'
+
 import {
   lexicalEditor,
   HeadingFeature,
@@ -8,19 +8,76 @@ import {
   OrderedListFeature,
   UnorderedListFeature,
 } from '@payloadcms/richtext-lexical'
+import { LEXICAL_H2_DEFAULT, LEXICAL_PARAGRAPH } from '../Reusable'
+import { linkGroup } from '@/fields/linkGroup'
 
 export const HomeBlock: Block = {
   slug: 'homeBlock',
   interfaceName: 'HomeBlock',
   fields: [
     {
-      name: 'whyToChoseUs',
-      label: 'Защо да изберете нас',
+      name: 'sh',
+      label: 'Допълнителна секция (Preview)',
       type: 'group',
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+            ],
+          }),
+          defaultValue: LEXICAL_H2_DEFAULT,
+          label: 'Заглавие на секцията',
+          admin: {
+            description:
+              'Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)',
+          },
+        },
+        {
+          name: 'description',
+          type: 'richText',
+          defaultValue: LEXICAL_PARAGRAPH,
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
+          }),
+          label: 'Описание на секцията',
+          admin: {
+            description: 'Моля, придържайте се към конвенцията за описанията.',
+          },
+        },
+        linkGroup({
+          overrides: {
+            maxRows: 1,
+          },
+        }),
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
+      ],
+    },
+    {
+      name: 'whyToChoseUs',
+      label: 'Защо да изберете нас',
+      type: 'group',
+      defaultValue: {},
+      fields: [
+        {
+          name: 'heading',
+          type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -52,16 +109,20 @@ export const HomeBlock: Block = {
         },
         {
           name: 'cardsArray',
+          defaultValue: [],
           type: 'array',
           label: 'Базов компонент (заглавие, описание и медия)',
           fields: [
             {
               name: 'basicComponent',
               type: 'group',
+              defaultValue: {},
               fields: [
                 {
                   name: 'heading',
                   type: 'richText',
+                  defaultValue: LEXICAL_H2_DEFAULT,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -78,6 +139,8 @@ export const HomeBlock: Block = {
                 {
                   name: 'description',
                   type: 'richText',
+
+                  defaultValue: LEXICAL_PARAGRAPH,
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -91,7 +154,13 @@ export const HomeBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
@@ -103,10 +172,13 @@ export const HomeBlock: Block = {
       name: 'historySection',
       label: 'История',
       type: 'group',
+      defaultValue: {},
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -136,17 +208,26 @@ export const HomeBlock: Block = {
             description: 'Моля, придържайте се към конвенцията за описанията.',
           },
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
       ],
     },
     {
       name: 'whatIsTheGame',
       label: 'Какво е играта',
       type: 'group',
+      defaultValue: {},
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -162,16 +243,20 @@ export const HomeBlock: Block = {
         },
         {
           name: 'cardsArray',
+          defaultValue: [],
           type: 'array',
           label: 'Базов компонент (заглавие, описание и медия)',
           fields: [
             {
               name: 'basicComponent',
               type: 'group',
+              defaultValue: {},
               fields: [
                 {
                   name: 'heading',
                   type: 'richText',
+                  defaultValue: LEXICAL_H2_DEFAULT,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -188,6 +273,8 @@ export const HomeBlock: Block = {
                 {
                   name: 'description',
                   type: 'richText',
+                  defaultValue: LEXICAL_PARAGRAPH,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -201,7 +288,13 @@ export const HomeBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
@@ -213,10 +306,13 @@ export const HomeBlock: Block = {
       name: 'gameRules',
       label: 'Правила',
       type: 'group',
+      defaultValue: {},
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -250,16 +346,20 @@ export const HomeBlock: Block = {
         },
         {
           name: 'cardsArray',
+          defaultValue: [],
           type: 'array',
           label: 'Базов компонент (заглавие, описание и медия)',
           fields: [
             {
               name: 'basicComponent',
               type: 'group',
+              defaultValue: {},
               fields: [
                 {
                   name: 'heading',
                   type: 'richText',
+                  defaultValue: LEXICAL_H2_DEFAULT,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -276,6 +376,8 @@ export const HomeBlock: Block = {
                 {
                   name: 'description',
                   type: 'richText',
+                  defaultValue: LEXICAL_PARAGRAPH,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -289,23 +391,38 @@ export const HomeBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
           ],
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
       ],
     },
     {
       name: 'gameRules2',
       label: 'Правила Втора секция',
       type: 'group',
+      defaultValue: {},
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -339,16 +456,20 @@ export const HomeBlock: Block = {
         },
         {
           name: 'cardsArray',
+          defaultValue: [],
           type: 'array',
           label: 'Базов компонент (заглавие, описание и медия)',
           fields: [
             {
               name: 'basicComponent',
               type: 'group',
+              defaultValue: {},
               fields: [
                 {
                   name: 'heading',
                   type: 'richText',
+                  defaultValue: LEXICAL_H2_DEFAULT,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -365,6 +486,8 @@ export const HomeBlock: Block = {
                 {
                   name: 'description',
                   type: 'richText',
+                  defaultValue: LEXICAL_PARAGRAPH,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -378,7 +501,13 @@ export const HomeBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
@@ -390,10 +519,13 @@ export const HomeBlock: Block = {
       name: 'singlePreview',
       label: 'Продукт - Preview',
       type: 'group',
+      defaultValue: {},
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -423,7 +555,13 @@ export const HomeBlock: Block = {
             description: 'Моля, придържайте се към конвенцията за описанията.',
           },
         },
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
         {
           name: 'price',
           label: 'Цена',
@@ -435,10 +573,13 @@ export const HomeBlock: Block = {
       name: 'galleryPreview',
       label: 'Галерия - Preview',
       type: 'group',
+      defaultValue: {},
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -456,7 +597,16 @@ export const HomeBlock: Block = {
           name: 'mediaArray',
           type: 'array',
           label: 'Медии',
-          fields: [MediaConfig],
+          defaultValue: [],
+          fields: [
+            {
+              name: 'media',
+              type: 'upload',
+              relationTo: 'media',
+              required: false,
+              maxDepth: 2,
+            },
+          ],
         },
       ],
     },
@@ -464,10 +614,13 @@ export const HomeBlock: Block = {
       name: 'histories',
       label: 'Истории',
       type: 'group',
+      defaultValue: {},
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -483,16 +636,20 @@ export const HomeBlock: Block = {
         },
         {
           name: 'cardsArray',
+          defaultValue: [],
           type: 'array',
           label: 'Базов компонент (заглавие, описание и медия)',
           fields: [
             {
               name: 'basicComponent',
               type: 'group',
+              defaultValue: {},
               fields: [
                 {
                   name: 'heading',
                   type: 'richText',
+                  defaultValue: LEXICAL_H2_DEFAULT,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -509,6 +666,8 @@ export const HomeBlock: Block = {
                 {
                   name: 'description',
                   type: 'richText',
+                  defaultValue: LEXICAL_PARAGRAPH,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -522,7 +681,13 @@ export const HomeBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },
@@ -533,11 +698,14 @@ export const HomeBlock: Block = {
     {
       name: 'partners',
       type: 'group',
+      defaultValue: {},
       label: 'Партньори - секция',
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -553,10 +721,17 @@ export const HomeBlock: Block = {
         },
         {
           name: 'cardsArray',
+          defaultValue: [],
           type: 'array',
           label: 'Базов компонент (заглавие, описание и медия)',
           fields: [
-            MediaConfig,
+            {
+              name: 'media',
+              type: 'upload',
+              relationTo: 'media',
+              required: false,
+              maxDepth: 2,
+            },
             {
               name: 'url',
               type: 'text',
@@ -570,10 +745,13 @@ export const HomeBlock: Block = {
       name: 'testimonials',
       label: 'Мнения на потребители',
       type: 'group',
+      defaultValue: {},
       fields: [
         {
           name: 'heading',
           type: 'richText',
+          defaultValue: LEXICAL_H2_DEFAULT,
+
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [
               ...rootFeatures,
@@ -589,16 +767,20 @@ export const HomeBlock: Block = {
         },
         {
           name: 'cardsArray',
+          defaultValue: [],
           type: 'array',
           label: 'Базов компонент (заглавие, описание и медия)',
           fields: [
             {
               name: 'basicComponent',
               type: 'group',
+              defaultValue: {},
               fields: [
                 {
                   name: 'heading',
                   type: 'richText',
+                  defaultValue: LEXICAL_H2_DEFAULT,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -615,6 +797,8 @@ export const HomeBlock: Block = {
                 {
                   name: 'description',
                   type: 'richText',
+                  defaultValue: LEXICAL_PARAGRAPH,
+
                   editor: lexicalEditor({
                     features: ({ rootFeatures }) => [
                       ...rootFeatures,
@@ -628,7 +812,13 @@ export const HomeBlock: Block = {
                     description: 'Моля, придържайте се към конвенцията за описанията.',
                   },
                 },
-                MediaConfig,
+                {
+                  name: 'media',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                  maxDepth: 2,
+                },
               ],
               label: 'Базов компонент (заглавие, описание и медия)',
             },

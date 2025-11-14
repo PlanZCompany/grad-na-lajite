@@ -1,6 +1,5 @@
 import type { GlobalConfig } from 'payload'
 
-import { MediaConfig } from '@/blocks/Reusable'
 import { revalidateSubscriptionModal } from './hooks/revalidateSubscriptionModal'
 import {
   lexicalEditor,
@@ -47,7 +46,13 @@ export const SubscriptionModal: GlobalConfig = {
         description: 'Моля, придържайте се към конвенцията за описанията.',
       },
     },
-    MediaConfig,
+    {
+      name: 'media',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      maxDepth: 2,
+    },
   ],
   hooks: {
     afterChange: [revalidateSubscriptionModal],

@@ -159,8 +159,8 @@ const ShoppingCardAside = () => {
             <span className="uppercase">Доставката е безплатна!</span>
           ) : (
             <>
-              Добави артикули за още {calculateRemainSum().toFixed(2)} лева и доставката ще е
-              безплатна
+              Добави артикули за още {calculateRemainSum().toFixed(2)}лв{' '}
+              {Number(priceToEuro(calculateRemainSum())).toFixed(2)}€ и доставката ще е безплатна
             </>
           )}
         </GenericParagraph>

@@ -38,7 +38,10 @@ const InfoAndGridCards = ({ data }: { data: HomeBlock['gameRules2'] }) => {
           </div>
 
           <figcaption className="w-full">
-            <div id={`${card.id}-title`} className="text-xl font-semibold text-[#FFD700] mb-3">
+            <div
+              id={`${card.id}-title`}
+              className="text-xl md:text-2xl font-semibold text-[#FFD700] mb-3"
+            >
               <RichText data={heading as any} />
             </div>
 

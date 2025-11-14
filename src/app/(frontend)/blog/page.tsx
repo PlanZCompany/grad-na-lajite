@@ -9,6 +9,8 @@ import { generateMeta } from '@/utils/generateMeta'
 import GridBlog from '@/components/Sections/GridBlog'
 import { Blog } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 export default async function BlogPage() {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config: configPromise })

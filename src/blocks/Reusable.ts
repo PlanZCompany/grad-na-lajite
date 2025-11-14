@@ -8,6 +8,67 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { Field, RichTextField, UploadField } from 'payload'
 
+export const LEXICAL_H2_DEFAULT = {
+  root: {
+    type: 'root',
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    version: 1,
+    children: [
+      {
+        type: 'heading',
+        tag: 'h2', // ← default to H2
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        version: 1,
+        children: [
+          {
+            type: 'text',
+            text: '', // keep empty or put placeholder like 'Заглавие'
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            version: 1,
+          },
+        ],
+      },
+    ],
+  },
+} as const
+
+export const LEXICAL_PARAGRAPH: any = {
+  root: {
+    type: 'root',
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    version: 1,
+    children: [
+      {
+        type: 'paragraph',
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        version: 1,
+        children: [
+          {
+            type: 'text',
+            text: '',
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            version: 1,
+          },
+        ],
+      },
+    ],
+  },
+}
+
 export const HeadingConfig = {
   name: 'heading',
   type: 'richText',

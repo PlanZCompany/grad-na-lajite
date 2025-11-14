@@ -2,6 +2,7 @@ import {
   FlipCardsAndInfo,
   InfoAndImage,
   InfoAndListWithImage,
+  InfoImageWithBackground,
   Testimonials,
   ThreeCardsGrid,
 } from '@/components/Sections'
@@ -15,6 +16,7 @@ import React from 'react'
 
 export const HomeBlockComponent: React.FC<HomeBlock> = (props) => {
   const {
+    sh,
     whyToChoseUs,
     historySection,
     whatIsTheGame,
@@ -30,6 +32,7 @@ export const HomeBlockComponent: React.FC<HomeBlock> = (props) => {
   return (
     <section className="w-full flex">
       <div className="w-full my-auto">
+        <InfoImageWithBackground data={sh} />
         <FlipCardsAndInfo data={whyToChoseUs} />
         <InfoAndImage data={historySection} />
         <ThreeCardsGrid data={whatIsTheGame} />

@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
-import { MediaConfig } from '@/blocks/Reusable'
+
 import { revalidateAside } from './hooks/revalidateAside'
 
 export const Aside: GlobalConfig = {
@@ -18,7 +18,13 @@ export const Aside: GlobalConfig = {
         link({
           appearances: false,
         }),
-        MediaConfig,
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
       ],
     },
   ],

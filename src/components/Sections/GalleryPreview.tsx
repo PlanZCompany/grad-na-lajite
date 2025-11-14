@@ -1,7 +1,7 @@
 import { HomeBlock, Media } from '@/payload-types'
 import React from 'react'
 import HeadingPlusDescription from '../Generic/HeadingPlusDescription'
-import { GenericImage } from '../Generic'
+import { GenericImage, GenericVideo } from '../Generic'
 import { GallerySlider } from '../Sliders'
 import { Settings } from 'react-slick'
 
@@ -38,6 +38,8 @@ const GalleryPreview = ({ data }: { data: HomeBlock['galleryPreview'] }) => {
   const cardsContent = data?.mediaArray?.map((card) => {
     const media = card?.media as Media
 
+    const mediaType = media.mimeType?.includes('video') ? 'video' : 'image'
+
     return (
       <div key={card.id} className="w-full px-2 md:px-4">
         <article
@@ -45,16 +47,20 @@ const GalleryPreview = ({ data }: { data: HomeBlock['galleryPreview'] }) => {
         relative hover:scale-[1.03] duration-300 transition-transform p-2.5 rounded-[12px] shadow-[0_4px_20px_rgba(0,0,0,0.6)]`}
         >
           <div className="w-full h-[320px] rounded-[6px] overflow-hidden relative shadow_card hover:scale-[1.07] transition-transform duration-300">
-            <GenericImage
-              src={media?.url || ''}
-              alt={media?.alt || ''}
-              wrapperClassName="absolute inset-0"
-              imageClassName="object-contain w-full h-full"
-              sizes="(max-width: 1024px) 100vw, 33vw"
-              priority={false}
-              fill={true}
-              updatedAt={media?.updatedAt}
-            />
+            {mediaType === 'video' ? (
+              <GenericVideo src={media?.url || ''} wrapperClassName="w-full h-full" />
+            ) : (
+              <GenericImage
+                src={media?.url || ''}
+                alt={media?.alt || ''}
+                wrapperClassName="absolute inset-0"
+                imageClassName="object-contain w-full h-full"
+                sizes="(max-width: 1024px) 100vw, 33vw"
+                priority={false}
+                fill={true}
+                updatedAt={media?.updatedAt}
+              />
+            )}
           </div>
         </article>
       </div>

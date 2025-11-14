@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { MediaConfig } from '../Reusable'
+
 import {
   lexicalEditor,
   HeadingFeature,
@@ -43,6 +43,12 @@ export const SubscriptionForm: Block = {
         description: 'Моля, придържайте се към конвенцията за описанията.',
       },
     },
-    MediaConfig,
+    {
+      name: 'media',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      maxDepth: 2,
+    },
   ],
 }
