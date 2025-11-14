@@ -13,6 +13,8 @@ const GenericVideo = ({
   style?: React.CSSProperties
   videoClassName?: string
 }) => {
+  const currentScr = src.replace('/api/media/file', '')
+
   return (
     <div className={wrapperClassName}>
       <video
@@ -20,7 +22,7 @@ const GenericVideo = ({
         height={'100%'}
         autoPlay={true}
         loop={true}
-        src={src}
+        src={currentScr}
         muted={true}
         style={style}
         playsInline={true}
