@@ -1,11 +1,17 @@
+'use client'
+
 import { HomeBlock, Media } from '@/payload-types'
-import React from 'react'
+import React, { useState } from 'react'
 import HeadingPlusDescription from '../Generic/HeadingPlusDescription'
 import { GenericImage, GenericVideo } from '../Generic'
 import { GallerySlider } from '../Sliders'
 import { Settings } from 'react-slick'
+import FullVideo from '../Custom/FullVideo'
 
 const GalleryPreview = ({ data }: { data: HomeBlock['galleryPreview'] }) => {
+  const [isActive, setIsActive] = useState(false)
+  const [videoSrc, setVideoSrc] = useState('')
+
   const settings: Settings = {
     slidesToShow: 4,
     responsive: [
@@ -48,7 +54,15 @@ const GalleryPreview = ({ data }: { data: HomeBlock['galleryPreview'] }) => {
         >
           <div className="w-full h-[320px] rounded-[6px] overflow-hidden relative shadow_card hover:scale-[1.07] transition-transform duration-300">
             {mediaType === 'video' ? (
-              <GenericVideo src={media?.url || ''} wrapperClassName="w-full h-full" />
+              <button
+                className="w-full h-full"
+                onClick={() => {
+                  setIsActive(true)
+                  setVideoSrc(media?.url || '')
+                }}
+              >
+                <GenericVideo src={media?.url || ''} wrapperClassName="w-full h-full" />
+              </button>
             ) : (
               <GenericImage
                 src={media?.url || ''}
@@ -68,22 +82,25 @@ const GalleryPreview = ({ data }: { data: HomeBlock['galleryPreview'] }) => {
   })
 
   return (
-    <section className="w-full py-10 md:py-20 flex">
-      <div className="w-full content_wrapper_mobile-full flex flex-col gap-10">
-        <HeadingPlusDescription heading={data?.heading} />
-        <div className="w-full relative">
-          <div className="hidden md:block absolute pointer-events-none top-0 bottom-0 left-0 w-[25%] z-[3] bg-gradient-to-r from-[#200226] to-transparent"></div>
-          <GallerySlider
-            extraClass="min-h-[320px]"
-            refKey="galleryPreview"
-            sliderSettings={settings}
-          >
-            {cardsContent}
-          </GallerySlider>
-          <div className="hidden md:block absolute pointer-events-none top-0 bottom-0 right-0 w-[25%] z-[3] bg-gradient-to-l from-[#200226] to-transparent"></div>
+    <>
+      <FullVideo isActive={isActive} setIsActive={setIsActive} src={videoSrc} />
+      <section className="w-full py-10 md:py-20 flex">
+        <div className="w-full content_wrapper_mobile-full flex flex-col gap-10">
+          <HeadingPlusDescription heading={data?.heading} />
+          <div className="w-full relative">
+            <div className="hidden md:block absolute pointer-events-none top-0 bottom-0 left-0 w-[25%] z-[3] bg-gradient-to-r from-[#200226] to-transparent"></div>
+            <GallerySlider
+              extraClass="min-h-[320px]"
+              refKey="galleryPreview"
+              sliderSettings={settings}
+            >
+              {cardsContent}
+            </GallerySlider>
+            <div className="hidden md:block absolute pointer-events-none top-0 bottom-0 right-0 w-[25%] z-[3] bg-gradient-to-l from-[#200226] to-transparent"></div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 

@@ -48,7 +48,7 @@ const GridBlog = ({ data }: { data: Blog[] }) => {
               {description && (
                 <GenericParagraph
                   pType="custom"
-                  extraClass="text-[16px] leading-[150%] md:line-clamp-4"
+                  extraClass="text-[16px] leading-[150%] line-clamp-4"
                 >
                   <RichText data={description} />
                 </GenericParagraph>

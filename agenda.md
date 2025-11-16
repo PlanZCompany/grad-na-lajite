@@ -47,13 +47,32 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 [admin] blog page - need data in admin
 
 - Мета снимка за всички страници и за отделни
+
+[done] - search
+
+- video fullscreen
+* create video full screen modal
+* add to each segment - (home-gallery, product-gallery)
+
 - Checkout page
 
 ---
 
-- all required collections (orders...)
+---emails---
+
 - email template fix (има го в папката в webrika pc)
 - email SMTP to be the domain
+  ---admin---
+- all required collections (orders...)
+- fill admin
+  ---seo---
 - sitemap
 - jsonld for required places
-- fill admin
+
+---media---
+
+- use storage try with superhosting
+
+**DONE PER WEEK**
+- search - визия | функционалност | може да се търси както по заглавие на блог така и по описание
+- full screen video popup - в галерия и продукти вече имаш възможност да видиш full screen video

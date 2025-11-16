@@ -21,6 +21,9 @@ import { ShoppingCardAside } from '@/components/Checkout'
 import ShoppingCartManager from '@/components/Setters/ShoppingCartManager'
 import BuyNowButton from '@/components/Custom/BuyNowButton'
 import SetMainProduct from '@/components/Setters/SetMainProduct'
+import { getPublishedBlogsCached } from '@/action/cache'
+import { Blog } from '@/payload-types'
+import Search from '@/components/Search/Search'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -32,7 +35,7 @@ export const metadata: Metadata = {
     template: `%s`,
   },
   description: 'Град на лъжите', //TODO
-  keywords: ['подарък', 'изненада', 'близък', 'рожден ден', 'имен ден'], //TODO
+  keywords: ['подарък', 'игра', 'настолна игра', 'карти', 'лъжа', 'истина'],
   authors: [{ name: 'Simeon Rudashki' }, { name: 'PlanZ' }, { name: 'Anatoli Vachev' }],
   creator: 'PlanZ',
   publisher: 'PlanZ',
@@ -127,42 +130,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   })
 
   const currentProduct = product?.docs?.[0]
-  // const productsForSearch = await payload.find({
-  //   collection: 'product',
-  //   draft: false,
-  //   limit: 1000,
-  //   overrideAccess: false,
-  //   pagination: false,
-  //   where: {
-  //     and: [
-  //       {
-  //         _status: {
-  //           equals: 'published',
-  //         },
-  //       },
-  //       {
-  //         quantity: {
-  //           not_equals: 0,
-  //         },
-  //       },
-  //     ],
-  //   },
-  //   select: {
-  //     title: true,
-  //     slug: true,
-  //     // media: true,
-  //     description: true,
-  //     heading: true,
-  //     category: true,
-  //     price: true,
-  //     bestSeller: true,
-  //     promoPrice: true,
-  //     havePriceRange: true,
-  //     mediaArray: true,
-  //     priceRange: true,
-  //     shortDescription: true,
-  //   },
-  // })
+  //need to make function with cache about to 5 minutes to get blogs to avoid flickering
+  const blogsForSearch = await getPublishedBlogsCached()
 
   return (
     <StoreProvider>
@@ -179,7 +148,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <a href="#content" className="sr-only focus:not-sr-only">
               Към съдържанието
             </a>
-            {/* <Search products={productsForSearch.docs as Product[]} /> */}
+            <Search blogs={blogsForSearch.docs as Blog[]} />
             <AsideComponent />
             <ScrollToTop />
             <SubscriptionModalComponent />
