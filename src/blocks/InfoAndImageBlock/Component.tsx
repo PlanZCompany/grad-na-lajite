@@ -18,11 +18,11 @@ export const InfoAndImageBlockComponent: React.FC<InfoAndImageBlock> = (props) =
             <article className={`flex gap-m flex-col`}>
               {props.heading && (
                 <GenericHeading
-                  textShadow={true}
+                  textShadow={false}
                   headingType="h2"
                   align="text-center md:text-left"
-                  extraClass={`w-full blog_headings`}
-                  textColor="text-[#4B0082]"
+                  extraClass={`w-full`}
+                  textColor="text-[#2d2d2d]"
                 >
                   <RichText data={props.heading} />
                 </GenericHeading>
@@ -37,7 +37,7 @@ export const InfoAndImageBlockComponent: React.FC<InfoAndImageBlock> = (props) =
           <GenericImage
             src={faqMedia?.url || ''}
             alt={faqMedia?.alt || ''}
-            wrapperClassName="w-full max-w-[350px] mx-auto xl:mx-[unset] aspect-square relative rounded-[16px] overflow-hidden"
+            wrapperClassName="w-full max-w-[350px] max-h-[350px] mx-auto xl:mx-[unset] aspect-square relative rounded-[16px] overflow-hidden"
             fill={true}
             priority={true}
             focalX={faqMedia?.focalX || 50}

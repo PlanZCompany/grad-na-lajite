@@ -11,7 +11,7 @@ const InfoImageWithBackground = ({ data }: { data: HomeBlock['sh'] }) => {
 
   return (
     <SectionWrapper>
-      <div className="w-full content_wrapper bg-[#d4af37] border-[#D4AF37] border-[4px] relative rounded-[16px] overflow-hidden py-6 md:py-10 border-">
+      <div className="w-full content_wrapper bg-[#d4af37] border-[#D4AF37] border-[4px] relative rounded-[16px] px-4 md:px-10 overflow-hidden py-6 md:py-10 border-">
         <div className={`flex flex-col-reverse gap-10 xl:flex-row`}>
           <div className="flex-1 flex justify-center items-center">
             <article

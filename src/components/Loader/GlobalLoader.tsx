@@ -7,7 +7,7 @@ const GlobalLoader = ({ color = '#FFF' }: { color: string }) => {
       <div className="w-fit mx-auto relative">
         <div className="absolute z-[10] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/logo.png"
+            src="/Logo.png"
             alt="logo"
             width={66}
             height={101}
