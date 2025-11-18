@@ -32,7 +32,6 @@ export const Media: CollectionConfig = {
         if (!doc?.filename) return doc
 
         const localPath = path.join(uploadLocalDir, doc.filename as string)
-        console.log('localPath (prod/dev):', localPath)
 
         try {
           await uploadToSuperhosting(localPath, doc.filename as string)

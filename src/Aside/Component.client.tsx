@@ -14,7 +14,7 @@ const AsideClient = ({ asideData }: { asideData: Aside }) => {
     const media = item.media as Media
 
     const initialTransition = index * 100
-
+    console.log(media.url)
     return (
       <li
         key={item.id}
