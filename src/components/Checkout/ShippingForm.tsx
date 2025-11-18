@@ -53,7 +53,13 @@ const shippingVariants = [
 
 const shippingSelectArray = ['econt', 'speedy', 'box-now']
 
-const ShippingForm = () => {
+const ShippingForm = ({
+  econtCities,
+  speedySites,
+}: {
+  econtCities: EcontCity[]
+  speedySites: SpeedySite[]
+}) => {
   const dispatch = useAppDispatch()
   const [ok, setOk] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -102,6 +108,14 @@ const ShippingForm = () => {
           onClick={() => {
             setActiveShipping(variant as 'speedy' | 'econt' | 'box-now')
             restoreStateAfterChangeActiveShipping()
+
+            if (variant === 'box-now') {
+              setActiveShippingInner('box-now')
+            } else if (variant === 'econt') {
+              setActiveShippingInner('econt-office')
+            } else {
+              setActiveShippingInner('speedy-office')
+            }
           }}
         >
           <GenericImage
@@ -123,6 +137,7 @@ const ShippingForm = () => {
       case 'econt':
         return (
           <EcontWrapper
+            econtCities={econtCities}
             activeInnerShipping={activeShippingInner as InnerShippingProps}
             address={address}
             currentShippingCity={currentShippingCity as EcontCity}
@@ -142,6 +157,7 @@ const ShippingForm = () => {
             handleCityChange={handleCityChange}
             handleOfficeChange={handleOfficeChange}
             office={chosenOffice as SpeedyOffice}
+            speedySites={speedySites}
           />
         )
       default:
@@ -151,7 +167,8 @@ const ShippingForm = () => {
 
   const shippingContent = shippingVariants.map((variant) => {
     const isActive = activeShippingInner === variant.name
-    const needToBeRendered = activeShipping === variant.parent
+    const isParentActive = activeShipping === variant.parent
+    const needToBeRendered = !!activeShippingInner ? isParentActive && isActive : isParentActive
 
     return needToBeRendered ? (
       <li
@@ -161,7 +178,11 @@ const ShippingForm = () => {
         <button
           className="w-full flex items-center"
           onClick={() => {
-            setActiveShippingInner(variant.name as InnerShippingProps)
+            if (activeShippingInner === variant.name) {
+              setActiveShippingInner(null)
+            } else {
+              setActiveShippingInner(variant.name as InnerShippingProps)
+            }
             restoreStateAfterChangeActiveShipping()
           }}
         >

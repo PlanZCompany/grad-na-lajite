@@ -42,45 +42,75 @@ export async function callSpeedy<T>(path: string, body: Record<string, unknown> 
 
   return res.json() as Promise<T>
 }
-const getSpeedySitesCached = unstable_cache(
+const getAllSpeedySitesCached = unstable_cache(
   async (): Promise<SpeedySite[]> => {
-    // TODO: ако Speedy API изисква задължително name, можеш да пробваш с празен string или специален флаг.
-    const rawSites = await callSpeedy<SpeedySiteRaw[]>('location/site', {
-      countryId: 100,
-      // name: ''  // -> ако API-то изисква поле name
+    const url = buildSpeedyUrl('location/site/csv/100') // 100 = BG
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      body: JSON.stringify({
+        userName: SPEEDY_USERNAME,
+        password: SPEEDY_PASSWORD,
+        language: SPEEDY_LANGUAGE ?? 'BG',
+      }),
+      cache: 'no-store',
     })
 
-    if (!('sites' in rawSites)) return []
+    if (!res.ok) {
+      const text = await res.text().catch(() => '')
+      throw new Error(`Speedy CSV error ${res.status}: ${text}`)
+    }
 
-    const resources: any = 'sites' in rawSites ? rawSites.sites : []
+    const csv = await res.text()
 
-    return !!resources.length
-      ? resources.map(
-          (s: any): SpeedySite => ({
-            id: s.id,
-            name: s.name,
-            postCode: s.postCode ?? null,
-            municipality: s.municipality ?? null,
-            region: s.region ?? null,
-          }),
-        )
-      : []
+    const lines = csv
+      .split('\n')
+      .map((l) => l.trim())
+      .filter(Boolean)
+
+    // първият ред е header → пропускаме го
+    const [, ...dataLines] = lines
+
+    const sites: SpeedySite[] = dataLines.map((line, index) => {
+      if (index < 5) {
+        console.log(line, 'line')
+      }
+
+      const cols = line.split(',') // тук може да донастроиш според реалния формат
+
+      const id = cols[0]
+      const name = cols[5]
+      const postCode = cols[11]
+      const municipality = cols[6]
+      const region = cols[9]
+
+      return {
+        id: Number(id),
+        name,
+        postCode: postCode || null,
+        municipality: municipality || null,
+        region: region || null,
+      }
+    })
+
+    return sites
   },
-  ['speedy-sites'],
-  {
-    revalidate: 60 * 60 * 24, // 24ч
-  },
+  ['speedy-sites-all'],
+  { revalidate: 60 * 60 * 24 }, // 24h
 )
 
-export async function getSpeedySitesAction(): Promise<SpeedySite[]> {
-  return getSpeedySitesCached()
+export async function getAllSpeedySitesAction() {
+  return getAllSpeedySitesCached()
 }
 
 const getSpeedyOfficesCached = unstable_cache(
   async (siteId: number): Promise<SpeedyOffice[]> => {
     const rawOffices = await callSpeedy<SpeedyOfficeRaw[]>('location/office', { siteId })
 
-    return (rawOffices ?? []).map((o): SpeedyOffice => {
+    const resources = 'offices' in rawOffices ? rawOffices.offices : []
+
+    return (resources as SpeedyOfficeRaw[]).map((o): SpeedyOffice => {
       const workTime =
         o.workTimeFrom || o.workTimeTo
           ? `${o.workTimeFrom ?? ''} - ${o.workTimeTo ?? ''}`.trim()

@@ -57,3 +57,8 @@ export interface EcontOffice {
     lng: number | null
   }
 }
+
+export type EcontCitiesCache = {
+  value: EcontCity[]
+  expiresAt: number
+} | null

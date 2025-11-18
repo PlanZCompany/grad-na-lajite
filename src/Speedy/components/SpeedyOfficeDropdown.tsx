@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { GenericParagraph } from '@/components/Generic'
 import { ArrowIcon } from '@/assets/icons'
 import { SpeedyOffice, SpeedySite } from '../types'
+import { getSpeedyOfficesAction } from '../actions'
 
 const SpeedyOfficeDropdown = ({
   cities,
@@ -23,13 +24,14 @@ const SpeedyOfficeDropdown = ({
 
   const [cityOffices, setCityOffices] = useState<SpeedyOffice[]>([])
 
+  console.log('RENDER OFFICES DROPDOWN')
+
   useEffect(() => {
     if (!city) return
 
-    //TODO
-    // getEcontOfficesAction(city.id).then((offices) => {
-    //   setCityOffices(offices)
-    // })
+    getSpeedyOfficesAction(city.id).then((offices) => {
+      setCityOffices(offices)
+    })
   }, [city])
 
   const citiesContent = cities.map((city) => {

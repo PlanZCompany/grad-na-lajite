@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { SpeedyOffice, SpeedySite } from '../types'
-import { getSpeedySitesAction } from '../actions'
+import { getAllSpeedySitesAction } from '../actions'
 import SpeedyOfficeDropdown from './SpeedyOfficeDropdown'
 import SpeedyAddressDropdown from './SpeedyAddressDropdown'
 import { InnerShippingProps } from '@/components/Checkout/ShippingForm'
@@ -15,6 +15,7 @@ type SpeedyWrapperProps = {
   handleCityChange: (city: SpeedySite) => void
   handleOfficeChange: (office: SpeedyOffice) => void
   handleAddressChange: (address: string) => void
+  speedySites: SpeedySite[]
 }
 
 const SpeedyWrapper = ({
@@ -25,26 +26,13 @@ const SpeedyWrapper = ({
   handleCityChange,
   handleOfficeChange,
   handleAddressChange,
+  speedySites,
 }: SpeedyWrapperProps) => {
-  const [cities, setCities] = useState<SpeedySite[]>([])
-
-  const handleGetCities = async () => {
-    const speedyCities = (await getSpeedySitesAction()) || []
-
-    if (speedyCities.length > 0) setCities(speedyCities)
-  }
-
-  useEffect(() => {
-    handleGetCities()
-  }, [])
-
-  console.log('cities', cities.slice(0, 5))
-
   return (
     <>
       {activeInnerShipping === 'speedy-office' ? (
         <SpeedyOfficeDropdown
-          cities={cities}
+          cities={speedySites}
           setter={handleCityChange}
           office={office}
           city={currentShippingCity as SpeedySite}
@@ -52,7 +40,7 @@ const SpeedyWrapper = ({
         />
       ) : (
         <SpeedyAddressDropdown
-          cities={cities}
+          cities={speedySites}
           setter={handleCityChange}
           city={currentShippingCity as SpeedySite}
           address={address}

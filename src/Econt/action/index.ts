@@ -2,7 +2,13 @@
 'use server'
 
 import 'server-only'
-import { EcontCitiesResponseRaw, EcontCity, EcontOffice, EcontOfficesResponseRaw } from '../types'
+import {
+  EcontCitiesCache,
+  EcontCitiesResponseRaw,
+  EcontCity,
+  EcontOffice,
+  EcontOfficesResponseRaw,
+} from '../types'
 import { unstable_cache } from 'next/cache'
 
 const { ECONT_BASE_URL, ECONT_USERNAME, ECONT_PASSWORD } = process.env
@@ -39,6 +45,7 @@ async function callEcont<T>(path: string, body: unknown): Promise<T> {
 
   return res.json() as Promise<T>
 }
+
 export async function getEcontCitiesRawAction(
   countryCode = process.env.ECONT_COUNTRY_CODE ?? 'BGR',
 ) {
@@ -57,30 +64,39 @@ export async function getEcontOfficesRawAction(cityId: number) {
   })
 }
 
-const getEcontCitiesCached = unstable_cache(
-  async (countryCode: string): Promise<EcontCity[]> => {
-    const raw = await callEcont<EcontCitiesResponseRaw>(
-      'Nomenclatures/NomenclaturesService.getCities.json',
-      { countryCode },
+let econtCitiesCache: EcontCitiesCache = null
+
+export async function getEcontCitiesAction(
+  countryCode = process.env.ECONT_COUNTRY_CODE ?? 'BGR',
+): Promise<EcontCity[]> {
+  const now = Date.now()
+
+  if (econtCitiesCache && econtCitiesCache.expiresAt > now) {
+    return econtCitiesCache.value
+  }
+
+  const raw = await callEcont<EcontCitiesResponseRaw>(
+    'Nomenclatures/NomenclaturesService.getCities.json',
+    { countryCode },
+  )
+
+  const cities = (raw?.cities ?? [])
+    .map(
+      (c): EcontCity => ({
+        id: c.id,
+        name: c.name ?? '',
+        postCode: c.postCode ?? null,
+        regionName: c.regionName ?? null,
+      }),
     )
+    .filter((c) => c.name.trim().length > 0)
 
-    return (raw?.cities ?? [])
-      .map(
-        (c): EcontCity => ({
-          id: c.id,
-          name: c.name ?? '',
-          postCode: c.postCode ?? null,
-          regionName: c.regionName ?? null,
-        }),
-      )
-      .filter((c) => c.name.trim().length > 0)
-  },
-  ['econt-cities'],
-  { revalidate: 60 * 60 * 24 }, // 6 часа
-)
+  econtCitiesCache = {
+    value: cities,
+    expiresAt: now + 24 * 60 * 60 * 1000, // 24h
+  }
 
-export async function getEcontCitiesAction(countryCode = process.env.ECONT_COUNTRY_CODE ?? 'BGR') {
-  return getEcontCitiesCached(countryCode)
+  return cities
 }
 
 const getEcontOfficesCached = unstable_cache(
