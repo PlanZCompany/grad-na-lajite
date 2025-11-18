@@ -1,1 +1,5 @@
 export { default as ShoppingCardAside } from './ShoppingCardAside'
+export { default as CheckoutHeader } from './CheckoutHeader'
+export { default as CheckoutAside } from './CheckoutAside'
+export { default as CheckoutForms } from './CheckoutForms'
+export { default as ContactForm } from './ContactForm'

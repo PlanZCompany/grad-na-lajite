@@ -11,6 +11,10 @@ declare global {
       EMAIL_FROM_NAME: string
       EMAIL_FROM_ADDRESS: string
       NEXT_PUBLIC_PRODUCTION_URL: string
+      ECONT_BASE_URL: string
+      ECONT_USERNAME: string
+      ECONT_PASSWORD: string
+      ECONT_COUNTRY_CODE: string
     }
   }
 }

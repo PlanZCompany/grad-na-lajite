@@ -50,12 +50,16 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 
 [done] - search
 
-- video fullscreen
-* create video full screen modal
-* add to each segment - (home-gallery, product-gallery)
+[QC] video fullscreen
 
 - Checkout page
-
+* sticky indicator
+* product with interaction (right column)
+* overall information (right column)
+* step 1 - personal information (left column)
+* step 2 - chose curier - (left column)
+* step 3 - payment method
+* step 4 - thank you and ifo
 ---
 
 ---emails---
@@ -74,5 +78,3 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 - use storage try with superhosting
 
 **DONE PER WEEK**
-- search - визия | функционалност | може да се търси както по заглавие на блог така и по описание
-- full screen video popup - в галерия и продукти вече имаш възможност да видиш full screen video
