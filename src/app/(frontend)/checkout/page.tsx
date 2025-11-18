@@ -1,3 +1,4 @@
+import { getBoxnowCitiesAction } from '@/BoxNow/action'
 import { CheckoutAside, CheckoutHeader } from '@/components/Checkout'
 import CheckoutForms from '@/components/Checkout/CheckoutForms'
 import { getEcontCitiesAction } from '@/Econt/action'
@@ -18,19 +19,23 @@ export default async function CheckoutPage() {
   //**info
   //footer?
 
-  const [econtCities, speedySites] = await Promise.all([
+  const [econtCities, speedySites, boxNowCities] = await Promise.all([
     getEcontCitiesAction(),
     getAllSpeedySitesAction(), // при теб -> CSV варианта
-    //getBoxnowCitiesAction(), //TODO
+    getBoxnowCitiesAction(),
   ])
 
   return (
     <div className="fixed w-full inset-0 h-screen overflow-y-auto bg-purpleBackground z-[30]">
       <CheckoutHeader />
 
-      <div className="w-full h-full flex justify-stretch items-stretch">
-        <CheckoutForms econtCities={econtCities} speedySites={speedySites} />
+      <div className="w-full h-full flex flex-col lg:flex-row lg:justify-stretch lg:items-stretch">
         <CheckoutAside />
+        <CheckoutForms
+          econtCities={econtCities}
+          speedySites={speedySites}
+          boxNowCities={boxNowCities}
+        />
       </div>
     </div>
   )

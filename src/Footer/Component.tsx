@@ -10,7 +10,6 @@ import { generateHref, LinkObject } from '@/utils/generateHref'
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
 
-  console.log((footerData.logo as Media)?.url)
   const media = footerData.logo as Media
 
   const socialLinks = footerData.socialLinks?.map((link) => {

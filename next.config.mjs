@@ -12,6 +12,20 @@ const nextConfig = {
 
     return webpackConfig
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'media.gradnalajite.anilevisoulwalks.com',
+        pathname: '/media/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.gradnalajite.anilevisoulwalks.com',
+        pathname: '/media/**',
+      },
+    ],
+  },
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
 }

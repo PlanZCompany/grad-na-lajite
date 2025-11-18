@@ -2,7 +2,7 @@
 
 import 'server-only'
 import { unstable_cache } from 'next/cache'
-import { SpeedyOffice, SpeedyOfficeRaw, SpeedySite, SpeedySiteRaw } from '../types'
+import { SpeedyOffice, SpeedyOfficeRaw, SpeedySite } from '../types'
 
 const { SPEEDY_BASE_URL, SPEEDY_USERNAME, SPEEDY_PASSWORD, SPEEDY_LANGUAGE } = process.env
 
@@ -72,11 +72,7 @@ const getAllSpeedySitesCached = unstable_cache(
     // първият ред е header → пропускаме го
     const [, ...dataLines] = lines
 
-    const sites: SpeedySite[] = dataLines.map((line, index) => {
-      if (index < 5) {
-        console.log(line, 'line')
-      }
-
+    const sites: SpeedySite[] = dataLines.map((line) => {
       const cols = line.split(',') // тук може да донастроиш според реалния формат
 
       const id = cols[0]

@@ -2,13 +2,16 @@
 
 import { useAppDispatch } from '@/hooks/redux-hooks'
 import { setIsLoading } from '@/store/features/root'
-
+//gradnalajite1234
+// /home/anilevis/media.gradnalajite.anilevisoulwalks.com/media
 import React, { useCallback, useState, useTransition } from 'react'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '../Generic'
 import { EcontCity, EcontOffice } from '@/Econt/types'
 import EcontWrapper from '@/Econt/components/EcontWrapper'
 import SpeedyWrapper from '@/Speedy/components/SpeedyWrapper'
 import { SpeedyOffice, SpeedySite } from '@/Speedy/types'
+import { BoxNowWrapper } from '@/BoxNow/components'
+import { BoxnowLocker } from '@/BoxNow/types'
 
 export type InnerShippingProps =
   | null
@@ -56,26 +59,34 @@ const shippingSelectArray = ['econt', 'speedy', 'box-now']
 const ShippingForm = ({
   econtCities,
   speedySites,
+  boxNowCities,
+  passedStep,
+  handlePassedStep,
 }: {
   econtCities: EcontCity[]
   speedySites: SpeedySite[]
+  boxNowCities: string[]
+  passedStep: number
+  handlePassedStep: (step: number) => void
 }) => {
   const dispatch = useAppDispatch()
-  const [ok, setOk] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
   const [activeShipping, setActiveShipping] = useState<null | 'econt' | 'speedy' | 'box-now'>(null)
   const [activeShippingInner, setActiveShippingInner] = useState<InnerShippingProps>(null)
-  const [currentShippingCity, setCurrentShippingCity] = useState<EcontCity | SpeedySite | null>(
-    null,
-  )
+  const [currentShippingCity, setCurrentShippingCity] = useState<
+    EcontCity | SpeedySite | string | null
+  >(null)
   const handleCityChange = useCallback(
-    (city: EcontCity | SpeedySite) => setCurrentShippingCity(city),
+    (city: EcontCity | SpeedySite | string) => setCurrentShippingCity(city),
     [],
   )
-  const [chosenOffice, setChosenOffice] = useState<EcontOffice | SpeedyOffice | null>(null)
+  const [chosenOffice, setChosenOffice] = useState<
+    EcontOffice | SpeedyOffice | BoxnowLocker | null
+  >(null)
   const handleOfficeChange = useCallback(
-    (office: EcontOffice | SpeedyOffice) => setChosenOffice(office),
+    (office: EcontOffice | SpeedyOffice | BoxnowLocker) =>
+      setChosenOffice(office as EcontOffice | SpeedyOffice | BoxnowLocker),
     [],
   )
   const [address, setAddress] = useState('')
@@ -90,7 +101,9 @@ const ShippingForm = ({
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
 
-    //go to next step
+    start(async () => {
+      handlePassedStep(passedStep + 1)
+    })
 
     setError(null)
   }
@@ -133,7 +146,16 @@ const ShippingForm = ({
   const currentComponent = () => {
     switch (activeShipping) {
       case 'box-now':
-        return <></>
+        return (
+          <BoxNowWrapper
+            activeInnerShipping={activeShippingInner as InnerShippingProps}
+            currentShippingCity={currentShippingCity as string}
+            handleCityChange={handleCityChange}
+            handleOfficeChange={handleOfficeChange}
+            office={chosenOffice as null}
+            boxNowCities={boxNowCities as string[]}
+          />
+        )
       case 'econt':
         return (
           <EcontWrapper
@@ -214,8 +236,13 @@ const ShippingForm = ({
     ) : null
   })
 
+  const isPassed = passedStep > 1
+
   return (
-    <div className="p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50">
+    <div
+      className={`REF_CHECKOUT_SHIPPING p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50 relative`}
+    >
+      {!isPassed && <div className={`absolute inset-0 z-[5] backdrop-blur-sm`}></div>}
       <GenericHeading
         align="text-center"
         headingType="h4"

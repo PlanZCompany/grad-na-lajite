@@ -10,8 +10,6 @@ const SetMainProduct = ({ product }: { product: Product }) => {
   useEffect(() => {
     if (!product) return
 
-    console.log('TRIGGER SET MAIN PRODUCT')
-
     dispatch(setMainProduct(product))
   }, [dispatch, product])
 

@@ -30,8 +30,6 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
       try {
         const res = await subscribeAction(email)
 
-        console.log(res, 'res')
-
         if (res.ok) {
           setMessage(res.message + (res.discountCode ? ` Код: ${res.discountCode}` : ''))
           dispatch(

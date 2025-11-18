@@ -1,10 +1,9 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { EcontCity, EcontOffice } from '../types'
 import { EcontOfficeDropdown } from '.'
 import EcontAddressDropdown from './EcontAddressDropdown'
-import { getEcontCitiesAction } from '../action'
 import { InnerShippingProps } from '@/components/Checkout/ShippingForm'
 
 type EcontWrapperProps = {

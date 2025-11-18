@@ -4,16 +4,34 @@ import React from 'react'
 import { GenericImage, GenericParagraph } from '../Generic'
 
 const stages = ['Контакт', 'Доставка', 'Плащане', 'Потвърждение']
+const REFS = [
+  'REF_CHECKOUT_CONTACT',
+  'REF_CHECKOUT_SHIPPING',
+  'REF_CHECKOUT_PAYMENT',
+  'REF_CHECKOUT_CONFIRMATION',
+]
 
 const CheckoutHeader = () => {
   const stageContent = stages.map((stage, index) => {
+    const currentRef = REFS[index]
+
     return (
       <li className="w-full flex items-center gap-2" key={stage}>
-        <div className="size-10 rounded-full flex justify-center items-center p-2 border-[1px] border-primaryYellow">
-          <p className="text-center text-primaryYellow">{index + 1}</p>
-        </div>
+        <button
+          className="size-6 lg:size-10 rounded-full flex justify-center items-center p-2 border-[1px] border-primaryYellow"
+          aria-label={stage}
+          onClick={() => {
+            const nextTarget = document.querySelector(`.${currentRef}`) as HTMLElement
 
-        <GenericParagraph extraClass="text-white">{stage}</GenericParagraph>
+            if (nextTarget) {
+              nextTarget.scrollIntoView({ behavior: 'smooth' })
+            }
+          }}
+        >
+          <p className="text-center text-primaryYellow text-[12px] lg:text-[16px]">{index + 1}</p>
+        </button>
+
+        <GenericParagraph extraClass="text-white hidden lg:block">{stage}</GenericParagraph>
 
         <div className="flex-1 bg-gradient-to-r from-primaryYellow to-transparent h-[2px] w-full"></div>
       </li>

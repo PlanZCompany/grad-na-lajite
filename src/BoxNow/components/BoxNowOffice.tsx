@@ -1,40 +1,40 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { EcontCity, EcontOffice } from '../types'
 import { GenericParagraph } from '@/components/Generic'
 import { ArrowIcon } from '@/assets/icons'
-import { getEcontOfficesAction } from '../action'
+import { BoxnowLocker } from '../types'
+import { getBoxnowLockersByCityAction } from '../action'
 
-const EcontOfficeDropdown = ({
+const BoxNowOfficeDropdown = ({
   cities,
   setter,
   city,
   office,
   setOffice,
 }: {
-  cities: EcontCity[]
-  setter: (city: EcontCity) => void
-  city: EcontCity
-  office: EcontOffice | null
-  setOffice: (office: EcontOffice) => void
+  cities: string[]
+  setter: (city: string) => void
+  city: string
+  office: BoxnowLocker | null
+  setOffice: (office: BoxnowLocker) => void
 }) => {
   const [activeDropdown, setActiveDropdown] = useState(false)
   const [activeDropdownOffice, setActiveDropdownOffice] = useState(false)
 
-  const [cityOffices, setCityOffices] = useState<EcontOffice[]>([])
+  const [cityOffices, setCityOffices] = useState<BoxnowLocker[]>([])
 
   useEffect(() => {
     if (!city) return
 
-    getEcontOfficesAction(city.id).then((offices) => {
+    getBoxnowLockersByCityAction(city).then((offices) => {
       setCityOffices(offices)
     })
   }, [city])
 
   const citiesContent = cities.map((city) => {
     return (
-      <li key={city.id}>
+      <li key={city}>
         <button
           className="w-full flex items-center"
           onClick={() => {
@@ -46,7 +46,7 @@ const EcontOfficeDropdown = ({
             textColor="text-black"
             extraClass="w-full text-center border-b-[1px] border-black/50"
           >
-            {city.name}
+            {city}
           </GenericParagraph>
         </button>
       </li>
@@ -85,7 +85,7 @@ const EcontOfficeDropdown = ({
             }}
           >
             <GenericParagraph textColor="text-black">
-              {!!city ? city.name : '<Изберете град>'}
+              {!!city ? city : '<Изберете град>'}
             </GenericParagraph>
 
             <div
@@ -137,4 +137,4 @@ const EcontOfficeDropdown = ({
   )
 }
 
-export default EcontOfficeDropdown
+export default BoxNowOfficeDropdown

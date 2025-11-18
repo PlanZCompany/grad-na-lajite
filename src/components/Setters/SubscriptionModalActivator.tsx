@@ -12,11 +12,9 @@ const SubscriptionModalActivator = () => {
     if (itIsSubscribed.data === true) return
 
     timeOut.current = setTimeout(() => {
-      console.log('show modal')
       const target = document.querySelector('.REF_SUBSCRIPTION_MODAL') as HTMLElement
 
       if (target) {
-        console.log('show modal if')
         target.click()
       }
     }, 5000)

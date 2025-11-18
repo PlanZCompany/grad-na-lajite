@@ -8,9 +8,8 @@ import { GenericButton, GenericHeading, TextInput } from '../Generic'
 
 //TODO if user populate the form
 
-const ContactForm = () => {
+const ContactForm = ({ handlePassedStep }: { handlePassedStep: (step: number) => void }) => {
   const dispatch = useAppDispatch()
-  const [ok, setOk] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
   const [formValues, setFormValues] = useState({
@@ -47,13 +46,26 @@ const ContactForm = () => {
       return
     }
 
-    //go to next step
+    start(async () => {
+      try {
+        handlePassedStep(2)
+        setErrors({ firstName: '', lastName: '', phoneNumber: '', email: '' })
+
+        const nextTarget = document.querySelector('.REF_CHECKOUT_SHIPPING') as HTMLElement
+
+        if (nextTarget) {
+          nextTarget.scrollIntoView({ behavior: 'smooth' })
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    })
 
     setError(null)
   }
 
   return (
-    <div className="p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50">
+    <div className="REF_CHECKOUT_CONTACT p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50">
       <GenericHeading
         align="text-center"
         headingType="h4"

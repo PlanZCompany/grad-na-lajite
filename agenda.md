@@ -78,3 +78,23 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 - use storage try with superhosting
 
 **DONE PER WEEK**
+
+{
+    id: '1957',
+    type: 'apm',
+    image: 'https://storage.googleapis.com/boxnow-production-images/images/manager/07_06_2024/9f6a9d9c-1a0c-4e22-aa7d-2ff192c787c6',
+    lat: '42.67115394819068',
+    lat: '42.67115394819068',
+    lng: '23.39672502775583',
+    lng: '23.39672502775583',
+    region: 'bg-BG',
+    title: 'Iskar,Trade Center Europe',
+    title: 'Iskar,Trade Center Europe',
+    name: 'АМП - Търг. център Европа, бул. Искърско шосе 7, София - 24/7',
+    addressLine1: 'бул. Искърско шосе 7',
+    addressLine2: 'София',
+    postalCode: '1528',
+    country: 'BG',
+    note: 'Срещу централен вход на Сграда 3. 24/7',
+    expectedDeliveryTime: '2025-11-19T06:00:00.000Z'
+  }

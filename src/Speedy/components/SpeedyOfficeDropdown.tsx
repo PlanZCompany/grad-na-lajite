@@ -24,8 +24,6 @@ const SpeedyOfficeDropdown = ({
 
   const [cityOffices, setCityOffices] = useState<SpeedyOffice[]>([])
 
-  console.log('RENDER OFFICES DROPDOWN')
-
   useEffect(() => {
     if (!city) return
 

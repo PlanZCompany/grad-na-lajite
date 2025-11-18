@@ -4,7 +4,6 @@ import React from 'react'
 
 export const DividerBlockComponent: React.FC<DividerBlock> = (props) => {
   const media = props.media as Media
-  console.log('divider')
   return (
     <div className="w-full my-[32px] md:my-[48px] h-[2px] bg-[#D4AF37] relative">
       <GenericImage

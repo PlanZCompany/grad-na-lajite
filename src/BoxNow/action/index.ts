@@ -13,11 +13,12 @@ if (!BOXNOW_API_URL || !BOXNOW_CLIENT_ID || !BOXNOW_CLIENT_SECRET) {
 function buildBoxnowUrl(path: string) {
   const base = BOXNOW_API_URL!.replace(/\/$/, '')
   const clean = path.replace(/^\//, '')
+
   return `${base}/${clean}`
 }
 
 async function getBoxnowAccessToken(): Promise<string> {
-  const url = buildBoxnowUrl('auth-sessions') // ако при вас е друго име/път, ще го сменим
+  const url = buildBoxnowUrl('auth-sessions')
 
   const res = await fetch(url, {
     method: 'POST',
@@ -70,35 +71,34 @@ export async function callBoxnow<T>(path: string, init?: RequestInit): Promise<T
 // Тук може да се наложи да смениш 'destinations' с точния path от BoxNow документацията
 const getBoxnowLockersCached = unstable_cache(
   async (): Promise<BoxnowLocker[]> => {
-    const raw = await callBoxnow<BoxnowDestinationRaw[]>('destinations')
+    try {
+      const raw = await callBoxnow<BoxnowDestinationRaw[]>('destinations')
 
-    return (raw ?? [])
-      .filter((d) => d.isActive !== false) // само активни
-      .map(
+      const resources: BoxnowDestinationRaw[] =
+        'data' in raw ? (raw.data as BoxnowDestinationRaw[]) : []
+
+      return resources.map(
         (d): BoxnowLocker => ({
           id: d.id,
+          city: d.addressLine2,
           name: d.name,
-          city: d.city,
-          postcode: d.postcode ?? null,
-          address: d.address,
-          location: {
-            lat: d.latitude ?? null,
-            lng: d.longitude ?? null,
-          },
         }),
       )
+    } catch (error) {
+      console.log(error)
+      return []
+    }
   },
   ['boxnow-lockers'],
   {
-    // рефреш на всеки 6 часа (настрой по желание)
-    revalidate: 60 * 60 * 6,
+    revalidate: 60 * 60 * 24,
   },
 )
 
 export async function getBoxnowCitiesAction(): Promise<string[]> {
   const lockers = await getBoxnowLockersCached()
 
-  const unique = new Set(lockers.map((l) => l.city.trim()).filter((c) => c.length > 0))
+  const unique = new Set(lockers.map((l) => l?.city?.trim()).filter((c) => c?.length > 0))
 
   return Array.from(unique).sort((a, b) => a.localeCompare(b, 'bg'))
 }
@@ -109,5 +109,8 @@ export async function getBoxnowLockersByCityAction(city: string): Promise<Boxnow
 
   if (!normalized) return []
 
-  return lockers.filter((l) => l.city.trim().toLowerCase() === normalized)
+  return lockers.filter((l) => {
+    const lc = l?.city?.trim()?.toLowerCase()
+    return lc === normalized
+  })
 }

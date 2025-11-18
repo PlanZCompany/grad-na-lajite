@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { SpeedyOffice, SpeedySite } from '../types'
-import { getAllSpeedySitesAction } from '../actions'
 import SpeedyOfficeDropdown from './SpeedyOfficeDropdown'
 import SpeedyAddressDropdown from './SpeedyAddressDropdown'
 import { InnerShippingProps } from '@/components/Checkout/ShippingForm'
