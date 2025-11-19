@@ -9,6 +9,7 @@ import React, { useState } from 'react'
 const AsideClient = ({ asideData }: { asideData: Aside }) => {
   const [showNetwork, setShowNetwork] = useState(false)
   const { links } = asideData
+  if (!links) console.log('no links')
 
   const linksContent = links?.map((item, index) => {
     const media = item.media as Media
