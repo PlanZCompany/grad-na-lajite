@@ -14,7 +14,6 @@ const AsideClient = ({ asideData }: { asideData: Aside }) => {
     const media = item.media as Media
 
     const initialTransition = index * 100
-    console.log(media.url)
     return (
       <li
         key={item.id}
@@ -31,7 +30,6 @@ const AsideClient = ({ asideData }: { asideData: Aside }) => {
               alt={media?.alt || ''}
               wrapperClassName="w-10 h-10"
               imageClassName="object-contain"
-              unoptimized={true}
             />
           </Link>
         </button>

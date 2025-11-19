@@ -81,7 +81,6 @@ const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
           focalX={media?.focalX || 50}
           focalY={media?.focalY || 50}
           updatedAt={media?.updatedAt || ''}
-          unoptimized={true}
         />
 
         {condition.condition && (
