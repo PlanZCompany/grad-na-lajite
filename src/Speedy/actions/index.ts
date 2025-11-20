@@ -4,10 +4,23 @@ import 'server-only'
 import { unstable_cache } from 'next/cache'
 import { SpeedyOffice, SpeedyOfficeRaw, SpeedySite } from '../types'
 
+import fs from 'node:fs/promises'
+import path from 'node:path'
+
+const ECONT_CITIES_JSON_PATH = path.join(process.cwd(), 'speedy-cities.json')
+
 const { SPEEDY_BASE_URL, SPEEDY_USERNAME, SPEEDY_PASSWORD, SPEEDY_LANGUAGE } = process.env
 
 if (!SPEEDY_BASE_URL || !SPEEDY_USERNAME || !SPEEDY_PASSWORD) {
   throw new Error('Missing Speedy env variables')
+}
+
+async function persistEcontCities(cities: SpeedySite[]) {
+  try {
+    await fs.writeFile(ECONT_CITIES_JSON_PATH, JSON.stringify(cities, null, 2), 'utf8')
+  } catch (error) {
+    console.error('Failed to write Econt cities JSON:', error)
+  }
 }
 
 function buildSpeedyUrl(path: string) {
@@ -77,18 +90,39 @@ const getAllSpeedySitesCached = unstable_cache(
 
       const id = cols[0]
       const name = cols[5]
-      const postCode = cols[11]
-      const municipality = cols[6]
       const region = cols[9]
 
       return {
         id: Number(id),
-        name,
-        postCode: postCode || null,
-        municipality: municipality || null,
-        region: region || null,
+        name: `${name} (${region})`,
       }
     })
+
+    const sorted = sites.sort((a, b) => {
+      //a.name.localeCompare(b.name)
+      const aName = a.name.split('(')[1].trim()
+      const bName = b.name.split('(')[1].trim()
+      return aName.localeCompare(bName)
+    })
+
+    persistEcontCities(
+      sorted.map((city) => {
+        const cityName = city.name.split('(')[0].trim().toLowerCase()
+        const cityRegion = city.name.split('(')[1].trim().toLowerCase().replace(')', '')
+
+        if (cityName === cityRegion) {
+          return {
+            id: city.id,
+            name: city.name.split('(')[0].trim(),
+          }
+        }
+
+        return {
+          id: city.id,
+          name: city.name,
+        }
+      }),
+    ).catch(() => {})
 
     return sites
   },

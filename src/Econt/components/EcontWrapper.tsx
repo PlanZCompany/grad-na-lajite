@@ -14,7 +14,10 @@ type EcontWrapperProps = {
   handleCityChange: (city: EcontCity) => void
   handleOfficeChange: (office: EcontOffice) => void
   handleAddressChange: (address: string) => void
-  econtCities: EcontCity[]
+  econtCities: {
+    regionName: string
+    cities: EcontCity[]
+  }[]
 }
 
 const EcontWrapper = ({

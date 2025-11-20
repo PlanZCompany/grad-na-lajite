@@ -63,7 +63,10 @@ const ShippingForm = ({
   passedStep,
   handlePassedStep,
 }: {
-  econtCities: EcontCity[]
+  econtCities: {
+    regionName: string
+    cities: EcontCity[]
+  }[]
   speedySites: SpeedySite[]
   boxNowCities: string[]
   passedStep: number
@@ -72,7 +75,6 @@ const ShippingForm = ({
   const dispatch = useAppDispatch()
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
-  const [activeShipping, setActiveShipping] = useState<null | 'econt' | 'speedy' | 'box-now'>(null)
   const [activeShippingInner, setActiveShippingInner] = useState<InnerShippingProps>(null)
   const [currentShippingCity, setCurrentShippingCity] = useState<
     EcontCity | SpeedySite | string | null
@@ -108,91 +110,57 @@ const ShippingForm = ({
     setError(null)
   }
 
-  const shippingSelect = shippingSelectArray.map((variant) => {
-    const isActive = activeShipping === variant
-
-    return (
-      <li
-        key={variant}
-        className={`w-full aspect-square ${isActive ? 'bg-purpleBackground/50' : 'bg-white'} border-[2px] border-gray-700 rounded-[12px] flex max-h-[48px] md:max-h-[100px] md:p-4`}
-      >
-        <button
-          className="w-full flex items-center justify-center"
-          onClick={() => {
-            setActiveShipping(variant as 'speedy' | 'econt' | 'box-now')
-            restoreStateAfterChangeActiveShipping()
-
-            if (variant === 'box-now') {
-              setActiveShippingInner('box-now')
-            } else if (variant === 'econt') {
-              setActiveShippingInner('econt-office')
-            } else {
-              setActiveShippingInner('speedy-office')
-            }
-          }}
-        >
-          <GenericImage
-            src={`/static/${variant}.png`}
-            alt={variant}
-            wrapperClassName="w-full h-full object-contain relative"
-            imageClassName="w-full h-full object-contain"
-            fill={true}
-          />
-        </button>
-      </li>
-    )
-  })
-
   const currentComponent = () => {
-    switch (activeShipping) {
-      case 'box-now':
-        return (
-          <BoxNowWrapper
-            activeInnerShipping={activeShippingInner as InnerShippingProps}
-            currentShippingCity={currentShippingCity as string}
-            handleCityChange={handleCityChange}
-            handleOfficeChange={handleOfficeChange}
-            office={chosenOffice as null}
-            boxNowCities={boxNowCities as string[]}
-          />
-        )
-      case 'econt':
-        return (
-          <EcontWrapper
-            econtCities={econtCities}
-            activeInnerShipping={activeShippingInner as InnerShippingProps}
-            address={address}
-            currentShippingCity={currentShippingCity as EcontCity}
-            handleAddressChange={handleAddressChange}
-            handleCityChange={handleCityChange}
-            handleOfficeChange={handleOfficeChange}
-            office={chosenOffice as EcontOffice}
-          />
-        )
-      case 'speedy':
-        return (
-          <SpeedyWrapper
-            activeInnerShipping={activeShippingInner as InnerShippingProps}
-            address={address}
-            currentShippingCity={currentShippingCity as SpeedySite}
-            handleAddressChange={handleAddressChange}
-            handleCityChange={handleCityChange}
-            handleOfficeChange={handleOfficeChange}
-            office={chosenOffice as SpeedyOffice}
-            speedySites={speedySites}
-          />
-        )
-      default:
-        return <></>
-    }
+    const isEcont = activeShippingInner?.includes('econt')
+    const isSpeedy = activeShippingInner?.includes('speedy')
+    const isBoxNow = activeShippingInner?.includes('box-now')
+
+    let component = null
+    if (isEcont)
+      component = (
+        <EcontWrapper
+          econtCities={econtCities}
+          activeInnerShipping={activeShippingInner as InnerShippingProps}
+          address={address}
+          currentShippingCity={currentShippingCity as EcontCity}
+          handleAddressChange={handleAddressChange}
+          handleCityChange={handleCityChange}
+          handleOfficeChange={handleOfficeChange}
+          office={chosenOffice as EcontOffice}
+        />
+      )
+    if (isSpeedy)
+      component = (
+        <SpeedyWrapper
+          activeInnerShipping={activeShippingInner as InnerShippingProps}
+          address={address}
+          currentShippingCity={currentShippingCity as SpeedySite}
+          handleAddressChange={handleAddressChange}
+          handleCityChange={handleCityChange}
+          handleOfficeChange={handleOfficeChange}
+          office={chosenOffice as SpeedyOffice}
+          speedySites={speedySites}
+        />
+      )
+    if (isBoxNow)
+      component = (
+        <BoxNowWrapper
+          activeInnerShipping={activeShippingInner as InnerShippingProps}
+          currentShippingCity={currentShippingCity as string}
+          handleCityChange={handleCityChange}
+          handleOfficeChange={handleOfficeChange}
+          office={chosenOffice as null}
+          boxNowCities={boxNowCities as string[]}
+        />
+      )
+
+    return component
   }
 
   const shippingContent = shippingVariants.map((variant) => {
     const isActive = activeShippingInner === variant.name
-    const isParentActive = activeShipping === variant.parent
-    const needToBeRendered = !!activeShippingInner ? isParentActive && isActive : isParentActive
 
-    return needToBeRendered ? (
+    return (
       <li
         key={variant.name}
         className="w-full p-2 rounded-[8px] border-[1px] border-primaryYellow bg-white"
@@ -229,11 +197,11 @@ const ShippingForm = ({
           </div>
         </button>
 
-        {!!activeShipping && activeShipping === variant.parent && (
+        {activeShippingInner === variant.name && (
           <div className="w-full px-4 py-3 bg-white">{currentComponent()}</div>
         )}
       </li>
-    ) : null
+    )
   })
 
   const isPassed = passedStep > 1
@@ -252,7 +220,6 @@ const ShippingForm = ({
         <h2>Данни за доставка</h2>
       </GenericHeading>
       <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
-        <ul className="w-full grid grid-cols-3 gap-1">{shippingSelect}</ul>
         <ul className="w-full flex flex-col gap-s">{shippingContent}</ul>
 
         <div className="my-4 flex w-full">

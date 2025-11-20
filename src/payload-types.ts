@@ -187,7 +187,8 @@ export interface Product {
   title: string;
   mediaArray?:
     | {
-        file: number | Media;
+        file?: (number | null) | Media;
+        externalVideo?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -831,6 +832,7 @@ export interface HomeBlock {
     mediaArray?:
       | {
           media?: (number | null) | Media;
+          externalVideo?: string | null;
           id?: string | null;
         }[]
       | null;
@@ -2651,6 +2653,7 @@ export interface HomeBlockSelect<T extends boolean = true> {
           | T
           | {
               media?: T;
+              externalVideo?: T;
               id?: T;
             };
       };
@@ -2996,6 +2999,7 @@ export interface ProductSelect<T extends boolean = true> {
     | T
     | {
         file?: T;
+        externalVideo?: T;
         id?: T;
       };
   price?: T;

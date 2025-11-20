@@ -27,7 +27,7 @@ const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
 
   const mediaMenu = mainProduct?.mediaArray?.map((currentMedia, index) => {
     const image = currentMedia.file as Media
-    const mediaType = image.mimeType?.includes('video') ? 'video' : 'image'
+    const mediaType = !!image && image?.mimeType?.includes('video') ? 'video' : 'image'
 
     const isActive = index === currentMediaIndex
 
@@ -43,9 +43,9 @@ const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
             setCurrentMediaIndex(index)
           }}
         >
-          {mediaType === 'video' ? (
+          {mediaType === 'video' || !!currentMedia.externalVideo ? (
             <GenericVideo
-              src={image?.url || ''}
+              src={!!currentMedia.externalVideo ? currentMedia.externalVideo : image?.url || ''}
               wrapperClassName="w-[60px] h-[60px] relative rounded-[16px] overflow-hidden"
             />
           ) : (
@@ -98,15 +98,26 @@ const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
       <section className="w-full py-10 md:py-20 flex relative z-[2]">
         <div className="m-auto content_wrapper flex flex-col gap-10 md:flex-row">
           <div className="md:max-w-[40%] min-h-[300px] w-full">
-            {currentMediaType === 'video' ? (
+            {currentMediaType === 'video' ||
+            !!mainProduct?.mediaArray?.[currentMediaIndex].externalVideo ? (
               <button
                 className="w-full h-full min-h-[300px] radial_yellow md:max-h-[450px] border-[#D4AF37] border-[4px] relative rounded-[16px] overflow-hidden"
                 onClick={() => {
+                  const resource = mainProduct?.mediaArray?.[currentMediaIndex].externalVideo
+                    ? mainProduct?.mediaArray?.[currentMediaIndex].externalVideo
+                    : productMedia?.url
                   setIsActive(true)
-                  setVideoSrc(productMedia?.url || '')
+                  setVideoSrc(resource || '')
                 }}
               >
-                <GenericVideo src={productMedia?.url || ''} wrapperClassName="w-full h-full" />
+                <GenericVideo
+                  src={
+                    mainProduct?.mediaArray?.[currentMediaIndex].externalVideo
+                      ? mainProduct?.mediaArray?.[currentMediaIndex].externalVideo
+                      : productMedia?.url || ''
+                  }
+                  wrapperClassName="w-full h-full"
+                />
               </button>
             ) : (
               <GenericImage

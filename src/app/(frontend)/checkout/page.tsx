@@ -1,9 +1,10 @@
 import { getBoxnowCitiesAction } from '@/BoxNow/action'
 import { CheckoutAside, CheckoutHeader } from '@/components/Checkout'
 import CheckoutForms from '@/components/Checkout/CheckoutForms'
-import { getEcontCitiesAction } from '@/Econt/action'
-import { getAllSpeedySitesAction } from '@/Speedy/actions'
 import type { Metadata } from 'next/types'
+
+import econtCities from '../../../Econt/json/econt-cities.json'
+import speedySites from '../../../Speedy/json/speedy-cities.json'
 
 import React from 'react'
 
@@ -19,11 +20,9 @@ export default async function CheckoutPage() {
   //**info
   //footer?
 
-  const [econtCities, speedySites, boxNowCities] = await Promise.all([
-    getEcontCitiesAction(),
-    getAllSpeedySitesAction(), // при теб -> CSV варианта
-    getBoxnowCitiesAction(),
-  ])
+  //TODO econt for the towns that dont have offices in Bulgaria need to have extra property in the json to not be rendered in towns (maybe same for speedy)
+
+  const [boxNowCities] = await Promise.all([getBoxnowCitiesAction()])
 
   return (
     <div className="fixed w-full inset-0 h-screen overflow-y-auto bg-purpleBackground z-[30]">

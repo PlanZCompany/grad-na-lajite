@@ -13,7 +13,10 @@ const EcontOfficeDropdown = ({
   office,
   setOffice,
 }: {
-  cities: EcontCity[]
+  cities: {
+    regionName: string
+    cities: EcontCity[]
+  }[]
   setter: (city: EcontCity) => void
   city: EcontCity
   office: EcontOffice | null
@@ -21,6 +24,7 @@ const EcontOfficeDropdown = ({
 }) => {
   const [activeDropdown, setActiveDropdown] = useState(false)
   const [activeDropdownOffice, setActiveDropdownOffice] = useState(false)
+  const [activeRegionName, setActiveRegionName] = useState('')
 
   const [cityOffices, setCityOffices] = useState<EcontOffice[]>([])
 
@@ -32,23 +36,57 @@ const EcontOfficeDropdown = ({
     })
   }, [city])
 
+  const findCurrentCityInners = cities.find((city) => city.regionName === activeRegionName)
+
+  const innerDropDownContent = !!findCurrentCityInners
+    ? findCurrentCityInners.cities.map((city) => {
+        return (
+          <li key={city.id}>
+            <button
+              className="w-full flex items-center py-2 border-b-[1px] border-black/50"
+              onClick={() => {
+                setter(city)
+                setActiveDropdown(false)
+              }}
+            >
+              <GenericParagraph textColor="text-black" extraClass="w-full text-center">
+                {city.name}
+              </GenericParagraph>
+            </button>
+          </li>
+        )
+      })
+    : []
+
   const citiesContent = cities.map((city) => {
     return (
-      <li key={city.id}>
-        <button
-          className="w-full flex items-center"
-          onClick={() => {
-            setter(city)
-            setActiveDropdown(false)
-          }}
-        >
-          <GenericParagraph
-            textColor="text-black"
-            extraClass="w-full text-center border-b-[1px] border-black/50"
+      <li key={city.regionName}>
+        <div className="w-full flex items-center relative">
+          <button
+            className="w-full flex items-center bg-gray-200 border-b-[1px] border-black/50 py-2 px-2"
+            onClick={() => {
+              if (activeRegionName === city.regionName) {
+                setActiveRegionName('')
+                return
+              }
+              setActiveRegionName(city.regionName)
+            }}
           >
-            {city.name}
-          </GenericParagraph>
-        </button>
+            <div className="flex-1">
+              <GenericParagraph textColor="text-black" extraClass="w-full text-center">
+                {city.regionName}
+              </GenericParagraph>
+            </div>
+
+            <div className="ml-auto flex justify-center items-center size-6">
+              <ArrowIcon />
+            </div>
+          </button>
+        </div>
+
+        {activeRegionName === city.regionName && (
+          <ul className="w-full flex flex-col">{innerDropDownContent}</ul>
+        )}
       </li>
     )
   })

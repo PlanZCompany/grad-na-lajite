@@ -11,7 +11,10 @@ const CheckoutForms = ({
   speedySites,
   boxNowCities,
 }: {
-  econtCities: EcontCity[]
+  econtCities: {
+    regionName: string
+    cities: EcontCity[]
+  }[]
   speedySites: SpeedySite[]
   boxNowCities: string[]
 }) => {

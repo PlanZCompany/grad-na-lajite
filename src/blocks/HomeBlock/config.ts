@@ -606,6 +606,12 @@ export const HomeBlock: Block = {
               required: false,
               maxDepth: 2,
             },
+            {
+              name: 'externalVideo',
+              type: 'text',
+              required: false,
+              label: 'Връзка към вънщен източник',
+            },
           ],
         },
       ],

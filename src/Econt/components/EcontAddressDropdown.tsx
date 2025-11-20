@@ -12,7 +12,10 @@ const EcontAddressDropdown = ({
   address,
   setAdrress,
 }: {
-  cities: EcontCity[]
+  cities: {
+    regionName: string
+    cities: EcontCity[]
+  }[]
   setter: (city: EcontCity) => void
   city: EcontCity
   address: string
@@ -22,11 +25,11 @@ const EcontAddressDropdown = ({
 
   const citiesContent = cities.map((city) => {
     return (
-      <li key={city.id}>
+      <li key={city.regionName}>
         <button
           className="w-full flex items-center"
           onClick={() => {
-            setter(city)
+            // setter(city)
             setActiveDropdown(false)
           }}
         >
@@ -34,7 +37,7 @@ const EcontAddressDropdown = ({
             textColor="text-black"
             extraClass="w-full text-center border-b-[1px] border-black/50"
           >
-            {city.name}
+            {city.regionName}
           </GenericParagraph>
         </button>
       </li>

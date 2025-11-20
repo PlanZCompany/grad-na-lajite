@@ -11,6 +11,11 @@ import {
 } from '../types'
 import { unstable_cache } from 'next/cache'
 
+// import fs from 'node:fs/promises'
+// import path from 'node:path'
+
+// const ECONT_CITIES_JSON_PATH = path.join(process.cwd(), 'econt-cities.json')
+
 const { ECONT_BASE_URL, ECONT_USERNAME, ECONT_PASSWORD } = process.env
 
 if (!ECONT_BASE_URL || !ECONT_USERNAME || !ECONT_PASSWORD) {
@@ -22,6 +27,14 @@ function buildEcontUrl(path: string) {
   const cleanPath = path.replace(/^\//, '')
   return `${base}/${cleanPath}`
 }
+
+// async function persistEcontCities(cities) {
+//   try {
+//     await fs.writeFile(ECONT_CITIES_JSON_PATH, JSON.stringify(cities, null, 2), 'utf8')
+//   } catch (error) {
+//     console.error('Failed to write Econt cities JSON:', error)
+//   }
+// }
 
 async function callEcont<T>(path: string, body: unknown): Promise<T> {
   const url = buildEcontUrl(path)
@@ -96,6 +109,21 @@ export async function getEcontCitiesAction(
     expiresAt: now + 24 * 60 * 60 * 1000, // 24h
   }
 
+  //I need to use groupBy regionName
+  // const regionNames = cities.map((c) => c.regionName)
+  // const regionNameSet = new Set(regionNames)
+  // const regionNamesArray = Array.from(regionNameSet)
+
+  // const groupedByRegionName = regionNamesArray.map((regionName) => {
+  //   return {
+  //     regionName,
+  //     cities: cities.filter(
+  //       (c) => c.regionName?.trim().toLocaleLowerCase() === regionName?.trim().toLocaleLowerCase(),
+  //     ),
+  //   }
+  // })
+  // persistEcontCities(groupedByRegionName).catch(() => {})
+
   return cities
 }
 
@@ -126,7 +154,7 @@ const getEcontOfficesCached = unstable_cache(
     })
   },
   ['econt-offices'],
-  { revalidate: 60 * 60 * 6 },
+  { revalidate: 60 * 60 * 24 },
 )
 
 export async function getEcontOfficesAction(cityId: number) {

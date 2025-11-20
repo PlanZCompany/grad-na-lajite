@@ -45,8 +45,14 @@ export const Product: CollectionConfig = {
           type: 'upload',
           label: 'Снимка',
           relationTo: 'media',
-          required: true,
+          required: false,
         } as Field,
+        {
+          name: 'externalVideo',
+          type: 'text',
+          required: false,
+          label: 'Връзка към вънщен източник',
+        },
       ],
     },
     {

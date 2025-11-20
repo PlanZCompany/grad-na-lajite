@@ -44,7 +44,7 @@ const GalleryPreview = ({ data }: { data: HomeBlock['galleryPreview'] }) => {
   const cardsContent = data?.mediaArray?.map((card) => {
     const media = card?.media as Media
 
-    const mediaType = media.mimeType?.includes('video') ? 'video' : 'image'
+    const mediaType = !!media && media?.mimeType?.includes('video') ? 'video' : 'image'
 
     return (
       <div key={card.id} className="w-full px-2 md:px-4">
@@ -53,15 +53,19 @@ const GalleryPreview = ({ data }: { data: HomeBlock['galleryPreview'] }) => {
         relative hover:scale-[1.03] duration-300 transition-transform p-2.5 rounded-[12px] shadow-[0_4px_20px_rgba(0,0,0,0.6)]`}
         >
           <div className="w-full h-[320px] rounded-[6px] overflow-hidden relative shadow_card hover:scale-[1.07] transition-transform duration-300">
-            {mediaType === 'video' ? (
+            {mediaType === 'video' || !!card.externalVideo ? (
               <button
                 className="w-full h-full"
                 onClick={() => {
+                  const resource = card?.externalVideo ? card?.externalVideo : media.url
                   setIsActive(true)
-                  setVideoSrc(media?.url || '')
+                  setVideoSrc(resource || '')
                 }}
               >
-                <GenericVideo src={media?.url || ''} wrapperClassName="w-full h-full" />
+                <GenericVideo
+                  src={card?.externalVideo ? card?.externalVideo : media.url || ''}
+                  wrapperClassName="w-full h-full"
+                />
               </button>
             ) : (
               <GenericImage

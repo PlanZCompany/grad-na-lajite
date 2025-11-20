@@ -25,9 +25,6 @@ export interface SpeedyOfficeRaw {
 export interface SpeedySite {
   id: number
   name: string
-  postCode: string | null
-  municipality: string | null
-  region: string | null
 }
 
 export interface SpeedyOffice {
