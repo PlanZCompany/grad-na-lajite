@@ -3,8 +3,8 @@
 import React, { useCallback, useState } from 'react'
 import ContactForm from './ContactForm'
 import ShippingForm from './ShippingForm'
-import { EcontCity } from '@/Econt/types'
 import { SpeedySite } from '@/Speedy/types'
+import { BoxnowLocker } from '@/BoxNow/types'
 
 const CheckoutForms = ({
   econtCities,
@@ -12,11 +12,11 @@ const CheckoutForms = ({
   boxNowCities,
 }: {
   econtCities: {
-    regionName: string
-    cities: EcontCity[]
+    id: number
+    name: string
   }[]
   speedySites: SpeedySite[]
-  boxNowCities: string[]
+  boxNowCities: BoxnowLocker[]
 }) => {
   const [passedStep, setPassedStep] = useState(0)
   const handlePassedStep = useCallback((step: number) => setPassedStep(step), [])

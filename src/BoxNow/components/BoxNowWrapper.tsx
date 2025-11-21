@@ -7,11 +7,11 @@ import BoxNowOfficeDropdown from './BoxNowOffice'
 
 type BoxNowWrapperProps = {
   activeInnerShipping: InnerShippingProps
-  currentShippingCity: string | null
+  currentShippingCity: BoxnowLocker | null
   office: BoxnowLocker | null
-  handleCityChange: (city: string) => void
+  handleCityChange: (city: BoxnowLocker) => void
   handleOfficeChange: (office: BoxnowLocker) => void
-  boxNowCities: string[]
+  boxNowCities: BoxnowLocker[]
 }
 
 const BoxNowWrapper = ({
@@ -26,7 +26,7 @@ const BoxNowWrapper = ({
       cities={boxNowCities}
       setter={handleCityChange}
       office={office}
-      city={currentShippingCity as string}
+      city={currentShippingCity as BoxnowLocker}
       setOffice={handleOfficeChange}
     />
   )

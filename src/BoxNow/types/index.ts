@@ -19,5 +19,4 @@ export interface BoxnowDestinationRaw {
 export interface BoxnowLocker {
   id: string
   name: string
-  city: string
 }

@@ -20,9 +20,9 @@ export default async function CheckoutPage() {
   //**info
   //footer?
 
-  //TODO econt for the towns that dont have offices in Bulgaria need to have extra property in the json to not be rendered in towns (maybe same for speedy)
-
   const [boxNowCities] = await Promise.all([getBoxnowCitiesAction()])
+  // getEcontCitiesAction()
+  // getAllSpeedySitesAction()
 
   return (
     <div className="fixed w-full inset-0 h-screen overflow-y-auto bg-purpleBackground z-[30]">

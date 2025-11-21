@@ -80,7 +80,6 @@ const getBoxnowLockersCached = unstable_cache(
       return resources.map(
         (d): BoxnowLocker => ({
           id: d.id,
-          city: d.addressLine2,
           name: d.name,
         }),
       )
@@ -95,22 +94,15 @@ const getBoxnowLockersCached = unstable_cache(
   },
 )
 
-export async function getBoxnowCitiesAction(): Promise<string[]> {
+export async function getBoxnowCitiesAction(): Promise<BoxnowLocker[]> {
   const lockers = await getBoxnowLockersCached()
 
-  const unique = new Set(lockers.map((l) => l?.city?.trim()).filter((c) => c?.length > 0))
-
-  return Array.from(unique).sort((a, b) => a.localeCompare(b, 'bg'))
-}
-
-export async function getBoxnowLockersByCityAction(city: string): Promise<BoxnowLocker[]> {
-  const lockers = await getBoxnowLockersCached()
-  const normalized = city.trim().toLowerCase()
-
-  if (!normalized) return []
-
-  return lockers.filter((l) => {
-    const lc = l?.city?.trim()?.toLowerCase()
-    return lc === normalized
+  const unique = lockers.map((locker) => {
+    return {
+      id: locker.id,
+      name: locker.name,
+    }
   })
+
+  return unique.sort((a, b) => a.name.localeCompare(b.name, 'bg'))
 }

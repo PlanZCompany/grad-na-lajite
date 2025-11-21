@@ -1,111 +1,55 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { EcontCity, EcontOffice } from '../types'
+import React, { useCallback, useState } from 'react'
+import { EcontCity } from '../types'
 import { GenericParagraph } from '@/components/Generic'
-import { ArrowIcon } from '@/assets/icons'
-import { getEcontOfficesAction } from '../action'
+import { ArrowIcon, SearchLogo } from '@/assets/icons'
+import InfiniteScrollContainer from './InfiniteScrollContainer'
 
 const EcontOfficeDropdown = ({
   cities,
   setter,
   city,
-  office,
-  setOffice,
 }: {
   cities: {
-    regionName: string
-    cities: EcontCity[]
+    id: number
+    name: string
   }[]
   setter: (city: EcontCity) => void
   city: EcontCity
-  office: EcontOffice | null
-  setOffice: (office: EcontOffice) => void
 }) => {
+  const [searchValue, setSearchValue] = useState('')
   const [activeDropdown, setActiveDropdown] = useState(false)
-  const [activeDropdownOffice, setActiveDropdownOffice] = useState(false)
-  const [activeRegionName, setActiveRegionName] = useState('')
+  const [searchResults, setSearchResults] = useState<
+    {
+      id: number
+      name: string
+    }[]
+  >(cities)
+  const [slice, setSlice] = useState(0)
+  const setSliceHandler = useCallback(() => {
+    setSlice((prev) => prev + 1)
+  }, [])
 
-  const [cityOffices, setCityOffices] = useState<EcontOffice[]>([])
-
-  useEffect(() => {
-    if (!city) return
-
-    getEcontOfficesAction(city.id).then((offices) => {
-      setCityOffices(offices)
-    })
-  }, [city])
-
-  const findCurrentCityInners = cities.find((city) => city.regionName === activeRegionName)
-
-  const innerDropDownContent = !!findCurrentCityInners
-    ? findCurrentCityInners.cities.map((city) => {
-        return (
-          <li key={city.id}>
-            <button
-              className="w-full flex items-center py-2 border-b-[1px] border-black/50"
-              onClick={() => {
-                setter(city)
-                setActiveDropdown(false)
-              }}
-            >
-              <GenericParagraph textColor="text-black" extraClass="w-full text-center">
-                {city.name}
-              </GenericParagraph>
-            </button>
-          </li>
-        )
-      })
-    : []
-
-  const citiesContent = cities.map((city) => {
-    return (
-      <li key={city.regionName}>
-        <div className="w-full flex items-center relative">
-          <button
-            className="w-full flex items-center bg-gray-200 border-b-[1px] border-black/50 py-2 px-2"
-            onClick={() => {
-              if (activeRegionName === city.regionName) {
-                setActiveRegionName('')
-                return
-              }
-              setActiveRegionName(city.regionName)
-            }}
-          >
-            <div className="flex-1">
-              <GenericParagraph textColor="text-black" extraClass="w-full text-center">
-                {city.regionName}
-              </GenericParagraph>
-            </div>
-
-            <div className="ml-auto flex justify-center items-center size-6">
-              <ArrowIcon />
-            </div>
-          </button>
-        </div>
-
-        {activeRegionName === city.regionName && (
-          <ul className="w-full flex flex-col">{innerDropDownContent}</ul>
-        )}
-      </li>
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value)
+    setSearchResults(
+      cities.filter((city) => city.name.toLowerCase().includes(e.target.value.toLowerCase())),
     )
-  })
+  }
 
-  const officesContent = cityOffices.map((currentOffice) => {
+  const resultsContent = searchResults.map((city, index) => {
     return (
-      <li key={currentOffice.id}>
+      <li key={`city-${city.id}-${index}`}>
         <button
-          className="w-full flex items-center"
+          className="w-full flex px-2 text-center py-2 border-[1px] border-black/50"
           onClick={() => {
-            setOffice(currentOffice)
-            setActiveDropdownOffice(false)
+            setter({ id: city.id, name: city.name })
+            setActiveDropdown(false)
           }}
         >
-          <GenericParagraph
-            textColor="text-black"
-            extraClass="w-full text-center border-b-[1px] border-black/50"
-          >
-            {currentOffice.name}
+          <GenericParagraph textColor="text-black" extraClass="w-full text-left">
+            {city.name}
           </GenericParagraph>
         </button>
       </li>
@@ -114,16 +58,18 @@ const EcontOfficeDropdown = ({
 
   return (
     <div className="w-full flex flex-col gap-s">
-      <div>
+      <div className="">
         <div className="w-full flex items-center bg-white/80 rounded-[8px] py-2 px-2 border-[1px] border-black/50">
           <button
             className="w-full flex items-center"
             onClick={() => {
-              setActiveDropdown(!activeDropdown)
+              setActiveDropdown((prev) => !prev)
+              setSearchValue('')
+              setSlice(0)
             }}
           >
             <GenericParagraph textColor="text-black">
-              {!!city ? city.name : '<Изберете град>'}
+              {!!city ? city.name : '<Изберете офис/автомат>'}
             </GenericParagraph>
 
             <div
@@ -136,41 +82,28 @@ const EcontOfficeDropdown = ({
           </button>
         </div>
         {activeDropdown && (
-          <ul className="flex flex-col gap-3 border-[1px] border-black/50 max-h-[400px] overflow-y-auto">
-            {citiesContent}
+          <ul className="flex flex-col gap-3 border-[1px] border-black/50">
+            <li className="w-full relative">
+              <div className="z-[5] absolute right-2 top-2 flex justify-center items-center size-6">
+                <SearchLogo />
+              </div>
+              <input
+                type="text"
+                placeholder="Напишете град/офис и изберете"
+                className="w-full border-[1px] border-black/50 
+                bg-purpleBackground text-white placeholder:text-white/80 py-2 px-2"
+                value={searchValue}
+                onChange={(e) => handleSearchChange(e)}
+              />
+            </li>
+
+            <InfiniteScrollContainer
+              items={resultsContent.slice(0, (slice + 1) * 50)}
+              setSliceHandler={setSliceHandler}
+            />
           </ul>
         )}
       </div>
-
-      {city && (
-        <div>
-          <div className="w-full flex items-center bg-white/80 rounded-[8px] py-2 px-2 border-[1px] border-black/50">
-            <button
-              className="w-full flex items-center"
-              onClick={() => {
-                setActiveDropdownOffice(!activeDropdownOffice)
-              }}
-            >
-              <GenericParagraph textColor="text-black">
-                {!!office ? office.name : '<Изберете офис>'}
-              </GenericParagraph>
-
-              <div
-                className={`flex justify-center items-center size-6 ml-auto ${
-                  !!office ? 'rotate-[270deg]' : 'rotate-90'
-                }`}
-              >
-                <ArrowIcon />
-              </div>
-            </button>
-          </div>
-          {activeDropdownOffice && (
-            <ul className="flex flex-col gap-3 border-[1px] border-black/50 max-h-[400px] overflow-y-auto">
-              {officesContent}
-            </ul>
-          )}
-        </div>
-      )}
     </div>
   )
 }

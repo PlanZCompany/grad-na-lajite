@@ -20,9 +20,7 @@ const GenericVideo = ({
         height={'100%'}
         autoPlay={true}
         loop={true}
-        src={
-          'https://media.gradnalajite.anilevisoulwalks.com/media/3d-rolling-dice-animation-alpha-channel-2025-10-31-18-43-15-utc.mp4'
-        }
+        src={src}
         muted={true}
         style={style}
         playsInline={true}

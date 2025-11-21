@@ -54,8 +54,6 @@ const shippingVariants = [
   },
 ]
 
-const shippingSelectArray = ['econt', 'speedy', 'box-now']
-
 const ShippingForm = ({
   econtCities,
   speedySites,
@@ -64,11 +62,11 @@ const ShippingForm = ({
   handlePassedStep,
 }: {
   econtCities: {
-    regionName: string
-    cities: EcontCity[]
+    id: number
+    name: string
   }[]
   speedySites: SpeedySite[]
-  boxNowCities: string[]
+  boxNowCities: BoxnowLocker[]
   passedStep: number
   handlePassedStep: (step: number) => void
 }) => {
@@ -77,10 +75,10 @@ const ShippingForm = ({
   const [pending, start] = useTransition()
   const [activeShippingInner, setActiveShippingInner] = useState<InnerShippingProps>(null)
   const [currentShippingCity, setCurrentShippingCity] = useState<
-    EcontCity | SpeedySite | string | null
+    EcontCity | SpeedySite | BoxnowLocker | null
   >(null)
   const handleCityChange = useCallback(
-    (city: EcontCity | SpeedySite | string) => setCurrentShippingCity(city),
+    (city: EcontCity | SpeedySite | BoxnowLocker) => setCurrentShippingCity(city),
     [],
   )
   const [chosenOffice, setChosenOffice] = useState<
@@ -146,11 +144,11 @@ const ShippingForm = ({
       component = (
         <BoxNowWrapper
           activeInnerShipping={activeShippingInner as InnerShippingProps}
-          currentShippingCity={currentShippingCity as string}
+          currentShippingCity={currentShippingCity as BoxnowLocker}
           handleCityChange={handleCityChange}
           handleOfficeChange={handleOfficeChange}
           office={chosenOffice as null}
-          boxNowCities={boxNowCities as string[]}
+          boxNowCities={boxNowCities as BoxnowLocker[]}
         />
       )
 
@@ -163,7 +161,7 @@ const ShippingForm = ({
     return (
       <li
         key={variant.name}
-        className="w-full p-2 rounded-[8px] border-[1px] border-primaryYellow bg-white"
+        className="w-full p-2 md:p-1 rounded-[8px] border-[1px] border-primaryYellow bg-white"
       >
         <button
           className="w-full flex items-center"
@@ -177,7 +175,7 @@ const ShippingForm = ({
           }}
         >
           <div className="flex items-center gap-2">
-            <div className="w-[24px] h-[24px] flex items-center justify-center border-[1px] border-purpleLight rounded-full bg-transparent relative">
+            <div className="w-[20px] h-[20px] md:w-[24px] md:h-[24px] flex items-center justify-center border-[1px] border-purpleLight rounded-full bg-transparent relative">
               {isActive && (
                 <div className="w-[16px] h-[16px] rounded-full bg-purpleBackground"></div>
               )}
@@ -198,7 +196,7 @@ const ShippingForm = ({
         </button>
 
         {activeShippingInner === variant.name && (
-          <div className="w-full px-4 py-3 bg-white">{currentComponent()}</div>
+          <div className="w-full py-3 md:px-4 md:py-3 bg-white">{currentComponent()}</div>
         )}
       </li>
     )

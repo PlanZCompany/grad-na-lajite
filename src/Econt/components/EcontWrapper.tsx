@@ -15,8 +15,8 @@ type EcontWrapperProps = {
   handleOfficeChange: (office: EcontOffice) => void
   handleAddressChange: (address: string) => void
   econtCities: {
-    regionName: string
-    cities: EcontCity[]
+    id: number
+    name: string
   }[]
 }
 
@@ -24,9 +24,7 @@ const EcontWrapper = ({
   activeInnerShipping,
   currentShippingCity,
   address,
-  office,
   handleCityChange,
-  handleOfficeChange,
   handleAddressChange,
   econtCities,
 }: EcontWrapperProps) => {
@@ -36,9 +34,7 @@ const EcontWrapper = ({
         <EcontOfficeDropdown
           cities={econtCities}
           setter={handleCityChange}
-          office={office}
           city={currentShippingCity as EcontCity}
-          setOffice={handleOfficeChange}
         />
       ) : (
         <EcontAddressDropdown

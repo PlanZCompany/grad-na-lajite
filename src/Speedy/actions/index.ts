@@ -104,25 +104,37 @@ const getAllSpeedySitesCached = unstable_cache(
       const bName = b.name.split('(')[1].trim()
       return aName.localeCompare(bName)
     })
+    const allOffices = []
+    // let count = 0
+    const testSlice = sorted
+    for (const city of testSlice) {
+      try {
+        const offices = await getSpeedyOfficesCached(city.id)
 
-    persistEcontCities(
-      sorted.map((city) => {
-        const cityName = city.name.split('(')[0].trim().toLowerCase()
-        const cityRegion = city.name.split('(')[1].trim().toLowerCase().replace(')', '')
-
-        if (cityName === cityRegion) {
-          return {
+        if (!offices.length) {
+          allOffices.push({
             id: city.id,
-            name: city.name.split('(')[0].trim(),
-          }
+            name: city.name,
+          })
+          continue
         }
 
-        return {
-          id: city.id,
-          name: city.name,
-        }
-      }),
-    ).catch(() => {})
+        allOffices.push(
+          ...offices.map((o) => {
+            return {
+              id: o.id,
+              name: `${o.name}`,
+            }
+          }),
+        )
+
+        await new Promise((resolve) => setTimeout(resolve, 200))
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    persistEcontCities(allOffices).catch(() => {})
 
     return sites
   },

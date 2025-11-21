@@ -21,9 +21,7 @@ const SpeedyWrapper = ({
   activeInnerShipping,
   currentShippingCity,
   address,
-  office,
   handleCityChange,
-  handleOfficeChange,
   handleAddressChange,
   speedySites,
 }: SpeedyWrapperProps) => {
@@ -33,9 +31,7 @@ const SpeedyWrapper = ({
         <SpeedyOfficeDropdown
           cities={speedySites}
           setter={handleCityChange}
-          office={office}
           city={currentShippingCity as SpeedySite}
-          setOffice={handleOfficeChange}
         />
       ) : (
         <SpeedyAddressDropdown

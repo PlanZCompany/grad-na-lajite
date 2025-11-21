@@ -40,8 +40,6 @@ export interface EcontOfficesResponseRaw {
 export interface EcontCity {
   id: number
   name: string
-  postCode: string | null
-  regionName: string | null
 }
 
 export interface EcontOffice {
