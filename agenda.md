@@ -50,7 +50,7 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 
 [done] - search
 
-[QC] video fullscreen
+[done] video fullscreen
 
 - Checkout page
 * sticky indicator

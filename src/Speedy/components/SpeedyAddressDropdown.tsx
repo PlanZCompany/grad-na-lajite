@@ -26,7 +26,20 @@ const SpeedyAddressDropdown = ({
       id: number
       name: string
     }[]
-  >(cities)
+  >(() => {
+    const citiesNameExtracted = cities.map((city) => {
+      return {
+        id: city.id,
+        name: city.name?.split(' ')[0],
+      }
+    })
+
+    const setOfCities = Array.from(
+      new Map(citiesNameExtracted.map((item) => [item.name, item])).values(),
+    )
+
+    return setOfCities
+  })
   const [slice, setSlice] = useState(0)
   const setSliceHandler = useCallback(() => {
     setSlice((prev) => prev + 1)
@@ -70,7 +83,7 @@ const SpeedyAddressDropdown = ({
             }}
           >
             <GenericParagraph textColor="text-black">
-              {!!city ? city.name : '<Изберете офис/автомат>'}
+              {!!city ? city.name : '<Изберете град>'}
             </GenericParagraph>
 
             <div

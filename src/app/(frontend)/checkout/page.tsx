@@ -21,8 +21,6 @@ export default async function CheckoutPage() {
   //footer?
 
   const [boxNowCities] = await Promise.all([getBoxnowCitiesAction()])
-  // getEcontCitiesAction()
-  // getAllSpeedySitesAction()
 
   return (
     <div className="fixed w-full inset-0 h-screen overflow-y-auto bg-purpleBackground z-[30]">
