@@ -5,6 +5,8 @@ import ContactForm from './ContactForm'
 import ShippingForm from './ShippingForm'
 import { SpeedySite } from '@/Speedy/types'
 import { BoxnowLocker } from '@/BoxNow/types'
+import PaymentFormSection from './PaymentFormSection'
+import CheckoutConfirm from './CheckoutConfirm'
 
 const CheckoutForms = ({
   econtCities,
@@ -18,19 +20,16 @@ const CheckoutForms = ({
   speedySites: SpeedySite[]
   boxNowCities: BoxnowLocker[]
 }) => {
-  const [passedStep, setPassedStep] = useState(0)
-  const handlePassedStep = useCallback((step: number) => setPassedStep(step), [])
-
   return (
     <div className="w-full lg:max-w-[50%] flex flex-col gap-m p-6 md:p-10">
-      <ContactForm handlePassedStep={handlePassedStep} />
+      <ContactForm />
       <ShippingForm
         econtCities={econtCities}
         speedySites={speedySites}
         boxNowCities={boxNowCities}
-        passedStep={passedStep}
-        handlePassedStep={handlePassedStep}
       />
+      <PaymentFormSection />
+      <CheckoutConfirm />
     </div>
   )
 }

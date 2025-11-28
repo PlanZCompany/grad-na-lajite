@@ -1,6 +1,6 @@
 'use client'
 
-import { useAppDispatch } from '@/hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { setIsLoading } from '@/store/features/root'
 //gradnalajite1234
 // /home/anilevis/media.gradnalajite.anilevisoulwalks.com/media
@@ -12,6 +12,7 @@ import SpeedyWrapper from '@/Speedy/components/SpeedyWrapper'
 import { SpeedyOffice, SpeedySite } from '@/Speedy/types'
 import { BoxNowWrapper } from '@/BoxNow/components'
 import { BoxnowLocker } from '@/BoxNow/types'
+import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
 
 export type InnerShippingProps =
   | null
@@ -58,8 +59,6 @@ const ShippingForm = ({
   econtCities,
   speedySites,
   boxNowCities,
-  passedStep,
-  handlePassedStep,
 }: {
   econtCities: {
     id: number
@@ -67,10 +66,9 @@ const ShippingForm = ({
   }[]
   speedySites: SpeedySite[]
   boxNowCities: BoxnowLocker[]
-  passedStep: number
-  handlePassedStep: (step: number) => void
 }) => {
   const dispatch = useAppDispatch()
+  const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
   const [activeShippingInner, setActiveShippingInner] = useState<InnerShippingProps>(null)
@@ -102,7 +100,23 @@ const ShippingForm = ({
     e.preventDefault()
 
     start(async () => {
-      handlePassedStep(passedStep + 1)
+      try {
+        dispatch(setCompletedStage(2))
+        let activeShipping: 'speedy' | 'econt' | 'boxnow' = 'boxnow'
+        if (activeShippingInner === 'econt-address' || activeShippingInner === 'econt-office')
+          activeShipping = 'econt'
+        if (activeShippingInner === 'speedy-address' || activeShippingInner === 'speedy-office')
+          activeShipping = 'speedy'
+        dispatch(setCheckoutFormData({ shipping: activeShipping }))
+
+        const nextTarget = document.querySelector('.REF_CHECKOUT_PAYMENT') as HTMLElement
+
+        if (nextTarget) {
+          nextTarget.scrollIntoView({ behavior: 'smooth' })
+        }
+      } catch (err) {
+        console.log(err)
+      }
     })
 
     setError(null)
@@ -155,6 +169,27 @@ const ShippingForm = ({
     return component
   }
 
+  //return boolean
+  const disableButtonConditions = () => {
+    const isEcont = activeShippingInner?.includes('econt')
+    const isSpeedy = activeShippingInner?.includes('speedy')
+    const isBoxNow = activeShippingInner?.includes('box-now')
+
+    if (!isEcont && !isSpeedy && !isBoxNow) return true
+
+    if (isBoxNow && !currentShippingCity) return true
+
+    if (isEcont && activeShippingInner === 'econt-office' && !currentShippingCity) return true
+
+    if (isEcont && activeShippingInner === 'econt-address' && !address) return true
+
+    if (isSpeedy && activeShippingInner === 'speedy-office' && !currentShippingCity) return true
+
+    if (isSpeedy && activeShippingInner === 'speedy-address' && !address) return true
+
+    return false
+  }
+
   const shippingContent = shippingVariants.map((variant) => {
     const isActive = activeShippingInner === variant.name
 
@@ -165,6 +200,7 @@ const ShippingForm = ({
       >
         <button
           className="w-full flex items-center"
+          type="button"
           onClick={() => {
             if (activeShippingInner === variant.name) {
               setActiveShippingInner(null)
@@ -202,11 +238,12 @@ const ShippingForm = ({
     )
   })
 
-  const isPassed = passedStep > 1
+  const isPassed = passedStep > 0
 
   return (
     <div
-      className={`REF_CHECKOUT_SHIPPING p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50 relative`}
+      className={`REF_CHECKOUT_SHIPPING p-3 md:p-6 rounded-[12px] border-[1px] 
+        border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50 relative`}
     >
       {!isPassed && <div className={`absolute inset-0 z-[5] backdrop-blur-sm`}></div>}
       <GenericHeading
@@ -229,6 +266,7 @@ const ShippingForm = ({
             click={() => {
               dispatch(setIsLoading(true))
             }}
+            disabled={disableButtonConditions()}
           >
             {pending ? <span className="animate-pulse">Зареждане</span> : 'Продължи'}
           </GenericButton>

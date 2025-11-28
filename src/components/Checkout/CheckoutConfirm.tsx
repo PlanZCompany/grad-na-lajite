@@ -1,0 +1,174 @@
+'use client'
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
+
+import React from 'react'
+import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '../Generic'
+import dayjs from 'dayjs'
+import { useCheckout } from '@/hooks/useCheckout'
+import { priceToEuro } from '@/utils/calculatePriceFromLvToEuro'
+import { Media } from '@/payload-types'
+import Link from 'next/link'
+import { resetToInitialState } from '@/store/features/checkout'
+
+const CheckoutConfirm = () => {
+  const dispatch = useAppDispatch()
+  const { products, checkoutFormData, stageCompleted } = useAppSelector((state) => state.checkout)
+  const { calculateTotalPrice } = useCheckout()
+  const isPassed = stageCompleted === 3
+
+  const productsContent = products.map((product) => {
+    const media = product?.mediaArray?.[0].file as Media
+
+    return (
+      <li key={product.id} className="w-full p-3">
+        <article
+          className="w-full flex flex-col bg-purpleBackground items-center relative 
+          border-[1px] border-primaryYellow rounded-[16px]"
+        >
+          <div className="w-full max-w-[150px] md:max-w-[200px] p-2 rounded-[12px] overflow-hidden">
+            <GenericImage
+              src={media.url as string}
+              alt={media.alt}
+              fill={true}
+              wrapperClassName="w-full max-w-[150px] mx-auto md:max-w-[unset] aspect-square relative rounded-[12px] overflow-hidden"
+              imageClassName="w-full h-full object-contain"
+            />
+          </div>
+          <div className="w-full flex flex-col">
+            <GenericParagraph
+              fontStyle="font-georgia font-[400]"
+              pType="large"
+              textColor="text-white"
+              extraClass="text-center mx-auto md:mx-[unset] w-full px-2"
+            >
+              <h3>
+                {product.title} * {product.orderQuantity}
+              </h3>
+            </GenericParagraph>
+
+            <div className="flex justify-center items-center px-2 pb-4">
+              <div>
+                <GenericParagraph
+                  fontStyle="custom"
+                  pType="regular"
+                  textColor="text-primaryYellow"
+                  extraClass="font-georgia font-[700]"
+                >
+                  <>
+                    {(product.price! * product.orderQuantity).toFixed(2)} лв. (
+                    {priceToEuro(product.price! * product.orderQuantity)})€
+                  </>
+                </GenericParagraph>
+              </div>
+            </div>
+          </div>
+        </article>
+      </li>
+    )
+  })
+
+  return (
+    <div
+      className="p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col 
+    gap-m justify-center items-center form_container bg-purpleDark/50 relative"
+    >
+      {!isPassed && <div className={`absolute inset-0 z-[5] backdrop-blur-sm`}></div>}
+
+      <GenericHeading
+        align="text-center"
+        headingType="h4"
+        textColor="text-primaryYellow"
+        extraClass="border-b-[1px] border-primaryYellow mb-4 md:mb-6"
+      >
+        <h2>
+          Благодарим Ви за поръчката! <br />
+          Поръчката ви е направено успешно!
+        </h2>
+      </GenericHeading>
+
+      <div className="w-full flex flex-col md:flex-row items-center">
+        <div className="w-full flex flex-col gap-m">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-m">
+            <div className="w-full flex flex-col justify-center items-center">
+              <GenericParagraph>
+                <strong>Поръчка номер:</strong>
+              </GenericParagraph>
+              <GenericParagraph textColor="text-primaryYellow">TODO</GenericParagraph>
+            </div>
+
+            <div className="w-full flex flex-col justify-center items-center">
+              <GenericParagraph>
+                <strong>Поръчана на:</strong>
+              </GenericParagraph>
+              <GenericParagraph textColor="text-primaryYellow">
+                {dayjs().format('DD.MM.YYYY - HH:mm:ss')}
+              </GenericParagraph>
+            </div>
+          </div>
+
+          <div className="divider_section relative z-[2]"></div>
+
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-m">
+            <div className="w-full flex flex-col justify-center items-center">
+              <GenericParagraph>
+                <strong>Статус на изпълнение:</strong>
+              </GenericParagraph>
+              <GenericParagraph textColor="text-primaryYellow">Обработва се</GenericParagraph>
+            </div>
+
+            <div className="w-full flex flex-col justify-center items-center">
+              <GenericParagraph>
+                <strong>Статус:</strong>
+              </GenericParagraph>
+              <GenericParagraph textColor="text-primaryYellow">
+                {checkoutFormData.payment === 'cash' ? 'Неплатена' : 'Платена'}
+              </GenericParagraph>
+            </div>
+          </div>
+
+          <div className="divider_section relative z-[2]"></div>
+
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-m">
+            <div className="w-full flex flex-col justify-center items-center">
+              <GenericParagraph>
+                <strong>Начин на плащане:</strong>
+              </GenericParagraph>
+              <GenericParagraph textColor="text-primaryYellow">
+                {checkoutFormData.payment === 'cash' ? 'Наложен платеж' : 'Дебитна/Кредитна карта'}
+              </GenericParagraph>
+            </div>
+
+            <div className="w-full flex flex-col justify-center items-center">
+              <GenericParagraph>
+                <strong>Обща сума:</strong>
+              </GenericParagraph>
+              <GenericParagraph textColor="text-primaryYellow">
+                {/* //TODO depend on discount */}
+                {calculateTotalPrice().toFixed(2)} лв ({priceToEuro(calculateTotalPrice())}€)
+              </GenericParagraph>
+            </div>
+          </div>
+        </div>
+        <div className="w-full md:max-w-[33%]">{productsContent}</div>
+      </div>
+
+      <div className="divider_section relative z-[2]"></div>
+
+      <div className="w-full flex justify-center items-center">
+        <Link href="/">
+          <GenericButton
+            click={() => {
+              document.body.style.overflow = ''
+              dispatch(resetToInitialState())
+            }}
+          >
+            <span>Начало</span>
+          </GenericButton>
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+export default CheckoutConfirm

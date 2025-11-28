@@ -96,7 +96,7 @@ const CheckoutAside = () => {
               </GenericParagraph>
             </div>
 
-            <div className="w-full flex items-center gap-2">
+            <div className="w-full flex flex-col md:flex-row items-center gap-2 px-2 py-2">
               <input
                 name={'code'}
                 type={'text'}
@@ -107,7 +107,7 @@ const CheckoutAside = () => {
                    !text-white outline-none placeholder:text-white/80 border-[1px] border-white`}
                 maxLength={50}
               />
-              <GenericButton variant="primary" styleClass="!py-[12px]">
+              <GenericButton variant="primary" styleClass="!py-[12px] w-full md:w-fit">
                 провери
               </GenericButton>
             </div>

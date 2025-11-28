@@ -5,10 +5,11 @@ import { setIsLoading } from '@/store/features/root'
 
 import React, { useState, useTransition } from 'react'
 import { GenericButton, GenericHeading, TextInput } from '../Generic'
+import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
 
 //TODO if user populate the form
 
-const ContactForm = ({ handlePassedStep }: { handlePassedStep: (step: number) => void }) => {
+const ContactForm = () => {
   const dispatch = useAppDispatch()
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
@@ -48,8 +49,9 @@ const ContactForm = ({ handlePassedStep }: { handlePassedStep: (step: number) =>
 
     start(async () => {
       try {
-        handlePassedStep(2)
         setErrors({ firstName: '', lastName: '', phoneNumber: '', email: '' })
+        dispatch(setCompletedStage(1))
+        dispatch(setCheckoutFormData(formValues))
 
         const nextTarget = document.querySelector('.REF_CHECKOUT_SHIPPING') as HTMLElement
 

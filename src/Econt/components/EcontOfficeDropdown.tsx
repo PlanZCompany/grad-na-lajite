@@ -47,6 +47,7 @@ const EcontOfficeDropdown = ({
             setter({ id: city.id, name: city.name })
             setActiveDropdown(false)
           }}
+          type="button"
         >
           <GenericParagraph textColor="text-black" extraClass="w-full text-left">
             {city.name}
@@ -67,6 +68,7 @@ const EcontOfficeDropdown = ({
               setSearchValue('')
               setSlice(0)
             }}
+            type="button"
           >
             <GenericParagraph textColor="text-black">
               {!!city ? city.name : '<Изберете офис/автомат>'}

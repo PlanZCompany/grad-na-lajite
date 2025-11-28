@@ -6,11 +6,35 @@ export type ExtendedProduct = Product & { orderQuantity: number }
 export interface CheckoutInitialState {
   shoppingCardOpen: boolean
   products: ExtendedProduct[]
+  stageCompleted: number
+  checkoutFormData: {
+    firstName: string
+    lastName: string
+    phoneNumber: string
+    email: string
+    shipping: 'econt' | 'boxnow' | 'speedy' | null
+    city: string | undefined
+    office: string | undefined
+    address: string | undefined
+    payment: 'card' | 'cash'
+  }
 }
 
 const checkoutInitialState: CheckoutInitialState = {
   shoppingCardOpen: false,
   products: [],
+  stageCompleted: 0,
+  checkoutFormData: {
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: '',
+    shipping: null,
+    city: undefined,
+    office: undefined,
+    address: undefined,
+    payment: 'cash',
+  },
 }
 
 export const checkoutSlice = createSlice({
@@ -52,6 +76,18 @@ export const checkoutSlice = createSlice({
         return product
       })
     },
+    setCompletedStage: (state, { payload }: PayloadAction<number>) => {
+      state.stageCompleted = payload
+    },
+    setCheckoutFormData: (
+      state,
+      { payload }: PayloadAction<Partial<CheckoutInitialState['checkoutFormData']>>,
+    ) => {
+      state.checkoutFormData = { ...state.checkoutFormData, ...payload }
+    },
+    resetToInitialState: () => {
+      return checkoutInitialState
+    },
   },
 })
 
@@ -63,6 +99,9 @@ export const {
   removeProductFromShoppingCart,
   addOrderQuantity,
   removeOrderQuantity,
+  setCompletedStage,
+  setCheckoutFormData,
+  resetToInitialState,
 } = checkoutSlice.actions
 
 export default checkoutSlice.reducer

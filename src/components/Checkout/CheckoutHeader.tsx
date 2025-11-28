@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { GenericImage, GenericParagraph } from '../Generic'
+import { useAppSelector } from '@/hooks/redux-hooks'
 
 const stages = ['Контакт', 'Доставка', 'Плащане', 'Потвърждение']
 const REFS = [
@@ -12,23 +13,35 @@ const REFS = [
 ]
 
 const CheckoutHeader = () => {
+  const completedStage = useAppSelector((state) => state.checkout.stageCompleted)
+
   const stageContent = stages.map((stage, index) => {
     const currentRef = REFS[index]
+
+    const isStageCompleted = completedStage >= index + 1
+    const isCurrentStep = completedStage === index
+
+    let extraClass = 'bg-transparent text-primaryYellow'
+    if (isStageCompleted) extraClass = 'bg-primaryYellow text-black'
+    if (isCurrentStep) extraClass = 'radial_yellow text-black scale-110'
 
     return (
       <li className="w-full flex items-center gap-2" key={stage}>
         <button
-          className="size-6 lg:size-10 rounded-full flex justify-center items-center p-2 border-[1px] border-primaryYellow"
+          className={`size-6 lg:size-10 rounded-full flex justify-center items-center p-2 border-[1px] border-primaryYellow
+          ${extraClass}
+          `}
           aria-label={stage}
           onClick={() => {
             const nextTarget = document.querySelector(`.${currentRef}`) as HTMLElement
 
             if (nextTarget) {
+              nextTarget.classList.add('scroll-mt-20 md:scroll-mt-[150px]')
               nextTarget.scrollIntoView({ behavior: 'smooth' })
             }
           }}
         >
-          <p className="text-center text-primaryYellow text-[12px] lg:text-[16px]">{index + 1}</p>
+          <p className="text-center text-[12px] lg:text-[16px]">{index + 1}</p>
         </button>
 
         <GenericParagraph extraClass="text-white hidden lg:block">{stage}</GenericParagraph>
@@ -39,7 +52,7 @@ const CheckoutHeader = () => {
   })
 
   return (
-    <header className="w-full bg-black/70 z-[12] py-[4px] md:py-[15px] px-4 lg:px-[40px] flex justify-center items-center">
+    <header className="w-full bg-black/70 z-[12] py-[4px] md:py-[15px] px-4 lg:px-[40px] flex justify-center items-center sticky top-0">
       <nav className="w-full flex justify-between items-center content_wrapper_mobile-full relative z-[2]">
         <Link href={'/'} aria-label="Отиди на начална страница">
           <GenericImage

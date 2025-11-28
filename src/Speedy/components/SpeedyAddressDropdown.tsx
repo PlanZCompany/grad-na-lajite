@@ -61,6 +61,7 @@ const SpeedyAddressDropdown = ({
             setter({ id: city.id, name: city.name })
             setActiveDropdown(false)
           }}
+          type="button"
         >
           <GenericParagraph textColor="text-black" extraClass="w-full text-left">
             {city.name}
@@ -81,6 +82,7 @@ const SpeedyAddressDropdown = ({
               setSearchValue('')
               setSlice(0)
             }}
+            type="button"
           >
             <GenericParagraph textColor="text-black">
               {!!city ? city.name : '<Изберете град>'}
