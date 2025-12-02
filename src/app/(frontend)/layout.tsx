@@ -170,7 +170,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <ShoppingCartManager />
             <SetMainProduct product={currentProduct} />
             <CookieBanner />
-            <AnalyticsManager />
+            {/* <AnalyticsManager /> */}
           </main>
         </body>
       </html>
