@@ -25,7 +25,7 @@ import { getPublishedBlogsCached } from '@/action/cache'
 import { Blog } from '@/payload-types'
 import Search from '@/components/Search/Search'
 import CookieBanner from '@/components/CookieContent/CookieBanner'
-import { AnalyticsManager } from '@/components/CookieContent/AnalyticsManager'
+// import { AnalyticsManager } from '@/components/CookieContent/AnalyticsManager'
 
 const SITE_NAME = 'Град на Лъжите'
 
