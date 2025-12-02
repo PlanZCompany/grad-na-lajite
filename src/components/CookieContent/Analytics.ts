@@ -49,9 +49,10 @@ function initMetaPixel(pixelId: string) {
   const w = window as any
   if (w.fbq) return
 
-  const fbq: any = function (...args: any[]) {
-    fbq.callMethod ? fbq.callMethod.apply(fbq, args) : fbq.queue.push(args)
-  }
+  // const fbq: any = function (...args: any[]) {
+  //   fbq.callMethod ? fbq.callMethod.push([fbq, ...args]) : fbq.queue.push(args)
+  // }
+  const fbq: any = {}
   fbq.push = fbq
   fbq.loaded = true
   fbq.version = '2.0'

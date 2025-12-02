@@ -11,6 +11,7 @@ import { PaymentForm } from './PaymentForm'
 import { createPaymentIntentAction } from '../action'
 import { useAppSelector } from '@/hooks/redux-hooks'
 import { subscribeAction } from '@/action/subscribe'
+import { GooglePayButton } from '../GooglePay/GooglePayButton'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 type PaymentSectionProps = {
@@ -66,6 +67,8 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
 
   return (
     <div>
+      <GooglePayButton products={items} clientSecret={clientSecret} discount={0} />
+
       <Elements stripe={stripePromise} options={options}>
         <PaymentForm />
       </Elements>
