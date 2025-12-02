@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { generateHref, LinkObject } from '@/utils/generateHref'
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
+  const footerData: Footer = (await getCachedGlobal('footer', 1)()) as Footer
 
   const media = footerData.logo as Media
 

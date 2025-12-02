@@ -1,5 +1,4 @@
 import type { Field, GlobalConfig } from 'payload'
-import { link } from '@/fields/link'
 
 export const FooterCheckout: GlobalConfig = {
   slug: 'footer-checkout',
