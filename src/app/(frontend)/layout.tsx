@@ -24,6 +24,8 @@ import SetMainProduct from '@/components/Setters/SetMainProduct'
 import { getPublishedBlogsCached } from '@/action/cache'
 import { Blog } from '@/payload-types'
 import Search from '@/components/Search/Search'
+import CookieBanner from '@/components/CookieContent/CookieBanner'
+import { AnalyticsManager } from '@/components/CookieContent/AnalyticsManager'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -167,6 +169,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <SubscriptionModalActivator />
             <ShoppingCartManager />
             <SetMainProduct product={currentProduct} />
+            <CookieBanner />
+            <AnalyticsManager />
           </main>
         </body>
       </html>

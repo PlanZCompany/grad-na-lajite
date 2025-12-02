@@ -53,16 +53,17 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 [done] video fullscreen
 
 - Checkout page
-* sticky indicator
-* product with interaction (right column)
-* overall information (right column)
-* step 1 - personal information (left column)
-* step 2 - chose curier - (left column)
-* step 3 - payment method
-* step 4 - thank you and ifo
----
+  [done] sticky indicator
+  [done] product with interaction (right column)
+  [done] overall information (right column)
+  [done] step 1 - personal information (left column)
+  [done] step 2 - chose curier - (left column)
+  [done] step 3 - payment method
+  [done] step 4 - thank you and ifo
+- discounts
 
 ---emails---
+
 - email template fix (има го в папката в webrika pc)
 - email SMTP to be the domain
   ---admin---
@@ -74,6 +75,7 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 
 ---media---
 [done] use storage try with superhosting
+
 - add video option url
 
-**DONE PER WEEK* 
+\*_DONE PER WEEK_
