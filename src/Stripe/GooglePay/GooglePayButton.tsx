@@ -94,7 +94,7 @@ export function GooglePayButton({ products, clientSecret, discount }: GooglePayB
       const result = await pr.canMakePayment()
 
       if (!cancelled) {
-        if (result && (result as any).googlePay) {
+        if ((result && (result as any)?.googlePay) || (result as any)?.applePay) {
           setPaymentRequest(pr)
         } else {
           // няма Google Pay → просто не показваме бутона
