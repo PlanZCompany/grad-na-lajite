@@ -56,8 +56,8 @@ const CheckoutConfirm = () => {
                   extraClass="font-georgia font-[700]"
                 >
                   <>
-                    {(product.price! * product.orderQuantity).toFixed(2)} лв. (
-                    {priceToEuro(product.price! * product.orderQuantity)})€
+                    {/* {(product.price! * product.orderQuantity).toFixed(2)} лв. ( */}
+                    {priceToEuro(product.price! * product.orderQuantity)}€
                   </>
                 </GenericParagraph>
               </div>
@@ -75,17 +75,34 @@ const CheckoutConfirm = () => {
     >
       {!isPassed && <div className={`absolute inset-0 z-[5] backdrop-blur-sm`}></div>}
 
-      <GenericHeading
-        align="text-center"
-        headingType="h4"
-        textColor="text-primaryYellow"
-        extraClass="border-b-[1px] border-primaryYellow mb-4 md:mb-6"
-      >
-        <h2>
-          Благодарим Ви за поръчката! <br />
-          Поръчката ви е направено успешно!
-        </h2>
-      </GenericHeading>
+      <div className="w-full flex items-center justify-center gap-m ">
+        <div className="flex justify-center items-center">
+          <GenericHeading
+            align="text-center"
+            headingType="h4"
+            textColor="text-primaryYellow"
+            extraClass="border-b-[1px] border-primaryYellow"
+          >
+            <h2>
+              Благодарим Ви за поръчката! <br />
+              Поръчката ви е направено успешно!
+            </h2>
+          </GenericHeading>
+        </div>
+
+        <div className="hidden justify-center items-center md:flex">
+          <Link href="/">
+            <GenericButton
+              click={() => {
+                document.body.style.overflow = ''
+                dispatch(resetToInitialState())
+              }}
+            >
+              <span>Начало</span>
+            </GenericButton>
+          </Link>
+        </div>
+      </div>
 
       <div className="w-full flex flex-col md:flex-row items-center">
         <div className="w-full flex flex-col gap-m">
@@ -145,7 +162,8 @@ const CheckoutConfirm = () => {
               </GenericParagraph>
               <GenericParagraph textColor="text-primaryYellow">
                 {/* //TODO depend on discount */}
-                {calculateTotalPrice().toFixed(2)} лв ({priceToEuro(calculateTotalPrice())}€)
+                {/* calculateTotalPrice().toFixed(2)} лв  */}
+                {priceToEuro(calculateTotalPrice())}€
               </GenericParagraph>
             </div>
           </div>
@@ -155,7 +173,7 @@ const CheckoutConfirm = () => {
 
       <div className="divider_section relative z-[2]"></div>
 
-      <div className="w-full flex justify-center items-center">
+      <div className="w-full flex justify-center items-center md:hidden">
         <Link href="/">
           <GenericButton
             click={() => {

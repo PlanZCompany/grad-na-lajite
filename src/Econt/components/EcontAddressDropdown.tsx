@@ -107,7 +107,7 @@ const EcontAddressDropdown = ({
                 type="text"
                 placeholder="Напишете град/офис и изберете"
                 className="w-full border-[1px] border-black/50 
-                bg-purpleBackground text-white placeholder:text-white/80 py-2 px-2"
+                bg-purpleBackground text-white placeholder:text-white/80 py-2 px-2 placeholder:text-[12px] md:placeholder:text-[14px]"
                 value={searchValue}
                 onChange={(e) => handleSearchChange(e)}
               />

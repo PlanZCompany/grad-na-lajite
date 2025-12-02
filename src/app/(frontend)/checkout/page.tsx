@@ -7,6 +7,7 @@ import speedySites from '../../../Speedy/json/speedy-cities.json'
 
 import React from 'react'
 import ContentHolder from '@/components/Checkout/ContentHolder'
+import { FooterCheckoutComponent } from '@/FooterCheckout/Component'
 
 export default async function CheckoutPage() {
   //footer?
@@ -24,6 +25,8 @@ export default async function CheckoutPage() {
         econtCities={econtCities}
         speedySites={speedySites}
       />
+
+      <FooterCheckoutComponent />
     </div>
   )
 }

@@ -21,7 +21,7 @@ const CheckoutForms = ({
   boxNowCities: BoxnowLocker[]
 }) => {
   return (
-    <div className="w-full lg:max-w-[50%] flex flex-col gap-m p-6 md:p-10">
+    <div className="w-full lg:max-w-[50%] flex flex-col gap-m p-4 md:p-10">
       <ContactForm />
       <ShippingForm
         econtCities={econtCities}

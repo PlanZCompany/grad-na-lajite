@@ -40,6 +40,8 @@ export function PaymentForm() {
         if (nextTarget) {
           nextTarget.scrollIntoView({ behavior: 'smooth' })
         }
+
+        localStorage.removeItem('cartProductsGradNaLajite')
       }
     })
   }

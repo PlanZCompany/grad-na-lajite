@@ -105,12 +105,14 @@ export interface Config {
     footer: Footer;
     aside: Aside;
     subscriptionModal: SubscriptionModal;
+    'footer-checkout': FooterCheckout;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     aside: AsideSelect<false> | AsideSelect<true>;
     subscriptionModal: SubscriptionModalSelect<false> | SubscriptionModalSelect<true>;
+    'footer-checkout': FooterCheckoutSelect<false> | FooterCheckoutSelect<true>;
   };
   locale: null;
   user: User & {
@@ -3427,6 +3429,21 @@ export interface SubscriptionModal {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer-checkout".
+ */
+export interface FooterCheckout {
+  id: number;
+  paymentLinks?:
+    | {
+        media?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -3551,6 +3568,21 @@ export interface SubscriptionModalSelect<T extends boolean = true> {
   heading?: T;
   description?: T;
   media?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer-checkout_select".
+ */
+export interface FooterCheckoutSelect<T extends boolean = true> {
+  paymentLinks?:
+    | T
+    | {
+        media?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

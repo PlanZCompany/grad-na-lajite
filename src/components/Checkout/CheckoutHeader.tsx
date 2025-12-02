@@ -39,6 +39,7 @@ const CheckoutHeader = () => {
               nextTarget.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }
           }}
+          disabled={completedStage === 3}
         >
           <p className="text-center text-[12px] lg:text-[16px]">{index + 1}</p>
         </button>

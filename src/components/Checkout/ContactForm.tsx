@@ -12,18 +12,18 @@ import {
 } from '@/store/features/checkout'
 import { CheckIcon } from '@/assets/icons'
 
-//TODO if user populate the form
-
 const ContactForm = () => {
   const dispatch = useAppDispatch()
+
+  const user = useAppSelector((state) => state.root.user)
   const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
   const [formValues, setFormValues] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
+    firstName: user?.firstName ?? '',
+    lastName: user?.lastName ?? '',
+    email: user?.email ?? '',
+    phoneNumber: user?.phoneNumber ?? '',
   })
 
   const [errors, setErrors] = useState({

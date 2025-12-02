@@ -120,8 +120,8 @@ const CheckoutAside = () => {
   const remain = Number(calculateRemainSum().toFixed(2))
 
   return (
-    <div className="lg:fixed  lg:top-[170px] lg:rounded-[16px] lg:right-4 w-full lg:max-w-[50%] bg-purpleLight">
-      <div className="w-full flex relative justify-center items-center py-4">
+    <div className="lg:fixed lg:top-[170px] lg:rounded-[16px] lg:right-4 w-full lg:max-w-[50%] bg-purpleLight">
+      <div className="w-full flex relative justify-center items-center py-2">
         <GenericParagraph
           fontStyle="custom"
           pType="custom"
@@ -142,7 +142,7 @@ const CheckoutAside = () => {
             <span className="uppercase">Доставката е безплатна!</span>
           ) : (
             <>
-              Добави артикули за още {calculateRemainSum().toFixed(2)}лв{' '}
+              {/* Добави артикули за още {calculateRemainSum().toFixed(2)}лв{' '} */}
               {Number(priceToEuro(calculateRemainSum())).toFixed(2)}€ и доставката ще е безплатна
             </>
           )}
@@ -189,7 +189,8 @@ const CheckoutAside = () => {
                 textColor="text-primaryYellow"
                 extraClass="font-georgia font-[700]"
               >
-                {calculateTotalPrice().toFixed(2)} лв ({priceToEuro(calculateTotalPrice())}€)
+                {/* calculateTotalPrice().toFixed(2)} лв */}
+                {priceToEuro(calculateTotalPrice())}€
               </GenericParagraph>
             </div>
           </div>

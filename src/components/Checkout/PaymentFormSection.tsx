@@ -44,6 +44,8 @@ const PaymentFormSection = () => {
         if (nextTarget) {
           nextTarget.scrollIntoView({ behavior: 'smooth' })
         }
+
+        localStorage.removeItem('cartProductsGradNaLajite')
       } catch (err) {
         console.log(err)
       }

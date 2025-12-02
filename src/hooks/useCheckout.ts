@@ -48,10 +48,15 @@ export function useCheckout() {
     if (!!userId) {
       addToCart(product?.id, userId!)
     } else {
-      const currentLocalStorageProducts = JSON.parse(localStorage.getItem('cartProducts') || '[]')
+      const currentLocalStorageProducts = JSON.parse(
+        localStorage.getItem('cartProductsGradNaLajite') || '[]',
+      )
 
       if (currentLocalStorageProducts.length === 0) {
-        localStorage.setItem('cartProducts', JSON.stringify([{ ...product, orderQuantity: 1 }]))
+        localStorage.setItem(
+          'cartProductsGradNaLajite',
+          JSON.stringify([{ ...product, orderQuantity: 1 }]),
+        )
         return
       }
 
@@ -61,10 +66,16 @@ export function useCheckout() {
 
       if (productExistsInLocalStorage) {
         productExistsInLocalStorage.orderQuantity++
-        localStorage.setItem('cartProducts', JSON.stringify(currentLocalStorageProducts))
+        localStorage.setItem(
+          'cartProductsGradNaLajite',
+          JSON.stringify(currentLocalStorageProducts),
+        )
       } else {
         currentLocalStorageProducts.push({ ...product, orderQuantity: 1 })
-        localStorage.setItem('cartProducts', JSON.stringify(currentLocalStorageProducts))
+        localStorage.setItem(
+          'cartProductsGradNaLajite',
+          JSON.stringify(currentLocalStorageProducts),
+        )
       }
 
       return
@@ -84,7 +95,9 @@ export function useCheckout() {
     if (!!userId) {
       removeFromCart(product.id, userId!)
     } else {
-      const currentLocalStorageProducts = JSON.parse(localStorage.getItem('cartProducts') || '[]')
+      const currentLocalStorageProducts = JSON.parse(
+        localStorage.getItem('cartProductsGradNaLajite') || '[]',
+      )
 
       const productExistsInLocalStorage = currentLocalStorageProducts.find(
         (x: ExtendedProduct) => x.id === product.id,
@@ -95,9 +108,12 @@ export function useCheckout() {
           currentLocalStorageProducts.indexOf(productExistsInLocalStorage),
           1,
         )
-        localStorage.setItem('cartProducts', JSON.stringify(currentLocalStorageProducts))
+        localStorage.setItem(
+          'cartProductsGradNaLajite',
+          JSON.stringify(currentLocalStorageProducts),
+        )
       } else {
-        localStorage.removeItem('cartProducts')
+        localStorage.removeItem('cartProductsGradNaLajite')
       }
     }
   }

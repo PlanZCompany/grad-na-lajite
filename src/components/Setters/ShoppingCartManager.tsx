@@ -11,7 +11,8 @@ const ShoppingCartManager = () => {
 
   const dispatchCurrentProductsToState = async () => {
     if (!userId) {
-      const localStorageProducts = JSON.parse(localStorage.getItem('cartProducts') as string) || []
+      const localStorageProducts =
+        JSON.parse(localStorage.getItem('cartProductsGradNaLajite') as string) || []
 
       if (localStorageProducts.length > 0) {
         dispatch(setProducts(localStorageProducts))

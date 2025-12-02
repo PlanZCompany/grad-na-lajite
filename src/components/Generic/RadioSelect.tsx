@@ -36,10 +36,11 @@ const RadioSelect = <T,>({
         {required && <span className="text-primaryBlue"> *</span>}
       </label>
 
-      <div className="w-full flex">
+      <div className="w-full flex flex-col md:flex-row">
         <button
-          className={`flex-1 border-[1px] border-primaryYellow/80 rounded-tl-[8px] rounded-bl-[8px] h-[50px] 
-          ${isFirstSelected ? 'bg-primaryYellow text-black' : 'text-primaryYellow'} hover:opacity-80 hover:shadow-sm transition-color duration-300 ease-in-out
+          className={`flex-1 border-[1px] border-primaryYellow/80 md:rounded-tl-[8px] md:rounded-bl-[8px] h-[50px] py-4 md:py-[unset]
+          ${isFirstSelected ? 'bg-primaryYellow text-black' : 'text-primaryYellow'} 
+          hover:opacity-80 hover:shadow-sm transition-color duration-300 ease-in-out
         `}
           type="button"
           onClick={() => onSelectHandler(options[0].value)}
@@ -47,7 +48,7 @@ const RadioSelect = <T,>({
           {options[0].label}
         </button>
         <button
-          className={`flex-1 border-[1px] border-primaryYellow/80 rounded-tr-[8px] rounded-br-[8px] h-[50px]
+          className={`flex-1 border-[1px] border-primaryYellow/80 md:rounded-tr-[8px] md:rounded-br-[8px] h-[50px] py-4 md:py-[unset]
           ${isSecondSelected ? 'bg-primaryYellow text-black' : 'text-primaryYellow'} hover:opacity-80 hover:shadow-sm transition-color duration-300 ease-in-out
         `}
           type="button"
