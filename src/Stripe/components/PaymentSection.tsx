@@ -66,12 +66,12 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
   }
 
   return (
-    <div>
-      <GooglePayButton products={items} clientSecret={clientSecret} discount={0} />
+    <Elements stripe={stripePromise} options={options}>
+      <div>
+        <GooglePayButton products={items} clientSecret={clientSecret} discount={0} />
 
-      <Elements stripe={stripePromise} options={options}>
         <PaymentForm />
-      </Elements>
-    </div>
+      </div>
+    </Elements>
   )
 }

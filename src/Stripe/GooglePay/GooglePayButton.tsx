@@ -1,11 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { PaymentRequestButtonElement } from '@stripe/react-stripe-js'
-import { loadStripe, type PaymentRequest } from '@stripe/stripe-js'
+import { PaymentRequestButtonElement, useStripe } from '@stripe/react-stripe-js'
+import { type PaymentRequest } from '@stripe/stripe-js'
 import { ExtendedProduct } from '@/store/features/checkout'
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 type GooglePayButtonProps = {
   products: ExtendedProduct[]
@@ -38,20 +36,16 @@ function calculateTotalAmount(items: ExtendedProduct[], discount: number = 0): n
 }
 
 export function GooglePayButton({ products, clientSecret, discount }: GooglePayButtonProps) {
+  const stripe = useStripe()
   const amount = calculateTotalAmount(products, discount)
   const [paymentRequest, setPaymentRequest] = useState<PaymentRequest | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    if (!stripe) return
     let cancelled = false
 
     const init = async () => {
-      const stripe = await stripePromise
-      if (!stripe) {
-        setError('Stripe не е инициализиран.')
-        return
-      }
-
       const pr = stripe.paymentRequest({
         country: 'BG',
         currency: 'eur',

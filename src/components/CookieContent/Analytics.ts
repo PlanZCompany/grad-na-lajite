@@ -6,9 +6,9 @@ export function initAnalyticsTools() {
   if (analyticsInitialized) return
   analyticsInitialized = true
 
-  const GA_ID = 'G-XXXXXXX' // TODO: replace
-  const ADS_ID = 'AW-XXXXXXX' // TODO: replace
-  const META_PIXEL_ID = 'XXXXXXXX' // TODO: replace
+  const GA_ID = null // TODO: replace
+  const ADS_ID = null // TODO: replace
+  const META_PIXEL_ID = null // TODO: replace
 
   initGtagBase()
   if (GA_ID) {
