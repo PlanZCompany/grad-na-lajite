@@ -90,8 +90,8 @@ const CheckoutAside = () => {
                 extraClass="font-georgia font-[700] text-center"
               >
                 <>
-                  {(product.price! * product.orderQuantity).toFixed(2)} лв. (
-                  {priceToEuro(product.price! * product.orderQuantity)})€
+                  {/* {(product.price! * product.orderQuantity).toFixed(2)} лв. ( */}
+                  {priceToEuro(product.price! * product.orderQuantity)}€
                 </>
               </GenericParagraph>
             </div>

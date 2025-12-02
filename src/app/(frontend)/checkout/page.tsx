@@ -1,6 +1,5 @@
 import { getBoxnowCitiesAction } from '@/BoxNow/action'
-import { CheckoutAside, CheckoutHeader, ConfirmHolder } from '@/components/Checkout'
-import CheckoutForms from '@/components/Checkout/CheckoutForms'
+import { CheckoutHeader, ConfirmHolder } from '@/components/Checkout'
 import type { Metadata } from 'next/types'
 
 import econtCities from '../../../Econt/json/econt-cities.json'

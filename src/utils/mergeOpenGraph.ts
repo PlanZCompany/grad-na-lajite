@@ -6,7 +6,7 @@ const defaultOpenGraph: Metadata['openGraph'] = {
   description: 'Уебсайт генериран от Симеон Рудашки',
   images: [
     {
-      url: `${getServerSideURL()}Logo.png`,
+      url: `${getServerSideURL()}/Logo.png`,
     },
   ],
   siteName: 'Град на лъжите',

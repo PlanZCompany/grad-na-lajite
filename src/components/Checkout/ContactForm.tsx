@@ -1,16 +1,22 @@
 'use client'
 
-import { useAppDispatch } from '@/hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { setIsLoading } from '@/store/features/root'
 
 import React, { useState, useTransition } from 'react'
-import { GenericButton, GenericHeading, TextInput } from '../Generic'
-import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
+import { GenericButton, GenericHeading, GenericParagraph, TextInput } from '../Generic'
+import {
+  setCheckoutFormData,
+  setCompletedStage,
+  setUserWantSubscription,
+} from '@/store/features/checkout'
+import { CheckIcon } from '@/assets/icons'
 
 //TODO if user populate the form
 
 const ContactForm = () => {
   const dispatch = useAppDispatch()
+  const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
   const [formValues, setFormValues] = useState({
@@ -67,7 +73,7 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="REF_CHECKOUT_CONTACT p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50">
+    <div className="REF_CHECKOUT_CONTACT scroll-mt-20 md:scroll-mt-[150px] p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50">
       <GenericHeading
         align="text-center"
         headingType="h4"
@@ -127,6 +133,24 @@ const ContactForm = () => {
             error={errors.email}
             autoFocus={false}
           />
+        </div>
+
+        <div className="w-full flex items-center gap-2">
+          <button
+            className={`size-6 border-[1px] border-primaryYellow flex justify-center items-center
+          ${userWantSubscription && 'bg-primaryYellow'}
+          `}
+            onClick={() => {
+              dispatch(setUserWantSubscription(!userWantSubscription))
+            }}
+            type="button"
+          >
+            {userWantSubscription && <CheckIcon />}
+          </button>
+
+          <GenericParagraph pType="small">
+            <span>Искам да получавам новини и предложения</span>
+          </GenericParagraph>
         </div>
 
         <div className="my-4 flex w-full">

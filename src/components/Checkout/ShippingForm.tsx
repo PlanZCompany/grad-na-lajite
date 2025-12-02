@@ -242,7 +242,7 @@ const ShippingForm = ({
 
   return (
     <div
-      className={`REF_CHECKOUT_SHIPPING p-3 md:p-6 rounded-[12px] border-[1px] 
+      className={`REF_CHECKOUT_SHIPPING scroll-mt-20 md:scroll-mt-[150px] p-3 md:p-6 rounded-[12px] border-[1px] 
         border-white/20 flex flex-col gap-m justify-center items-center form_container bg-purpleDark/50 relative`}
     >
       {!isPassed && <div className={`absolute inset-0 z-[5] backdrop-blur-sm`}></div>}

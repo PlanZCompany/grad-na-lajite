@@ -50,7 +50,7 @@ export default function ProductPreview({ data }: { data: HomeBlock['singlePrevie
               }}
               variant="colored"
             >
-              Поръчай
+              {data?.buttonText || 'Поръчай'}
             </GenericButton>
           </div>
         </article>

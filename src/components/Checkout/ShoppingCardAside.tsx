@@ -106,8 +106,8 @@ const ShoppingCardAside = () => {
                   extraClass="font-georgia font-[700]"
                 >
                   <>
-                    {(product.price! * product.orderQuantity).toFixed(2)} лв. (
-                    {priceToEuro(product.price! * product.orderQuantity)})€
+                    {/* {(product.price! * product.orderQuantity).toFixed(2)} лв. ( */}
+                    {priceToEuro(product.price! * product.orderQuantity)}€
                   </>
                 </GenericParagraph>
               </div>
@@ -160,8 +160,9 @@ const ShoppingCardAside = () => {
             <span className="uppercase">Доставката е безплатна!</span>
           ) : (
             <>
-              Добави артикули за още {calculateRemainSum().toFixed(2)}лв{' '}
-              {Number(priceToEuro(calculateRemainSum())).toFixed(2)}€ и доставката ще е безплатна
+              {/* {calculateRemainSum().toFixed(2)}лв{' '} */}
+              Добави артикули за още {Number(priceToEuro(calculateRemainSum())).toFixed(2)}€ и
+              доставката ще е безплатна
             </>
           )}
         </GenericParagraph>
@@ -213,7 +214,8 @@ const ShoppingCardAside = () => {
                 textColor="text-primaryYellow"
                 extraClass="font-georgia font-[700]"
               >
-                {calculateTotalPrice().toFixed(2)} лв ({priceToEuro(calculateTotalPrice())}€)
+                {/* calculateTotalPrice().toFixed(2)} лв  */}
+                {priceToEuro(calculateTotalPrice())}€
               </GenericParagraph>
             </div>
           </button>

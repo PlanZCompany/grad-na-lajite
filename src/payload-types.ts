@@ -809,6 +809,7 @@ export interface HomeBlock {
     } | null;
     media?: (number | null) | Media;
     price?: string | null;
+    buttonText?: string | null;
   };
   galleryPreview?: {
     /**
@@ -2644,6 +2645,7 @@ export interface HomeBlockSelect<T extends boolean = true> {
         description?: T;
         media?: T;
         price?: T;
+        buttonText?: T;
       };
   galleryPreview?:
     | T

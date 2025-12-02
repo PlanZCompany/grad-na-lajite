@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     default: SITE_NAME,
     template: `%s`,
   },
-  description: 'Град на лъжите', //TODO
+  description: 'Град на лъжите - истината е някъде там',
   keywords: ['подарък', 'игра', 'настолна игра', 'карти', 'лъжа', 'истина'],
   authors: [{ name: 'Simeon Rudashki' }, { name: 'PlanZ' }, { name: 'Anatoli Vachev' }],
   creator: 'PlanZ',
@@ -128,6 +128,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       },
     },
   })
+
+  console.log('BUILD 2.12.2025')
 
   const currentProduct = product?.docs?.[0]
   //need to make function with cache about to 5 minutes to get blogs to avoid flickering

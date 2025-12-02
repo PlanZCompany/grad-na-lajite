@@ -36,8 +36,7 @@ const CheckoutHeader = () => {
             const nextTarget = document.querySelector(`.${currentRef}`) as HTMLElement
 
             if (nextTarget) {
-              nextTarget.classList.add('scroll-mt-20 md:scroll-mt-[150px]')
-              nextTarget.scrollIntoView({ behavior: 'smooth' })
+              nextTarget.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }
           }}
         >

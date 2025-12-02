@@ -567,6 +567,11 @@ export const HomeBlock: Block = {
           label: 'Цена',
           type: 'text',
         },
+        {
+          name: 'buttonText',
+          label: 'Текст на бутон',
+          type: 'text',
+        },
       ],
     },
     {

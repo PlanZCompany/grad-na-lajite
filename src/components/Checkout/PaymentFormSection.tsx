@@ -7,9 +7,12 @@ import { GenericButton, GenericHeading, RadioSelect } from '../Generic'
 import { PaymentSection } from '@/Stripe/components'
 import { createPaymentIntentAction } from '@/Stripe/action'
 import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
+import { subscribeAction } from '@/action/subscribe'
 
 const PaymentFormSection = () => {
   const dispatch = useAppDispatch()
+  const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
+  const formData = useAppSelector((state) => state.checkout.checkoutFormData)
   const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
   const products = useAppSelector((state) => state.checkout.products)
   const [pending, start] = useTransition()
@@ -28,6 +31,14 @@ const PaymentFormSection = () => {
         dispatch(setCompletedStage(3))
         dispatch(setCheckoutFormData({ payment: 'cash' }))
 
+        //TODO make order
+        if (userWantSubscription) {
+          const subscription = await subscribeAction(formData.email)
+
+          //TODO IF OK === true add discount
+          console.log(subscription.ok, subscription.message)
+        }
+
         const nextTarget = document.querySelector('.REF_CHECKOUT_CONFIRM') as HTMLElement
 
         if (nextTarget) {
@@ -43,7 +54,7 @@ const PaymentFormSection = () => {
 
   return (
     <div
-      className="REF_CHECKOUT_PAYMENT p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col 
+      className="REF_CHECKOUT_PAYMENT scroll-mt-20 md:scroll-mt-[150px] p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col 
     gap-m justify-center items-center form_container bg-purpleDark/50 relative"
     >
       {!isPassed && <div className={`absolute inset-0 z-[5] backdrop-blur-sm`}></div>}

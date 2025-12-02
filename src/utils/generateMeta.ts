@@ -10,7 +10,7 @@ export const getImageURL = (
 ) => {
   const serverUrl = getServerSideURL()
 
-  let url = serverUrl + 'Logo.png'
+  let url = serverUrl + '/Logo.png'
 
   if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl =
@@ -29,7 +29,7 @@ export const getImageURL = (
 export const generateMeta = async (args: { doc: Partial<Page> | null }): Promise<Metadata> => {
   const { doc } = args
 
-  const ogImage = getImageURL(doc?.meta?.image as any) || 'logo.png' //TODO ANY
+  const ogImage = getImageURL(doc?.meta?.image as any) || '/logo.png' //TODO ANY
 
   const title = doc?.meta?.title ? `${doc?.meta?.title} | Град на лъжите` : 'Град на лъжите'
 

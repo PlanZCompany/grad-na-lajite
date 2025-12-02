@@ -9,7 +9,8 @@ import { loadStripe, type StripeElementsOptions } from '@stripe/stripe-js'
 
 import { PaymentForm } from './PaymentForm'
 import { createPaymentIntentAction } from '../action'
-import { GenericHeading } from '@/components/Generic'
+import { useAppSelector } from '@/hooks/redux-hooks'
+import { subscribeAction } from '@/action/subscribe'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 type PaymentSectionProps = {
@@ -21,6 +22,8 @@ type PaymentSectionProps = {
 }
 
 export default function PaymentSection({ items }: PaymentSectionProps) {
+  const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
+  const formData = useAppSelector((state) => state.checkout.checkoutFormData)
   const [clientSecret, setClientSecret] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -28,6 +31,13 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
   useEffect(() => {
     startTransition(async () => {
       try {
+        if (userWantSubscription) {
+          const subscription = await subscribeAction(formData.email)
+
+          //TODO IF OK === true add discount to createPaymentIntent
+          console.log(subscription.ok, subscription.message)
+        }
+
         const result = await createPaymentIntentAction(items)
 
         if (!result.clientSecret) {

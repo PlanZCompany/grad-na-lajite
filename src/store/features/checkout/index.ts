@@ -18,6 +18,7 @@ export interface CheckoutInitialState {
     address: string | undefined
     payment: 'card' | 'cash'
   }
+  userWantSubscription: boolean
 }
 
 const checkoutInitialState: CheckoutInitialState = {
@@ -35,6 +36,7 @@ const checkoutInitialState: CheckoutInitialState = {
     address: undefined,
     payment: 'cash',
   },
+  userWantSubscription: false,
 }
 
 export const checkoutSlice = createSlice({
@@ -85,6 +87,9 @@ export const checkoutSlice = createSlice({
     ) => {
       state.checkoutFormData = { ...state.checkoutFormData, ...payload }
     },
+    setUserWantSubscription: (state, { payload }: PayloadAction<boolean>) => {
+      state.userWantSubscription = payload
+    },
     resetToInitialState: () => {
       return checkoutInitialState
     },
@@ -102,6 +107,7 @@ export const {
   setCompletedStage,
   setCheckoutFormData,
   resetToInitialState,
+  setUserWantSubscription,
 } = checkoutSlice.actions
 
 export default checkoutSlice.reducer
