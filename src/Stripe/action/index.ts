@@ -32,7 +32,7 @@ export async function createPaymentIntentAction(products: ExtendedProduct[], dis
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
-    currency: 'BGN',
+    currency: 'eur',
     automatic_payment_methods: {
       enabled: true,
     },

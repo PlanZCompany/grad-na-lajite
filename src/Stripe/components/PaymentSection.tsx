@@ -63,6 +63,12 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
 
   const options: StripeElementsOptions = {
     clientSecret,
+    appearance: {
+      theme: 'flat',
+      inputs: 'spaced',
+      labels: 'above',
+      variables: { colorPrimary: '#200226' },
+    },
   }
 
   return (

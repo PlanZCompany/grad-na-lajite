@@ -166,6 +166,18 @@ const CheckoutConfirm = () => {
               </GenericParagraph>
             </div>
           </div>
+
+          <div className="divider_section relative z-[2]"></div>
+          <div className="w-full">
+            <div className="w-full flex flex-col justify-center items-center">
+              <GenericParagraph>
+                <strong>Адрес на доставка:</strong>
+              </GenericParagraph>
+              <GenericParagraph textColor="text-primaryYellow">
+                {checkoutFormData.city} {checkoutFormData.address} {checkoutFormData.office}
+              </GenericParagraph>
+            </div>
+          </div>
         </div>
         <div className="w-full md:max-w-[33%]">{productsContent}</div>
       </div>

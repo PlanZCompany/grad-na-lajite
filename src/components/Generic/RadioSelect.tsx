@@ -36,9 +36,9 @@ const RadioSelect = <T,>({
         {required && <span className="text-primaryBlue"> *</span>}
       </label>
 
-      <div className="w-full flex flex-col md:flex-row">
+      <div className="w-full flex flex-col">
         <button
-          className={`flex-1 border-[1px] border-primaryYellow/80 md:rounded-tl-[8px] md:rounded-bl-[8px] h-[50px] py-4 md:py-[unset]
+          className={`flex-1 border-[1px] border-primaryYellow/80 h-[50px] py-4
           ${isFirstSelected ? 'bg-primaryYellow text-black' : 'text-primaryYellow'} 
           hover:opacity-80 hover:shadow-sm transition-color duration-300 ease-in-out
         `}
@@ -48,7 +48,7 @@ const RadioSelect = <T,>({
           {options[0].label}
         </button>
         <button
-          className={`flex-1 border-[1px] border-primaryYellow/80 md:rounded-tr-[8px] md:rounded-br-[8px] h-[50px] py-4 md:py-[unset]
+          className={`flex-1 border-[1px] border-primaryYellow/80 h-[50px] py-4
           ${isSecondSelected ? 'bg-primaryYellow text-black' : 'text-primaryYellow'} hover:opacity-80 hover:shadow-sm transition-color duration-300 ease-in-out
         `}
           type="button"

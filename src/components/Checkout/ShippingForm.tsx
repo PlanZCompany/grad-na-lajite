@@ -107,7 +107,14 @@ const ShippingForm = ({
           activeShipping = 'econt'
         if (activeShippingInner === 'speedy-address' || activeShippingInner === 'speedy-office')
           activeShipping = 'speedy'
-        dispatch(setCheckoutFormData({ shipping: activeShipping }))
+        dispatch(
+          setCheckoutFormData({
+            shipping: activeShipping,
+            city: currentShippingCity?.name,
+            office: chosenOffice?.name,
+            address: address,
+          }),
+        )
 
         const nextTarget = document.querySelector('.REF_CHECKOUT_PAYMENT') as HTMLElement
 
