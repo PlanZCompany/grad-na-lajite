@@ -1,7 +1,7 @@
 export const site = {
   url: `${process.env.NEXT_PUBLIC_SERVER_URL}/` || 'http://localhost:3000/',
   name: 'Град на лъжите',
-  logo: `${process.env.NEXT_PUBLIC_SERVER_URL}/public/logo.png`,
+  logo: `${process.env.NEXT_PUBLIC_SERVER_URL}/public/static/preview.png` || '',
   // contact: {
   //   email: '',
   //   phone: '+359-87-775-7765',

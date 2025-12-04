@@ -14,7 +14,7 @@ export default async function subscribeEmail(
   try {
     const siteName = 'Град на лъжите'
     const siteUrl = `https://gradnalajite.bg`
-    const logoUrl = `${siteUrl}/logo.png`
+    const logoUrl = `${siteUrl}/static/preview.png`
     const supportEmail = 'noreply@gradnalajite.bg'
     const recipient = email
     const displayName = userName || undefined // if you have user.name, pass it instead

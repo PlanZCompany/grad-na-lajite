@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { GenericButton } from '../Generic'
+import { GenericButton, GenericImage } from '../Generic'
 import Link from 'next/link'
 import { getCookieConsent, setCookieConsent } from './CookieConsent'
 import { initAnalyticsTools } from './Analytics'
@@ -38,12 +38,24 @@ const CookieBanner: React.FC<CookieBannerProps> = ({ onAcceptAll, onAcceptNecess
   }
 
   return (
-    <div className="fixed bottom-4 left-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl -translate-x-1/2">
-      <div className="flex flex-col gap-3 rounded-xl bg-purpleLight px-4 py-3 md:py-4 text-sm text-slate-50 shadow-2xl md:flex-row md:items-center md:justify-between md:gap-6">
-        <div>
-          <h2 className="mb-1 text-base font-semibold">Бисквитки</h2>
+    <div className="fixed bottom-0 left-0 z-50 right-0">
+      <div
+        className="flex flex-col gap-3 bg-purpleLight 
+      px-4 py-3 md:py-4 text-sm text-slate-50 shadow-2xl md:flex-row md:items-center md:justify-between md:gap-6"
+      >
+        <div className="md:pl-4">
+          <div className="flex items-center mb-1">
+            <GenericImage
+              src="/static/cookie-image.png"
+              alt="cookie"
+              wrapperClassName="w-6 h-6 md:w-8 md:h-8 relative"
+              imageClassName="w-full h-full object-contain"
+              fill={true}
+            ></GenericImage>
+            <h2 className=" text-base font-semibold">Бисквитки</h2>
+          </div>
 
-          <p className="text-slate-200">
+          <p className="text-primaryYellow">
             В „Град на Лъжите“ използваме бисквитки, за да пазим тайните ти в безопасност и да
             направим преживяването по-добро. <br /> Някои са нужни, за да работи сайтът, а други
             помагат да разберем как го използваш.{' '}
@@ -55,15 +67,7 @@ const CookieBanner: React.FC<CookieBannerProps> = ({ onAcceptAll, onAcceptNecess
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 justify-center">
-          <button
-            type="button"
-            className="underline text-white hover:opacity-80"
-            onClick={handleAcceptNecessary}
-          >
-            <p className="underline">Само нужните</p>
-          </button>
-
+        <div className="flex flex-col items-center gap-2 justify-center">
           <GenericButton
             type="button"
             styleClass="!text-[12px] !px-2 !py-1"
@@ -71,6 +75,13 @@ const CookieBanner: React.FC<CookieBannerProps> = ({ onAcceptAll, onAcceptNecess
           >
             <p className="text-white">Приемам всички</p>
           </GenericButton>
+          <button
+            type="button"
+            className="underline text-white hover:opacity-80"
+            onClick={handleAcceptNecessary}
+          >
+            <p className="underline">Само нужните</p>
+          </button>
         </div>
       </div>
     </div>

@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { useCheckout } from '@/hooks/useCheckout'
 import { Media } from '@/payload-types'
 import { removeOrderQuantity, addOrderQuantity } from '@/store/features/checkout'
-import { priceToEuro } from '@/utils/calculatePriceFromLvToEuro'
 import React, { useState } from 'react'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '../Generic'
 import Link from 'next/link'
@@ -91,7 +90,7 @@ const CheckoutAside = () => {
               >
                 <>
                   {/* {(product.price! * product.orderQuantity).toFixed(2)} лв. ( */}
-                  {priceToEuro(product.price! * product.orderQuantity)}€
+                  {(product.price! * product.orderQuantity).toFixed(2)}€
                 </>
               </GenericParagraph>
             </div>
@@ -143,7 +142,7 @@ const CheckoutAside = () => {
           ) : (
             <>
               {/* Добави артикули за още {calculateRemainSum().toFixed(2)}лв{' '} */}
-              {Number(priceToEuro(calculateRemainSum())).toFixed(2)}€ и доставката ще е безплатна
+              {Number(calculateRemainSum()).toFixed(2)}€ и доставката ще е безплатна
             </>
           )}
         </GenericParagraph>
@@ -190,7 +189,7 @@ const CheckoutAside = () => {
                 extraClass="font-georgia font-[700]"
               >
                 {/* calculateTotalPrice().toFixed(2)} лв */}
-                {priceToEuro(calculateTotalPrice())}€
+                {calculateTotalPrice().toFixed(2)}€
               </GenericParagraph>
             </div>
           </div>

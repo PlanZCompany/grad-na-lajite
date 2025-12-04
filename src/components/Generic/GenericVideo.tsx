@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useRef } from 'react'
 
 const GenericVideo = ({
   wrapperClassName,
@@ -7,12 +9,22 @@ const GenericVideo = ({
     transformOrigin: 'center center',
   },
   videoClassName = 'w-full h-full object-cover',
+  muted = true,
 }: {
   wrapperClassName: string
   src: string
   style?: React.CSSProperties
   videoClassName?: string
+  muted?: boolean
 }) => {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = muted
+    }
+  }, [videoRef, muted])
+
   return (
     <div className={wrapperClassName}>
       <video
@@ -25,6 +37,7 @@ const GenericVideo = ({
         style={style}
         playsInline={true}
         className={videoClassName}
+        ref={videoRef}
       />
     </div>
   )

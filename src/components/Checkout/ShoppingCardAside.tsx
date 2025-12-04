@@ -10,7 +10,6 @@ import {
   setShoppingCardOpen,
 } from '@/store/features/checkout'
 import { useCheckout } from '@/hooks/useCheckout'
-import { priceToEuro } from '@/utils/calculatePriceFromLvToEuro'
 import { Media } from '@/payload-types'
 import { COLORS } from '@/cssVariables'
 import Link from 'next/link'
@@ -107,7 +106,7 @@ const ShoppingCardAside = () => {
                 >
                   <>
                     {/* {(product.price! * product.orderQuantity).toFixed(2)} лв. ( */}
-                    {priceToEuro(product.price! * product.orderQuantity)}€
+                    {(product.price! * product.orderQuantity).toFixed(2)}€
                   </>
                 </GenericParagraph>
               </div>
@@ -161,8 +160,8 @@ const ShoppingCardAside = () => {
           ) : (
             <>
               {/* {calculateRemainSum().toFixed(2)}лв{' '} */}
-              Добави артикули за още {Number(priceToEuro(calculateRemainSum())).toFixed(2)}€ и
-              доставката ще е безплатна
+              Добави артикули за още {Number(calculateRemainSum()).toFixed(2)}€ и доставката ще е
+              безплатна
             </>
           )}
         </GenericParagraph>
@@ -215,7 +214,7 @@ const ShoppingCardAside = () => {
                 extraClass="font-georgia font-[700]"
               >
                 {/* calculateTotalPrice().toFixed(2)} лв  */}
-                {priceToEuro(calculateTotalPrice())}€
+                {calculateTotalPrice().toFixed(2)}€
               </GenericParagraph>
             </div>
           </button>

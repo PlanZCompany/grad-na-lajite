@@ -40,11 +40,14 @@ const FullVideo = ({
         </button>
       </div>
       <div className="w-full h-full">
-        <GenericVideo
-          src={src}
-          wrapperClassName="w-full h-full"
-          videoClassName="w-full h-full object-contain"
-        />
+        {isActive && (
+          <GenericVideo
+            src={src}
+            wrapperClassName="w-full h-full"
+            videoClassName="w-full h-full object-contain"
+            muted={false}
+          />
+        )}
       </div>
     </div>
   )

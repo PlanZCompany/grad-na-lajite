@@ -26,7 +26,7 @@ export function useCheckout() {
   }
 
   const calculateRemainSum = () => {
-    const BASE_SUM = 65
+    const BASE_SUM = 33
 
     const differences = BASE_SUM - calculateTotalPrice()
 

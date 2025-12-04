@@ -3,10 +3,10 @@ import { getServerSideURL } from './getURL'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'Уебсайт генериран от Симеон Рудашки',
+  description: 'Град на Лъжите - Премиум настолна игра с карти за компании, стратегии и характери.',
   images: [
     {
-      url: `${getServerSideURL()}/Logo.png`,
+      url: `${getServerSideURL()}/static/preview.png`,
     },
   ],
   siteName: 'Град на лъжите',

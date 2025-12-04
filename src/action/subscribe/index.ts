@@ -70,6 +70,10 @@ export async function subscribeAction(userEmail: string): Promise<SubscribeResul
       }
 
       if (Object.keys(updates).length > 0) {
+        updates.marketing_consent = true
+        updates.marketing_consent_date = new Date().toISOString()
+        updates.marketing_consent_source = 'checkout'
+
         await payload.update({
           collection: 'users',
           id: user.id,

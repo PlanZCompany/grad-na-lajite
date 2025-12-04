@@ -149,7 +149,7 @@ const ContactForm = () => {
           </button>
 
           <GenericParagraph pType="small">
-            <span>Искам да получавам новини и предложения</span>
+            <span>{`Искам да получавам имейли с новини и оферти от 'Град на Лъжите'`}</span>
           </GenericParagraph>
         </div>
 

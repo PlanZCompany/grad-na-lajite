@@ -6,7 +6,6 @@ import React from 'react'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '../Generic'
 import dayjs from 'dayjs'
 import { useCheckout } from '@/hooks/useCheckout'
-import { priceToEuro } from '@/utils/calculatePriceFromLvToEuro'
 import { Media } from '@/payload-types'
 import Link from 'next/link'
 import { resetToInitialState } from '@/store/features/checkout'
@@ -57,7 +56,7 @@ const CheckoutConfirm = () => {
                 >
                   <>
                     {/* {(product.price! * product.orderQuantity).toFixed(2)} лв. ( */}
-                    {priceToEuro(product.price! * product.orderQuantity)}€
+                    {(product.price! * product.orderQuantity).toFixed(2)}€
                   </>
                 </GenericParagraph>
               </div>
@@ -163,7 +162,7 @@ const CheckoutConfirm = () => {
               <GenericParagraph textColor="text-primaryYellow">
                 {/* //TODO depend on discount */}
                 {/* calculateTotalPrice().toFixed(2)} лв  */}
-                {priceToEuro(calculateTotalPrice())}€
+                {calculateTotalPrice().toFixed(2)}€
               </GenericParagraph>
             </div>
           </div>

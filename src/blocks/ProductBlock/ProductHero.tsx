@@ -181,7 +181,7 @@ const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
                     addProductToShoppingCartFullProcess(mainProduct)
                   }}
                 >
-                  Купи сега
+                  {hero.links?.[0]?.link?.label || 'КУПИ СЕГА'}
                 </GenericButton>
                 {hero.conditions && (
                   <ul className="grid md:grid-cols-2 gap-4 xl:grid-cols-4">{conditionsContent}</ul>

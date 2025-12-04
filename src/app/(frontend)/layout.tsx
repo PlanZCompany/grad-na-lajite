@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     default: SITE_NAME,
     template: `%s`,
   },
-  description: 'Град на лъжите - истината е някъде там',
+  description: 'Град на Лъжите - Премиум настолна игра с карти за компании, стратегии и характери.',
   keywords: ['подарък', 'игра', 'настолна игра', 'карти', 'лъжа', 'истина'],
   authors: [{ name: 'Simeon Rudashki' }, { name: 'PlanZ' }, { name: 'Anatoli Vachev' }],
   creator: 'PlanZ',
@@ -53,7 +53,8 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: SITE_NAME,
     title: SITE_NAME,
-    description: 'Град на лъжите - подаръци, които се помнят',
+    description:
+      'Град на Лъжите - Премиум настолна игра с карти за компании, стратегии и характери.',
     url: '/',
     locale: 'bg_BG',
     images: [
@@ -69,7 +70,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: SITE_NAME,
-    description: 'Град на лъжите - подаръци, които се помнят',
+    description:
+      'Град на Лъжите - Премиум настолна игра с карти за компании, стратегии и характери.',
     images: [
       {
         url: `/mobile-hero.jpg`,
@@ -129,8 +131,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       },
     },
   })
-
-  console.log('BUILD 2.12.2025')
 
   const currentProduct = product?.docs?.[0]
   //need to make function with cache about to 5 minutes to get blogs to avoid flickering

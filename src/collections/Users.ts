@@ -126,6 +126,83 @@ export const Users: CollectionConfig = {
       },
     },
     {
+      name: 'tags',
+      label: 'Tags',
+      type: 'text',
+      hasMany: true,
+    },
+    {
+      name: 'marketing_consent',
+      label: 'Marketing consent',
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    {
+      name: 'marketing_consent_source',
+      label: 'Marketing consent source',
+      type: 'select',
+      options: [
+        { label: 'Popup', value: 'popup' },
+        { label: 'Checkout', value: 'checkout' },
+        { label: 'Other', value: 'other' },
+      ],
+      admin: { placeholder: 'Select source' },
+    },
+    {
+      name: 'marketing_consent_date',
+      label: 'Marketing consent date',
+      type: 'date',
+      admin: {
+        date: { pickerAppearance: 'dayAndTime' },
+      },
+    },
+    {
+      name: 'newsletter_status',
+      label: 'Newsletter status',
+      type: 'select',
+      required: true,
+      defaultValue: 'subscribed',
+      options: [
+        { label: 'Subscribed', value: 'subscribed' },
+        { label: 'Unsubscribed', value: 'unsubscribed' },
+      ],
+    },
+    {
+      name: 'newsletter_unsubscribed_at',
+      label: 'Newsletter unsubscribed at',
+      type: 'date',
+      admin: { date: { pickerAppearance: 'dayAndTime' } },
+    },
+    {
+      name: 'last_marketing_email_sent_at',
+      label: 'Last marketing email sent at',
+      type: 'date',
+      admin: { date: { pickerAppearance: 'dayAndTime' } },
+    },
+    {
+      name: 'last_newsletter_sent_at',
+      label: 'Last newsletter sent at',
+      type: 'date',
+      admin: { date: { pickerAppearance: 'dayAndTime' } },
+    },
+    {
+      name: 'last_campaign_key',
+      label: 'Last campaign key',
+      type: 'text',
+    },
+    {
+      name: 'last_login_at',
+      label: 'Last login at',
+      type: 'date',
+      admin: { date: { pickerAppearance: 'dayAndTime' } },
+    },
+    {
+      name: 'gdpr_deleted_at',
+      label: 'GDPR deleted at',
+      type: 'date',
+      admin: { date: { pickerAppearance: 'dayAndTime' } },
+    },
+    {
       name: 'discountCode',
       label: 'Код за отстъпка',
       type: 'text',
