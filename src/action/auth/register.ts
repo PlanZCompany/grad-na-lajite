@@ -33,6 +33,7 @@ export async function registerUser(values: {
       role: 'user',
       subscribed: isSubscribed,
       discountCode: isSubscribed ? subscription.docs[0].discountCode : null,
+      newsletter_status: 'unsubscribed',
     },
   })
 
