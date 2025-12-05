@@ -1,0 +1,576 @@
+{
+  "RateGroups": [
+    {
+      "Id": "5b452a36-a486-42e2-a2a5-ad8900dc949d",
+      "Ordering": 0,
+      "SettlementType": "Automatic",
+      "SettlementAction": "ChargeCreditCard",
+      "SettlementTrigger": "Confirmation",
+      "SettlementOffset": "P0M0DT0H0M0S",
+      "SettlementValue": 1,
+      "SettlementFlatValue": null,
+      "SettlementMaximumNights": null,
+      "SettlementMaximumTimeUnits": null,
+      "SettlementCurrencyCode": "AUD"
+    },
+    {
+      "Id": "8ebe481f-0475-4be6-a51a-ad8900def203",
+      "Ordering": 3,
+      "SettlementType": "Automatic",
+      "SettlementAction": "ChargeCreditCard",
+      "SettlementTrigger": "Confirmation",
+      "SettlementOffset": "P0M0DT0H0M0S",
+      "SettlementValue": 1,
+      "SettlementFlatValue": null,
+      "SettlementMaximumNights": null,
+      "SettlementMaximumTimeUnits": null,
+      "SettlementCurrencyCode": "AUD"
+    },
+    {
+      "Id": "f40b9618-a4fa-4c7e-9c7e-ad8900def203",
+      "Ordering": 8,
+      "SettlementType": "Automatic",
+      "SettlementAction": "ChargeCreditCard",
+      "SettlementTrigger": "Confirmation",
+      "SettlementOffset": "P0M0DT0H0M0S",
+      "SettlementValue": 1,
+      "SettlementFlatValue": null,
+      "SettlementMaximumNights": null,
+      "SettlementMaximumTimeUnits": null,
+      "SettlementCurrencyCode": "AUD"
+    }
+  ],
+  "Rates": [
+    {
+      "Id": "dd147d6d-463d-4f22-b0e1-aeb400a31612",
+      "RateGroupId": "5b452a36-a486-42e2-a2a5-ad8900dc949d",
+      "Ordering": 0,
+      "Name": {
+        "en-US": "WEBRATE"
+      },
+      "Description": {
+        "en-US": "DO NOT USE \r\nRate for Web Config only"
+      },
+      "IsPrivate": true,
+      "CurrencyCode": "AUD"
+    },
+    {
+      "Id": "304450dd-aebd-4d05-8731-ad8900dee82d",
+      "RateGroupId": "8ebe481f-0475-4be6-a51a-ad8900def203",
+      "Ordering": 0,
+      "Name": {
+        "en-US": "Flexible Rate Weekly Discount"
+      },
+      "Description": {
+        "en-US": "Flexible rate with weekly discounts. Free Cancellation up to 7 days prior to arrival date (1500 hrs). If cancelled within 7 days prior to arrival, 25% of the booking value will be charged. Full Payment at the time of booking."
+      },
+      "IsPrivate": false,
+      "CurrencyCode": "AUD"
+    },
+    {
+      "Id": "30687d14-9083-4278-a273-ad8900dee82d",
+      "RateGroupId": "f40b9618-a4fa-4c7e-9c7e-ad8900def203",
+      "Ordering": 0,
+      "Name": {
+        "en-US": "Non Refundable Rate Weekly discount"
+      },
+      "Description": {
+        "en-US": "Non Refundable one night stay rate. Full Payment at the time of booking. No Refunds or cancellations. Amendments subject to availability"
+      },
+      "IsPrivate": false,
+      "CurrencyCode": "AUD"
+    }
+  ],
+  "RoomCategoryAvailabilities": [
+    {
+      "RoomCategoryId": "582b4f75-543e-4205-b0dd-ad8900deeb62",
+      "AvailableRoomCount": 3,
+      "RoomOccupancyAvailabilities": [
+        {
+          "Pricing": [
+            {
+              "RateId": "dd147d6d-463d-4f22-b0e1-aeb400a31612",
+              "Price": {
+                "Total": {
+                  "AUD": 2235
+                },
+                "TotalAmount": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 2235,
+                    "NetValue": 2235,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 2235,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AveragePerNight": {
+                  "AUD": 248.33
+                },
+                "AveragePerTimeUnit": {
+                  "AUD": 248.33
+                },
+                "AverageAmountPerNight": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 248.33,
+                    "NetValue": 248.33,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 248.33,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AverageAmountPerTimeUnit": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 248.33,
+                    "NetValue": 248.33,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 248.33,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "MaxPrice": {
+                "Total": {
+                  "AUD": 2235
+                },
+                "TotalAmount": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 2235,
+                    "NetValue": 2235,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 2235,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AveragePerNight": {
+                  "AUD": 248.33
+                },
+                "AveragePerTimeUnit": {
+                  "AUD": 248.33
+                },
+                "AverageAmountPerNight": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 248.33,
+                    "NetValue": 248.33,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 248.33,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AverageAmountPerTimeUnit": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 248.33,
+                    "NetValue": 248.33,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 248.33,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "RateId": "304450dd-aebd-4d05-8731-ad8900dee82d",
+              "Price": {
+                "Total": {
+                  "AUD": 2167.95
+                },
+                "TotalAmount": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 2167.95,
+                    "NetValue": 2167.95,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 2167.95,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AveragePerNight": {
+                  "AUD": 240.88
+                },
+                "AveragePerTimeUnit": {
+                  "AUD": 240.88
+                },
+                "AverageAmountPerNight": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 240.88,
+                    "NetValue": 240.88,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 240.88,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AverageAmountPerTimeUnit": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 240.88,
+                    "NetValue": 240.88,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 240.88,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "MaxPrice": {
+                "Total": {
+                  "AUD": 2167.95
+                },
+                "TotalAmount": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 2167.95,
+                    "NetValue": 2167.95,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 2167.95,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AveragePerNight": {
+                  "AUD": 240.88
+                },
+                "AveragePerTimeUnit": {
+                  "AUD": 240.88
+                },
+                "AverageAmountPerNight": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 240.88,
+                    "NetValue": 240.88,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 240.88,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AverageAmountPerTimeUnit": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 240.88,
+                    "NetValue": 240.88,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 240.88,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "RateId": "30687d14-9083-4278-a273-ad8900dee82d",
+              "Price": {
+                "Total": {
+                  "AUD": 2059.53
+                },
+                "TotalAmount": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 2059.53,
+                    "NetValue": 2059.53,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 2059.53,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AveragePerNight": {
+                  "AUD": 228.84
+                },
+                "AveragePerTimeUnit": {
+                  "AUD": 228.84
+                },
+                "AverageAmountPerNight": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 228.84,
+                    "NetValue": 228.84,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 228.84,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AverageAmountPerTimeUnit": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 228.84,
+                    "NetValue": 228.84,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 228.84,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "MaxPrice": {
+                "Total": {
+                  "AUD": 2059.53
+                },
+                "TotalAmount": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 2059.53,
+                    "NetValue": 2059.53,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 2059.53,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AveragePerNight": {
+                  "AUD": 228.84
+                },
+                "AveragePerTimeUnit": {
+                  "AUD": 228.84
+                },
+                "AverageAmountPerNight": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 228.84,
+                    "NetValue": 228.84,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 228.84,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "AverageAmountPerTimeUnit": {
+                  "AUD": {
+                    "Currency": "AUD",
+                    "GrossValue": 228.84,
+                    "NetValue": 228.84,
+                    "TaxValues": [
+                      {
+                        "TaxRateCode": "AU-Z",
+                        "Value": 0
+                      }
+                    ],
+                    "Breakdown": {
+                      "Items": [
+                        {
+                          "TaxRateCode": "AU-Z",
+                          "NetValue": 228.84,
+                          "TaxValue": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "AdultCount": 1,
+          "ChildCount": 0,
+          "OccupancyData": [
+            {
+              "AgeCategoryId": "bb91f566-4836-4f47-90ff-ade400cf79b8",
+              "PersonCount": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ViolatedRestrictions": null
+}
