@@ -3,7 +3,11 @@
 import { ExtendedProduct } from '@/store/features/checkout'
 import { stripe } from '..'
 
-function calculateTotalAmount(items: ExtendedProduct[], discount: number = 0): number {
+function calculateTotalAmount(
+  items: ExtendedProduct[],
+  discount: number = 0,
+  shipping: number = 0,
+): number {
   let total = 0
 
   for (const item of items) {
@@ -22,13 +26,21 @@ function calculateTotalAmount(items: ExtendedProduct[], discount: number = 0): n
     total *= discount
   }
 
+  if (shipping > 0) {
+    total += shipping
+  }
+
   total = Math.round(total * 100)
 
   return total
 }
 
-export async function createPaymentIntentAction(products: ExtendedProduct[], discount: number = 0) {
-  const amount = calculateTotalAmount(products, discount)
+export async function createPaymentIntentAction(
+  products: ExtendedProduct[],
+  discount: number = 0,
+  shipping: number = 0,
+) {
+  const amount = calculateTotalAmount(products, discount, shipping)
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,

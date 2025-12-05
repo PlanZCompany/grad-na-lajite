@@ -12,9 +12,42 @@ import { resetToInitialState } from '@/store/features/checkout'
 
 const CheckoutConfirm = () => {
   const dispatch = useAppDispatch()
+  const couriers = useAppSelector((state) => state.checkout.shippingOptions)
+  const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
   const { products, checkoutFormData, stageCompleted } = useAppSelector((state) => state.checkout)
   const { calculateTotalPrice } = useCheckout()
   const isPassed = stageCompleted === 3
+
+  const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
+    if (!shippingName) return 0
+    const match = couriers.find((item) => {
+      return item.courier_code === shippingName
+    })
+    let shippingPrice = match?.base_fee || 0
+
+    if (match?.free_shipping) {
+      return (shippingPrice = 0)
+    }
+    const isEnoughForFreeShipping =
+      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+    if (isEnoughForFreeShipping) {
+      return (shippingPrice = 0)
+    }
+    return shippingPrice
+  }
+
+  const shippingText =
+    calculateShippingPrice(courier as 'econt' | 'speedy' | 'boxnow') === 0
+      ? 'безплатна доставка'
+      : `+ ${calculateShippingPrice(courier as 'econt' | 'speedy' | 'boxnow')}€`
+
+  const calculateTotalPriceWithShipping = () => {
+    let total = calculateTotalPrice()
+    if (shippingText !== 'безплатна доставка') {
+      total += calculateShippingPrice(courier as 'econt' | 'speedy' | 'boxnow')
+    }
+    return total
+  }
 
   const productsContent = products.map((product) => {
     const media = product?.mediaArray?.[0].file as Media
@@ -47,18 +80,44 @@ const CheckoutConfirm = () => {
             </GenericParagraph>
 
             <div className="flex justify-center items-center px-2 pb-4">
-              <div>
+              <div className="flex flex-col">
                 <GenericParagraph
                   fontStyle="custom"
                   pType="regular"
                   textColor="text-primaryYellow"
-                  extraClass="font-georgia font-[700]"
+                  extraClass="font-georgia font-[700] w-full text-center"
                 >
-                  <>
-                    {/* {(product.price! * product.orderQuantity).toFixed(2)} лв. ( */}
-                    {(product.price! * product.orderQuantity).toFixed(2)}€
-                  </>
+                  <span className="text-white/90">Цена за артикули: </span>
+                  {(product.price! * product.orderQuantity).toFixed(2)}€
                 </GenericParagraph>
+
+                {!!courier && (
+                  <GenericParagraph
+                    fontStyle="custom"
+                    pType="regular"
+                    textColor="text-primaryYellow"
+                    extraClass="font-georgia font-[700] text-center"
+                  >
+                    <>
+                      <span className="text-white/90">Цена за доставка: </span>
+                      {shippingText}
+                    </>
+                  </GenericParagraph>
+                )}
+
+                {!!courier && (
+                  <GenericParagraph
+                    fontStyle="custom"
+                    pType="large"
+                    textColor="text-primaryYellow"
+                    extraClass="font-georgia font-[700] text-center"
+                  >
+                    <>
+                      <span className="text-white/90">Цена за плащане: </span>
+                      {calculateTotalPriceWithShipping().toFixed(2)}€
+                    </>
+                  </GenericParagraph>
+                )}
               </div>
             </div>
           </div>
@@ -83,8 +142,8 @@ const CheckoutConfirm = () => {
             extraClass="border-b-[1px] border-primaryYellow"
           >
             <h2>
-              Благодарим Ви за поръчката! <br />
-              Поръчката ви е направено успешно!
+              Благодарим за поръчката! <br /> Градът я регистрира. Сделката е сключена - чакай
+              кутията
             </h2>
           </GenericHeading>
         </div>

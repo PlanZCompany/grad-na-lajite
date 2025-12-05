@@ -13,6 +13,7 @@ import { SpeedyOffice, SpeedySite } from '@/Speedy/types'
 import { BoxNowWrapper } from '@/BoxNow/components'
 import { BoxnowLocker } from '@/BoxNow/types'
 import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
+import { useCheckout } from '@/hooks/useCheckout'
 
 export type InnerShippingProps =
   | null
@@ -69,6 +70,8 @@ const ShippingForm = ({
 }) => {
   const dispatch = useAppDispatch()
   const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
+  const couriers = useAppSelector((state) => state.checkout.shippingOptions)
+  const { calculateTotalPrice } = useCheckout()
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
   const [activeShippingInner, setActiveShippingInner] = useState<InnerShippingProps>(null)
@@ -94,6 +97,23 @@ const ShippingForm = ({
     setCurrentShippingCity(null)
     setChosenOffice(null)
     setAddress('')
+  }
+
+  const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
+    const match = couriers.find((item) => {
+      return item.courier_code === shippingName
+    })
+    let shippingPrice = match?.base_fee || 0
+
+    if (match?.free_shipping) {
+      return (shippingPrice = 0)
+    }
+    const isEnoughForFreeShipping =
+      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+    if (isEnoughForFreeShipping) {
+      return (shippingPrice = 0)
+    }
+    return shippingPrice
   }
 
   function onSubmit(e: React.FormEvent) {
@@ -200,6 +220,14 @@ const ShippingForm = ({
   const shippingContent = shippingVariants.map((variant) => {
     const isActive = activeShippingInner === variant.name
 
+    const match = couriers.find((item) => item.courier_code === variant.parent.replace('-', ''))
+    if (!match?.is_active) return null
+
+    const shippingText =
+      calculateShippingPrice(variant.parent.replace('-', '') as 'econt' | 'speedy' | 'boxnow') === 0
+        ? 'безплатна доставка'
+        : `+ ${calculateShippingPrice(variant.parent.replace('-', '') as 'econt' | 'speedy' | 'boxnow')}€`
+
     return (
       <li
         key={variant.name}
@@ -224,8 +252,14 @@ const ShippingForm = ({
               )}
             </div>
             <GenericParagraph textColor="text-black" pType="small">
-              {variant.text}
+              {variant.text} -{' '}
             </GenericParagraph>
+
+            <div className="px-[4px] py-[2px] bg-purpleBackground/80 rounded-[4px]">
+              <GenericParagraph textColor="text-white" pType="small">
+                {shippingText}
+              </GenericParagraph>
+            </div>
           </div>
 
           <div className="ml-auto">

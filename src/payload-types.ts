@@ -106,6 +106,7 @@ export interface Config {
     aside: Aside;
     subscriptionModal: SubscriptionModal;
     'footer-checkout': FooterCheckout;
+    shipping: Shipping;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -113,6 +114,7 @@ export interface Config {
     aside: AsideSelect<false> | AsideSelect<true>;
     subscriptionModal: SubscriptionModalSelect<false> | SubscriptionModalSelect<true>;
     'footer-checkout': FooterCheckoutSelect<false> | FooterCheckoutSelect<true>;
+    shipping: ShippingSelect<false> | ShippingSelect<true>;
   };
   locale: null;
   user: User & {
@@ -158,7 +160,12 @@ export interface User {
   lastName?: string | null;
   phoneNumber?: string | null;
   subscribed?: boolean | null;
-  tags?: string[] | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   marketing_consent?: boolean | null;
   marketing_consent_source?: ('popup' | 'checkout' | 'other') | null;
   marketing_consent_date?: string | null;
@@ -2426,7 +2433,12 @@ export interface UsersSelect<T extends boolean = true> {
   lastName?: T;
   phoneNumber?: T;
   subscribed?: T;
-  tags?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
   marketing_consent?: T;
   marketing_consent_source?: T;
   marketing_consent_date?: T;
@@ -3466,6 +3478,36 @@ export interface FooterCheckout {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shipping".
+ */
+export interface Shipping {
+  id: number;
+  courierOptions?:
+    | {
+        /**
+         * e.g. Econt, Speedy, BoxNow
+         */
+        courier_name: string;
+        courier_code: 'econt' | 'speedy' | 'boxnow';
+        method: 'office' | 'address' | 'locker';
+        /**
+         * Standard fee, e.g. 6.90
+         */
+        base_fee: number;
+        free_shipping?: boolean | null;
+        /**
+         * Free shipping above this total (leave empty for no threshold)
+         */
+        free_over_amount?: number | null;
+        is_active?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -3603,6 +3645,27 @@ export interface FooterCheckoutSelect<T extends boolean = true> {
     | T
     | {
         media?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shipping_select".
+ */
+export interface ShippingSelect<T extends boolean = true> {
+  courierOptions?:
+    | T
+    | {
+        courier_name?: T;
+        courier_code?: T;
+        method?: T;
+        base_fee?: T;
+        free_shipping?: T;
+        free_over_amount?: T;
+        is_active?: T;
         id?: T;
       };
   updatedAt?: T;

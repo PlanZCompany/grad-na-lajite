@@ -72,8 +72,15 @@ const PaymentFormSection = () => {
       <div className="w-full">
         <RadioSelect
           options={[
-            { label: 'Наложен платеж', value: 'cash' },
-            { label: 'Кредит/Дебит карта | Google Pay | Apple Pay', value: 'card' },
+            {
+              label: 'Плащане при доставка - казваш "здрасти" на куриера и му даваш сумата.',
+              value: 'cash',
+            },
+            {
+              label:
+                'Плащане с карта, Google Pay или Apple Pay - модерно, чисто, без излишни въпроси.',
+              value: 'card',
+            },
           ]}
           label="Метод на плащане"
           formValues={formValues}

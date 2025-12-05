@@ -11,10 +11,43 @@ import Link from 'next/link'
 
 const CheckoutAside = () => {
   const dispatch = useAppDispatch()
+  const couriers = useAppSelector((state) => state.checkout.shippingOptions)
+  const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
   const { calculateTotalPrice, calculateRemainSum } = useCheckout()
   const products = useAppSelector((state) => state.checkout.products)
 
   const [formValues, setFormValues] = useState({ code: '' })
+
+  const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
+    if (!shippingName) return 0
+    const match = couriers.find((item) => {
+      return item.courier_code === shippingName
+    })
+    let shippingPrice = match?.base_fee || 0
+
+    if (match?.free_shipping) {
+      return (shippingPrice = 0)
+    }
+    const isEnoughForFreeShipping =
+      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+    if (isEnoughForFreeShipping) {
+      return (shippingPrice = 0)
+    }
+    return shippingPrice
+  }
+
+  const shippingText =
+    calculateShippingPrice(courier as 'econt' | 'speedy' | 'boxnow') === 0
+      ? 'безплатна доставка'
+      : `+ ${calculateShippingPrice(courier as 'econt' | 'speedy' | 'boxnow')}€`
+
+  const calculateTotalPriceWithShipping = () => {
+    let total = calculateTotalPrice()
+    if (shippingText !== 'безплатна доставка') {
+      total += calculateShippingPrice(courier as 'econt' | 'speedy' | 'boxnow')
+    }
+    return total
+  }
 
   const productsContent = products.map((product) => {
     const media = product?.mediaArray?.[0].file as Media
@@ -81,18 +114,46 @@ const CheckoutAside = () => {
               </button>
             </div>
 
-            <div>
+            <div className="flex flex-col">
               <GenericParagraph
                 fontStyle="custom"
-                pType="large"
+                pType="regular"
                 textColor="text-primaryYellow"
                 extraClass="font-georgia font-[700] text-center"
               >
                 <>
-                  {/* {(product.price! * product.orderQuantity).toFixed(2)} лв. ( */}
+                  <span className="text-white/90">Цена артикули: </span>
                   {(product.price! * product.orderQuantity).toFixed(2)}€
                 </>
               </GenericParagraph>
+
+              {!!courier && (
+                <GenericParagraph
+                  fontStyle="custom"
+                  pType="regular"
+                  textColor="text-primaryYellow"
+                  extraClass="font-georgia font-[700] text-center"
+                >
+                  <>
+                    <span className="text-white/90">Цена за доставка: </span>
+                    {shippingText}
+                  </>
+                </GenericParagraph>
+              )}
+
+              {!!courier && (
+                <GenericParagraph
+                  fontStyle="custom"
+                  pType="large"
+                  textColor="text-primaryYellow"
+                  extraClass="font-georgia font-[700] text-center"
+                >
+                  <>
+                    <span className="text-white/90">Цена за плащане: </span>
+                    {calculateTotalPriceWithShipping().toFixed(2)}€
+                  </>
+                </GenericParagraph>
+              )}
             </div>
 
             <div className="w-full flex flex-col md:flex-row items-center gap-2 px-2 py-2">

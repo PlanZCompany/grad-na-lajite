@@ -60,7 +60,7 @@ const Search = ({ blogs }: { blogs: Blog[] }) => {
             className="w-full md:min-w-[300px] h-[48px] xl:min-w-[400px] p-1 outline-none bg-transparent font-georgia font-[400] 
         text-[16px] xl:text-[18px] placeholder:font-georgia text-white placeholder:text-white/80 border-b-[1px] border-primaryYellow"
             type="text"
-            placeholder="Потърси артикул.."
+            placeholder="Търси в блога.."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           ></input>

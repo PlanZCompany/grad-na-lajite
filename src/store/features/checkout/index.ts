@@ -3,6 +3,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type ExtendedProduct = Product & { orderQuantity: number }
 
+export type CourierOption = {
+  id: string
+  courier_name: string
+  courier_code: 'econt' | 'speedy' | 'boxnow'
+  method: 'office' | 'address' | 'locker'
+  base_fee: number
+  free_shipping: boolean
+  free_over_amount: number
+  is_active: boolean
+}
+
 export interface CheckoutInitialState {
   shoppingCardOpen: boolean
   products: ExtendedProduct[]
@@ -19,6 +30,7 @@ export interface CheckoutInitialState {
     payment: 'card' | 'cash'
   }
   userWantSubscription: boolean
+  shippingOptions: CourierOption[]
 }
 
 const checkoutInitialState: CheckoutInitialState = {
@@ -37,6 +49,7 @@ const checkoutInitialState: CheckoutInitialState = {
     payment: 'cash',
   },
   userWantSubscription: false,
+  shippingOptions: [],
 }
 
 export const checkoutSlice = createSlice({
@@ -90,6 +103,9 @@ export const checkoutSlice = createSlice({
     setUserWantSubscription: (state, { payload }: PayloadAction<boolean>) => {
       state.userWantSubscription = payload
     },
+    setCourierOptions: (state, { payload }: PayloadAction<CourierOption[]>) => {
+      state.shippingOptions = payload
+    },
     resetToInitialState: () => {
       return checkoutInitialState
     },
@@ -108,6 +124,7 @@ export const {
   setCheckoutFormData,
   resetToInitialState,
   setUserWantSubscription,
+  setCourierOptions,
 } = checkoutSlice.actions
 
 export default checkoutSlice.reducer

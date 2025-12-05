@@ -128,8 +128,14 @@ export const Users: CollectionConfig = {
     {
       name: 'tags',
       label: 'Tags',
-      type: 'text',
-      hasMany: true,
+      type: 'array',
+      fields: [
+        {
+          name: 'tag',
+          label: 'Tag',
+          type: 'text',
+        },
+      ],
     },
     {
       name: 'marketing_consent',
