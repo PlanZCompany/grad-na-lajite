@@ -6,7 +6,7 @@ const constantClass = `inline-flex items-center justify-center
 whitespace-nowrap rounded ring-offset-background transition-colors focus-visible:outline-none 
 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none`
 const classMap = {
-  primary: `bg-gradient-to-br from-[#d4af37] to-[#b7952b] text-[#FFD700]
+  primary: `bg-gradient-to-br from-[#d4af37] to-[#b7952b] text-[#200226]
          text-xl font-bold cursor-pointer
          transition-all duration-300 ease-in-out
          shadow-[0_0_15px_rgba(212,175,55,0.4)]
