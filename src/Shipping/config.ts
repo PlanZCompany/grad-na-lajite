@@ -1,5 +1,6 @@
 // src/payload/globals/Shipping.ts
 import type { GlobalConfig } from 'payload'
+import { revalidateShipping } from './hooks/revalidateShipping'
 
 export const Shipping: GlobalConfig = {
   slug: 'shipping',
@@ -81,4 +82,7 @@ export const Shipping: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [revalidateShipping],
+  },
 }

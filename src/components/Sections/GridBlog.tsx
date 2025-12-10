@@ -1,3 +1,5 @@
+'use client'
+
 import { Blog, Media } from '@/payload-types'
 import React from 'react'
 import { GenericHeading, GenericImage, GenericParagraph } from '../Generic'
