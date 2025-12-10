@@ -29,9 +29,9 @@ export const getImageURL = (
 export const generateMeta = async (args: { doc: Partial<Page> | null }): Promise<Metadata> => {
   const { doc } = args
 
-  const ogImage = getImageURL(doc?.meta?.image as any) || '/static/preview.png' //TODO ANY
+  const ogImage = (doc?.meta?.image as Media).url || `${getServerSideURL()}/static/preview.png`
 
-  const title = doc?.meta?.title ? `${doc?.meta?.title} | Град на лъжите` : 'Град на лъжите'
+  const title = doc?.meta?.title ? `${doc?.meta?.title}` : 'Град на лъжите'
 
   return {
     description: doc?.meta?.description,
@@ -40,7 +40,7 @@ export const generateMeta = async (args: { doc: Partial<Page> | null }): Promise
       images: ogImage
         ? [
             {
-              url: ogImage,
+              url: ogImage as string,
             },
           ]
         : undefined,

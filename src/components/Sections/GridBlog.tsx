@@ -14,7 +14,16 @@ const GridBlog = ({ data }: { data: Blog[] }) => {
 
     return (
       <div key={card.id} className="w-full px-2 md:px-4">
-        <Link href={`/blog/${card?.slug}`}>
+        <Link
+          href={`/blog/${card?.slug}`}
+          onClick={() => {
+            const target = document.querySelector('.REF_CLOSE_SEARCH') as HTMLButtonElement
+
+            if (target) {
+              target.click()
+            }
+          }}
+        >
           <article
             className={`w-full bg-[rgba(20,10,40,0.85)] shadow-[0_0_20px_rgba(0,0,0,0.6)] md:h-[480px] flex flex-col
             hover:translate-y-[-9px] duration-300 transition-transform rounded-[12px] overflow-hidden`}

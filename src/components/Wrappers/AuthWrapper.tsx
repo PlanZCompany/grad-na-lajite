@@ -13,7 +13,7 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
           {children}
 
           <div className="absolute z-[2] py-[2px] left-0 right-0 bottom-[0px] flex justify-center items-center">
-            <Link href="/terms" className="w-full text-white text-center">
+            <Link href="/privacy-policy" className="w-full text-white text-center">
               <span className="font-georgia font-[400] text-white text-center text-[14px] w-full">
                 Политика за поверителност
               </span>

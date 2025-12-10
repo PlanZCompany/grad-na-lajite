@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { Media, SubscriptionForm } from '@/payload-types'
 import { setNotification } from '@/store/features/notifications'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import Link from 'next/link'
 import React, { useState, useTransition } from 'react'
 
 export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
@@ -116,8 +117,15 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
               </div>
 
               <p className="text-white/60 text-[12px] md:text-[14px] mt-4 text-center">
-                Записвайки се, сте съгласни с нашата политика за поверителност и условия за
-                използване.
+                Записвайки се, сте съгласни с нашата{' '}
+                <Link className="underline" href="/privacy-policy">
+                  Политика за поверителност
+                </Link>{' '}
+                и{' '}
+                <Link className="underline" href="/terms-and-conditions">
+                  Условия за използване
+                </Link>
+                .
               </p>
 
               {message && (

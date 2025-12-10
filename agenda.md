@@ -79,3 +79,8 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 - add video option url
 
 \*_DONE PER WEEK_
+
+**_BEFORE REALEASE_**
+
+- personal neon to client
+- personal vercel to client

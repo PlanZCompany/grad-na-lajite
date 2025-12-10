@@ -34,7 +34,7 @@ const Search = ({ blogs }: { blogs: Blog[] }) => {
     >
       <div className="absolute top-4 right-4 flex justify-center items-center">
         <button
-          className="w-[32px] h-[32px] md:w-[48px] md:h-[48px]"
+          className="w-[32px] h-[32px] md:w-[48px] md:h-[48px] REF_CLOSE_SEARCH"
           onClick={() => {
             setInputValue('')
             setSearchResults(null)

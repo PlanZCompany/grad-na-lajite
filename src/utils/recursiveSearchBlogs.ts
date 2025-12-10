@@ -1,5 +1,6 @@
-import { Blog } from '@/payload-types'
+import { Blog, ContentBlock } from '@/payload-types'
 import { containsQuery } from './translate'
+import { extractTextFromRichText } from './richtextForSearch'
 
 export const recursiveSearchBlogs = (blogs: Blog[], query: string): Blog[] => {
   const results: Blog[] = []
@@ -35,7 +36,11 @@ export const recursiveSearchBlogs = (blogs: Blog[], query: string): Blog[] => {
       return false
     })
 
-    if (titleMatch || descriptionMatch) {
+    const fullText = extractTextFromRichText(blog.layout as ContentBlock[]).toLowerCase()
+
+    const contentMatch = fullText.includes(query.toLowerCase())
+
+    if (titleMatch || descriptionMatch || contentMatch) {
       results.push(blog)
     }
   })

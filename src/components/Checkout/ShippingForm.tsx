@@ -252,10 +252,10 @@ const ShippingForm = ({
               )}
             </div>
             <GenericParagraph textColor="text-black" pType="small">
-              {variant.text} -{' '}
+              {variant.text}:{' '}
             </GenericParagraph>
 
-            <div className="px-[4px] py-[2px] bg-purpleBackground/80 rounded-[4px]">
+            <div className="px-[4px] py-[2px] bg-[#45464c] rounded-[4px]">
               <GenericParagraph textColor="text-white" pType="small">
                 {shippingText}
               </GenericParagraph>
