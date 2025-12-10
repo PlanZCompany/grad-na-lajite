@@ -99,9 +99,12 @@ const ShippingForm = ({
     setAddress('')
   }
 
-  const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
+  const calculateShippingPrice = (
+    shippingName: 'econt' | 'speedy' | 'boxnow',
+    method: 'address' | 'office' | 'locker',
+  ) => {
     const match = couriers.find((item) => {
-      return item.courier_code === shippingName
+      return item.courier_code === shippingName && item.method === method
     })
     let shippingPrice = match?.base_fee || 0
 
@@ -113,7 +116,7 @@ const ShippingForm = ({
     if (isEnoughForFreeShipping) {
       return (shippingPrice = 0)
     }
-    return shippingPrice
+    return shippingPrice.toFixed(2)
   }
 
   function onSubmit(e: React.FormEvent) {
@@ -223,10 +226,17 @@ const ShippingForm = ({
     const match = couriers.find((item) => item.courier_code === variant.parent.replace('-', ''))
     if (!match?.is_active) return null
 
+    let method: 'address' | 'office' | 'locker' = 'locker'
+    if (variant.text.toLowerCase().includes('офис')) method = 'office'
+    if (variant.text.toLowerCase().includes('адрес')) method = 'address'
+
     const shippingText =
-      calculateShippingPrice(variant.parent.replace('-', '') as 'econt' | 'speedy' | 'boxnow') === 0
+      calculateShippingPrice(
+        variant.parent.replace('-', '') as 'econt' | 'speedy' | 'boxnow',
+        method,
+      ) === 0
         ? 'безплатна доставка'
-        : `+ ${calculateShippingPrice(variant.parent.replace('-', '') as 'econt' | 'speedy' | 'boxnow')}€`
+        : `${calculateShippingPrice(variant.parent.replace('-', '') as 'econt' | 'speedy' | 'boxnow', method)}€`
 
     return (
       <li
@@ -243,6 +253,12 @@ const ShippingForm = ({
               setActiveShippingInner(variant.name as InnerShippingProps)
             }
             restoreStateAfterChangeActiveShipping()
+            dispatch(
+              setCheckoutFormData({
+                innerShipping: variant.name as 'econt-office',
+                shipping: variant.parent.replace('-', '') as 'econt',
+              }),
+            )
           }}
         >
           <div className="flex items-center gap-2">
@@ -255,8 +271,8 @@ const ShippingForm = ({
               {variant.text}:{' '}
             </GenericParagraph>
 
-            <div className="px-[4px] py-[2px] bg-[#45464c] rounded-[4px]">
-              <GenericParagraph textColor="text-white" pType="small">
+            <div className="px-[4px] py-[2px] rounded-[4px]">
+              <GenericParagraph textColor="text-white" pType="small" extraClass="!text-[#45464c]">
                 {shippingText}
               </GenericParagraph>
             </div>

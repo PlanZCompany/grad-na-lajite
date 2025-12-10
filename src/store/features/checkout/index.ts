@@ -25,6 +25,13 @@ export interface CheckoutInitialState {
     email: string
     shipping: 'econt' | 'boxnow' | 'speedy' | null
     city: string | undefined
+    innerShipping:
+      | 'econt-office'
+      | 'econt-address'
+      | 'speedy-office'
+      | 'speedy-address'
+      | 'box-now'
+      | undefined
     office: string | undefined
     address: string | undefined
     payment: 'card' | 'cash'
@@ -44,6 +51,7 @@ const checkoutInitialState: CheckoutInitialState = {
     email: '',
     shipping: null,
     city: undefined,
+    innerShipping: undefined,
     office: undefined,
     address: undefined,
     payment: 'cash',

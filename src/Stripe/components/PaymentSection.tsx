@@ -35,8 +35,12 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
   const { calculateTotalPrice } = useCheckout()
 
   const calculateShippingPrice = () => {
+    let method = 'locker'
+    if (formData.shipping !== 'boxnow') method = 'office'
+    if (formData.shipping !== 'boxnow' && formData.address) method = 'address'
+
     const match = couriers.find((item) => {
-      return item.courier_code === courier
+      return item.courier_code === courier && item.method === method
     })
     let shippingPrice = match?.base_fee || 0
 
@@ -74,7 +78,7 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
         setError(err instanceof Error ? err.message : 'Грешка при създаване на плащането.')
       }
     })
-  }, [items])
+  }, [items, formData.innerShipping])
 
   if (error) {
     return <div>Грешка: {error}</div>

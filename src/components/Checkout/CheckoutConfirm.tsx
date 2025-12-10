@@ -14,14 +14,18 @@ const CheckoutConfirm = () => {
   const dispatch = useAppDispatch()
   const couriers = useAppSelector((state) => state.checkout.shippingOptions)
   const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
+  const formData = useAppSelector((state) => state.checkout.checkoutFormData)
   const { products, checkoutFormData, stageCompleted } = useAppSelector((state) => state.checkout)
   const { calculateTotalPrice } = useCheckout()
   const isPassed = stageCompleted === 3
 
   const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
     if (!shippingName) return 0
+    let method = 'locker'
+    if (formData.shipping !== 'boxnow') method = 'office'
+    if (formData.shipping !== 'boxnow' && formData.address) method = 'address'
     const match = couriers.find((item) => {
-      return item.courier_code === shippingName
+      return item.courier_code === shippingName && item.method === method
     })
     let shippingPrice = match?.base_fee || 0
 
