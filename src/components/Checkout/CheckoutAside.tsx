@@ -260,7 +260,7 @@ const CheckoutAside = () => {
                 extraClass="font-georgia font-[700]"
               >
                 {/* calculateTotalPrice().toFixed(2)} лв */}
-                {calculateTotalPrice().toFixed(2)}€
+                {calculateTotalPriceWithShipping().toFixed(2)}€
               </GenericParagraph>
             </div>
           </div>
