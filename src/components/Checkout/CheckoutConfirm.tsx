@@ -223,9 +223,7 @@ const CheckoutConfirm = () => {
                 <strong>Обща сума:</strong>
               </GenericParagraph>
               <GenericParagraph textColor="text-primaryYellow">
-                {/* //TODO depend on discount */}
-                {/* calculateTotalPrice().toFixed(2)} лв  */}
-                {calculateTotalPrice().toFixed(2)}€
+                {calculateTotalPriceWithShipping().toFixed(2)}€
               </GenericParagraph>
             </div>
           </div>

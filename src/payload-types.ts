@@ -258,6 +258,7 @@ export interface Page {
         | FaqBlock
         | FormBlock
         | RegulatoryBlock
+        | PDFBlock
       )[]
     | null;
   meta?: {
@@ -1265,7 +1266,7 @@ export interface ProductBlock {
         }[]
       | null;
   };
-  play?: {
+  play: {
     /**
      * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
      */
@@ -1347,6 +1348,11 @@ export interface ProductBlock {
         }[]
       | null;
     orderButton?: boolean | null;
+    pdf: {
+      pdfFile: number | Media;
+      button: string;
+      url: string;
+    };
   };
   roles?: {
     /**
@@ -2035,6 +2041,18 @@ export interface RegulatoryBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PDFBlock".
+ */
+export interface PDFBlock {
+  pdfFile: number | Media;
+  button: string;
+  showPDF?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pdfBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "subscriptions".
  */
 export interface Subscription {
@@ -2508,6 +2526,7 @@ export interface PagesSelect<T extends boolean = true> {
         faqBlock?: T | FaqBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         regulatoryBlock?: T | RegulatoryBlockSelect<T>;
+        pdfBlock?: T | PDFBlockSelect<T>;
       };
   meta?:
     | T
@@ -2845,6 +2864,13 @@ export interface ProductBlockSelect<T extends boolean = true> {
               id?: T;
             };
         orderButton?: T;
+        pdf?:
+          | T
+          | {
+              pdfFile?: T;
+              button?: T;
+              url?: T;
+            };
       };
   roles?:
     | T
@@ -3013,6 +3039,17 @@ export interface RegulatoryBlockSelect<T extends boolean = true> {
   heading?: T;
   shortDescription?: T;
   description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PDFBlock_select".
+ */
+export interface PDFBlockSelect<T extends boolean = true> {
+  pdfFile?: T;
+  button?: T;
+  showPDF?: T;
   id?: T;
   blockName?: T;
 }

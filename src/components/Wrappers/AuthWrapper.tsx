@@ -24,7 +24,7 @@ const AuthWrapper = ({
             <div className="absolute z-[2] py-[2px] left-0 right-0 bottom-[0px] flex justify-center items-center">
               <p className="font-georgia font-[400] text-white text-center text-[12px] w-full max-w-[90%] mx-auto">
                 С решението си да продължите приемате{' '}
-                <Link href="/privacy-policy" className="underline">
+                <Link href="/terms-and-conditions" className="underline">
                   Общите условията
                 </Link>{' '}
                 и{' '}

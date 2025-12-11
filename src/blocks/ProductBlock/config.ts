@@ -317,6 +317,33 @@ export const ProductBlock: Block = {
           label: 'Показване на бутон за поръчка',
           defaultValue: false,
         },
+        {
+          name: 'pdf',
+          type: 'group',
+          fields: [
+            {
+              name: 'pdfFile',
+              label: 'PDF file',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+            {
+              name: 'button',
+              label: 'Текст на бутон',
+              type: 'text',
+              required: true,
+              defaultValue: 'ИЗТЕГЛИ ПЪЛНИТЕ ПРАВИЛА',
+            },
+            {
+              name: 'url',
+              label: 'URL',
+              type: 'text',
+              required: true,
+              defaultValue: '/upatvane',
+            },
+          ],
+        },
       ],
     },
     {

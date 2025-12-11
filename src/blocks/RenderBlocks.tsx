@@ -7,6 +7,7 @@ import type {
   HomeBlock,
   InfoAndImageBlock,
   MediaBlock as MediaBlockType,
+  PDFBlock,
   ProductBlock,
   RegulatoryBlock,
   SubscriptionForm,
@@ -25,6 +26,7 @@ import { RegulatoryBlockComponent } from './RegulatoryBlock/Component'
 import ProductBlockComponent from './ProductBlock/Component'
 import { InfoAndImageBlockComponent } from './InfoAndImageBlock/Component'
 import { TableBLockComponent } from './TableBlock/Component'
+import { PDFBlockComponent } from './PDFBlock/Component'
 
 const blockComponents = {
   mediaBlock: MediaBlock,
@@ -39,6 +41,7 @@ const blockComponents = {
   regulatoryBlock: RegulatoryBlockComponent,
   infoAndImageBlock: InfoAndImageBlockComponent,
   tableBlock: TableBLockComponent,
+  pdfBlock: PDFBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{
@@ -54,6 +57,7 @@ export const RenderBlocks: React.FC<{
         | RegulatoryBlock
         | InfoAndImageBlock
         | TableBlock
+        | PDFBlock
       )[]
     | null
     | undefined
