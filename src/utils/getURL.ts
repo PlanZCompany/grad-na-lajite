@@ -1,7 +1,7 @@
 import canUseDOM from './canUseDOM'
 
 export const getServerSideURL = () => {
-  let url = process.env.NEXT_PUBLIC_SERVER_URL
+  let url = process.env.NEXT_PUBLIC_APP_URL
 
   if (!url && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
@@ -25,5 +25,5 @@ export const getClientSideURL = () => {
 
   return process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : process.env.NEXT_PUBLIC_PRODUCTION_URL || 'https://grad-na-lajite.vercel.app' //TODO! change to below logic when the envs are added to vercel
+    : process.env.NEXT_PUBLIC_APP_URL || 'https://grad-na-lajite-dun.vercel.app' //TODO! change to below logic when the envs are added to vercel
 }
