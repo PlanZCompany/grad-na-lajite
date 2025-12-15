@@ -73,6 +73,8 @@ export interface Config {
     subscriptions: Subscription;
     product: Product;
     blog: Blog;
+    order: Order;
+    'order-item': OrderItem;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -81,7 +83,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    order: {
+      items: 'order-item';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -89,6 +95,8 @@ export interface Config {
     subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     product: ProductSelect<false> | ProductSelect<true>;
     blog: BlogSelect<false> | BlogSelect<true>;
+    order: OrderSelect<false> | OrderSelect<true>;
+    'order-item': OrderItemSelect<false> | OrderItemSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -2216,6 +2224,108 @@ export interface TableBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order".
+ */
+export interface Order {
+  id: number;
+  orderNumber: string;
+  /**
+   * Leave empty for guest checkout
+   */
+  userId?: (number | null) | User;
+  /**
+   * Items in this order
+   */
+  items?: {
+    docs?: (number | OrderItem)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  customerInfo: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+  };
+  terms: {
+    termsAccepted: boolean;
+    termsAcceptedAt?: string | null;
+    termsVersion?: string | null;
+    /**
+     * IP address when terms were accepted
+     */
+    termsIpAddress?: string | null;
+  };
+  shippingAddress: {
+    line1: string;
+    line2?: string | null;
+    city: string;
+    postcode: string;
+    country: string;
+  };
+  shipping: {
+    method: string;
+    provider: 'econt' | 'speedy' | 'boxnow';
+    trackingNumber?: string | null;
+    price: number;
+  };
+  currency: string;
+  subtotalAmount: number;
+  shippingAmount: number;
+  totalAmount: number;
+  paymentMethod: 'card' | 'cash_on_delivery' | 'bank_transfer' | 'apple_pay' | 'google_pay';
+  paymentStatus: 'pending' | 'paid' | 'refunded' | 'failed';
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'returned';
+  paidAt?: string | null;
+  shippedAt?: string | null;
+  deliveredAt?: string | null;
+  cancelledAt?: string | null;
+  emailTracking?: {
+    shippedSentAt?: string | null;
+    postDeliverySentAt?: string | null;
+    reviewSentAt?: string | null;
+    winbackSentAt?: string | null;
+  };
+  /**
+   * Date until which this order must be retained for legal purposes
+   */
+  legalRetentionUntil: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order-item".
+ */
+export interface OrderItem {
+  id: number;
+  orderId: number | Order;
+  /**
+   * Link to product (optional if you store product snapshot)
+   */
+  productId?: (number | null) | Product;
+  /**
+   * Product name at time of order
+   */
+  productName: string;
+  /**
+   * Product SKU/Article code
+   */
+  sku?: string | null;
+  quantity: number;
+  /**
+   * Price per unit at time of order
+   */
+  unitPrice: number;
+  /**
+   * quantity × unitPrice
+   */
+  totalPrice: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2382,6 +2492,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blog';
         value: number | Blog;
+      } | null)
+    | ({
+        relationTo: 'order';
+        value: number | Order;
+      } | null)
+    | ({
+        relationTo: 'order-item';
+        value: number | OrderItem;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3151,6 +3269,85 @@ export interface TableBlockSelect<T extends boolean = true> {
       };
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order_select".
+ */
+export interface OrderSelect<T extends boolean = true> {
+  orderNumber?: T;
+  userId?: T;
+  items?: T;
+  customerInfo?:
+    | T
+    | {
+        email?: T;
+        firstName?: T;
+        lastName?: T;
+        phone?: T;
+      };
+  terms?:
+    | T
+    | {
+        termsAccepted?: T;
+        termsAcceptedAt?: T;
+        termsVersion?: T;
+        termsIpAddress?: T;
+      };
+  shippingAddress?:
+    | T
+    | {
+        line1?: T;
+        line2?: T;
+        city?: T;
+        postcode?: T;
+        country?: T;
+      };
+  shipping?:
+    | T
+    | {
+        method?: T;
+        provider?: T;
+        trackingNumber?: T;
+        price?: T;
+      };
+  currency?: T;
+  subtotalAmount?: T;
+  shippingAmount?: T;
+  totalAmount?: T;
+  paymentMethod?: T;
+  paymentStatus?: T;
+  status?: T;
+  paidAt?: T;
+  shippedAt?: T;
+  deliveredAt?: T;
+  cancelledAt?: T;
+  emailTracking?:
+    | T
+    | {
+        shippedSentAt?: T;
+        postDeliverySentAt?: T;
+        reviewSentAt?: T;
+        winbackSentAt?: T;
+      };
+  legalRetentionUntil?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order-item_select".
+ */
+export interface OrderItemSelect<T extends boolean = true> {
+  orderId?: T;
+  productId?: T;
+  productName?: T;
+  sku?: T;
+  quantity?: T;
+  unitPrice?: T;
+  totalPrice?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

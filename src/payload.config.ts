@@ -22,6 +22,8 @@ import { Product } from './collections/Product/Product'
 import { Blog } from './collections/Blog'
 import { FooterCheckout } from './FooterCheckout/config'
 import { Shipping } from './Shipping/config'
+import { Order } from './collections/Order'
+import { OrderItem } from './collections/OrderItem'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,7 +58,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Pages, Subscriptions, Product, Blog],
+  collections: [Users, Media, Pages, Subscriptions, Product, Blog, Order, OrderItem],
   globals: [Header, Footer, Aside, SubscriptionModal, FooterCheckout, Shipping],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
