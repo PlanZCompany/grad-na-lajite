@@ -1,20 +1,20 @@
 import type { CollectionConfig } from 'payload'
 
-function formatOrderNumberFromId(id: unknown) {
-  const n = typeof id === 'number' ? id : Number(id)
-  // Expecting numeric IDs (e.g., Postgres serial/bigint)
-  if (!Number.isFinite(n) || n < 0) return undefined
-  return `ORD-${String(Math.trunc(n)).padStart(7, '0')}`
-}
-
 export const Order: CollectionConfig = {
   slug: 'order',
+  labels: {
+    singular: 'Поръчка',
+    plural: 'Поръчки',
+  },
   admin: {
     useAsTitle: 'orderNumber',
     defaultColumns: ['orderNumber', 'email', 'totalAmount', 'status', 'paymentStatus', 'createdAt'],
   },
+
   timestamps: true,
+
   fields: [
+    // Generated later from Payload id (ORD-0000123)
     {
       name: 'orderNumber',
       type: 'text',
@@ -23,7 +23,7 @@ export const Order: CollectionConfig = {
       admin: { readOnly: true },
     },
 
-    // Change relationTo if your users collection slug differs (often 'users')
+    // user_id (optional)
     {
       name: 'user',
       type: 'relationship',
@@ -32,22 +32,27 @@ export const Order: CollectionConfig = {
       index: true,
     },
 
+    // Customer
+
     { name: 'email', type: 'email', required: true, index: true },
     { name: 'firstName', type: 'text', required: true },
     { name: 'lastName', type: 'text', required: true },
     { name: 'phone', type: 'text', required: true },
 
+    // Terms
     { name: 'termsAccepted', type: 'checkbox', required: true, defaultValue: false },
     { name: 'termsAcceptedAt', type: 'date' },
     { name: 'termsVersion', type: 'text' },
     { name: 'termsIpAddress', type: 'text' },
 
+    // Shipping address
     { name: 'shippingAddressLine1', type: 'text', required: true },
     { name: 'shippingAddressLine2', type: 'text' },
     { name: 'shippingCity', type: 'text', required: true },
     { name: 'shippingPostcode', type: 'text', required: true },
     { name: 'shippingCountry', type: 'text', required: true, defaultValue: 'Bulgaria' },
 
+    // Courier / tracking
     { name: 'shippingMethod', type: 'text', required: true },
     {
       name: 'shippingProvider',
@@ -57,17 +62,9 @@ export const Order: CollectionConfig = {
     },
     { name: 'trackingNumber', type: 'text' },
 
-    {
-      name: 'shippingPrice',
-      type: 'number',
-      required: true,
-      defaultValue: 0,
-      min: 0,
-      admin: { step: 0.01 },
-    },
+    // Money
     { name: 'currency', type: 'text', required: true, defaultValue: 'BGN' },
 
-    // Defaults make order creation easier before items exist
     {
       name: 'subtotalAmount',
       type: 'number',
@@ -77,7 +74,7 @@ export const Order: CollectionConfig = {
       admin: { step: 0.01 },
     },
     {
-      name: 'shippingAmount',
+      name: 'shippingFinalAmount',
       type: 'number',
       required: true,
       defaultValue: 0,
@@ -93,6 +90,7 @@ export const Order: CollectionConfig = {
       admin: { step: 0.01 },
     },
 
+    // Payment + status
     {
       name: 'paymentMethod',
       type: 'select',
@@ -114,19 +112,22 @@ export const Order: CollectionConfig = {
       options: ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'returned'],
     },
 
+    // Lifecycle timestamps
     { name: 'paidAt', type: 'date' },
     { name: 'shippedAt', type: 'date' },
     { name: 'deliveredAt', type: 'date' },
     { name: 'cancelledAt', type: 'date' },
 
+    // Email timestamps
     { name: 'emailShippedSentAt', type: 'date' },
     { name: 'emailPostDeliverySentAt', type: 'date' },
     { name: 'emailReviewSentAt', type: 'date' },
     { name: 'emailWinbackSentAt', type: 'date' },
 
+    // Legal (will be auto-calculated to +5 years later, but editable)
     { name: 'legalRetentionUntil', type: 'date', required: true },
 
-    // Reverse relation (virtual list of items)
+    // Optional: show items on the order (virtual list)
     {
       name: 'items',
       type: 'join',
@@ -139,52 +140,4 @@ export const Order: CollectionConfig = {
       },
     },
   ],
-
-  hooks: {
-    afterChange: [
-      async ({ doc, req, operation }) => {
-        // prevent recursion if we update the same order inside this hook
-        if (req.context?.skipOrderNumberGen) return
-
-        // only set if missing
-        if (doc.orderNumber) return
-
-        // create/update both can run, but this is mainly for create
-        if (operation !== 'create' && operation !== 'update') return
-
-        const orderNumber = formatOrderNumberFromId((doc as any).id)
-        if (!orderNumber) return
-
-        await req.payload.update({
-          collection: 'order',
-          id: (doc as any).id,
-          context: { ...req.context, skipOrderNumberGen: true },
-          data: { orderNumber },
-        })
-      },
-    ],
-
-    afterDelete: [
-      async ({ doc, req }) => {
-        // Clean up related order items so no orphans remain
-        const orderId = (doc as any).id
-
-        const items = await req.payload.find({
-          collection: 'order-item',
-          depth: 0,
-          limit: 1000,
-          where: { order: { equals: orderId } },
-        })
-
-        await Promise.all(
-          items.docs.map((item: any) =>
-            req.payload.delete({
-              collection: 'order-item',
-              id: item.id,
-            }),
-          ),
-        )
-      },
-    ],
-  },
 }

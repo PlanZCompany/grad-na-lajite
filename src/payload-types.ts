@@ -2228,50 +2228,27 @@ export interface TableBlock {
  */
 export interface Order {
   id: number;
-  orderNumber: string;
-  /**
-   * Leave empty for guest checkout
-   */
-  userId?: (number | null) | User;
-  /**
-   * Items in this order
-   */
-  items?: {
-    docs?: (number | OrderItem)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  customerInfo: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
-  };
-  terms: {
-    termsAccepted: boolean;
-    termsAcceptedAt?: string | null;
-    termsVersion?: string | null;
-    /**
-     * IP address when terms were accepted
-     */
-    termsIpAddress?: string | null;
-  };
-  shippingAddress: {
-    line1: string;
-    line2?: string | null;
-    city: string;
-    postcode: string;
-    country: string;
-  };
-  shipping: {
-    method: string;
-    provider: 'econt' | 'speedy' | 'boxnow';
-    trackingNumber?: string | null;
-    price: number;
-  };
+  orderNumber?: string | null;
+  user?: (number | null) | User;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  termsAccepted: boolean;
+  termsAcceptedAt?: string | null;
+  termsVersion?: string | null;
+  termsIpAddress?: string | null;
+  shippingAddressLine1: string;
+  shippingAddressLine2?: string | null;
+  shippingCity: string;
+  shippingPostcode: string;
+  shippingCountry: string;
+  shippingMethod: string;
+  shippingProvider: 'econt' | 'speedy' | 'boxnow';
+  trackingNumber?: string | null;
   currency: string;
   subtotalAmount: number;
-  shippingAmount: number;
+  shippingFinalAmount: number;
   totalAmount: number;
   paymentMethod: 'card' | 'cash_on_delivery' | 'bank_transfer' | 'apple_pay' | 'google_pay';
   paymentStatus: 'pending' | 'paid' | 'refunded' | 'failed';
@@ -2280,16 +2257,16 @@ export interface Order {
   shippedAt?: string | null;
   deliveredAt?: string | null;
   cancelledAt?: string | null;
-  emailTracking?: {
-    shippedSentAt?: string | null;
-    postDeliverySentAt?: string | null;
-    reviewSentAt?: string | null;
-    winbackSentAt?: string | null;
-  };
-  /**
-   * Date until which this order must be retained for legal purposes
-   */
+  emailShippedSentAt?: string | null;
+  emailPostDeliverySentAt?: string | null;
+  emailReviewSentAt?: string | null;
+  emailWinbackSentAt?: string | null;
   legalRetentionUntil: string;
+  items?: {
+    docs?: (number | OrderItem)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -2299,27 +2276,12 @@ export interface Order {
  */
 export interface OrderItem {
   id: number;
-  orderId: number | Order;
-  /**
-   * Link to product (optional if you store product snapshot)
-   */
-  productId?: (number | null) | Product;
-  /**
-   * Product name at time of order
-   */
+  order: number | Order;
+  product: number | Product;
   productName: string;
-  /**
-   * Product SKU/Article code
-   */
   sku?: string | null;
   quantity: number;
-  /**
-   * Price per unit at time of order
-   */
   unitPrice: number;
-  /**
-   * quantity × unitPrice
-   */
   totalPrice: number;
   updatedAt: string;
   createdAt: string;
@@ -3276,44 +3238,26 @@ export interface TableBlockSelect<T extends boolean = true> {
  */
 export interface OrderSelect<T extends boolean = true> {
   orderNumber?: T;
-  userId?: T;
-  items?: T;
-  customerInfo?:
-    | T
-    | {
-        email?: T;
-        firstName?: T;
-        lastName?: T;
-        phone?: T;
-      };
-  terms?:
-    | T
-    | {
-        termsAccepted?: T;
-        termsAcceptedAt?: T;
-        termsVersion?: T;
-        termsIpAddress?: T;
-      };
-  shippingAddress?:
-    | T
-    | {
-        line1?: T;
-        line2?: T;
-        city?: T;
-        postcode?: T;
-        country?: T;
-      };
-  shipping?:
-    | T
-    | {
-        method?: T;
-        provider?: T;
-        trackingNumber?: T;
-        price?: T;
-      };
+  user?: T;
+  email?: T;
+  firstName?: T;
+  lastName?: T;
+  phone?: T;
+  termsAccepted?: T;
+  termsAcceptedAt?: T;
+  termsVersion?: T;
+  termsIpAddress?: T;
+  shippingAddressLine1?: T;
+  shippingAddressLine2?: T;
+  shippingCity?: T;
+  shippingPostcode?: T;
+  shippingCountry?: T;
+  shippingMethod?: T;
+  shippingProvider?: T;
+  trackingNumber?: T;
   currency?: T;
   subtotalAmount?: T;
-  shippingAmount?: T;
+  shippingFinalAmount?: T;
   totalAmount?: T;
   paymentMethod?: T;
   paymentStatus?: T;
@@ -3322,15 +3266,12 @@ export interface OrderSelect<T extends boolean = true> {
   shippedAt?: T;
   deliveredAt?: T;
   cancelledAt?: T;
-  emailTracking?:
-    | T
-    | {
-        shippedSentAt?: T;
-        postDeliverySentAt?: T;
-        reviewSentAt?: T;
-        winbackSentAt?: T;
-      };
+  emailShippedSentAt?: T;
+  emailPostDeliverySentAt?: T;
+  emailReviewSentAt?: T;
+  emailWinbackSentAt?: T;
   legalRetentionUntil?: T;
+  items?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3339,8 +3280,8 @@ export interface OrderSelect<T extends boolean = true> {
  * via the `definition` "order-item_select".
  */
 export interface OrderItemSelect<T extends boolean = true> {
-  orderId?: T;
-  productId?: T;
+  order?: T;
+  product?: T;
   productName?: T;
   sku?: T;
   quantity?: T;
