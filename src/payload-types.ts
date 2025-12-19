@@ -220,7 +220,9 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  price?: number | null;
+  price: number;
+  isOnSale: boolean;
+  salePrice?: number | null;
   quantity: number;
   publishedAt?: string | null;
   updatedAt: string;
@@ -3158,6 +3160,8 @@ export interface ProductSelect<T extends boolean = true> {
         id?: T;
       };
   price?: T;
+  isOnSale?: T;
+  salePrice?: T;
   quantity?: T;
   publishedAt?: T;
   updatedAt?: T;

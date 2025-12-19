@@ -61,11 +61,27 @@ export const Product: CollectionConfig = {
       required: true,
       admin: {
         position: 'sidebar',
-        condition: (data) => {
-          return data.category !== 6
-        },
       },
     },
+    {
+      name: 'isOnSale',
+      label: 'Промоция',
+      type: 'checkbox',
+      defaultValue: false,
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'salePrice',
+      type: 'number',
+      admin: {
+        position: 'sidebar',
+        condition: (siblingData) => siblingData.isOnSale,
+      },
+    },
+
     {
       name: 'quantity',
       type: 'number',
