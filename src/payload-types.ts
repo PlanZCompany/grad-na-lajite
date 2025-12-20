@@ -75,6 +75,9 @@ export interface Config {
     blog: Blog;
     order: Order;
     'order-item': OrderItem;
+    'discount-code': DiscountCode;
+    'discount-code-usages': DiscountCodeUsage;
+    'discount-code-attempt': DiscountCodeAttempt;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -97,6 +100,9 @@ export interface Config {
     blog: BlogSelect<false> | BlogSelect<true>;
     order: OrderSelect<false> | OrderSelect<true>;
     'order-item': OrderItemSelect<false> | OrderItemSelect<true>;
+    'discount-code': DiscountCodeSelect<false> | DiscountCodeSelect<true>;
+    'discount-code-usages': DiscountCodeUsagesSelect<false> | DiscountCodeUsagesSelect<true>;
+    'discount-code-attempt': DiscountCodeAttemptSelect<false> | DiscountCodeAttemptSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -2232,6 +2238,8 @@ export interface Order {
   id: number;
   orderNumber?: string | null;
   user?: (number | null) | User;
+  discountCode?: (number | null) | DiscountCode;
+  discountAmount: number;
   email: string;
   firstName: string;
   lastName: string;
@@ -2274,6 +2282,44 @@ export interface Order {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code".
+ */
+export interface DiscountCode {
+  id: number;
+  /**
+   * Напр. ISTINA10, LAJA50. Препоръчително UPPERCASE.
+   */
+  code: string;
+  description?: string | null;
+  discountType: 'percent' | 'fixed';
+  discountValue: number;
+  isActive: boolean;
+  maxUsesTotal?: number | null;
+  maxUsesPerUser?: number | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  appliesToType: 'all' | 'product' | 'category';
+  /**
+   * ID на продукт/категория (според appliesToType). NULL/празно при appliesToType=all.
+   */
+  appliesToId?: number | null;
+  isPublic: boolean;
+  channel?: ('site' | 'newsletter' | 'dm' | 'instagram' | 'tiktok' | 'partner' | 'internal') | null;
+  /**
+   * Ако е попълнено, кодът важи само за тези имейли (особено за guest checkout).
+   */
+  allowedCustomers?:
+    | {
+        email: string;
+        id?: string | null;
+      }[]
+    | null;
+  allowedUsers?: (number | User)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "order-item".
  */
 export interface OrderItem {
@@ -2287,6 +2333,55 @@ export interface OrderItem {
   totalPrice: number;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code-usages".
+ */
+export interface DiscountCodeUsage {
+  id: number;
+  discountCode: number | DiscountCode;
+  user?: (number | null) | User;
+  order: number | Order;
+  /**
+   * Попълва се при guest поръчка (когато няма user).
+   */
+  usedEmail?: string | null;
+  discountAmount: number;
+  usedAt: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code-attempt".
+ */
+export interface DiscountCodeAttempt {
+  id: number;
+  /**
+   * user_id/sessionId/IP – идентификатор за анти-спам прозореца.
+   */
+  clientKey: string;
+  /**
+   * Кодът както е въведен (нормализиран до trim + uppercase).
+   */
+  code: string;
+  user?: (number | null) | User;
+  /**
+   * По желание – ако attempt е в контекст на конкретна поръчка/checkout.
+   */
+  order?: (number | null) | Order;
+  /**
+   * Email при guest / fallback.
+   */
+  usedEmail?: string | null;
+  success: boolean;
+  /**
+   * Кратък код/причина (напр. CODE_NOT_FOUND, CODE_EXPIRED и т.н.).
+   */
+  failReason?: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2464,6 +2559,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'order-item';
         value: number | OrderItem;
+      } | null)
+    | ({
+        relationTo: 'discount-code';
+        value: number | DiscountCode;
+      } | null)
+    | ({
+        relationTo: 'discount-code-usages';
+        value: number | DiscountCodeUsage;
+      } | null)
+    | ({
+        relationTo: 'discount-code-attempt';
+        value: number | DiscountCodeAttempt;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3243,6 +3350,8 @@ export interface TableBlockSelect<T extends boolean = true> {
 export interface OrderSelect<T extends boolean = true> {
   orderNumber?: T;
   user?: T;
+  discountCode?: T;
+  discountAmount?: T;
   email?: T;
   firstName?: T;
   lastName?: T;
@@ -3293,6 +3402,63 @@ export interface OrderItemSelect<T extends boolean = true> {
   totalPrice?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code_select".
+ */
+export interface DiscountCodeSelect<T extends boolean = true> {
+  code?: T;
+  description?: T;
+  discountType?: T;
+  discountValue?: T;
+  isActive?: T;
+  maxUsesTotal?: T;
+  maxUsesPerUser?: T;
+  startDate?: T;
+  endDate?: T;
+  appliesToType?: T;
+  appliesToId?: T;
+  isPublic?: T;
+  channel?: T;
+  allowedCustomers?:
+    | T
+    | {
+        email?: T;
+        id?: T;
+      };
+  allowedUsers?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code-usages_select".
+ */
+export interface DiscountCodeUsagesSelect<T extends boolean = true> {
+  discountCode?: T;
+  user?: T;
+  order?: T;
+  usedEmail?: T;
+  discountAmount?: T;
+  usedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code-attempt_select".
+ */
+export interface DiscountCodeAttemptSelect<T extends boolean = true> {
+  clientKey?: T;
+  code?: T;
+  user?: T;
+  order?: T;
+  usedEmail?: T;
+  success?: T;
+  failReason?: T;
+  createdAt?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -20,7 +20,7 @@ export const Order: CollectionConfig = {
       type: 'text',
       unique: true,
       index: true,
-      admin: { readOnly: true },
+      admin: { readOnly: true, position: 'sidebar' },
     },
 
     // user_id (optional)
@@ -30,6 +30,26 @@ export const Order: CollectionConfig = {
       relationTo: 'users',
       required: false,
       index: true,
+    },
+
+    // Discount code (optional)
+    {
+      name: 'discountCode',
+      type: 'relationship',
+      relationTo: 'discount-code',
+      required: false,
+      index: true,
+      admin: { position: 'sidebar' },
+    },
+
+    // Discount amount snapshot (BGN)
+    {
+      name: 'discountAmount',
+      type: 'number',
+      required: true,
+      defaultValue: 0,
+      min: 0,
+      admin: { step: 0.01, position: 'sidebar' },
     },
 
     // Customer

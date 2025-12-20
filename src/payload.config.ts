@@ -24,6 +24,9 @@ import { FooterCheckout } from './FooterCheckout/config'
 import { Shipping } from './Shipping/config'
 import { Order } from './collections/Order'
 import { OrderItem } from './collections/OrderItem'
+import { DiscountCode } from './collections/DiscountCode/DiscountCode'
+import { DiscountCodeUsages } from './collections/DiscountCodeUsages/DiscountCodeUsages'
+import { DiscountCodeAttempt } from './collections/DiscountCodeAttempt/DiscountCodeAttempt'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -58,7 +61,19 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Pages, Subscriptions, Product, Blog, Order, OrderItem],
+  collections: [
+    Users,
+    Media,
+    Pages,
+    Subscriptions,
+    Product,
+    Blog,
+    Order,
+    OrderItem,
+    DiscountCode,
+    DiscountCodeUsages,
+    DiscountCodeAttempt,
+  ],
   globals: [Header, Footer, Aside, SubscriptionModal, FooterCheckout, Shipping],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
