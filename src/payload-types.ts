@@ -79,6 +79,7 @@ export interface Config {
     'discount-code-usages': DiscountCodeUsage;
     'discount-code-attempt': DiscountCodeAttempt;
     'email-templates': EmailTemplate;
+    'email-send-requests': EmailSendRequest;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -105,6 +106,7 @@ export interface Config {
     'discount-code-usages': DiscountCodeUsagesSelect<false> | DiscountCodeUsagesSelect<true>;
     'discount-code-attempt': DiscountCodeAttemptSelect<false> | DiscountCodeAttemptSelect<true>;
     'email-templates': EmailTemplatesSelect<false> | EmailTemplatesSelect<true>;
+    'email-send-requests': EmailSendRequestsSelect<false> | EmailSendRequestsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -2394,7 +2396,29 @@ export interface DiscountCodeAttempt {
 export interface EmailTemplate {
   id: number;
   name: string;
-  slug: string;
+  slug:
+    | 'welcome_istina10'
+    | 'welcome_reminder'
+    | 'order_confirmation'
+    | 'order_shipped'
+    | 'post_delivery'
+    | 'review_request'
+    | 'ugc_thanks'
+    | 'ugc_followup'
+    | 'winback'
+    | 'abandoned_cart_1'
+    | 'abandoned_cart_2'
+    | 'newsletter_story'
+    | 'campaign_special'
+    | 'account_created'
+    | 'email_verification'
+    | 'password_reset'
+    | 'password_changed'
+    | 'order_cancelled';
+  category: 'marketing' | 'transactional';
+  delivery: 'auto' | 'manual';
+  isActive?: boolean | null;
+  description?: string | null;
   subject: string;
   preheader?: string | null;
   hero: {
@@ -2436,6 +2460,27 @@ export interface EmailTemplate {
       url?: string | null;
     };
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-send-requests".
+ */
+export interface EmailSendRequest {
+  id: number;
+  title: string;
+  template: number | EmailTemplate;
+  recipients: {
+    email: string;
+    id?: string | null;
+  }[];
+  status: 'draft' | 'sent' | 'error';
+  sentAt?: string | null;
+  /**
+   * Чекни и натисни Save, за да изпратиш имейла.
+   */
+  sendNow?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2631,6 +2676,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'email-templates';
         value: number | EmailTemplate;
+      } | null)
+    | ({
+        relationTo: 'email-send-requests';
+        value: number | EmailSendRequest;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3527,6 +3576,10 @@ export interface DiscountCodeAttemptSelect<T extends boolean = true> {
 export interface EmailTemplatesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  category?: T;
+  delivery?: T;
+  isActive?: T;
+  description?: T;
   subject?: T;
   preheader?: T;
   hero?:
@@ -3580,6 +3633,25 @@ export interface EmailTemplatesSelect<T extends boolean = true> {
               url?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-send-requests_select".
+ */
+export interface EmailSendRequestsSelect<T extends boolean = true> {
+  title?: T;
+  template?: T;
+  recipients?:
+    | T
+    | {
+        email?: T;
+        id?: T;
+      };
+  status?: T;
+  sentAt?: T;
+  sendNow?: T;
   updatedAt?: T;
   createdAt?: T;
 }

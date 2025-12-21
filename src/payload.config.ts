@@ -29,6 +29,7 @@ import { DiscountCodeUsages } from './collections/DiscountCodeUsages/DiscountCod
 import { DiscountCodeAttempt } from './collections/DiscountCodeAttempt/DiscountCodeAttempt'
 import { EmailTemplates } from './collections/EmailTemplates/config'
 import { EmailSettings } from './EmailSettings/config'
+import { EmailSendRequests } from './collections/EmailSendRequest/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -76,6 +77,7 @@ export default buildConfig({
     DiscountCodeUsages,
     DiscountCodeAttempt,
     EmailTemplates,
+    EmailSendRequests,
   ],
   globals: [Header, Footer, Aside, SubscriptionModal, FooterCheckout, Shipping, EmailSettings],
   editor: lexicalEditor(),
@@ -88,7 +90,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
-    push: true,
+    push: false,
   }),
   sharp,
   plugins: [payloadCloudPlugin(), ...plugins],
