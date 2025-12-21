@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <title>Поръчката ти влезе в играта 🎭</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @media only screen and (max-width:600px){
+      .container{width:100%!important;}
+      .p-body{padding:24px 20px!important;}
+      .btn{display:block!important;width:100%!important;}
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background:#0E0B12;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#0E0B12;">
+    <tr><td align="center">
+      <table role="presentation" width="600" class="container" cellspacing="0" cellpadding="0" border="0" style="width:600px;max-width:600px;margin:0 auto;">
+        
+        <!-- Header -->
+        <tr>
+          <td style="background:linear-gradient(135deg,#1A0F26 0%,#3C1D1D 100%);padding:20px;">
+            <table role="presentation" width="100%">
+              <tr>
+                <td align="left" valign="middle" style="width:50%;">
+                  <a href="https://gradnalajite.bg" target="_blank">
+                    <img src="Logo.png" width="140" alt="Град на Лъжите - лого" style="display:block;border:0;max-width:140px;">
+                  </a>
+                </td>
+                <td align="right" valign="middle" style="width:50%;">
+                  <div style="font-family:'Merriweather',Georgia,serif;font-size:17px;line-height:1.4;color:#E8C468;font-weight:600;text-align:right;">
+                    Истината е в движение…<br>и скоро ще стигне до теб.
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td class="p-body" style="background:#15121B;padding:36px 40px;">
+            <h1 style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:24px;color:#F5C34D;">
+              Поръчката ти е приета 🎲
+            </h1>
+            <p style="margin:0 0 16px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+              Здравей, Пътнико в <em>„Града на Лъжите“</em> 👁️  
+              Получихме твоята поръчка и колелото на съдбата вече се завъртя.
+            </p>
+            <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+              Нашият екип подготвя товара в тъмното…  
+              Ще получиш известие, когато пратката тръгне към теб.
+            </p>
+
+            <!-- Order summary -->
+            <div style="margin:20px 0 22px;padding:16px;background:#1E1825;border:1px dashed #F5C34D;border-radius:6px;">
+              <div style="font-family:'Merriweather',Georgia,serif;font-size:16px;color:#E8C468;font-weight:700;margin-bottom:10px;">
+                🧾 Детайли за поръчката:
+              </div>
+              <p style="margin:0;font-family:'Merriweather',Georgia,serif;font-size:15px;line-height:1.7;color:#EDE8F5;">
+                <strong>Номер:</strong> {{order_number}}<br>
+                <strong>Дата:</strong> {{order_date}}<br>
+                <strong>Сума:</strong> {{order_total}}<br>
+                <strong>Начин на плащане:</strong> {{payment_method}}
+              </p>
+            </div>
+
+            <!-- Products -->
+            <div style="margin:0 0 26px;">
+              <div style="font-family:'Merriweather',Georgia,serif;font-size:16px;color:#E8C468;font-weight:700;margin-bottom:8px;">
+                🎴 Поръчани артикули:
+              </div>
+              <ul style="margin:0;padding-left:18px;font-family:'Merriweather',Georgia,serif;font-size:15px;line-height:1.7;color:#EDE8F5;">
+                {{order_items}}
+              </ul>
+            </div>
+
+            <!-- Button -->
+            <table align="center" cellspacing="0" cellpadding="0" style="margin:20px 0 30px;">
+              <tr><td style="border-radius:6px;" bgcolor="#F5C34D">
+                <a href="{{order_status_url}}" target="_blank"
+                   style="display:inline-block;padding:14px 28px;font-family:'Merriweather',Georgia,serif;font-size:16px;font-weight:700;
+                          text-decoration:none;color:#1A0F26;background:#F5C34D;border-radius:6px;">
+                  ВИЖ СТАТУСА НА ПОРЪЧКАТА
+                </a>
+              </td></tr>
+            </table>
+
+            <!-- Note -->
+            <p style="font-size:14px;color:#B9ACC8;font-family:'Merriweather',Georgia,serif;line-height:1.6;">
+              Ако имаш въпроси или искаш да добавиш промяна,  
+              просто ни отговори на този имейл - ние ще те намерим.
+            </p>
+
+            <div style="text-align:center;margin-top:24px;">
+              <img src="order-dark.png" width="220" alt="Поръчка - илюстрация с карти и плик" style="display:inline-block;border:0;max-width:220px;">
+            </div>
+          </td>
+        </tr>
+
+        <!-- Feature strip -->
+        <tr>
+          <td style="background:#0F0D14;padding:16px;">
+            <table width="100%">
+              <tr>
+                <td align="center" style="font-family:'Merriweather',Georgia,serif;color:#F5C34D;font-size:14px;">🎲 2–4 играчи</td>
+                <td align="center" style="font-family:'Merriweather',Georgia,serif;color:#F5C34D;font-size:14px;">⏱️ 20–40 мин.</td>
+                <td align="center" style="font-family:'Merriweather',Georgia,serif;color:#F5C34D;font-size:14px;">🧠 Блъф • Саботаж • Разобличаване</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#15121B;padding:22px 26px;border-top:1px solid #2E1A47;">
+            <table width="100%">
+              <tr>
+                <td style="font-family:'Merriweather',Georgia,serif;font-size:14px;color:#D8C9E8;">
+                  От екипа на  
+                  <a href="https://gradnalajite.bg" target="_blank" style="color:#F5C34D;text-decoration:none;">Град на Лъжите</a>
+                </td>
+                <td align="right" style="font-family:'Merriweather',Georgia,serif;font-size:11px;color:#B9ACC8;">
+                  © anilevi.soulwalks™ · © 2025 Град на Лъжите
+                </td>
+              </tr>
+            </table>
+            <div style="height:10px;"></div>
+            <div style="font-family:'Merriweather',Georgia,serif;font-size:11px;color:#887C97;opacity:.7;">
+              Получаваш този имейл, защото направи поръчка в „Град на Лъжите“.  
+              Ако не си ти, можеш да се <a href="*|UNSUB|*" style="color:#F5C34D;text-decoration:underline;">отпишеш</a>.
+            </div>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

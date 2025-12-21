@@ -78,6 +78,7 @@ export interface Config {
     'discount-code': DiscountCode;
     'discount-code-usages': DiscountCodeUsage;
     'discount-code-attempt': DiscountCodeAttempt;
+    'email-templates': EmailTemplate;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -103,6 +104,7 @@ export interface Config {
     'discount-code': DiscountCodeSelect<false> | DiscountCodeSelect<true>;
     'discount-code-usages': DiscountCodeUsagesSelect<false> | DiscountCodeUsagesSelect<true>;
     'discount-code-attempt': DiscountCodeAttemptSelect<false> | DiscountCodeAttemptSelect<true>;
+    'email-templates': EmailTemplatesSelect<false> | EmailTemplatesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -121,6 +123,7 @@ export interface Config {
     subscriptionModal: SubscriptionModal;
     'footer-checkout': FooterCheckout;
     shipping: Shipping;
+    'email-settings': EmailSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -129,6 +132,7 @@ export interface Config {
     subscriptionModal: SubscriptionModalSelect<false> | SubscriptionModalSelect<true>;
     'footer-checkout': FooterCheckoutSelect<false> | FooterCheckoutSelect<true>;
     shipping: ShippingSelect<false> | ShippingSelect<true>;
+    'email-settings': EmailSettingsSelect<false> | EmailSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -2385,6 +2389,58 @@ export interface DiscountCodeAttempt {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-templates".
+ */
+export interface EmailTemplate {
+  id: number;
+  name: string;
+  slug: string;
+  subject: string;
+  preheader?: string | null;
+  hero: {
+    image?: (number | null) | Media;
+    imageAlt?: string | null;
+    title: string;
+    text: string;
+    primaryCta: {
+      label: string;
+      url: string;
+    };
+  };
+  infoBlocks?:
+    | {
+        icon?: (number | null) | Media;
+        iconAlt?: string | null;
+        title: string;
+        text: string;
+        link?: {
+          label?: string | null;
+          url?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  promo?: {
+    enabled?: boolean | null;
+    icon?: (number | null) | Media;
+    iconAlt?: string | null;
+    codeName?: string | null;
+    discountText?: string | null;
+    instructionText?: string | null;
+  };
+  secondaryCta?: {
+    enabled?: boolean | null;
+    introText?: string | null;
+    button?: {
+      label?: string | null;
+      url?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2571,6 +2627,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'discount-code-attempt';
         value: number | DiscountCodeAttempt;
+      } | null)
+    | ({
+        relationTo: 'email-templates';
+        value: number | EmailTemplate;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3462,6 +3522,69 @@ export interface DiscountCodeAttemptSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-templates_select".
+ */
+export interface EmailTemplatesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  subject?: T;
+  preheader?: T;
+  hero?:
+    | T
+    | {
+        image?: T;
+        imageAlt?: T;
+        title?: T;
+        text?: T;
+        primaryCta?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+      };
+  infoBlocks?:
+    | T
+    | {
+        icon?: T;
+        iconAlt?: T;
+        title?: T;
+        text?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        id?: T;
+      };
+  promo?:
+    | T
+    | {
+        enabled?: T;
+        icon?: T;
+        iconAlt?: T;
+        codeName?: T;
+        discountText?: T;
+        instructionText?: T;
+      };
+  secondaryCta?:
+    | T
+    | {
+        enabled?: T;
+        introText?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
@@ -3853,6 +3976,34 @@ export interface Shipping {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-settings".
+ */
+export interface EmailSetting {
+  id: number;
+  siteUrl: string;
+  logo: number | Media;
+  logoAlt?: string | null;
+  communityIntroText?: string | null;
+  socialLinks?:
+    | {
+        platform: 'instagram' | 'tiktok' | 'website';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  ugcImage?: (number | null) | Media;
+  ugcAlt?: string | null;
+  contactEmail: string;
+  footerSiteUrl: string;
+  unsubscribeUrl: string;
+  termsUrl?: string | null;
+  privacyUrl?: string | null;
+  flavorText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -4013,6 +4164,34 @@ export interface ShippingSelect<T extends boolean = true> {
         is_active?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-settings_select".
+ */
+export interface EmailSettingsSelect<T extends boolean = true> {
+  siteUrl?: T;
+  logo?: T;
+  logoAlt?: T;
+  communityIntroText?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  ugcImage?: T;
+  ugcAlt?: T;
+  contactEmail?: T;
+  footerSiteUrl?: T;
+  unsubscribeUrl?: T;
+  termsUrl?: T;
+  privacyUrl?: T;
+  flavorText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
