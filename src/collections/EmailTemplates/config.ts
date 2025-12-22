@@ -75,14 +75,14 @@ export const EmailTemplates: CollectionConfig = {
       fields: [
         { name: 'image', type: 'upload', relationTo: 'media' },
         { name: 'imageAlt', type: 'text' },
-        { name: 'title', type: 'text', required: true },
-        { name: 'text', type: 'textarea', required: true },
+        { name: 'title', type: 'text' },
+        { name: 'text', type: 'textarea' },
         {
           name: 'primaryCta',
           type: 'group',
           fields: [
-            { name: 'label', type: 'text', required: true },
-            { name: 'url', type: 'text', required: true },
+            { name: 'label', type: 'text' },
+            { name: 'url', type: 'text' },
           ],
         },
       ],
@@ -126,6 +126,38 @@ export const EmailTemplates: CollectionConfig = {
           defaultValue: 'Въведи кода в количката преди плащане.',
         },
       ],
+    },
+
+    // VERIFY (optional)
+    {
+      name: 'verify',
+      label: 'Verify/Reset Password Block',
+      type: 'group',
+      fields: [
+        { name: 'title', type: 'text' },
+        { name: 'text', type: 'textarea' },
+        {
+          name: 'button',
+          type: 'group',
+          fields: [
+            { name: 'label', type: 'text' },
+            { name: 'url', type: 'text' },
+          ],
+        },
+        { name: 'extraText', type: 'text' },
+        { name: 'extraUrl', type: 'text' },
+      ],
+    },
+
+    // EXTRA IMAGE
+    {
+      name: 'extraImage',
+      label: 'Extra Image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Снимка която се появява преди Фоотера',
+      },
     },
 
     // 5) SECONDARY CTA (optional)

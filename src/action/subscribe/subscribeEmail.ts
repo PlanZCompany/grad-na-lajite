@@ -17,8 +17,8 @@ export default async function subscribeEmail(
     const logoUrl = `${siteUrl}/static/preview.png`
     const supportEmail = 'noreply@gradnalajite.bg'
     const recipient = email
-    const displayName = userName || undefined // if you have user.name, pass it instead
-    const code = discountCodeToReturn || '' // if you only send when you have a code, guard below
+    const displayName = userName || undefined
+    const code = discountCodeToReturn || ''
 
     const { subject, html, text } = buildSubscriptionEmail({
       toEmail: recipient,

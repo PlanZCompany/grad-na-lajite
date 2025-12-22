@@ -1,4 +1,6 @@
-import type { CollectionConfig } from 'payload'
+import { getPayload, type CollectionConfig } from 'payload'
+import configPromise from '@payload-config'
+import { buildEmailCustom } from '@/lib/email/buildEmailCustom'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -9,32 +11,47 @@ export const Users: CollectionConfig = {
     verify: {
       generateEmailSubject: (_args?: { token?: string; user?: { email?: string } }) =>
         `Верификация на Имейл`,
-      generateEmailHTML: ({ token, user }: { token?: string; user?: { email?: string } }) => {
+      generateEmailHTML: async ({ token, user }: { token?: string; user?: { email?: string } }) => {
         const t = encodeURIComponent(token ?? '')
         const url = `${process.env.NEXT_PUBLIC_APP_URL}auth/verify?token=${t}`
-        const email = user?.email ?? ''
-        return `<!doctype html><html><body style="font-family:system-ui,Segoe UI,Roboto">
-      <h1>Добре дошли ${email ? `, ${email}` : ''}!</h1>
-      <p>Потвърдете своя Имейл адрес, за да активирате аккаунта си.</p>
-      <button><a href="${url}" style="cursor:pointer; display:inline-block;padding:10px 16px;text-decoration:none;border:1px solid #ddd;border-radius:8px">Потвърди</a>
-      </button>
-      <p>Или копирай линка в браузъра:<br>${url}</p>
-    </body></html>`
+        // const email = user?.email ?? ''
+
+        const { html } = await buildEmailCustom({
+          templateSlug: 'email_verification',
+          verifyUrl: url,
+        })
+
+        return html
+        //     return `<!doctype html><html><body style="font-family:system-ui,Segoe UI,Roboto">
+        //   <h1>Добре дошли ${email ? `, ${email}` : ''}!</h1>
+        //   <p>Потвърдете своя Имейл адрес, за да активирате аккаунта си.</p>
+        //   <button><a href="${url}" style="cursor:pointer; display:inline-block;padding:10px 16px;text-decoration:none;border:1px solid #ddd;border-radius:8px">Потвърди</a>
+        //   </button>
+        //   <p>Или копирай линка в браузъра:<br>${url}</p>
+        // </body></html>`
       },
     },
     forgotPassword: {
       generateEmailSubject: () => `Обновяване на паролата`,
-      generateEmailHTML: (args) => {
+      generateEmailHTML: async (args) => {
         const t = encodeURIComponent(args?.token ?? '')
         const url = `${process.env.NEXT_PUBLIC_APP_URL}auth/reset-password?token=${t}`
-        const email = args?.user?.email ?? ''
-        return `<!doctype html><html><body style="font-family:system-ui,Segoe UI,Roboto">
-        <h1>Обновяване на паролата</h1>
-        <p>Получихме заявка за обновяване на паролата ${email}.</p>
-        <p><a href="${url}" style="display:inline-block;padding:10px 16px;text-decoration:none;border:1px solid #ddd;border-radius:8px">Обнови</a></p>
-        <p>Ако не е предназчено за вас, моля игнорирайте.</p>
-        <p>Link: ${url}</p>
-      </body></html>`
+        // const email = args?.user?.email ?? ''
+
+        //   return `<!doctype html><html><body style="font-family:system-ui,Segoe UI,Roboto">
+        //   <h1>Обновяване на паролата</h1>
+        //   <p>Получихме заявка за обновяване на паролата ${email}.</p>
+        //   <p><a href="${url}" style="display:inline-block;padding:10px 16px;text-decoration:none;border:1px solid #ddd;border-radius:8px">Обнови</a></p>
+        //   <p>Ако не е предназчено за вас, моля игнорирайте.</p>
+        //   <p>Link: ${url}</p>
+        // </body></html>`
+
+        const { html } = await buildEmailCustom({
+          templateSlug: 'password_reset',
+          verifyUrl: url,
+        })
+
+        return html
       },
     },
   },
@@ -233,4 +250,30 @@ export const Users: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    afterChange: [
+      async (req) => {
+        const { doc, operation } = req
+        if (operation !== 'create') return doc
+        if (doc.role !== 'user') return doc
+
+        try {
+          const { subject, html } = await buildEmailCustom({
+            templateSlug: 'account_created',
+          })
+          const payload = await getPayload({ config: configPromise })
+          const { email } = doc
+          await payload.sendEmail({
+            to: email,
+            subject,
+            html,
+            text: html,
+            from: 'no-reply@gradnalajite.bg',
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      },
+    ],
+  },
 }

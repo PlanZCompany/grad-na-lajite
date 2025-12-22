@@ -1,5 +1,7 @@
 import { EmailTemplate } from '@/payload-types'
-import type { PayloadRequest } from 'payload'
+import { getPayload } from 'payload'
+
+import configPromise from '../../payload.config'
 
 type Data = Record<string, any>
 
@@ -7,7 +9,7 @@ function getByPath(obj: any, path: string) {
   return path.split('.').reduce((acc, k) => (acc == null ? undefined : acc[k]), obj)
 }
 
-function interpolate(input: string, data: Data): string {
+function interpolate(input: string, data: Data = {}): string {
   return (input || '').replace(/\{\{\s*([a-zA-Z0-9_.-]+)\s*\}\}/g, (_m, key: string) => {
     const val = getByPath(data, key)
     return val === undefined || val === null ? '' : String(val)
@@ -20,33 +22,42 @@ function resolveMediaUrl(media: any): string {
   return media.url || ''
 }
 
-export async function buildEmail(args: {
-  req: PayloadRequest
-  templateId: number
-  data?: Data
+export async function buildEmailCustom(args: {
+  templateSlug: EmailTemplate['slug']
+  verifyUrl?: string
 }): Promise<{ subject: string; html: string }> {
-  const { req, templateId } = args
-  const data = args.data ?? {}
+  const payload = await getPayload({ config: configPromise })
+  const { templateSlug } = args
 
-  const settings = await req.payload.findGlobal({
+  const settings = await payload.findGlobal({
     slug: 'email-settings',
-    req,
     depth: 2,
   })
 
-  const template = await req.payload.findByID({
+  console.log('templateId', templateSlug)
+  const templateDocs = await payload.find({
     collection: 'email-templates',
-    id: templateId,
-    req,
+    where: {
+      slug: {
+        equals: templateSlug,
+      },
+    },
     depth: 2,
+    limit: 1,
   })
+
+  if (templateDocs.docs.length === 0) {
+    throw new Error('Template not found')
+  }
+
+  const template = templateDocs.docs[0]
 
   const description = template.description ?? ''
 
-  const subject = interpolate(template.subject ?? '', data)
-  const preheader = template.preheader ? interpolate(template.preheader, data) : ''
+  const subject = interpolate(template.subject ?? '')
+  const preheader = template.preheader ? interpolate(template.preheader, {}) : ''
 
-  const bodyHTML = renderTemplateSections(template, settings, data)
+  const bodyHTML = renderTemplateSections(template, settings, {}, args.verifyUrl)
 
   const html = wrapEmailLayout({
     settings,
@@ -58,7 +69,12 @@ export async function buildEmail(args: {
   return { subject, html }
 }
 
-function renderTemplateSections(template: EmailTemplate, settings: any, data: Data): string {
+function renderTemplateSections(
+  template: EmailTemplate,
+  settings: any,
+  data: Data,
+  verifyUrl?: string,
+): string {
   const parts: string[] = []
 
   // HERO
@@ -96,6 +112,51 @@ function renderTemplateSections(template: EmailTemplate, settings: any, data: Da
           interpolate(template.hero.primaryCta.label, data),
         ),
       )
+    }
+
+    parts.push(renderDivider())
+  }
+
+  if (template.verify) {
+    if (template.verify.title) {
+      parts.push(`
+            <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+              ${interpolate(template.verify.title, data).replace(/\n/g, '<br>')}
+            </p>
+          `)
+    }
+
+    if (template.verify.button?.label && template.verify.button?.url && verifyUrl) {
+      parts.push(
+        renderPrimaryButton(
+          interpolate(verifyUrl, data),
+          interpolate(template.verify.button.label, data),
+        ),
+      )
+    }
+
+    if (template.verify.text) {
+      parts.push(`
+        <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+          ${interpolate(template.verify.text, data).replace(/\n/g, '<br>')}
+        </p>
+      `)
+    }
+
+    if (template.verify.extraText) {
+      parts.push(`
+        <p style="margin:0 0 16px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+          ${interpolate(template.verify.extraText, data).replace(/\n/g, '<br>')}
+        </p>
+      `)
+    }
+
+    if (template.verify.extraUrl && verifyUrl) {
+      parts.push(`
+        <a href="${interpolate(verifyUrl, data)}" style="margin:0 0 16px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+          ${interpolate(verifyUrl, data).replace(/\n/g, '<br>')}
+        </a>
+      `)
     }
 
     parts.push(renderDivider())

@@ -73,10 +73,12 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 - sitemap
 - jsonld for required places
 
+- да се върже локига към чекоут с промокод
+
 ---media---
 [done] use storage try with superhosting
 
-- add video option url
+[done] add video option url
 
 \*_DONE PER WEEK_
 

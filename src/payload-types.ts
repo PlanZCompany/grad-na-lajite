@@ -2421,14 +2421,14 @@ export interface EmailTemplate {
   description?: string | null;
   subject: string;
   preheader?: string | null;
-  hero: {
+  hero?: {
     image?: (number | null) | Media;
     imageAlt?: string | null;
-    title: string;
-    text: string;
-    primaryCta: {
-      label: string;
-      url: string;
+    title?: string | null;
+    text?: string | null;
+    primaryCta?: {
+      label?: string | null;
+      url?: string | null;
     };
   };
   infoBlocks?:
@@ -2452,6 +2452,20 @@ export interface EmailTemplate {
     discountText?: string | null;
     instructionText?: string | null;
   };
+  verify?: {
+    title?: string | null;
+    text?: string | null;
+    button?: {
+      label?: string | null;
+      url?: string | null;
+    };
+    extraText?: string | null;
+    extraUrl?: string | null;
+  };
+  /**
+   * Снимка която се появява преди Фоотера
+   */
+  extraImage?: (number | null) | Media;
   secondaryCta?: {
     enabled?: boolean | null;
     introText?: string | null;
@@ -2477,10 +2491,6 @@ export interface EmailSendRequest {
   }[];
   status: 'draft' | 'sent' | 'error';
   sentAt?: string | null;
-  /**
-   * Чекни и натисни Save, за да изпратиш имейла.
-   */
-  sendNow?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -3621,6 +3631,21 @@ export interface EmailTemplatesSelect<T extends boolean = true> {
         discountText?: T;
         instructionText?: T;
       };
+  verify?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        extraText?: T;
+        extraUrl?: T;
+      };
+  extraImage?: T;
   secondaryCta?:
     | T
     | {
@@ -3651,7 +3676,6 @@ export interface EmailSendRequestsSelect<T extends boolean = true> {
       };
   status?: T;
   sentAt?: T;
-  sendNow?: T;
   updatedAt?: T;
   createdAt?: T;
 }

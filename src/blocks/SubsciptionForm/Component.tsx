@@ -44,9 +44,9 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
           setMessage(res.fieldErrors?.email ?? res.message)
         }
 
-        if (res.ok && !!res.discountCode) {
-          subscribeEmail(email, res.userName, res.discountCode)
-        }
+        // if (res.ok && !!res.discountCode) {
+        //   subscribeEmail(email, res.userName, res.discountCode)
+        // }
       } catch (err) {
         console.log(err)
       }

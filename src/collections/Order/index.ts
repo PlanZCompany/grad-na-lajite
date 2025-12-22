@@ -1,4 +1,6 @@
-import type { CollectionConfig } from 'payload'
+import { buildEmailCustom } from '@/lib/email/buildEmailCustom'
+import { getPayload, type CollectionConfig } from 'payload'
+import configPromise from '@payload-config'
 
 export const Order: CollectionConfig = {
   slug: 'order',
@@ -160,4 +162,33 @@ export const Order: CollectionConfig = {
       },
     },
   ],
+  // Email confirmation after order is created
+  hooks: {
+    afterChange: [
+      async (req) => {
+        const { doc, operation } = req
+
+        if (operation !== 'create') return doc
+
+        try {
+          const { subject, html } = await buildEmailCustom({
+            templateSlug: 'order_confirmation',
+          })
+          const payload = await getPayload({ config: configPromise })
+          const { email } = doc
+          await payload.sendEmail({
+            to: email,
+            subject,
+            html,
+            text: html,
+            from: 'no-reply@gradnalajite.bg',
+          })
+        } catch (error) {
+          console.error(error)
+        }
+
+        return doc
+      },
+    ],
+  },
 }

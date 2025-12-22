@@ -53,74 +53,120 @@ export const EmailSendRequests: CollectionConfig = {
     { name: 'sentAt', type: 'date', admin: { readOnly: true } },
 
     {
-      name: 'sendNow',
-      type: 'checkbox',
-      defaultValue: false,
+      name: 'preview',
+      type: 'ui',
       admin: {
-        description: 'Чекни и натисни Save, за да изпратиш имейла.',
+        components: {
+          Field: {
+            path: '@/admin/EmailSendRequestPreview#EmailSendRequestPreview',
+          },
+        },
       },
     },
   ],
+  endpoints: [
+    // PREVIEW
+    {
+      path: '/:id/preview',
+      method: 'get',
+      handler: async (req) => {
+        const id = req.routeParams?.id as string
 
-  hooks: {
-    afterChange: [
-      async ({ doc, req }) => {
-        if (req.context?.skipEmailSendHook) return
-        if (!doc.sendNow) return
+        console.log(id, 'id')
 
-        try {
-          // 1) Вземаме template (и basic guard)
-          const template = await req.payload.findByID({
-            collection: 'email-templates',
-            id: doc.template,
-            req,
-          })
+        const sendReq: any = await req.payload.findByID({
+          collection: 'email-send-requests',
+          id,
+          req,
+          depth: 2,
+        })
 
-          if (template.delivery !== 'manual') {
-            throw new Error('Този template не е manual.')
-          }
+        const { html } = await buildEmail({
+          req,
+          templateId: sendReq.template.id,
+          data: sendReq.data ?? {},
+        })
 
-          // 2) Build email (global settings + template)
-          const { subject, html } = await buildEmail({
-            req,
-            templateId: template.id,
-            data: doc.data ?? {},
-          })
-
-          for (const r of doc.recipients ?? []) {
-            await req.payload.sendEmail({
-              to: r.email,
-              subject,
-              html,
-            })
-          }
-
-          await req.payload.update({
-            collection: 'email-send-requests',
-            id: doc.id,
-            req,
-            overrideAccess: true,
-            context: { ...req.context, skipEmailSendHook: true },
-            data: {
-              sendNow: false,
-              status: 'sent',
-              sentAt: new Date().toISOString(),
-            },
-          })
-        } catch (err: any) {
-          await req.payload.update({
-            collection: 'email-send-requests',
-            id: doc.id,
-            req,
-            overrideAccess: true,
-            context: { ...req.context, skipEmailSendHook: true },
-            data: {
-              sendNow: false,
-              status: 'error',
-            },
-          })
-        }
+        return new Response(html, {
+          status: 200,
+          headers: { 'content-type': 'text/html; charset=utf-8' },
+        })
       },
-    ],
-  },
+    },
+
+    {
+      path: '/:id/send-stream',
+      method: 'post',
+      handler: async (req) => {
+        const id = req.routeParams?.id as string
+
+        const sendReq: any = await req.payload.findByID({
+          collection: 'email-send-requests',
+          id,
+          req,
+          depth: 0,
+        })
+
+        const total = (sendReq.recipients ?? []).length
+
+        const encoder = new TextEncoder()
+
+        const stream = new ReadableStream({
+          start: async (controller) => {
+            const write = (obj: any) => {
+              controller.enqueue(encoder.encode(JSON.stringify(obj) + '\n'))
+            }
+
+            try {
+              const { subject, html } = await buildEmail({
+                req,
+                templateId: sendReq.template,
+                data: sendReq.data ?? {},
+              })
+
+              let sent = 0
+              for (const r of sendReq.recipients ?? []) {
+                await req.payload.sendEmail({ to: r.email, subject, html })
+                sent += 1
+                write({ type: 'progress', sent, total, email: r.email })
+              }
+
+              await req.payload.update({
+                collection: 'email-send-requests',
+                id,
+                req,
+                data: { status: 'sent', sentAt: new Date().toISOString() },
+              })
+
+              write({ type: 'done', sent, total })
+              controller.close()
+            } catch (err: any) {
+              await req.payload.update({
+                collection: 'email-send-requests',
+                id,
+                req,
+                data: {
+                  status: 'error',
+                },
+              })
+
+              write({
+                type: 'error',
+                message: err?.message ? String(err.message) : 'Unknown error',
+              })
+              controller.close()
+            }
+          },
+        })
+
+        return new Response(stream, {
+          status: 200,
+          headers: {
+            'content-type': 'application/x-ndjson; charset=utf-8',
+            'cache-control': 'no-cache',
+          },
+        })
+      },
+    },
+  ],
 }

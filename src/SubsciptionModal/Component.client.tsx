@@ -44,9 +44,9 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
           setMessage(res.fieldErrors?.email ?? res.message)
         }
 
-        if (res.ok && !!res.discountCode) {
-          subscribeEmail(email, res.userName, res.discountCode)
-        }
+        // if (res.ok && !!res.discountCode) {
+        //   subscribeEmail(email, res.userName, res.discountCode)
+        // }
       } catch (err) {
         console.log(err)
       }
