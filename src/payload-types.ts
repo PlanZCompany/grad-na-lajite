@@ -73,6 +73,13 @@ export interface Config {
     subscriptions: Subscription;
     product: Product;
     blog: Blog;
+    order: Order;
+    'order-item': OrderItem;
+    'discount-code': DiscountCode;
+    'discount-code-usages': DiscountCodeUsage;
+    'discount-code-attempt': DiscountCodeAttempt;
+    'email-templates': EmailTemplate;
+    'email-send-requests': EmailSendRequest;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -81,7 +88,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    order: {
+      items: 'order-item';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -89,6 +100,13 @@ export interface Config {
     subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     product: ProductSelect<false> | ProductSelect<true>;
     blog: BlogSelect<false> | BlogSelect<true>;
+    order: OrderSelect<false> | OrderSelect<true>;
+    'order-item': OrderItemSelect<false> | OrderItemSelect<true>;
+    'discount-code': DiscountCodeSelect<false> | DiscountCodeSelect<true>;
+    'discount-code-usages': DiscountCodeUsagesSelect<false> | DiscountCodeUsagesSelect<true>;
+    'discount-code-attempt': DiscountCodeAttemptSelect<false> | DiscountCodeAttemptSelect<true>;
+    'email-templates': EmailTemplatesSelect<false> | EmailTemplatesSelect<true>;
+    'email-send-requests': EmailSendRequestsSelect<false> | EmailSendRequestsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -107,6 +125,7 @@ export interface Config {
     subscriptionModal: SubscriptionModal;
     'footer-checkout': FooterCheckout;
     shipping: Shipping;
+    'email-settings': EmailSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -115,6 +134,7 @@ export interface Config {
     subscriptionModal: SubscriptionModalSelect<false> | SubscriptionModalSelect<true>;
     'footer-checkout': FooterCheckoutSelect<false> | FooterCheckoutSelect<true>;
     shipping: ShippingSelect<false> | ShippingSelect<true>;
+    'email-settings': EmailSettingsSelect<false> | EmailSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -212,7 +232,9 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  price?: number | null;
+  price: number;
+  isOnSale: boolean;
+  salePrice?: number | null;
   quantity: number;
   publishedAt?: string | null;
   updatedAt: string;
@@ -2216,6 +2238,254 @@ export interface TableBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order".
+ */
+export interface Order {
+  id: number;
+  orderNumber?: string | null;
+  user?: (number | null) | User;
+  discountCode?: (number | null) | DiscountCode;
+  discountAmount: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  termsAccepted: boolean;
+  termsAcceptedAt?: string | null;
+  termsVersion?: string | null;
+  termsIpAddress?: string | null;
+  shippingAddressLine1: string;
+  shippingAddressLine2?: string | null;
+  shippingCity: string;
+  shippingPostcode: string;
+  shippingCountry: string;
+  shippingMethod: string;
+  shippingProvider: 'econt' | 'speedy' | 'boxnow';
+  trackingNumber?: string | null;
+  currency: string;
+  subtotalAmount: number;
+  shippingFinalAmount: number;
+  totalAmount: number;
+  paymentMethod: 'card' | 'cash_on_delivery' | 'bank_transfer' | 'apple_pay' | 'google_pay';
+  paymentStatus: 'pending' | 'paid' | 'refunded' | 'failed';
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'returned';
+  paidAt?: string | null;
+  shippedAt?: string | null;
+  deliveredAt?: string | null;
+  cancelledAt?: string | null;
+  emailShippedSentAt?: string | null;
+  emailPostDeliverySentAt?: string | null;
+  emailReviewSentAt?: string | null;
+  emailWinbackSentAt?: string | null;
+  legalRetentionUntil: string;
+  items?: {
+    docs?: (number | OrderItem)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code".
+ */
+export interface DiscountCode {
+  id: number;
+  /**
+   * Напр. ISTINA10, LAJA50. Препоръчително UPPERCASE.
+   */
+  code: string;
+  description?: string | null;
+  discountType: 'percent' | 'fixed';
+  discountValue: number;
+  isActive: boolean;
+  maxUsesTotal?: number | null;
+  maxUsesPerUser?: number | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  appliesToType: 'all' | 'product' | 'category';
+  /**
+   * ID на продукт/категория (според appliesToType). NULL/празно при appliesToType=all.
+   */
+  appliesToId?: number | null;
+  isPublic: boolean;
+  channel?: ('site' | 'newsletter' | 'dm' | 'instagram' | 'tiktok' | 'partner' | 'internal') | null;
+  /**
+   * Ако е попълнено, кодът важи само за тези имейли (особено за guest checkout).
+   */
+  allowedCustomers?:
+    | {
+        email: string;
+        id?: string | null;
+      }[]
+    | null;
+  allowedUsers?: (number | User)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order-item".
+ */
+export interface OrderItem {
+  id: number;
+  order: number | Order;
+  product: number | Product;
+  productName: string;
+  sku?: string | null;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code-usages".
+ */
+export interface DiscountCodeUsage {
+  id: number;
+  discountCode: number | DiscountCode;
+  user?: (number | null) | User;
+  order: number | Order;
+  /**
+   * Попълва се при guest поръчка (когато няма user).
+   */
+  usedEmail?: string | null;
+  discountAmount: number;
+  usedAt: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code-attempt".
+ */
+export interface DiscountCodeAttempt {
+  id: number;
+  /**
+   * user_id/sessionId/IP – идентификатор за анти-спам прозореца.
+   */
+  clientKey: string;
+  /**
+   * Кодът както е въведен (нормализиран до trim + uppercase).
+   */
+  code: string;
+  user?: (number | null) | User;
+  /**
+   * По желание – ако attempt е в контекст на конкретна поръчка/checkout.
+   */
+  order?: (number | null) | Order;
+  /**
+   * Email при guest / fallback.
+   */
+  usedEmail?: string | null;
+  success: boolean;
+  /**
+   * Кратък код/причина (напр. CODE_NOT_FOUND, CODE_EXPIRED и т.н.).
+   */
+  failReason?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-templates".
+ */
+export interface EmailTemplate {
+  id: number;
+  name: string;
+  slug:
+    | 'welcome_istina10'
+    | 'welcome_reminder'
+    | 'order_confirmation'
+    | 'order_shipped'
+    | 'post_delivery'
+    | 'review_request'
+    | 'ugc_thanks'
+    | 'ugc_followup'
+    | 'winback'
+    | 'abandoned_cart_1'
+    | 'abandoned_cart_2'
+    | 'newsletter_story'
+    | 'campaign_special'
+    | 'account_created'
+    | 'email_verification'
+    | 'password_reset'
+    | 'password_changed'
+    | 'order_cancelled';
+  category: 'marketing' | 'transactional';
+  delivery: 'auto' | 'manual';
+  isActive?: boolean | null;
+  description?: string | null;
+  subject: string;
+  preheader?: string | null;
+  hero: {
+    image?: (number | null) | Media;
+    imageAlt?: string | null;
+    title: string;
+    text: string;
+    primaryCta: {
+      label: string;
+      url: string;
+    };
+  };
+  infoBlocks?:
+    | {
+        icon?: (number | null) | Media;
+        iconAlt?: string | null;
+        title: string;
+        text: string;
+        link?: {
+          label?: string | null;
+          url?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  promo?: {
+    enabled?: boolean | null;
+    icon?: (number | null) | Media;
+    iconAlt?: string | null;
+    codeName?: string | null;
+    discountText?: string | null;
+    instructionText?: string | null;
+  };
+  secondaryCta?: {
+    enabled?: boolean | null;
+    introText?: string | null;
+    button?: {
+      label?: string | null;
+      url?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-send-requests".
+ */
+export interface EmailSendRequest {
+  id: number;
+  title: string;
+  template: number | EmailTemplate;
+  recipients: {
+    email: string;
+    id?: string | null;
+  }[];
+  status: 'draft' | 'sent' | 'error';
+  sentAt?: string | null;
+  /**
+   * Чекни и натисни Save, за да изпратиш имейла.
+   */
+  sendNow?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2382,6 +2652,34 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blog';
         value: number | Blog;
+      } | null)
+    | ({
+        relationTo: 'order';
+        value: number | Order;
+      } | null)
+    | ({
+        relationTo: 'order-item';
+        value: number | OrderItem;
+      } | null)
+    | ({
+        relationTo: 'discount-code';
+        value: number | DiscountCode;
+      } | null)
+    | ({
+        relationTo: 'discount-code-usages';
+        value: number | DiscountCodeUsage;
+      } | null)
+    | ({
+        relationTo: 'discount-code-attempt';
+        value: number | DiscountCodeAttempt;
+      } | null)
+    | ({
+        relationTo: 'email-templates';
+        value: number | EmailTemplate;
+      } | null)
+    | ({
+        relationTo: 'email-send-requests';
+        value: number | EmailSendRequest;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3078,6 +3376,8 @@ export interface ProductSelect<T extends boolean = true> {
         id?: T;
       };
   price?: T;
+  isOnSale?: T;
+  salePrice?: T;
   quantity?: T;
   publishedAt?: T;
   updatedAt?: T;
@@ -3151,6 +3451,209 @@ export interface TableBlockSelect<T extends boolean = true> {
       };
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order_select".
+ */
+export interface OrderSelect<T extends boolean = true> {
+  orderNumber?: T;
+  user?: T;
+  discountCode?: T;
+  discountAmount?: T;
+  email?: T;
+  firstName?: T;
+  lastName?: T;
+  phone?: T;
+  termsAccepted?: T;
+  termsAcceptedAt?: T;
+  termsVersion?: T;
+  termsIpAddress?: T;
+  shippingAddressLine1?: T;
+  shippingAddressLine2?: T;
+  shippingCity?: T;
+  shippingPostcode?: T;
+  shippingCountry?: T;
+  shippingMethod?: T;
+  shippingProvider?: T;
+  trackingNumber?: T;
+  currency?: T;
+  subtotalAmount?: T;
+  shippingFinalAmount?: T;
+  totalAmount?: T;
+  paymentMethod?: T;
+  paymentStatus?: T;
+  status?: T;
+  paidAt?: T;
+  shippedAt?: T;
+  deliveredAt?: T;
+  cancelledAt?: T;
+  emailShippedSentAt?: T;
+  emailPostDeliverySentAt?: T;
+  emailReviewSentAt?: T;
+  emailWinbackSentAt?: T;
+  legalRetentionUntil?: T;
+  items?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order-item_select".
+ */
+export interface OrderItemSelect<T extends boolean = true> {
+  order?: T;
+  product?: T;
+  productName?: T;
+  sku?: T;
+  quantity?: T;
+  unitPrice?: T;
+  totalPrice?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code_select".
+ */
+export interface DiscountCodeSelect<T extends boolean = true> {
+  code?: T;
+  description?: T;
+  discountType?: T;
+  discountValue?: T;
+  isActive?: T;
+  maxUsesTotal?: T;
+  maxUsesPerUser?: T;
+  startDate?: T;
+  endDate?: T;
+  appliesToType?: T;
+  appliesToId?: T;
+  isPublic?: T;
+  channel?: T;
+  allowedCustomers?:
+    | T
+    | {
+        email?: T;
+        id?: T;
+      };
+  allowedUsers?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code-usages_select".
+ */
+export interface DiscountCodeUsagesSelect<T extends boolean = true> {
+  discountCode?: T;
+  user?: T;
+  order?: T;
+  usedEmail?: T;
+  discountAmount?: T;
+  usedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-code-attempt_select".
+ */
+export interface DiscountCodeAttemptSelect<T extends boolean = true> {
+  clientKey?: T;
+  code?: T;
+  user?: T;
+  order?: T;
+  usedEmail?: T;
+  success?: T;
+  failReason?: T;
+  createdAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-templates_select".
+ */
+export interface EmailTemplatesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  category?: T;
+  delivery?: T;
+  isActive?: T;
+  description?: T;
+  subject?: T;
+  preheader?: T;
+  hero?:
+    | T
+    | {
+        image?: T;
+        imageAlt?: T;
+        title?: T;
+        text?: T;
+        primaryCta?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+      };
+  infoBlocks?:
+    | T
+    | {
+        icon?: T;
+        iconAlt?: T;
+        title?: T;
+        text?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        id?: T;
+      };
+  promo?:
+    | T
+    | {
+        enabled?: T;
+        icon?: T;
+        iconAlt?: T;
+        codeName?: T;
+        discountText?: T;
+        instructionText?: T;
+      };
+  secondaryCta?:
+    | T
+    | {
+        enabled?: T;
+        introText?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-send-requests_select".
+ */
+export interface EmailSendRequestsSelect<T extends boolean = true> {
+  title?: T;
+  template?: T;
+  recipients?:
+    | T
+    | {
+        email?: T;
+        id?: T;
+      };
+  status?: T;
+  sentAt?: T;
+  sendNow?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3545,6 +4048,34 @@ export interface Shipping {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-settings".
+ */
+export interface EmailSetting {
+  id: number;
+  siteUrl: string;
+  logo: number | Media;
+  logoAlt?: string | null;
+  communityIntroText?: string | null;
+  socialLinks?:
+    | {
+        platform: 'instagram' | 'tiktok' | 'website';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  ugcImage?: (number | null) | Media;
+  ugcAlt?: string | null;
+  contactEmail: string;
+  footerSiteUrl: string;
+  unsubscribeUrl: string;
+  termsUrl?: string | null;
+  privacyUrl?: string | null;
+  flavorText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -3705,6 +4236,34 @@ export interface ShippingSelect<T extends boolean = true> {
         is_active?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-settings_select".
+ */
+export interface EmailSettingsSelect<T extends boolean = true> {
+  siteUrl?: T;
+  logo?: T;
+  logoAlt?: T;
+  communityIntroText?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  ugcImage?: T;
+  ugcAlt?: T;
+  contactEmail?: T;
+  footerSiteUrl?: T;
+  unsubscribeUrl?: T;
+  termsUrl?: T;
+  privacyUrl?: T;
+  flavorText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

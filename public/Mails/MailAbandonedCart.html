@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <title>Остави ли нещо… недовършено? 🕯️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @media only screen and (max-width:600px){
+      .container{width:100%!important;}
+      .p-body{padding:24px 20px!important;}
+      .btn{display:block!important;width:100%!important;}
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background:#0E0B12;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#0E0B12;">
+    <tr><td align="center">
+      <table role="presentation" width="600" class="container" cellspacing="0" cellpadding="0" border="0" style="width:600px;max-width:600px;margin:0 auto;">
+        
+        <!-- Header -->
+        <tr>
+          <td style="background:linear-gradient(135deg,#1A0F26 0%,#3C1D1D 100%);padding:20px;">
+            <table role="presentation" width="100%">
+              <tr>
+                <td align="left" valign="middle" style="width:50%;">
+                  <a href="https://gradnalajite.bg" target="_blank">
+                    <img src="Logo.png" width="140" alt="Град на Лъжите - лого" style="display:block;border:0;max-width:140px;">
+                  </a>
+                </td>
+                <td align="right" valign="middle" style="width:50%;">
+                  <div style="font-family:'Merriweather',Georgia,serif;font-size:17px;line-height:1.4;color:#E8C468;font-weight:600;text-align:right;">
+                    Изглежда, че нещо остана...<br>недоизказано.
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td class="p-body" style="background:#15121B;padding:36px 40px;">
+            <h1 style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:24px;color:#F5C34D;">
+              Остави ли нещо… недовършено? 👁️
+            </h1>
+            <p style="margin:0 0 16px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+              Видяхме, че си разглеждал <em>„Град на Лъжите“</em> и дори си добавил нещо в количката си…  
+              но след това мъглата се спусна и пътят остана недовършен.
+            </p>
+            <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+              Истината е, че това може да е твоят следващ ход.  
+              Върни се и довърши историята си - преди картите да се разбъркат отново.
+            </p>
+
+            <!-- Cart items -->
+            <div style="margin:20px 0 22px;padding:16px;background:#1E1825;border:1px dashed #F5C34D;border-radius:6px;">
+              <div style="font-family:'Merriweather',Georgia,serif;font-size:16px;color:#E8C468;font-weight:700;margin-bottom:10px;">
+                🛒 В твоята количка:
+              </div>
+              <table width="100%" cellspacing="0" cellpadding="0" style="color:#EDE8F5;font-family:'Merriweather',Georgia,serif;font-size:15px;">
+                {{cart_items}}
+              </table>
+            </div>
+
+            <!-- Button -->
+            <table align="center" cellspacing="0" cellpadding="0" style="margin:20px 0 30px;">
+              <tr><td style="border-radius:6px;" bgcolor="#F5C34D">
+                <a href="{{cart_url}}" target="_blank"
+                   style="display:inline-block;padding:14px 28px;font-family:'Merriweather',Georgia,serif;font-size:16px;font-weight:700;
+                          text-decoration:none;color:#1A0F26;background:#F5C34D;border-radius:6px;">
+                  ВЪРНИ СЕ В КОЛИЧКАТА
+                </a>
+              </td></tr>
+            </table>
+
+            <!-- Discount suggestion -->
+            <div style="margin:10px 0 30px;padding:16px;background:#1E1825;border-left:3px solid #F5C34D;border-radius:4px;">
+              <p style="margin:0;font-family:'Merriweather',Georgia,serif;font-size:15px;line-height:1.7;color:#EDE8F5;">
+                🗝️ Тайна за посветени: с код <strong style="color:#F5C34D;">ISTINA10</strong> получаваш <strong>-10%</strong> отстъпка,  
+                ако довършиш поръчката си в следващите 24 часа.
+              </p>
+            </div>
+
+            <p style="font-size:14px;color:#B9ACC8;font-family:'Merriweather',Georgia,serif;line-height:1.6;">
+              Ако имаш въпроси или се нуждаеш от помощ - просто ни отговори на този имейл.  
+              Ще се погрижим всичко да продължи по сценарий.
+            </p>
+
+            <div style="text-align:center;margin-top:24px;">
+              <img src="cart-dark.png" width="200" alt="Изоставена количка - илюстрация с карти" style="display:inline-block;border:0;max-width:200px;">
+            </div>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#15121B;padding:22px 26px;border-top:1px solid #2E1A47;">
+            <table width="100%">
+              <tr>
+                <td style="font-family:'Merriweather',Georgia,serif;font-size:14px;color:#D8C9E8;">
+                  От екипа на  
+                  <a href="https://gradnalajite.bg" target="_blank" style="color:#F5C34D;text-decoration:none;">Град на Лъжите</a>
+                </td>
+                <td align="right" style="font-family:'Merriweather',Georgia,serif;font-size:11px;color:#B9ACC8;">
+                  © anilevi.soulwalks™ · © 2025 Град на Лъжите
+                </td>
+              </tr>
+            </table>
+            <div style="height:10px;"></div>
+            <div style="font-family:'Merriweather',Georgia,serif;font-size:11px;color:#887C97;opacity:.7;">
+              Получаваш този имейл, защото си оставил продукти в количката си.  
+              Ако не искаш напомняния, можеш да се <a href="*|UNSUB|*" style="color:#F5C34D;text-decoration:underline;">отпишеш</a>.
+            </div>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

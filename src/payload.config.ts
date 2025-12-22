@@ -22,6 +22,14 @@ import { Product } from './collections/Product/Product'
 import { Blog } from './collections/Blog'
 import { FooterCheckout } from './FooterCheckout/config'
 import { Shipping } from './Shipping/config'
+import { Order } from './collections/Order'
+import { OrderItem } from './collections/OrderItem'
+import { DiscountCode } from './collections/DiscountCode/DiscountCode'
+import { DiscountCodeUsages } from './collections/DiscountCodeUsages/DiscountCodeUsages'
+import { DiscountCodeAttempt } from './collections/DiscountCodeAttempt/DiscountCodeAttempt'
+import { EmailTemplates } from './collections/EmailTemplates/config'
+import { EmailSettings } from './EmailSettings/config'
+import { EmailSendRequests } from './collections/EmailSendRequest/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,8 +64,22 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Pages, Subscriptions, Product, Blog],
-  globals: [Header, Footer, Aside, SubscriptionModal, FooterCheckout, Shipping],
+  collections: [
+    Users,
+    Media,
+    Pages,
+    Subscriptions,
+    Product,
+    Blog,
+    Order,
+    OrderItem,
+    DiscountCode,
+    DiscountCodeUsages,
+    DiscountCodeAttempt,
+    EmailTemplates,
+    EmailSendRequests,
+  ],
+  globals: [Header, Footer, Aside, SubscriptionModal, FooterCheckout, Shipping, EmailSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   cors: [getServerSideURL()].filter(Boolean),

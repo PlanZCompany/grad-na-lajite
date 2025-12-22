@@ -1,4 +1,4 @@
-import type { CollectionConfig, Field } from 'payload'
+import type { CollectionConfig, Field, NumberFieldSingleValidation } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
@@ -61,11 +61,43 @@ export const Product: CollectionConfig = {
       required: true,
       admin: {
         position: 'sidebar',
-        condition: (data) => {
-          return data.category !== 6
-        },
       },
     },
+    {
+      name: 'isOnSale',
+      label: 'Промоция',
+      type: 'checkbox',
+      defaultValue: false,
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'salePrice',
+      type: 'number',
+      label: 'Промоционална цена',
+      defaultValue: 0,
+      hasMany: false as const,
+      admin: {
+        position: 'sidebar',
+        condition: (_unusedData, siblingFields) =>
+          Boolean((siblingFields as { isOnSale?: boolean } | undefined)?.isOnSale),
+      },
+      validate: ((enteredSalePrice, validateOptions) => {
+        const siblingFields = validateOptions?.siblingData as { isOnSale?: boolean } | undefined
+        const isProductOnSale = Boolean(siblingFields?.isOnSale)
+
+        if (!isProductOnSale) return true
+
+        if (enteredSalePrice == null || enteredSalePrice <= 0) {
+          return 'Трябва да въведете промоционална цена'
+        }
+
+        return true
+      }) as NumberFieldSingleValidation,
+    },
+
     {
       name: 'quantity',
       type: 'number',
