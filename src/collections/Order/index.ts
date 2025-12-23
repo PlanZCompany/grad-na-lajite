@@ -183,7 +183,7 @@ export const Order: CollectionConfig = {
             subject,
             html,
             text: html,
-            from: 'no-reply@gradnalajite.bg',
+            from: 'no-reply@anilevisoulwalkswear.com',
           })
         } catch (error) {
           console.error(error)

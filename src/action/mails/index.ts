@@ -18,7 +18,7 @@ export default async function sendConfirmResetPasswordMail(email: string) {
       subject,
       html,
       text: html,
-      from: 'no-reply@gradnalajite.bg',
+      from: 'no-reply@anilevisoulwalkswear.com',
     })
   } catch (emailErr) {
     console.error('subscription email error:', emailErr)

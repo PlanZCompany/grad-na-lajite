@@ -95,15 +95,14 @@ export default buildConfig({
   sharp,
   plugins: [payloadCloudPlugin(), ...plugins],
   email: nodemailerAdapter({
-    defaultFromAddress: 'no-reply@gradnalajite.bg',
+    defaultFromAddress: 'no-reply@anilevisoulwalkswear.com',
     defaultFromName: 'Град на лъжите',
     transportOptions: {
-      host: 'radon.superhosting.bg',
+      host: 'mail.anilevisoulwalkswear.com',
       port: 465,
       secure: true,
-      requireTLS: true,
       auth: {
-        user: 'no-reply@gradnalajite.bg',
+        user: 'no-reply@anilevisoulwalkswear.com',
         pass: process.env.SMTP_PASS,
       },
     },

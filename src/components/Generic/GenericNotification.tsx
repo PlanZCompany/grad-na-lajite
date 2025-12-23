@@ -15,7 +15,7 @@ const GenericNotification = () => {
 
     const timeOut = setTimeout(() => {
       dispatch(setNotification({ showNotification: false, message: '', type: '' }))
-    }, 1000)
+    }, 2000)
 
     return () => clearTimeout(timeOut)
   }, [message, dispatch])
