@@ -3,16 +3,28 @@
 import { MinusIcon, PlusIcon } from '@/assets/icons'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { useCheckout } from '@/hooks/useCheckout'
-import { Media } from '@/payload-types'
-import { removeOrderQuantity, addOrderQuantity } from '@/store/features/checkout'
-import React, { useState } from 'react'
+import { DiscountCode, Media } from '@/payload-types'
+import {
+  removeOrderQuantity,
+  addOrderQuantity,
+  setCheckoutFormData,
+} from '@/store/features/checkout'
+import React, { useState, useTransition } from 'react'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '../Generic'
 import Link from 'next/link'
+import { validateDiscountCode } from '@/action/discountCode/validateAndPreviewDiscountCode'
 
 const CheckoutAside = () => {
   const dispatch = useAppDispatch()
   const couriers = useAppSelector((state) => state.checkout.shippingOptions)
   const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
+  const user = useAppSelector((state) => state.root.user)
+  const checkOutFormData = useAppSelector((state) => state.checkout.checkoutFormData)
+  const [pending, start] = useTransition()
+  const [activeCode, setActiveCode] = useState<
+    false | { code: string; discountType: 'percent' | 'fixed'; discountValue: number }
+  >(false)
+
   const innerActiveShipping = useAppSelector(
     (state) => state.checkout.checkoutFormData.innerShipping,
   )
@@ -57,6 +69,32 @@ const CheckoutAside = () => {
       total += calculateShippingPrice(courier as 'econt' | 'speedy' | 'boxnow')
     }
     return total
+  }
+
+  const checkDiscountCodeHandler = async () => {
+    if (!formValues.code) return
+
+    start(async () => {
+      const result = await validateDiscountCode(
+        formValues.code,
+        checkOutFormData.email ?? null,
+        user?.id ?? null,
+      )
+
+      if (result.ok) {
+        dispatch(
+          setCheckoutFormData({
+            discountCode: {
+              code: result.normalizedCode,
+              discountType: result.discountType,
+              discountValue: result.discountValue,
+            },
+          }),
+        )
+      }
+
+      console.log('validateDiscountCode result:', result)
+    })
   }
 
   const productsContent = products.map((product) => {
@@ -166,21 +204,42 @@ const CheckoutAside = () => {
               )}
             </div>
 
-            <div className="w-full flex flex-col md:flex-row items-center gap-2 px-2 py-2">
-              <input
-                name={'code'}
-                type={'text'}
-                placeholder={'Въведи код'}
-                value={formValues.code}
-                onChange={(e) => setFormValues({ ...formValues, code: e.target.value })}
-                className={`w-full rounded-[12px] bg-[#200226]/50 focus:outline focus:outline-1 focus:outline-white p-3 font-georgia font-[400]
+            {!checkOutFormData.discountCode?.code ? (
+              <div className="w-full flex flex-col md:flex-row items-center gap-2 px-2 py-2">
+                <input
+                  name={'code'}
+                  type={'text'}
+                  placeholder={'Въведи код'}
+                  value={formValues.code}
+                  onChange={(e) => setFormValues({ ...formValues, code: e.target.value })}
+                  className={`w-full rounded-[12px] bg-[#200226]/50 focus:outline focus:outline-1 focus:outline-white p-3 font-georgia font-[400]
                    !text-white outline-none placeholder:text-white/80 border-[1px] border-white`}
-                maxLength={50}
-              />
-              <GenericButton variant="primary" styleClass="!py-[12px] w-full md:w-fit">
-                провери
-              </GenericButton>
-            </div>
+                  maxLength={50}
+                />
+                <GenericButton
+                  click={checkDiscountCodeHandler}
+                  variant="primary"
+                  styleClass="!py-[12px] w-full  md:w-fit"
+                  disabled={!formValues.code || pending || !checkOutFormData.email}
+                >
+                  {pending ? 'проверка....' : 'валидирай'}
+                </GenericButton>
+              </div>
+            ) : (
+              <div className="w-full flex flex-col justify-evenly p-2 ">
+                <p className="mx-auto text-[32px] text-white ">
+                  Код:&nbsp;
+                  <span className="text-primaryYellow">{checkOutFormData.discountCode?.code}</span>
+                </p>
+                <p className="mx-auto text-[32px] text-white ">
+                  Отстъпка:&nbsp;
+                  <span className="text-primaryYellow">
+                    -{checkOutFormData.discountCode?.discountValue}
+                    {checkOutFormData.discountCode?.discountType === 'percent' ? '%' : '€'}
+                  </span>
+                </p>
+              </div>
+            )}
           </div>
         </article>
       </li>

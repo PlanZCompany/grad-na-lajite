@@ -35,6 +35,7 @@ export interface CheckoutInitialState {
     office: string | undefined
     address: string | undefined
     payment: 'card' | 'cash'
+    discountCode: null | { code: string; discountType: 'percent' | 'fixed'; discountValue: number }
   }
   userWantSubscription: boolean
   shippingOptions: CourierOption[]
@@ -55,6 +56,7 @@ const checkoutInitialState: CheckoutInitialState = {
     office: undefined,
     address: undefined,
     payment: 'cash',
+    discountCode: null,
   },
   userWantSubscription: false,
   shippingOptions: [],
