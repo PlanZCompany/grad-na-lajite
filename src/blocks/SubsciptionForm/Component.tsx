@@ -1,7 +1,6 @@
 'use client'
 
 import { subscribeAction } from '@/action/subscribe'
-import subscribeEmail from '@/action/subscribe/subscribeEmail'
 import { GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
 import SectionWrapper from '@/components/Wrappers/SectionWrapper'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'

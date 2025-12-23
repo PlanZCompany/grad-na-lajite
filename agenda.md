@@ -1,5 +1,7 @@
 === PROJECT AGENDA ===
 
+SMTP -> 2bcmmY%-E[9N
+
 **IMPORTANT**
 -- each new user "admin", needs to be verifiied manually
 

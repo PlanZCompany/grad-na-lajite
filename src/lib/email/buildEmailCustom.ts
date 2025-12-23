@@ -397,10 +397,10 @@ function wrapEmailLayout(args: {
 
   const contactEmail = settings.contactEmail ?? ''
   //test
-  const unsubscribeUrl = `http://localhost:3000/api/unsubscribe?email=${args.userEmail}`
+  // const unsubscribeUrl = `http://localhost:3000/api?email=${args.userEmail}`
 
   //live
-  // const unsubscribeUrl = `${settings.unsubscribeUrl}?email=${args.userEmail}`
+  const unsubscribeUrl = `${settings.unsubscribeUrl}?email=${args.userEmail}`
   const termsUrl = settings.termsUrl ?? ''
   const privacyUrl = settings.privacyUrl ?? ''
   const flavorText = settings.flavorText ?? ''

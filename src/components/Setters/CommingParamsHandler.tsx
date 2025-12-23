@@ -3,7 +3,7 @@
 import { useAppDispatch } from '@/hooks/redux-hooks'
 import { setNotification } from '@/store/features/notifications'
 import { useSearchParams } from 'next/navigation'
-import React, { use, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 const ComingParamsHandler = () => {
   const dispatch = useAppDispatch()

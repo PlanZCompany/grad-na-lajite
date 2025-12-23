@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { StoreProvider } from '@/store/StoreProvider'
 import '../../assets/styles/general.scss'
 import '../../assets/styles/blog.scss'
@@ -170,7 +170,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <ShoppingCartManager />
             <SetMainProduct product={currentProduct} />
             <CookieBanner />
-            <ComingParamsHandler />
+            <Suspense>
+              <ComingParamsHandler />
+            </Suspense>
             {/* <AnalyticsManager /> */}
           </main>
         </body>
