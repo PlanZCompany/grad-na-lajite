@@ -49,16 +49,19 @@ export const Subscriptions: CollectionConfig = {
         try {
           const { subject, html } = await buildEmailCustom({
             templateSlug: 'welcome_istina10',
+            userEmail: doc.email,
           })
           const payload = await getPayload({ config: configPromise })
           const { email } = doc
-          await payload.sendEmail({
+          const mailSended = await payload.sendEmail({
             to: email,
             subject,
             html,
             text: html,
-            from: 'no-reply@gradnalajite.bg',
+            from: 'no-reply@anilevisoulwalkswear.com',
           })
+
+          console.log(mailSended)
         } catch (error) {
           console.error(error)
         }

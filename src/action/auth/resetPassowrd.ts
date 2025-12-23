@@ -7,7 +7,10 @@ import config from '@payload-config'
 
 type ResetUser = { email?: string }
 
-export async function resetPassword(values: { token: string; password: string }) {
+export async function resetPassword(values: {
+  token: string
+  password: string
+}): Promise<{ ok: boolean; email: string }> {
   const input = values
   const payload = await getPayload({ config })
 
@@ -37,5 +40,5 @@ export async function resetPassword(values: { token: string; password: string })
     secure: process.env.NODE_ENV === 'production',
   })
 
-  return { ok: true }
+  return { ok: true, email: email.toLowerCase() }
 }

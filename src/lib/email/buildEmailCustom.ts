@@ -25,6 +25,8 @@ function resolveMediaUrl(media: any): string {
 export async function buildEmailCustom(args: {
   templateSlug: EmailTemplate['slug']
   verifyUrl?: string
+  orderId?: string
+  userEmail: string
 }): Promise<{ subject: string; html: string }> {
   const payload = await getPayload({ config: configPromise })
   const { templateSlug } = args
@@ -34,7 +36,6 @@ export async function buildEmailCustom(args: {
     depth: 2,
   })
 
-  console.log('templateId', templateSlug)
   const templateDocs = await payload.find({
     collection: 'email-templates',
     where: {
@@ -57,13 +58,14 @@ export async function buildEmailCustom(args: {
   const subject = interpolate(template.subject ?? '')
   const preheader = template.preheader ? interpolate(template.preheader, {}) : ''
 
-  const bodyHTML = renderTemplateSections(template, settings, {}, args.verifyUrl)
+  const bodyHTML = renderTemplateSections(template, settings, {}, args.verifyUrl, args.orderId)
 
   const html = wrapEmailLayout({
     settings,
     preheader,
     bodyHTML,
     description,
+    userEmail: args.userEmail,
   })
 
   return { subject, html }
@@ -74,6 +76,7 @@ function renderTemplateSections(
   settings: any,
   data: Data,
   verifyUrl?: string,
+  orderId?: string,
 ): string {
   const parts: string[] = []
 
@@ -209,6 +212,15 @@ function renderTemplateSections(
       )
     }
     parts.push(renderDivider())
+  }
+
+  if (orderId) {
+    parts.push(
+      `<p style="margin:0 0 14px;font-family:'Merriweather',Georgia,serif;font-size:14px;line-height:1.6;color:#B9ACC8;">
+        <a href=${`https://grad-na-lajite-dun.vercel.app/api/cancel-order?id=${orderId}`}>Отмени поръчка</a>
+      </p>  
+      `,
+    )
   }
 
   // COMMUNITY (ползваме Global)
@@ -374,6 +386,7 @@ function wrapEmailLayout(args: {
   preheader: string
   bodyHTML: string
   description?: string
+  userEmail: string
 }): string {
   const { settings, preheader, bodyHTML } = args
 
@@ -382,7 +395,11 @@ function wrapEmailLayout(args: {
   const logoAlt = settings.logoAlt ?? 'Град на Лъжите'
 
   const contactEmail = settings.contactEmail ?? ''
-  const unsubscribeUrl = settings.unsubscribeUrl ?? '*|UNSUB|*'
+  //test
+  // const unsubscribeUrl = `http://localhost:3000/api?email=${args.userEmail}`
+
+  //live
+  const unsubscribeUrl = `${settings.unsubscribeUrl}?email=${args.userEmail}`
   const termsUrl = settings.termsUrl ?? ''
   const privacyUrl = settings.privacyUrl ?? ''
   const flavorText = settings.flavorText ?? ''

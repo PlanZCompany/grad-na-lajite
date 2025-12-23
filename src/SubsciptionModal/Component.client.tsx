@@ -1,7 +1,6 @@
 'use client'
 
 import { subscribeAction } from '@/action/subscribe'
-import subscribeEmail from '@/action/subscribe/subscribeEmail'
 import { CloseCircle, DiscountIcon } from '@/assets/icons'
 import { GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
 import { useAppDispatch } from '@/hooks/redux-hooks'

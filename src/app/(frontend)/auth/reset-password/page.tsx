@@ -2,6 +2,7 @@
 'use client'
 
 import { resetPassword } from '@/action/auth/resetPassowrd'
+import sendConfirmResetPasswordMail from '@/action/mails'
 import { GenericButton, TextInput } from '@/components/Generic'
 import { AuthWrapper } from '@/components/Wrappers'
 import { useAppDispatch } from '@/hooks/redux-hooks'
@@ -70,6 +71,9 @@ export default function ResetPasswordPage() {
               type: 'success',
             }),
           )
+
+          sendConfirmResetPasswordMail(res.email)
+
           router.replace('/auth/login')
         }
       } catch (err: unknown) {

@@ -19,6 +19,7 @@ export const Users: CollectionConfig = {
         const { html } = await buildEmailCustom({
           templateSlug: 'email_verification',
           verifyUrl: url,
+          userEmail: user?.email ?? '',
         })
 
         return html
@@ -49,6 +50,7 @@ export const Users: CollectionConfig = {
         const { html } = await buildEmailCustom({
           templateSlug: 'password_reset',
           verifyUrl: url,
+          userEmail: args?.user?.email ?? '',
         })
 
         return html
@@ -260,6 +262,7 @@ export const Users: CollectionConfig = {
         try {
           const { subject, html } = await buildEmailCustom({
             templateSlug: 'account_created',
+            userEmail: doc.email,
           })
           const payload = await getPayload({ config: configPromise })
           const { email } = doc
@@ -268,7 +271,7 @@ export const Users: CollectionConfig = {
             subject,
             html,
             text: html,
-            from: 'no-reply@gradnalajite.bg',
+            from: 'no-reply@anilevisoulwalkswear.com',
           })
         } catch (error) {
           console.error(error)
