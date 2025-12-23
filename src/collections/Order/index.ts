@@ -171,11 +171,13 @@ export const Order: CollectionConfig = {
         if (operation !== 'create') return doc
 
         try {
+          const { email, id } = doc
           const { subject, html } = await buildEmailCustom({
             templateSlug: 'order_confirmation',
+            orderId: id,
+            userEmail: email,
           })
           const payload = await getPayload({ config: configPromise })
-          const { email } = doc
           await payload.sendEmail({
             to: email,
             subject,

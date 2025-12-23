@@ -22,7 +22,7 @@ const GenericNotification = () => {
 
   return (
     <article
-      className={`fixed bottom-0 left-0 right-0 md:left-[unset]  md:right-10 z-[21] transition-[transform] duration-300 ease-in-out ${
+      className={`fixed bottom-0 left-0 right-0 md:left-[unset]  md:right-10 z-[51] transition-[transform] duration-300 ease-in-out ${
         showNotification ? 'translate-y-0' : 'translate-y-[100%]'
       }`}
     >

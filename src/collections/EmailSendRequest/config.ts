@@ -72,8 +72,6 @@ export const EmailSendRequests: CollectionConfig = {
       handler: async (req) => {
         const id = req.routeParams?.id as string
 
-        console.log(id, 'id')
-
         const sendReq: any = await req.payload.findByID({
           collection: 'email-send-requests',
           id,
@@ -85,6 +83,7 @@ export const EmailSendRequests: CollectionConfig = {
           req,
           templateId: sendReq.template.id,
           data: sendReq.data ?? {},
+          userEmail: sendReq.recipients[0].email,
         })
 
         return new Response(html, {
@@ -118,14 +117,14 @@ export const EmailSendRequests: CollectionConfig = {
             }
 
             try {
-              const { subject, html } = await buildEmail({
-                req,
-                templateId: sendReq.template,
-                data: sendReq.data ?? {},
-              })
-
               let sent = 0
               for (const r of sendReq.recipients ?? []) {
+                const { subject, html } = await buildEmail({
+                  req,
+                  templateId: sendReq.template,
+                  data: sendReq.data ?? {},
+                  userEmail: r.email,
+                })
                 await req.payload.sendEmail({ to: r.email, subject, html })
                 sent += 1
                 write({ type: 'progress', sent, total, email: r.email })

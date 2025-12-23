@@ -13,6 +13,7 @@ import { useAppSelector } from '@/hooks/redux-hooks'
 import { subscribeAction } from '@/action/subscribe'
 import { GooglePayButton } from '../GooglePay/GooglePayButton'
 import { useCheckout } from '@/hooks/useCheckout'
+import { GenericParagraph } from '@/components/Generic'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 type PaymentSectionProps = {
@@ -81,11 +82,11 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
   }, [items, formData.innerShipping])
 
   if (error) {
-    return <div>Грешка: {error}</div>
+    return <GenericParagraph textColor="text-white">Грешка: {error}</GenericParagraph>
   }
 
   if (!clientSecret || isPending) {
-    return <div>Зареждане на плащането...</div>
+    return <GenericParagraph textColor="text-white">Зареждане на плащането...</GenericParagraph>
   }
 
   const options: StripeElementsOptions = {

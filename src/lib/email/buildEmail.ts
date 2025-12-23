@@ -24,6 +24,7 @@ export async function buildEmail(args: {
   req: PayloadRequest
   templateId: number
   data?: Data
+  userEmail: string
 }): Promise<{ subject: string; html: string }> {
   const { req, templateId } = args
   const data = args.data ?? {}
@@ -53,6 +54,7 @@ export async function buildEmail(args: {
     preheader,
     bodyHTML,
     description,
+    userEmail: args.userEmail,
   })
 
   return { subject, html }
@@ -313,6 +315,7 @@ function wrapEmailLayout(args: {
   preheader: string
   bodyHTML: string
   description?: string
+  userEmail: string
 }): string {
   const { settings, preheader, bodyHTML } = args
 
@@ -321,7 +324,7 @@ function wrapEmailLayout(args: {
   const logoAlt = settings.logoAlt ?? 'Град на Лъжите'
 
   const contactEmail = settings.contactEmail ?? ''
-  const unsubscribeUrl = settings.unsubscribeUrl ?? '*|UNSUB|*'
+  const unsubscribeUrl = `${settings.unsubscribeUrl}?email=${args.userEmail}`
   const termsUrl = settings.termsUrl ?? ''
   const privacyUrl = settings.privacyUrl ?? ''
   const flavorText = settings.flavorText ?? ''

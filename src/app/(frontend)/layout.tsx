@@ -24,6 +24,7 @@ import { getPublishedBlogsCached } from '@/action/cache'
 import { Blog } from '@/payload-types'
 import Search from '@/components/Search/Search'
 import CookieBanner from '@/components/CookieContent/CookieBanner'
+import ComingParamsHandler from '@/components/Setters/CommingParamsHandler'
 // import { AnalyticsManager } from '@/components/CookieContent/AnalyticsManager'
 
 const SITE_NAME = 'Град на Лъжите'
@@ -169,6 +170,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <ShoppingCartManager />
             <SetMainProduct product={currentProduct} />
             <CookieBanner />
+            <ComingParamsHandler />
             {/* <AnalyticsManager /> */}
           </main>
         </body>

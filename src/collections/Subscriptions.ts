@@ -49,6 +49,7 @@ export const Subscriptions: CollectionConfig = {
         try {
           const { subject, html } = await buildEmailCustom({
             templateSlug: 'welcome_istina10',
+            userEmail: doc.email,
           })
           const payload = await getPayload({ config: configPromise })
           const { email } = doc

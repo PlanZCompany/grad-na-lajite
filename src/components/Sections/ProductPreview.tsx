@@ -30,7 +30,7 @@ export default function ProductPreview({ data }: { data: HomeBlock['singlePrevie
             <GenericImage
               src={media?.url || ''}
               alt={media?.alt || ''}
-              wrapperClassName="absolute inset-[-80px]"
+              wrapperClassName="absolute inset-0"
               imageClassName="object-contain w-full h-full"
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority={false}
