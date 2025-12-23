@@ -3,7 +3,7 @@
 import { MinusIcon, PlusIcon } from '@/assets/icons'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { useCheckout } from '@/hooks/useCheckout'
-import { DiscountCode, Media } from '@/payload-types'
+import { Media } from '@/payload-types'
 import {
   removeOrderQuantity,
   addOrderQuantity,
@@ -21,9 +21,6 @@ const CheckoutAside = () => {
   const user = useAppSelector((state) => state.root.user)
   const checkOutFormData = useAppSelector((state) => state.checkout.checkoutFormData)
   const [pending, start] = useTransition()
-  const [activeCode, setActiveCode] = useState<
-    false | { code: string; discountType: 'percent' | 'fixed'; discountValue: number }
-  >(false)
 
   const innerActiveShipping = useAppSelector(
     (state) => state.checkout.checkoutFormData.innerShipping,
