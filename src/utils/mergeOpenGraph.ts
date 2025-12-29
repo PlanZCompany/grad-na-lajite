@@ -9,8 +9,8 @@ const defaultOpenGraph: Metadata['openGraph'] = {
       url: `${getServerSideURL()}/static/preview.png`,
     },
   ],
-  siteName: 'Град на лъжите',
-  title: 'Град на лъжите',
+  siteName: 'Град на Лъжите',
+  title: 'Град на Лъжите',
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {

@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
           </form>
           {ok && (
             <p className="mt-3 text-white">
-              Ако Акаунт съществува, ще получите имейл с инструкции за възстановяване на паролата.
+              Ако профила съществува, ще получите имейл с инструкции за възстановяване на паролата.
             </p>
           )}
           {error && <p className="mt-3 text-red-600">{error}</p>}

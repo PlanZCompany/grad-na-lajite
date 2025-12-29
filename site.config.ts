@@ -1,6 +1,6 @@
 export const site = {
   url: `${process.env.NEXT_PUBLIC_APP_URL}/` || 'http://localhost:3000/',
-  name: 'Град на лъжите',
+  name: 'Град на Лъжите',
   logo: `${process.env.NEXT_PUBLIC_APP_URL}/public/static/preview.png` || '',
   // contact: {
   //   email: '',

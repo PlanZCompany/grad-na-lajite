@@ -27,7 +27,7 @@ export async function FooterCheckoutComponent() {
     <footer className="bg-black/70 w-full py-2 md:py-4 px-4 fixed z-[10] left-0 right-0 bottom-0">
       <div className="w-full flex justify-between items-center">
         <p className="text-white text-[10px] md:text-[14px] text-center md:text-left">
-          © {new Date().getFullYear()} Град на лъжите
+          © {new Date().getFullYear()} Град на Лъжите
         </p>
         <ul className="flex items-center justify-center gap-2">{paymentLinks}</ul>
       </div>

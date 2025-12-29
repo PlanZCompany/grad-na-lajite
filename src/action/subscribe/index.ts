@@ -101,7 +101,7 @@ export async function subscribeAction(userEmail: string): Promise<SubscribeResul
       return {
         ok: false,
         message: userId
-          ? 'Вече сте абонирани. Акаунтът е синхронизиран със записа за абонамент.'
+          ? 'Вече сте абонирани. Профилът е синхронизиран със записа за абонамент.'
           : 'Вече сте абонирани с този имейл.',
       }
     } else {

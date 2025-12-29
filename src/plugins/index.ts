@@ -10,7 +10,7 @@ import { lexicalEditor, FixedToolbarFeature } from '@payloadcms/richtext-lexical
 import { Page } from '@/payload-types'
 
 const generateTitle: GenerateTitle<Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title}` : 'Град на лъжите'
+  return doc?.title ? `${doc.title}` : 'Град на Лъжите'
 }
 
 const generateURL: GenerateURL<Page> = ({ doc }) => {

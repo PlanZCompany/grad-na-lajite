@@ -46,6 +46,6 @@ export default async function CheckoutPage() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Град на лъжите | Завършване на поръчката',
+    title: 'Град на Лъжите | Завършване на поръчката',
   }
 }
