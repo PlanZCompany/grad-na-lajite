@@ -16,13 +16,28 @@ export function useCheckout() {
   const products = useAppSelector((state) => state.checkout.products)
   const userId = useAppSelector((state) => state.root.user?.id)
   const shoppingCartProducts = useAppSelector((state) => state.checkout.products)
+  const discountCode = useAppSelector((state) => state.checkout.checkoutFormData.discountCode)
 
   const calculateTotalPrice = () => {
-    return products.reduce((total, product) => {
+    const totalProductPrice = products.reduce((total, product) => {
       if (!product.price) return total
 
       return total + product.price * product.orderQuantity
     }, 0)
+
+    if (discountCode?.code) {
+      if (discountCode?.discountType === 'percent') {
+        return totalProductPrice * (1 - discountCode?.discountValue / 100)
+      } else {
+        return totalProductPrice - discountCode?.discountValue
+      }
+    } else return totalProductPrice
+
+    // return products.reduce((total, product) => {
+    //   if (!product.price) return total
+
+    //   return total + product.price * product.orderQuantity
+    // }, 0)
   }
 
   const calculateRemainSum = () => {
