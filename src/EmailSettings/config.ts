@@ -32,15 +32,11 @@ export const EmailSettings: GlobalConfig = {
               fields: [
                 {
                   name: 'platform',
-                  type: 'select',
+                  type: 'text',
                   required: true,
-                  options: [
-                    { label: 'Instagram', value: 'instagram' },
-                    { label: 'TikTok', value: 'tiktok' },
-                    { label: 'Website', value: 'website' },
-                  ],
                 },
                 { name: 'url', type: 'text', required: true },
+                { name: 'media', type: 'upload', relationTo: 'media' },
               ],
             },
             { name: 'ugcImage', type: 'upload', relationTo: 'media' },

@@ -1,4 +1,4 @@
-import { EmailTemplate } from '@/payload-types'
+import { EmailSetting, EmailTemplate, Media } from '@/payload-types'
 import type { PayloadRequest } from 'payload'
 
 type Data = Record<string, any>
@@ -276,7 +276,7 @@ function renderPromoBlock(promo: any, data: Data): string {
   `
 }
 
-function renderCommunityBlock(settings: any, data: Data): string {
+function renderCommunityBlock(settings: EmailSetting, data: Data): string {
   const intro = interpolate(settings.communityIntroText ?? '', data)
   const links = Array.isArray(settings.socialLinks) ? settings.socialLinks : []
   const ugc = resolveMediaUrl(settings.ugcImage)
@@ -286,18 +286,25 @@ function renderCommunityBlock(settings: any, data: Data): string {
 
   const linksHtml = links.length
     ? links
-        .map((l: any) => {
-          const url = interpolate(l.url ?? '', data)
-          const label = (l.platform ?? '').toString()
-          return `<a href="${url}" target="_blank" style="color:#F5C34D;text-decoration:underline;margin:0 10px;font-family:'Merriweather',Georgia,serif;font-size:12px;">${label}</a>`
+        .map((link) => {
+          const url = interpolate(link.url ?? '', data)
+          const imageSrc = (link.media as Media).url
+          // const label = (link.platform ?? '').toString()
+          return `
+          <a href="${url}" target="_blank" style="text-align:center;margin-top:10px;">
+        <img src="${imageSrc}" width="48" alt="Social Link" style="display:inline-block;border:0;max-width:48px;height:auto;">
+      </a>
+          `
         })
         .join('')
     : ''
 
   return `
     ${renderDivider()}
-    ${intro ? `<div style="font-family:'Merriweather',Georgia,serif;font-size:14px;color:#B9ACC8;line-height:1.6;margin:0 0 12px;">${intro}</div>` : ''}
-    ${linksHtml ? `<div style="text-align:center;margin:0 0 14px;">${linksHtml}</div>` : ''}
+    ${`<div style="display:flex;align-items:center;gap:10px;width:100%;padding:4px;">
+      ${intro ? `<div style="font-family:'Merriweather',Georgia,serif;font-size:14px;color:#B9ACC8;line-height:1.6;">${intro}</div>` : ''}
+      ${linksHtml ? `<div style="text-align:center;margin:0 0 14px;display:inline;width:fit-content;margin-top:10px;">${linksHtml}</div>` : ''}
+      </div>`}
     ${
       ugc
         ? `
