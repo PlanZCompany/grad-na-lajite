@@ -42,11 +42,16 @@ export const metadata: Metadata = {
   creator: 'PlanZ',
   publisher: 'PlanZ',
   referrer: 'origin-when-cross-origin',
-
   alternates: {
     canonical: '/',
     languages: {
       bg: '/',
+    },
+  },
+
+  verification: {
+    other: {
+      'facebook-domain-verification': 'cgdgn05x6r6uzkrwnlsdupirpt2z3l',
     },
   },
 
