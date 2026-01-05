@@ -288,13 +288,8 @@ function renderCommunityBlock(settings: EmailSetting, data: Data): string {
     ? links
         .map((link) => {
           const url = interpolate(link.url ?? '', data)
-          const imageSrc = (link.media as Media).url
-          // const label = (link.platform ?? '').toString()
-          return `
-          <a href="${url}" target="_blank" style="text-align:center;margin-top:10px;">
-        <img src="${imageSrc}" width="48" alt="Social Link" style="display:inline-block;border:0;max-width:48px;height:auto;">
-      </a>
-          `
+          const label = (link.platform ?? '').toString()
+          return `<a href="${url}" target="_blank" style="color:#F5C34D;text-decoration:underline;margin:0 10px;font-family:'Merriweather',Georgia,serif;font-size:12px;">${label}</a>`
         })
         .join('')
     : ''

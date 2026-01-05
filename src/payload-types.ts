@@ -4084,7 +4084,6 @@ export interface EmailSetting {
     | {
         platform: string;
         url: string;
-        media?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -4279,7 +4278,6 @@ export interface EmailSettingsSelect<T extends boolean = true> {
     | {
         platform?: T;
         url?: T;
-        media?: T;
         id?: T;
       };
   ugcImage?: T;

@@ -36,7 +36,6 @@ export const EmailSettings: GlobalConfig = {
                   required: true,
                 },
                 { name: 'url', type: 'text', required: true },
-                { name: 'media', type: 'upload', relationTo: 'media' },
               ],
             },
             { name: 'ugcImage', type: 'upload', relationTo: 'media' },
