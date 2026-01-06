@@ -1,4 +1,4 @@
-import { EmailSetting, EmailTemplate, Media } from '@/payload-types'
+import { EmailSetting, EmailTemplate } from '@/payload-types'
 import type { PayloadRequest } from 'payload'
 
 type Data = Record<string, any>

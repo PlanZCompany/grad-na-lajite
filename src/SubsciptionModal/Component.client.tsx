@@ -8,12 +8,13 @@ import { Media, SubscriptionModal } from '@/payload-types'
 import { setNotification } from '@/store/features/notifications'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
-import React, { useState, useTransition } from 'react'
+import React, { useEffect, useRef, useState, useTransition } from 'react'
 
 const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
   const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState(false)
   const { heading, description, media } = data
+  const timeOut = useRef<NodeJS.Timeout | null>(null)
 
   const [email, setEmail] = useState<string>('')
   const [message, setMessage] = useState<string | null>(null)
@@ -39,18 +40,26 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
               type: 'success',
             }),
           )
+
+          timeOut.current = setTimeout(() => {
+            setOpenModal(false)
+          }, 1000)
         } else {
           setMessage(res.fieldErrors?.email ?? res.message)
         }
-
-        // if (res.ok && !!res.discountCode) {
-        //   subscribeEmail(email, res.userName, res.discountCode)
-        // }
       } catch (err) {
         console.log(err)
       }
     })
   }
+
+  useEffect(() => {
+    return () => {
+      if (timeOut.current) {
+        clearTimeout(timeOut.current)
+      }
+    }
+  }, [])
 
   return (
     <>
