@@ -25,7 +25,6 @@ import { Blog } from '@/payload-types'
 import Search from '@/components/Search/Search'
 import CookieBanner from '@/components/CookieContent/CookieBanner'
 import ComingParamsHandler from '@/components/Setters/CommingParamsHandler'
-// import { AnalyticsManager } from '@/components/CookieContent/AnalyticsManager'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -151,6 +150,34 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
           {/* TODO prefetch to domain */}
           <link rel="preconnect prefetch" href="https://grad-na-lajite-dun.vercel.app/" />
+
+          <script id="default-consent">
+            {`window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+           gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });`}
+          </script>
+
+          <script id="gtm-base">{`
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PZFKNNKN');
+      `}</script>
+
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-PZFKNNKN"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            ></iframe>
+          </noscript>
         </head>
         <body>
           <main id="content" className="min-h-[100svh] overflow-x-clip">

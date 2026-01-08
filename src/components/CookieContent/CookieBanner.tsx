@@ -3,39 +3,72 @@
 import { useEffect, useState } from 'react'
 import { GenericButton, GenericImage } from '../Generic'
 import Link from 'next/link'
-import { getCookieConsent, setCookieConsent } from './CookieConsent'
-import { initAnalyticsTools } from './Analytics'
+import cookieConsent from '@/action/cookieConsent'
 
-interface CookieBannerProps {
-  onAcceptAll?: () => void
-  onAcceptNecessary?: () => void
-}
-
-const CookieBanner: React.FC<CookieBannerProps> = ({ onAcceptAll, onAcceptNecessary }) => {
+const CookieBanner = () => {
   const [isOpen, setIsOpen] = useState(true)
-
-  useEffect(() => {
-    const existing = getCookieConsent()
-
-    if (!existing) {
-      setIsOpen(true)
-    }
-  }, [])
 
   if (!isOpen) return null
 
-  const handleAcceptAll = () => {
-    setCookieConsent('all')
-    initAnalyticsTools()
-    onAcceptAll?.()
-    setIsOpen(false)
+  const handleCookieConsent = async () => {
+    const cookieConsentValue = await cookieConsent()
+
+    if (cookieConsentValue === 'granted') {
+      consentGrantedAdStorage()
+      setIsOpen(false)
+
+      return
+    } else if (cookieConsentValue === 'necessary') {
+      consentDeniedNonEssential()
+      setIsOpen(true)
+    }
+  }
+
+  const handleAccept = () => {
+    document.cookie = 'cookie-consent=granted; path=/; max-age=15552000'
+    handleCookieConsent()
+  }
+
+  function consentGrantedAdStorage() {
+    // eslint-disable-next-line
+    function gtag() {
+      // eslint-disable-next-line
+      window.dataLayer.push(arguments)
+    }
+    // @ts-ignore
+    gtag('consent', 'update', {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted',
+    })
+  }
+
+  function consentDeniedNonEssential() {
+    // eslint-disable-next-line
+    function gtag() {
+      // eslint-disable-next-line
+      window.dataLayer.push(arguments)
+    }
+
+    // @ts-ignore
+    gtag('consent', 'update', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+    })
   }
 
   const handleAcceptNecessary = () => {
-    setCookieConsent('necessary')
-    onAcceptNecessary?.()
+    document.cookie = 'cookie-consent=necessary; path=/; max-age=15552000'
+    consentDeniedNonEssential()
     setIsOpen(false)
   }
+
+  useEffect(() => {
+    handleCookieConsent()
+  }, [])
 
   return (
     <div className="fixed bottom-0 left-0 z-50 right-0">
@@ -71,14 +104,14 @@ const CookieBanner: React.FC<CookieBannerProps> = ({ onAcceptAll, onAcceptNecess
           <GenericButton
             type="button"
             styleClass="!text-[12px] !px-2 !py-1"
-            click={handleAcceptAll}
+            click={() => handleAccept()}
           >
             <p className="text-white">Приемам всички</p>
           </GenericButton>
           <button
             type="button"
             className="underline text-white hover:opacity-80"
-            onClick={handleAcceptNecessary}
+            onClick={() => handleAcceptNecessary()}
           >
             <p className="underline">Само нужните</p>
           </button>
