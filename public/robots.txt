@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Disallow: /admin/*
+
+# Host
+Host: https://gradnalajite.bg
+
+# Sitemaps
+Sitemap: https://gradnalajite.bg/sitemap.xml
+Sitemap: https://gradnalajite.bg/pages-sitemap.xml
+Sitemap: https://gradnalajite.bg/blog-sitemap.xml

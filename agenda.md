@@ -1,7 +1,5 @@
 === PROJECT AGENDA ===
 
-SMTP -> 2bcmmY%-E[9N
-
 **IMPORTANT**
 -- each new user "admin", needs to be verifiied manually
 
@@ -48,7 +46,7 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 
 [admin] blog page - need data in admin
 
-- Мета снимка за всички страници и за отделни
+[done] Мета снимка за всички страници и за отделни
 
 [done] - search
 
@@ -66,14 +64,15 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 
 ---emails---
 
-- email template fix (има го в папката в webrika pc)
-- email SMTP to be the domain
-  ---admin---
-- all required collections (orders...)
-- fill admin
-  ---seo---
-- sitemap
-- jsonld for required places
+[done] email template fix (има го в папката в webrika pc)
+[done] email SMTP to be the domain
+---admin---
+[done] all required collections (orders...)
+[done] fill admin
+---seo---
+
+[done] sitemap
+  ??jsonld for required places??
 
 - да се върже локига към чекоут с промокод
 
