@@ -60,4 +60,3 @@ const config = {
   plugins: [],
 }
 export default config
-//TODO CHANGE COLORS AND FONTS

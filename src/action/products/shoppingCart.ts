@@ -16,8 +16,6 @@ export async function addToCart(productId: number, userId: number) {
     depth: 0,
   })
 
-  //TODO case with update just quantity
-
   const current = Array.isArray(user.shoppingCartProducts)
     ? user.shoppingCartProducts.map((x: Product | number) => x).filter(Boolean)
     : []

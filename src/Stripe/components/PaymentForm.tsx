@@ -37,6 +37,8 @@ export function PaymentForm() {
 
         const nextTarget = document.querySelector('.REF_CHECKOUT_CONFIRM') as HTMLElement
 
+        //TODO ORDER: make order
+
         if (nextTarget) {
           nextTarget.scrollIntoView({ behavior: 'smooth' })
         }

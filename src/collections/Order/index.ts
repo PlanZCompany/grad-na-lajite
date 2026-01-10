@@ -44,7 +44,7 @@ export const Order: CollectionConfig = {
       admin: { position: 'sidebar' },
     },
 
-    // Discount amount snapshot (BGN)
+    // Discount amount snapshot (EUR)
     {
       name: 'discountAmount',
       type: 'number',
@@ -85,7 +85,7 @@ export const Order: CollectionConfig = {
     { name: 'trackingNumber', type: 'text' },
 
     // Money
-    { name: 'currency', type: 'text', required: true, defaultValue: 'BGN' },
+    { name: 'currency', type: 'text', required: true, defaultValue: 'EUR' },
 
     {
       name: 'subtotalAmount',
@@ -165,8 +165,8 @@ export const Order: CollectionConfig = {
   // Email confirmation after order is created
   hooks: {
     afterChange: [
-      async (req) => {
-        const { doc, operation } = req
+      async (props) => {
+        const { doc, operation } = props
 
         if (operation !== 'create') return doc
 

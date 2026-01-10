@@ -15,7 +15,7 @@
 }
 
 :root {
-  --font-base: "Georgia", ui-sans-serif, system-ui, Arial;
+  --font-base: 'Georgia', ui-sans-serif, system-ui, Arial;
 }
 
 *,
@@ -34,7 +34,7 @@ body,
 
 body {
   font-family: 'Georgia', serif;
-  background-color: #F8F8F6;
+  background-color: #f8f8f6;
   color: #2d2d2d;
   line-height: 1.6;
 }
@@ -85,7 +85,6 @@ video::-webkit-media-controls-start-playback-button {
   -webkit-overflow-scrolling: touch;
 }
 
-/* TODO FONTS */
 @font-face {
   font-family: montserrat-regular;
   font-display: swap;

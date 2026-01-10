@@ -4,11 +4,11 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 
 import React from 'react'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '../Generic'
-import dayjs from 'dayjs'
 import { useCheckout } from '@/hooks/useCheckout'
 import { Media } from '@/payload-types'
 import Link from 'next/link'
 import { resetToInitialState } from '@/store/features/checkout'
+import CurrentDateAndTime from '../Custom/CurrentDateAndTime'
 
 const CheckoutConfirm = () => {
   const dispatch = useAppDispatch()
@@ -173,16 +173,16 @@ const CheckoutConfirm = () => {
               <GenericParagraph>
                 <strong>Поръчка номер:</strong>
               </GenericParagraph>
-              <GenericParagraph textColor="text-primaryYellow">TODO</GenericParagraph>
+              <GenericParagraph textColor="text-primaryYellow">
+                {formData?.orderNumber || '0'}
+              </GenericParagraph>
             </div>
 
             <div className="w-full flex flex-col justify-center items-center">
               <GenericParagraph>
                 <strong>Поръчана на:</strong>
               </GenericParagraph>
-              <GenericParagraph textColor="text-primaryYellow">
-                {dayjs().format('DD.MM.YYYY - HH:mm:ss')}
-              </GenericParagraph>
+              <CurrentDateAndTime />
             </div>
           </div>
 

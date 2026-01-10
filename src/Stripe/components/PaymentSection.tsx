@@ -10,7 +10,6 @@ import { loadStripe, type StripeElementsOptions } from '@stripe/stripe-js'
 import { PaymentForm } from './PaymentForm'
 import { createPaymentIntentAction } from '../action'
 import { useAppSelector } from '@/hooks/redux-hooks'
-import { subscribeAction } from '@/action/subscribe'
 import { GooglePayButton } from '../GooglePay/GooglePayButton'
 import { useCheckout } from '@/hooks/useCheckout'
 import { GenericParagraph } from '@/components/Generic'
@@ -25,7 +24,7 @@ type PaymentSectionProps = {
 }
 
 export default function PaymentSection({ items }: PaymentSectionProps) {
-  const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
+  // const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
   const formData = useAppSelector((state) => state.checkout.checkoutFormData)
   const couriers = useAppSelector((state) => state.checkout.shippingOptions)
   const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
@@ -59,13 +58,6 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
   useEffect(() => {
     startTransition(async () => {
       try {
-        if (userWantSubscription) {
-          const subscription = await subscribeAction(formData.email)
-
-          //TODO IF OK === true add discount to createPaymentIntent
-          console.log(subscription.ok, subscription.message)
-        }
-
         const shippingPrice = calculateShippingPrice()
         const result = await createPaymentIntentAction(items, 0, shippingPrice)
 

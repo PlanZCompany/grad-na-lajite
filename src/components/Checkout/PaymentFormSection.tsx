@@ -7,14 +7,25 @@ import { GenericButton, GenericHeading, RadioSelect } from '../Generic'
 import { PaymentSection } from '@/Stripe/components'
 import { createPaymentIntentAction } from '@/Stripe/action'
 import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
-import { subscribeAction } from '@/action/subscribe'
+import { CreateOrderInput, makeOrder } from '@/action/orders'
+import { ROOT } from '@/constant'
+import ErrorMessageBox from '../Generic/ErrorMessage'
+import { useCheckout } from '@/hooks/useCheckout'
 
 const PaymentFormSection = () => {
   const dispatch = useAppDispatch()
-  const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
+  // const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
+  const { calculateTotalPrice } = useCheckout()
+
   const formData = useAppSelector((state) => state.checkout.checkoutFormData)
+  const couriers = useAppSelector((state) => state.checkout.shippingOptions)
+  const innerActiveShipping = useAppSelector(
+    (state) => state.checkout.checkoutFormData.innerShipping,
+  )
+  const userId = useAppSelector((state) => state.root.user?.id)
   const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
   const products = useAppSelector((state) => state.checkout.products)
+  const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
 
   const checkoutValuesInitialState: {
@@ -25,19 +36,78 @@ const PaymentFormSection = () => {
 
   const [formValues, setFormValues] = useState(checkoutValuesInitialState)
 
+  const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
+    if (!shippingName) return 0
+
+    let method = 'locker'
+    if (formData.shipping !== 'boxnow' && innerActiveShipping?.includes('office')) method = 'office'
+    if (formData.shipping !== 'boxnow' && innerActiveShipping?.includes('address'))
+      method = 'address'
+
+    const match = couriers.find((item) => {
+      return item.courier_code === shippingName && item.method === method
+    })
+    let shippingPrice = match?.base_fee || 0
+
+    if (match?.free_shipping) {
+      return (shippingPrice = 0)
+    }
+    const isEnoughForFreeShipping =
+      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+    if (isEnoughForFreeShipping) {
+      return (shippingPrice = 0)
+    }
+    return shippingPrice
+  }
+
   const cashSubmit = () => {
     start(async () => {
       try {
-        dispatch(setCompletedStage(3))
-        dispatch(setCheckoutFormData({ payment: 'cash' }))
+        console.log('START SUBMIT')
 
-        //TODO make order
-        if (userWantSubscription) {
-          const subscription = await subscribeAction(formData.email)
+        const totalWithoutShipping = calculateTotalPrice()
+        const shippingPrice = calculateShippingPrice(
+          formData.shipping as 'econt' | 'speedy' | 'boxnow',
+        )
+        const total = totalWithoutShipping + shippingPrice
 
-          //TODO IF OK === true add discount
-          console.log(subscription.ok, subscription.message)
+        //construct order data
+        const orderData: CreateOrderInput = {
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phone: formData.phoneNumber,
+          termsAccepted: true,
+          termsIpAddress: 'test-ip-address', //TODO ORDER after release
+          shippingAddressLine1: !!formData.address ? formData.address : 'Няма адрес',
+          shippingAddressLine2: '',
+          shippingCity: formData.city as string,
+          shippingPostcode: 'Test-postcode', //TODO ORDER?
+          shippingCountry: 'Bulgaria',
+          shippingMethod: formData.innerShipping as string,
+          shippingProvider: formData.shipping as 'econt' | 'speedy' | 'boxnow',
+          currency: 'EUR',
+          subtotalAmount: totalWithoutShipping,
+          shippingFinalAmount: shippingPrice,
+          totalAmount: total,
+          paymentMethod: 'cash_on_delivery',
+          paymentStatus: 'pending',
+          status: 'pending',
+          userId: userId ?? null,
+          discountCodeId: null, //TODO ORDER add discount
+          discountAmount: 0, //TODO ORDER add discount amount
         }
+        //TODO if user it is accepted to subscribe update user document
+
+        const orderStatus = await makeOrder(orderData)
+
+        if (orderStatus.status === 'error') {
+          setError(ROOT.global_error_message)
+          return
+        }
+
+        dispatch(setCompletedStage(3))
+        dispatch(setCheckoutFormData({ payment: 'cash', orderNumber: orderStatus.orderNumber }))
 
         const nextTarget = document.querySelector('.REF_CHECKOUT_CONFIRM') as HTMLElement
 
@@ -110,6 +180,8 @@ const PaymentFormSection = () => {
           </GenericButton>
         </div>
       )}
+
+      {error && <ErrorMessageBox error={error} />}
     </div>
   )
 }
