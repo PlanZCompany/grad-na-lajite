@@ -35,7 +35,12 @@ export interface CheckoutInitialState {
     office: string | undefined
     address: string | undefined
     payment: 'card' | 'cash'
-    discountCode: null | { code: string; discountType: 'percent' | 'fixed'; discountValue: number }
+    discountCode: null | {
+      discountCodeId: string
+      code: string
+      discountType: 'percent' | 'fixed'
+      discountValue: number
+    }
     orderNumber: string | null
   }
   userWantSubscription: boolean

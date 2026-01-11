@@ -82,6 +82,7 @@ const CheckoutAside = () => {
         dispatch(
           setCheckoutFormData({
             discountCode: {
+              discountCodeId: result.discountCodeId,
               code: result.normalizedCode,
               discountType: result.discountType,
               discountValue: result.discountValue,
@@ -94,13 +95,23 @@ const CheckoutAside = () => {
     })
   }
 
+  const calculateProductsDiscountPrice = (productsPrice: number) => {
+    if (checkOutFormData.discountCode?.code) {
+      if (checkOutFormData.discountCode?.discountType === 'percent') {
+        return productsPrice * (1 - checkOutFormData.discountCode?.discountValue / 100)
+      } else {
+        return productsPrice - checkOutFormData.discountCode?.discountValue
+      }
+    } else return productsPrice
+  }
+
   const productsContent = products.map((product) => {
     const media = product?.mediaArray?.[0].file as Media
 
     return (
       <li key={product.id} className="w-full p-3">
         <article
-          className="w-full flex flex-col md:flex-row bg-purpleBackground items-center relative 
+          className="w-full flex flex-col md:flex-row bg-purpleBackground items-center relative
         border-[1px] border-primaryYellow rounded-[16px]"
         >
           <div className="w-full md:w-[50%] md:min-w-[50%] p-2 rounded-[12px] overflow-hidden">
@@ -168,7 +179,10 @@ const CheckoutAside = () => {
               >
                 <>
                   <span className="text-white/90">Цена артикули: </span>
-                  {(product.price! * product.orderQuantity).toFixed(2)}€
+                  {calculateProductsDiscountPrice(product.price! * product.orderQuantity).toFixed(
+                    2,
+                  )}
+                  €
                 </>
               </GenericParagraph>
 
@@ -202,14 +216,14 @@ const CheckoutAside = () => {
             </div>
 
             {!checkOutFormData.discountCode?.code ? (
-              <div className="w-full flex flex-col md:flex-row items-center gap-2 px-2 py-2">
+              <div className="w-full flex flex-col 3xl:flex-row items-center gap-2 px-2 py-2">
                 <input
                   name={'code'}
                   type={'text'}
                   placeholder={'Въведи код'}
                   value={formValues.code}
                   onChange={(e) => setFormValues({ ...formValues, code: e.target.value })}
-                  className={`w-full rounded-[12px] bg-[#200226]/50 focus:outline focus:outline-1 focus:outline-white p-3 font-georgia font-[400]
+                  className={`w-full md:w-[227.5px] 3xl:w-full rounded-[12px] bg-[#200226]/50 focus:outline focus:outline-1 focus:outline-white p-3 font-georgia font-[400]
                    !text-white outline-none placeholder:text-white/80 border-[1px] border-white`}
                   maxLength={50}
                 />
@@ -219,7 +233,7 @@ const CheckoutAside = () => {
                   styleClass="!py-[12px] w-full  md:w-fit"
                   disabled={!formValues.code || pending || !checkOutFormData.email}
                 >
-                  {pending ? 'проверка....' : 'валидирай'}
+                  {pending ? 'проверка....' : 'валидирай'}
                 </GenericButton>
               </div>
             ) : (

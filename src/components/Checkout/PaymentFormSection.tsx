@@ -11,6 +11,7 @@ import { CreateOrderInput, makeOrder } from '@/action/orders'
 import { ROOT } from '@/constant'
 import ErrorMessageBox from '../Generic/ErrorMessage'
 import { useCheckout } from '@/hooks/useCheckout'
+import { roundMoney } from '@/utils/roundMoney'
 
 const PaymentFormSection = () => {
   const dispatch = useAppDispatch()
@@ -25,6 +26,7 @@ const PaymentFormSection = () => {
   const userId = useAppSelector((state) => state.root.user?.id)
   const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
   const products = useAppSelector((state) => state.checkout.products)
+  const discount = useAppSelector((state) => state.checkout.checkoutFormData.discountCode)
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
 
@@ -69,7 +71,13 @@ const PaymentFormSection = () => {
         const shippingPrice = calculateShippingPrice(
           formData.shipping as 'econt' | 'speedy' | 'boxnow',
         )
-        const total = totalWithoutShipping + shippingPrice
+        const total = roundMoney(totalWithoutShipping + shippingPrice)
+
+        // calculate discount amount
+        const sumWithoutDiscount = products.reduce(
+          (acc, { price, orderQuantity }) => acc + price * orderQuantity,
+          0,
+        )
 
         //construct order data
         const orderData: CreateOrderInput = {
@@ -87,15 +95,24 @@ const PaymentFormSection = () => {
           shippingMethod: formData.innerShipping as string,
           shippingProvider: formData.shipping as 'econt' | 'speedy' | 'boxnow',
           currency: 'EUR',
-          subtotalAmount: totalWithoutShipping,
+          subtotalAmount: roundMoney(totalWithoutShipping),
           shippingFinalAmount: shippingPrice,
           totalAmount: total,
           paymentMethod: 'cash_on_delivery',
           paymentStatus: 'pending',
           status: 'pending',
+          items: products.map(({ id, orderQuantity, price }) => ({
+            productId: id,
+            quantity: orderQuantity,
+            price,
+          })),
           userId: userId ?? null,
-          discountCodeId: null, //TODO ORDER add discount
-          discountAmount: 0, //TODO ORDER add discount amount
+          discountCodeId: discount?.discountCodeId ? +discount.discountCodeId : null, //TODO ORDER add discount
+          discountAmount: discount?.discountCodeId
+            ? discount.discountType === 'percent'
+              ? roundMoney((sumWithoutDiscount * discount.discountValue) / 100)
+              : discount.discountValue
+            : null, //TODO ORDER add discount amount
         }
         //TODO if user it is accepted to subscribe update user document
 
@@ -126,7 +143,7 @@ const PaymentFormSection = () => {
 
   return (
     <div
-      className="REF_CHECKOUT_PAYMENT scroll-mt-20 md:scroll-mt-[150px] p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col 
+      className="REF_CHECKOUT_PAYMENT scroll-mt-20 md:scroll-mt-[150px] p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col
     gap-m justify-center items-center form_container bg-purpleDark/50 relative"
     >
       {!isPassed && <div className={`absolute inset-0 z-[5] backdrop-blur-sm`}></div>}

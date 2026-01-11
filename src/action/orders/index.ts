@@ -2,6 +2,7 @@
 
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
+import { roundMoney } from '@/utils/roundMoney'
 
 export type CreateOrderInput = {
   email: string
@@ -30,6 +31,8 @@ export type CreateOrderInput = {
   paymentMethod: 'card' | 'cash_on_delivery' | 'bank_transfer' | 'apple_pay' | 'google_pay'
   paymentStatus: 'pending' | 'paid'
   status: 'pending' | 'processing'
+
+  items: Array<{ productId: number; quantity: number; price: number }>
 
   // optional
   userId: number | null
@@ -109,6 +112,31 @@ export async function makeOrder(
       },
     })
 
+    // create Order-items (редове в поръчка)
+    await Promise.all(
+      input.items.map(async (item) => {
+        const quantity = Math.max(1, Number(item.quantity || 1))
+        const product = await payload.findByID({
+          collection: 'product',
+          id: item.productId,
+        })
+
+        const totalPrice = roundMoney(item.price * quantity)
+
+        await payload.create({
+          collection: 'order-item',
+          data: {
+            order: order.id,
+            product: product.id,
+            productName: product.title,
+            sku: undefined, // по инструкции го има в колекцията
+            quantity,
+            unitPrice: roundMoney(item.price),
+            totalPrice,
+          },
+        })
+      }),
+    )
     if (!!order) {
       return { status: 'success', orderNumber }
     } else {
