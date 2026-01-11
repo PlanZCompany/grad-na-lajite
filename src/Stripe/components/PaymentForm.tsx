@@ -7,7 +7,7 @@ import { GenericButton } from '@/components/Generic'
 import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
 import { roundMoney } from '@/utils/roundMoney'
 import { CreateOrderInput, makeOrder } from '@/action/orders'
-import { ROOT } from '@/cssVariables'
+// import { ROOT } from '@/cssVariables'
 import { useCheckout } from '@/hooks/useCheckout'
 
 export function PaymentForm() {
@@ -25,7 +25,7 @@ export function PaymentForm() {
     (state) => state.checkout.checkoutFormData.innerShipping,
   )
   const userId = useAppSelector((state) => state.root.user?.id)
-  const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
+  // const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
   const products = useAppSelector((state) => state.checkout.products)
   const discount = useAppSelector((state) => state.checkout.checkoutFormData.discountCode)
 
