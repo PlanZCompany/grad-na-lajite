@@ -107,12 +107,12 @@ const PaymentFormSection = () => {
             price,
           })),
           userId: userId ?? null,
-          discountCodeId: discount?.discountCodeId ? +discount.discountCodeId : null, //TODO ORDER add discount
+          discountCodeId: discount?.discountCodeId ? +discount.discountCodeId : null,
           discountAmount: discount?.discountCodeId
             ? discount.discountType === 'percent'
               ? roundMoney((sumWithoutDiscount * discount.discountValue) / 100)
               : discount.discountValue
-            : null, //TODO ORDER add discount amount
+            : null,
         }
         //TODO if user it is accepted to subscribe update user document
 

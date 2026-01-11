@@ -59,7 +59,7 @@ const CheckoutConfirm = () => {
     return (
       <li key={product.id} className="w-full p-3">
         <article
-          className="w-full flex flex-col bg-purpleBackground items-center relative 
+          className="w-full flex flex-col bg-purpleBackground items-center relative
           border-[1px] border-primaryYellow rounded-[16px]"
         >
           <div className="w-full max-w-[150px] md:max-w-[200px] p-2 rounded-[12px] overflow-hidden">
@@ -109,6 +109,21 @@ const CheckoutConfirm = () => {
                   </GenericParagraph>
                 )}
 
+                {!!formData.discountCode?.discountCodeId && (
+                  <GenericParagraph
+                    fontStyle="custom"
+                    pType="regular"
+                    textColor="text-primaryYellow"
+                    extraClass="font-georgia font-[700] text-center"
+                  >
+                    <>
+                      <span className="text-white/90">Отстъпка от код: </span>
+                      {formData.discountCode?.discountValue}
+                      {formData.discountCode?.discountType === 'percent' ? '%' : '€'}
+                    </>
+                  </GenericParagraph>
+                )}
+
                 {!!courier && (
                   <GenericParagraph
                     fontStyle="custom"
@@ -132,7 +147,7 @@ const CheckoutConfirm = () => {
 
   return (
     <div
-      className="p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col 
+      className="p-3 md:p-6 rounded-[12px] border-[1px] border-white/20 flex flex-col
     gap-m justify-center items-center form_container bg-purpleDark/50 relative"
     >
       {!isPassed && <div className={`absolute inset-0 z-[5] backdrop-blur-sm`}></div>}
@@ -229,15 +244,28 @@ const CheckoutConfirm = () => {
           </div>
 
           <div className="divider_section relative z-[2]"></div>
-          <div className="w-full">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-m">
             <div className="w-full flex flex-col justify-center items-center">
               <GenericParagraph>
                 <strong>Адрес на доставка:</strong>
               </GenericParagraph>
+
               <GenericParagraph textColor="text-primaryYellow">
                 {checkoutFormData.city} {checkoutFormData.address} {checkoutFormData.office}
               </GenericParagraph>
             </div>
+
+            {checkoutFormData.discountCode?.discountCodeId && (
+              <div className="w-full flex flex-col justify-center items-center">
+                <GenericParagraph>
+                  <strong>Код за отстъпка:</strong>
+                </GenericParagraph>
+
+                <GenericParagraph textColor="text-primaryYellow">
+                  {checkoutFormData.discountCode.code}
+                </GenericParagraph>
+              </div>
+            )}
           </div>
         </div>
         <div className="w-full md:max-w-[33%]">{productsContent}</div>
