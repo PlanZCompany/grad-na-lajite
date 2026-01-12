@@ -3,15 +3,27 @@
 import { useEffect, useState } from 'react'
 import { PaymentRequestButtonElement, useStripe } from '@stripe/react-stripe-js'
 import { type PaymentRequest } from '@stripe/stripe-js'
-import { ExtendedProduct } from '@/store/features/checkout'
+import {
+  CheckoutInitialState,
+  ExtendedProduct,
+  setCheckoutFormData,
+} from '@/store/features/checkout'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
+import { roundMoney } from '@/utils/roundMoney'
+import { useCheckout } from '@/hooks/useCheckout'
 
 type GooglePayButtonProps = {
   products: ExtendedProduct[]
   clientSecret: string
-  discount: number
 }
 
-function calculateTotalAmount(items: ExtendedProduct[], discount: number = 0): number {
+//TODO add shipping to google and apple pay
+
+function calculateTotalAmount(
+  items: ExtendedProduct[],
+  discount: CheckoutInitialState['checkoutFormData']['discountCode'] | null,
+  shippingPrice: number = 0,
+): number {
   let total = 0
 
   for (const item of items) {
@@ -26,8 +38,20 @@ function calculateTotalAmount(items: ExtendedProduct[], discount: number = 0): n
     return 0
   }
 
-  if (discount > 0) {
-    total *= discount
+  let discountAmount = 0
+  if (!!discount) {
+    discountAmount = discount?.discountCodeId
+      ? discount.discountType === 'percent'
+        ? roundMoney((total * discount.discountValue) / 100)
+        : discount.discountValue
+      : 0
+  }
+
+  if (shippingPrice > 0) {
+    total += shippingPrice
+  }
+  if (discountAmount > 0) {
+    total = total - discountAmount
   }
 
   total = Math.round(total * 100)
@@ -35,12 +59,41 @@ function calculateTotalAmount(items: ExtendedProduct[], discount: number = 0): n
   return total
 }
 
-export function GooglePayButton({ products, clientSecret, discount }: GooglePayButtonProps) {
+export function GooglePayButton({ products, clientSecret }: GooglePayButtonProps) {
+  const dispatch = useAppDispatch()
   const stripe = useStripe()
-  const amount = calculateTotalAmount(products, discount)
+  const discountCode = useAppSelector((state) => state.checkout.checkoutFormData.discountCode)
+  const formData = useAppSelector((state) => state.checkout.checkoutFormData)
+  const couriers = useAppSelector((state) => state.checkout.shippingOptions)
+  const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
   const [paymentRequest, setPaymentRequest] = useState<PaymentRequest | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const { calculateTotalPrice } = useCheckout()
 
+  const calculateShippingPrice = () => {
+    let method = 'locker'
+    if (formData.shipping !== 'boxnow') method = 'office'
+    if (formData.shipping !== 'boxnow' && formData.address) method = 'address'
+
+    const match = couriers.find((item) => {
+      return item.courier_code === courier && item.method === method
+    })
+    let shippingPrice = match?.base_fee || 0
+
+    if (match?.free_shipping) {
+      return (shippingPrice = 0)
+    }
+    const isEnoughForFreeShipping =
+      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+    if (isEnoughForFreeShipping) {
+      return (shippingPrice = 0)
+    }
+    return shippingPrice
+  }
+
+  const shippingPrice = calculateShippingPrice()
+
+  const amount = calculateTotalAmount(products, discountCode, shippingPrice)
   useEffect(() => {
     if (!stripe) return
     let cancelled = false
@@ -59,6 +112,9 @@ export function GooglePayButton({ products, clientSecret, discount }: GooglePayB
 
       pr.on('paymentmethod', async (ev) => {
         try {
+          const walletProvider =
+            (ev as any).walletName || ev.paymentMethod?.card?.wallet?.type || null
+
           const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(
             clientSecret,
             {
@@ -66,6 +122,7 @@ export function GooglePayButton({ products, clientSecret, discount }: GooglePayB
             },
             { handleActions: false },
           )
+          let pi = paymentIntent
 
           if (confirmError) {
             setError(confirmError.message ?? 'Грешка при плащане.')
@@ -74,13 +131,33 @@ export function GooglePayButton({ products, clientSecret, discount }: GooglePayB
           }
 
           if (paymentIntent && paymentIntent.status === 'requires_action') {
-            const { error: actionError } = await stripe.confirmCardPayment(clientSecret)
+            const { error: actionError, paymentIntent: pi2 } =
+              await stripe.confirmCardPayment(clientSecret)
 
             if (actionError) {
               setError(actionError.message ?? 'Грешка при 3D сигурност.')
               ev.complete('fail')
               return
             }
+
+            pi = pi2
+          }
+
+          if (pi?.status === 'succeeded') {
+            console.log('Paid with:', walletProvider)
+
+            if (walletProvider === 'google_pay' || walletProvider === 'apple_pay') {
+              if (walletProvider === 'google_pay') {
+                dispatch(setCheckoutFormData({ payment: 'google_pay' }))
+              } else if (walletProvider === 'apple_pay') {
+                dispatch(setCheckoutFormData({ payment: 'apple_pay' }))
+              } else {
+                dispatch(setCheckoutFormData({ payment: 'card' }))
+              }
+            }
+
+            ev.complete('success')
+            return
           }
 
           ev.complete('success')

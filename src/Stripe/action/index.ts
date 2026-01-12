@@ -1,11 +1,12 @@
 'use server'
 
-import { ExtendedProduct } from '@/store/features/checkout'
+import { CheckoutInitialState, ExtendedProduct } from '@/store/features/checkout'
 import { stripe } from '..'
+import { roundMoney } from '@/utils/roundMoney'
 
 function calculateTotalAmount(
   items: ExtendedProduct[],
-  discount: number = 0,
+  discount: CheckoutInitialState['checkoutFormData']['discountCode'] | null = null,
   shipping: number = 0,
 ): number {
   let total = 0
@@ -22,8 +23,16 @@ function calculateTotalAmount(
     return 0
   }
 
-  if (discount > 0) {
-    total *= discount
+  let discountAmount = 0
+  if (!!discount) {
+    discountAmount = discount?.discountCodeId
+      ? discount.discountType === 'percent'
+        ? roundMoney((total * discount.discountValue) / 100)
+        : discount.discountValue
+      : 0
+  }
+  if (discountAmount > 0) {
+    total = total - discountAmount
   }
 
   if (shipping > 0) {
@@ -37,7 +46,7 @@ function calculateTotalAmount(
 
 export async function createPaymentIntentAction(
   products: ExtendedProduct[],
-  discount: number = 0,
+  discount: CheckoutInitialState['checkoutFormData']['discountCode'] | null = null,
   shipping: number = 0,
 ) {
   const amount = calculateTotalAmount(products, discount, shipping)

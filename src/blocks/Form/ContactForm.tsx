@@ -135,8 +135,6 @@ export const ContactForm: React.FC<
   const emailField = formFromProps.fields?.[1]
   const messageField = formFromProps.fields?.[2]
 
-  //TODO test button indicator
-
   return (
     <div className={`content_wrapper w-full flex flex-col py-10 md:py-[120px]`}>
       <div className={`w-full`}>

@@ -34,7 +34,7 @@ export interface CheckoutInitialState {
       | undefined
     office: string | undefined
     address: string | undefined
-    payment: 'card' | 'cash'
+    payment: 'card' | 'cash_on_delivery' | 'google_pay' | 'apple_pay'
     discountCode: null | {
       discountCodeId: string
       code: string
@@ -61,7 +61,7 @@ const checkoutInitialState: CheckoutInitialState = {
     innerShipping: undefined,
     office: undefined,
     address: undefined,
-    payment: 'cash',
+    payment: 'cash_on_delivery',
     discountCode: null,
     orderNumber: null,
   },

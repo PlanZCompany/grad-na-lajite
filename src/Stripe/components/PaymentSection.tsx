@@ -1,7 +1,7 @@
 // app/checkout/payment/PaymentSection.tsx
 'use client'
 
-import { ExtendedProduct } from '@/store/features/checkout'
+import { CheckoutInitialState, ExtendedProduct } from '@/store/features/checkout'
 
 import { useEffect, useState, useTransition } from 'react'
 import { Elements } from '@stripe/react-stripe-js'
@@ -19,7 +19,7 @@ type PaymentSectionProps = {
   items: ExtendedProduct[]
   createPaymentIntentAction: (
     items: ExtendedProduct[],
-    discount: number,
+    discount: CheckoutInitialState['checkoutFormData']['discountCode'] | null,
   ) => Promise<{ clientSecret: string | null }>
 }
 
@@ -59,7 +59,12 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
     startTransition(async () => {
       try {
         const shippingPrice = calculateShippingPrice()
-        const result = await createPaymentIntentAction(items, 0, shippingPrice)
+
+        const result = await createPaymentIntentAction(
+          items,
+          formData.discountCode || null,
+          shippingPrice,
+        )
 
         if (!result.clientSecret) {
           setError('Грешка при създаване на плащането. Моля, опитайте отново по-късно.')
@@ -94,7 +99,7 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
   return (
     <Elements stripe={stripePromise} options={options}>
       <div>
-        <GooglePayButton products={items} clientSecret={clientSecret} discount={0} />
+        <GooglePayButton products={items} clientSecret={clientSecret} />
 
         <PaymentForm />
       </div>

@@ -9,6 +9,7 @@ import { roundMoney } from '@/utils/roundMoney'
 import { CreateOrderInput, makeOrder } from '@/action/orders'
 // import { ROOT } from '@/cssVariables'
 import { useCheckout } from '@/hooks/useCheckout'
+import { subscribeAction } from '@/action/subscribe'
 
 export function PaymentForm() {
   const dispatch = useAppDispatch()
@@ -25,9 +26,9 @@ export function PaymentForm() {
     (state) => state.checkout.checkoutFormData.innerShipping,
   )
   const userId = useAppSelector((state) => state.root.user?.id)
-  // const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
   const products = useAppSelector((state) => state.checkout.products)
   const discount = useAppSelector((state) => state.checkout.checkoutFormData.discountCode)
+  const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
 
   const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
     if (!shippingName) return 0
@@ -70,13 +71,6 @@ export function PaymentForm() {
         setErrorMessage(result.error.message ?? 'Плащането не беше успешно.')
         return
       } else if (result.paymentIntent?.status === 'succeeded') {
-        dispatch(setCompletedStage(3))
-
-        dispatch(setCheckoutFormData({ payment: 'card' }))
-
-        // const nextTarget = document.querySelector('.REF_CHECKOUT_CONFIRM') as HTMLElement
-
-        //TODO ORDER: make order
         try {
           console.log('START SUBMIT')
 
@@ -127,7 +121,6 @@ export function PaymentForm() {
                 : discount.discountValue
               : null,
           }
-          //TODO if user it is accepted to subscribe update user document
 
           const orderStatus = await makeOrder(orderData)
 
@@ -138,7 +131,15 @@ export function PaymentForm() {
           }
 
           dispatch(setCompletedStage(3))
-          dispatch(setCheckoutFormData({ payment: 'card', orderNumber: orderStatus.orderNumber }))
+          if (formData.payment === 'apple_pay' || formData.payment === 'google_pay') {
+            dispatch(setCheckoutFormData({ orderNumber: orderStatus.orderNumber }))
+          } else {
+            dispatch(setCheckoutFormData({ payment: 'card', orderNumber: orderStatus.orderNumber }))
+          }
+
+          if (!!userWantSubscription) {
+            subscribeAction(formData.email)
+          }
 
           const nextTarget = document.querySelector('.REF_CHECKOUT_CONFIRM') as HTMLElement
 
@@ -150,12 +151,6 @@ export function PaymentForm() {
         } catch (err) {
           console.log(err)
         }
-
-        // if (nextTarget) {
-        //   nextTarget.scrollIntoView({ behavior: 'smooth' })
-        // }
-
-        // localStorage.removeItem('cartProductsGradNaLajite')
       }
     })
   }

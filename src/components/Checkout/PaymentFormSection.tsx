@@ -12,10 +12,11 @@ import { ROOT } from '@/constant'
 import ErrorMessageBox from '../Generic/ErrorMessage'
 import { useCheckout } from '@/hooks/useCheckout'
 import { roundMoney } from '@/utils/roundMoney'
+import { subscribeAction } from '@/action/subscribe'
 
 const PaymentFormSection = () => {
   const dispatch = useAppDispatch()
-  // const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
+  const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
   const { calculateTotalPrice } = useCheckout()
 
   const formData = useAppSelector((state) => state.checkout.checkoutFormData)
@@ -114,7 +115,6 @@ const PaymentFormSection = () => {
               : discount.discountValue
             : null,
         }
-        //TODO if user it is accepted to subscribe update user document
 
         const orderStatus = await makeOrder(orderData)
 
@@ -124,7 +124,16 @@ const PaymentFormSection = () => {
         }
 
         dispatch(setCompletedStage(3))
-        dispatch(setCheckoutFormData({ payment: 'cash', orderNumber: orderStatus.orderNumber }))
+        dispatch(
+          setCheckoutFormData({
+            payment: 'cash_on_delivery',
+            orderNumber: orderStatus.orderNumber,
+          }),
+        )
+
+        if (!!userWantSubscription) {
+          subscribeAction(formData.email)
+        }
 
         const nextTarget = document.querySelector('.REF_CHECKOUT_CONFIRM') as HTMLElement
 
