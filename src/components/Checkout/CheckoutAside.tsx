@@ -13,6 +13,7 @@ import React, { useState, useTransition } from 'react'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '../Generic'
 import Link from 'next/link'
 import { validateDiscountCode } from '@/action/discountCode/validateAndPreviewDiscountCode'
+import { roundMoney } from '@/utils/roundMoney'
 
 const CheckoutAside = () => {
   const dispatch = useAppDispatch()
@@ -104,6 +105,17 @@ const CheckoutAside = () => {
       }
     } else return productsPrice
   }
+
+  const sumWithoutDiscount = products.reduce(
+    (acc, { price, orderQuantity }) => acc + price * orderQuantity,
+    0,
+  )
+
+  const discountAmount = checkOutFormData.discountCode?.discountCodeId
+    ? checkOutFormData.discountCode.discountType === 'percent'
+      ? roundMoney((sumWithoutDiscount * checkOutFormData.discountCode.discountValue) / 100)
+      : checkOutFormData.discountCode.discountValue
+    : null
 
   const productsContent = products.map((product) => {
     const media = product?.mediaArray?.[0].file as Media
@@ -216,7 +228,7 @@ const CheckoutAside = () => {
             </div>
 
             {!checkOutFormData.discountCode?.code ? (
-              <div className="w-full flex flex-col 3xl:flex-row items-center gap-2 px-2 py-2">
+              <div className="w-full flex flex-col 3xl:flex-row items-center gap-2 px-2 pt-2 pb-12 md:py-2">
                 <input
                   name={'code'}
                   type={'text'}
@@ -227,27 +239,40 @@ const CheckoutAside = () => {
                    !text-white outline-none placeholder:text-white/80 border-[1px] border-white`}
                   maxLength={50}
                 />
-                <GenericButton
-                  click={checkDiscountCodeHandler}
-                  variant="primary"
-                  styleClass="!py-[12px] w-full  md:w-fit"
-                  disabled={!formValues.code || pending || !checkOutFormData.email}
-                >
-                  {pending ? 'проверка....' : 'валидирай'}
-                </GenericButton>
+                <div className="relative">
+                  <GenericButton
+                    click={checkDiscountCodeHandler}
+                    variant="primary"
+                    styleClass="!py-[12px] w-full md:w-fit"
+                    disabled={!formValues.code || pending || !checkOutFormData.email}
+                  >
+                    {pending ? 'проверка....' : 'валидирай'}
+                  </GenericButton>
+                  {!checkOutFormData.email && (
+                    <div className="absolute bottom-0 left-0 translate-y-[110%]">
+                      <GenericParagraph
+                        pType="custom"
+                        extraClass="pl-1 !leading-[110%] text-[14px]"
+                      >
+                        моля попълнете "Данни за контакт"
+                      </GenericParagraph>
+                    </div>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="w-full flex flex-col justify-evenly p-2 ">
                 <p className="mx-auto text-[32px] text-white ">
                   Код:&nbsp;
-                  <span className="text-primaryYellow">{checkOutFormData.discountCode?.code}</span>
+                  <span className="text-primaryYellow">
+                    {checkOutFormData.discountCode?.code} (-
+                    {checkOutFormData.discountCode?.discountValue}
+                    {checkOutFormData.discountCode?.discountType === 'percent' ? '%' : '€'})
+                  </span>
                 </p>
                 <p className="mx-auto text-[32px] text-white ">
                   Отстъпка:&nbsp;
-                  <span className="text-primaryYellow">
-                    -{checkOutFormData.discountCode?.discountValue}
-                    {checkOutFormData.discountCode?.discountType === 'percent' ? '%' : '€'}
-                  </span>
+                  <span className="text-primaryYellow">{discountAmount} €</span>
                 </p>
               </div>
             )}

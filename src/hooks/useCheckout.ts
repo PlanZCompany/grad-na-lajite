@@ -32,18 +32,22 @@ export function useCheckout() {
         return totalProductPrice - discountCode?.discountValue
       }
     } else return totalProductPrice
+  }
 
-    // return products.reduce((total, product) => {
-    //   if (!product.price) return total
+  const calculateTotalPriceWithoutDiscount = () => {
+    const totalProductPrice = products.reduce((total, product) => {
+      if (!product.price) return total
 
-    //   return total + product.price * product.orderQuantity
-    // }, 0)
+      return total + product.price * product.orderQuantity
+    }, 0)
+
+    return totalProductPrice
   }
 
   const calculateRemainSum = () => {
     const BASE_SUM = 33
 
-    const differences = BASE_SUM - calculateTotalPrice()
+    const differences = BASE_SUM - calculateTotalPriceWithoutDiscount()
 
     return differences
   }

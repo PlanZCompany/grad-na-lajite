@@ -47,11 +47,11 @@ function calculateTotalAmount(
       : 0
   }
 
-  if (shippingPrice > 0) {
-    total += shippingPrice
-  }
   if (discountAmount > 0) {
     total = total - discountAmount
+  }
+  if (shippingPrice > 0) {
+    total += shippingPrice
   }
 
   total = Math.round(total * 100)
@@ -114,6 +114,8 @@ export function GooglePayButton({ products, clientSecret }: GooglePayButtonProps
         try {
           const walletProvider =
             (ev as any).walletName || ev.paymentMethod?.card?.wallet?.type || null
+
+          console.log('walletProvider', walletProvider)
 
           const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(
             clientSecret,

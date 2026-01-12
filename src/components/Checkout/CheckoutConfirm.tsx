@@ -9,6 +9,7 @@ import { Media } from '@/payload-types'
 import Link from 'next/link'
 import { resetToInitialState } from '@/store/features/checkout'
 import CurrentDateAndTime from '../Custom/CurrentDateAndTime'
+import { roundMoney } from '@/utils/roundMoney'
 
 const CheckoutConfirm = () => {
   const dispatch = useAppDispatch()
@@ -52,6 +53,17 @@ const CheckoutConfirm = () => {
     }
     return total
   }
+
+  const sumWithoutDiscount = products.reduce(
+    (acc, { price, orderQuantity }) => acc + price * orderQuantity,
+    0,
+  )
+
+  const discountAmount = formData.discountCode?.discountCodeId
+    ? formData.discountCode.discountType === 'percent'
+      ? roundMoney((sumWithoutDiscount * formData.discountCode.discountValue) / 100)
+      : formData.discountCode.discountValue
+    : null
 
   const productsContent = products.map((product) => {
     const media = product?.mediaArray?.[0].file as Media
@@ -118,8 +130,7 @@ const CheckoutConfirm = () => {
                   >
                     <>
                       <span className="text-white/90">Отстъпка от код: </span>
-                      {formData.discountCode?.discountValue}
-                      {formData.discountCode?.discountType === 'percent' ? '%' : '€'}
+                      {discountAmount} €
                     </>
                   </GenericParagraph>
                 )}

@@ -131,6 +131,7 @@ export function PaymentForm() {
           }
 
           dispatch(setCompletedStage(3))
+
           if (formData.payment === 'apple_pay' || formData.payment === 'google_pay') {
             dispatch(setCheckoutFormData({ orderNumber: orderStatus.orderNumber }))
           } else {
