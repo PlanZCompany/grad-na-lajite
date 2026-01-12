@@ -129,8 +129,8 @@ const CheckoutConfirm = () => {
                     extraClass="font-georgia font-[700] text-center"
                   >
                     <>
-                      <span className="text-white/90">Отстъпка от код: </span>
-                      {discountAmount} €
+                      <span className="text-white/90">Градът ти спести: </span>
+                      {discountAmount?.toFixed(2)} €
                     </>
                   </GenericParagraph>
                 )}

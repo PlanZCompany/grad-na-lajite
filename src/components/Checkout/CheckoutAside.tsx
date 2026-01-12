@@ -1,6 +1,6 @@
 'use client'
 
-import { MinusIcon, PlusIcon } from '@/assets/icons'
+import { CloseCircle, DiscountVoucherIcon, MinusIcon, PlusIcon } from '@/assets/icons'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { useCheckout } from '@/hooks/useCheckout'
 import { Media } from '@/payload-types'
@@ -228,7 +228,11 @@ const CheckoutAside = () => {
             </div>
 
             {!checkOutFormData.discountCode?.code ? (
-              <div className="w-full flex flex-col 3xl:flex-row items-center gap-2 px-2 pt-2 pb-12 md:py-2">
+              <div
+                className={`w-full flex flex-col items-center gap-2 px-2 pt-2 md:py-2
+              ${formData.email ? 'pb-6' : 'pb-12'}
+              `}
+              >
                 <input
                   name={'code'}
                   type={'text'}
@@ -239,17 +243,17 @@ const CheckoutAside = () => {
                    !text-white outline-none placeholder:text-white/80 border-[1px] border-white`}
                   maxLength={50}
                 />
-                <div className="relative">
+                <div className="relative w-full">
                   <GenericButton
                     click={checkDiscountCodeHandler}
                     variant="primary"
-                    styleClass="!py-[12px] w-full md:w-fit"
+                    styleClass="!py-[10px] w-full"
                     disabled={!formValues.code || pending || !checkOutFormData.email}
                   >
-                    {pending ? 'проверка....' : 'валидирай'}
+                    {pending ? 'проверка....' : 'приложи'}
                   </GenericButton>
                   {!checkOutFormData.email && (
-                    <div className="absolute bottom-0 left-0 translate-y-[110%]">
+                    <div className="absolute bottom-0 left-0 translate-y-[120%]">
                       <GenericParagraph
                         pType="custom"
                         extraClass="pl-1 !leading-[110%] text-[14px]"
@@ -261,18 +265,31 @@ const CheckoutAside = () => {
                 </div>
               </div>
             ) : (
-              <div className="w-full flex flex-col justify-evenly p-2 ">
-                <p className="mx-auto text-[32px] text-white ">
-                  Код:&nbsp;
-                  <span className="text-primaryYellow">
-                    {checkOutFormData.discountCode?.code} (-
-                    {checkOutFormData.discountCode?.discountValue}
-                    {checkOutFormData.discountCode?.discountType === 'percent' ? '%' : '€'})
-                  </span>
-                </p>
-                <p className="mx-auto text-[32px] text-white ">
-                  Отстъпка:&nbsp;
-                  <span className="text-primaryYellow">{discountAmount} €</span>
+              <div className="w-full flex flex-col justify-evenly p-2">
+                <div className="w-fit px-2 py-1 mx-auto rounded-[12px] flex justify-center items-center bg-[#2e1a47]">
+                  <div className="size-8 flex justify-center items-center translate-y-[-2px]">
+                    <DiscountVoucherIcon />
+                  </div>
+                  <p className="mx-auto text-[18px] md:text-[24px] text-white ">
+                    <span className="text-white">
+                      {checkOutFormData.discountCode?.code} (-
+                      {checkOutFormData.discountCode?.discountValue}
+                      {checkOutFormData.discountCode?.discountType === 'percent' ? '%' : '€'})
+                    </span>
+                  </p>
+                  <button
+                    className="ml-2 size-7 flex justify-center items-center translate-y-[-2px]"
+                    onClick={() => {
+                      dispatch(setCheckoutFormData({ discountCode: null }))
+                      setFormValues({ ...formValues, code: '' })
+                    }}
+                  >
+                    <CloseCircle />
+                  </button>
+                </div>
+                <p className="mx-auto text-[20px] md:text-[28px] text-white ">
+                  Спестяваш:&nbsp;
+                  <span className="text-primaryYellow">{discountAmount?.toFixed(2)} €</span>
                 </p>
               </div>
             )}

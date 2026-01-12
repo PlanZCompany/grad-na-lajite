@@ -29,7 +29,7 @@ export const getImageURL = (
 export const generateMeta = async (args: { doc: Partial<Page> | null }): Promise<Metadata> => {
   const { doc } = args
 
-  const ogImage = (doc?.meta?.image as Media).url || `${getServerSideURL()}/static/preview.png`
+  const ogImage = (doc?.meta?.image as Media)?.url || `${getServerSideURL()}/static/preview.png`
 
   const title = doc?.meta?.title ? `${doc?.meta?.title}` : 'Град на лъжите'
 

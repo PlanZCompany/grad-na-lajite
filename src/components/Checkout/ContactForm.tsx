@@ -12,6 +12,7 @@ import {
 } from '@/store/features/checkout'
 import { CheckIcon } from '@/assets/icons'
 import Link from 'next/link'
+import { setNotification } from '@/store/features/notifications'
 
 const ContactForm = () => {
   const dispatch = useAppDispatch()
@@ -67,6 +68,13 @@ const ContactForm = () => {
         setErrors({ firstName: '', lastName: '', phoneNumber: '', email: '' })
         dispatch(setCompletedStage(1))
         dispatch(setCheckoutFormData(formValues))
+        dispatch(
+          setNotification({
+            showNotification: true,
+            message: 'Полето за ваучер код е отключено. Градът гледа.',
+            type: 'success',
+          }),
+        )
 
         const nextTarget = document.querySelector('.REF_CHECKOUT_SHIPPING') as HTMLElement
 
