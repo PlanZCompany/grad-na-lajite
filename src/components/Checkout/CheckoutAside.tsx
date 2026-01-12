@@ -254,7 +254,7 @@ const CheckoutAside = () => {
                         pType="custom"
                         extraClass="pl-1 !leading-[110%] text-[14px]"
                       >
-                        моля попълнете "Данни за контакт"
+                        моля попълнете `Данни за контакт`
                       </GenericParagraph>
                     </div>
                   )}
