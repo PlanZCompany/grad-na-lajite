@@ -9,7 +9,7 @@ import {
   addOrderQuantity,
   setCheckoutFormData,
 } from '@/store/features/checkout'
-import React, { useState, useTransition } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '../Generic'
 import Link from 'next/link'
 import { validateDiscountCode } from '@/action/discountCode/validateAndPreviewDiscountCode'
@@ -22,6 +22,7 @@ const CheckoutAside = () => {
   const user = useAppSelector((state) => state.root.user)
   const checkOutFormData = useAppSelector((state) => state.checkout.checkoutFormData)
   const [pending, start] = useTransition()
+  const [startVoucherCodeAnimation, setVoucherCodeAnimation] = useState(false)
 
   const innerActiveShipping = useAppSelector(
     (state) => state.checkout.checkoutFormData.innerShipping,
@@ -31,6 +32,12 @@ const CheckoutAside = () => {
   const products = useAppSelector((state) => state.checkout.products)
 
   const [formValues, setFormValues] = useState({ code: '' })
+
+  useEffect(() => {
+    if (!formData.email) return
+
+    setVoucherCodeAnimation(true)
+  }, [formData.email])
 
   const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
     if (!shippingName) return 0
@@ -233,16 +240,24 @@ const CheckoutAside = () => {
               ${formData.email ? 'pb-6' : 'pb-12'}
               `}
               >
-                <input
-                  name={'code'}
-                  type={'text'}
-                  placeholder={'Въведи код'}
-                  value={formValues.code}
-                  onChange={(e) => setFormValues({ ...formValues, code: e.target.value })}
-                  className={`w-full md:w-[227.5px] 3xl:w-full rounded-[12px] bg-[#200226]/50 focus:outline focus:outline-1 focus:outline-white p-3 font-georgia font-[400]
+                <div className="relative w-full overflow-hidden">
+                  <div
+                    className={`absolute left-0 top-[-32px] bottom-[-20px] w-[40px] bg-[#2e1a47] rotate-[45deg] z-[0] translate-x-[-100px]
+                      transition-[transform] duration-1000 ease-in-out
+                  ${startVoucherCodeAnimation && 'translate-x-[500px] md:translate-x-[550px]'}
+                  `}
+                  ></div>
+                  <input
+                    name={'code'}
+                    type={'text'}
+                    placeholder={'Въведи код'}
+                    value={formValues.code}
+                    onChange={(e) => setFormValues({ ...formValues, code: e.target.value })}
+                    className={`w-full relative z-[2] md:w-[227.5px] 3xl:w-full rounded-[12px] bg-transparent focus:outline focus:outline-1 focus:outline-white p-3 font-georgia font-[400]
                    !text-white outline-none placeholder:text-white/80 border-[1px] border-white`}
-                  maxLength={50}
-                />
+                    maxLength={50}
+                  />
+                </div>
                 <div className="relative w-full">
                   <GenericButton
                     click={checkDiscountCodeHandler}
