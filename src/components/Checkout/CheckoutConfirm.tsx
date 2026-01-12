@@ -216,7 +216,7 @@ const CheckoutConfirm = () => {
                 <strong>Статус:</strong>
               </GenericParagraph>
               <GenericParagraph textColor="text-primaryYellow">
-                {checkoutFormData.payment === 'cash' ? 'Неплатена' : 'Платена'}
+                {checkoutFormData.payment === 'cash_on_delivery' ? 'Неплатена' : 'Платена'}
               </GenericParagraph>
             </div>
           </div>
@@ -229,7 +229,9 @@ const CheckoutConfirm = () => {
                 <strong>Начин на плащане:</strong>
               </GenericParagraph>
               <GenericParagraph textColor="text-primaryYellow">
-                {checkoutFormData.payment === 'cash' ? 'Наложен платеж' : 'Дебитна/Кредитна карта'}
+                {checkoutFormData.payment === 'cash_on_delivery'
+                  ? 'Наложен платеж'
+                  : 'Дебитна/Кредитна карта'}
               </GenericParagraph>
             </div>
 
