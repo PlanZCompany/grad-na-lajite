@@ -338,7 +338,7 @@ export async function makeOrder(
           order: order.id,
           user: input.userId ?? undefined,
           usedEmail: input.userId ? undefined : input.email.trim().toLowerCase(),
-          discountAmount: computedDiscountAmount,
+          discountAmount: Number(computedDiscountAmount.toFixed(2)),
           usedAt: now.toISOString(),
         },
       })

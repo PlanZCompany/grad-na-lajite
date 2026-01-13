@@ -32,6 +32,7 @@ import { SlugComponent as SlugComponent_92cc057d0a2abb4f6cf0307edf59f986 } from 
 import { EmailSendRequestPreview as EmailSendRequestPreview_d7f1c7a5587ef684921d7a026a121c10 } from '@/admin/EmailSendRequestPreview'
 import { RowLabel as RowLabel_ec255a65fa6fa8d1faeb09cf35284224 } from '@/Header/RowLabel'
 import { RowLabel as RowLabel_1f6ff6ff633e3695d348f4f3c58f1466 } from '@/Footer/RowLabel'
+import { ClearDiscountUsagesButton as ClearDiscountUsagesButton_f785c223b89d5d2158b08915f04759b9 } from '@/admin/ClearDiscountUsagesButton'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -67,5 +68,6 @@ export const importMap = {
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_92cc057d0a2abb4f6cf0307edf59f986,
   "@/admin/EmailSendRequestPreview#EmailSendRequestPreview": EmailSendRequestPreview_d7f1c7a5587ef684921d7a026a121c10,
   "@/Header/RowLabel#RowLabel": RowLabel_ec255a65fa6fa8d1faeb09cf35284224,
-  "@/Footer/RowLabel#RowLabel": RowLabel_1f6ff6ff633e3695d348f4f3c58f1466
+  "@/Footer/RowLabel#RowLabel": RowLabel_1f6ff6ff633e3695d348f4f3c58f1466,
+  "@/admin/ClearDiscountUsagesButton#ClearDiscountUsagesButton": ClearDiscountUsagesButton_f785c223b89d5d2158b08915f04759b9
 }

@@ -10,6 +10,7 @@ import { CreateOrderInput, makeOrder } from '@/action/orders'
 // import { ROOT } from '@/cssVariables'
 import { useCheckout } from '@/hooks/useCheckout'
 import { subscribeAction } from '@/action/subscribe'
+import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
 
 export function PaymentForm() {
   const dispatch = useAppDispatch()
@@ -140,6 +141,9 @@ export function PaymentForm() {
 
           if (!!userWantSubscription) {
             subscribeAction(formData.email)
+            if (!userId) {
+              addSubscribeValueToCookie('add')
+            }
           }
 
           const nextTarget = document.querySelector('.REF_CHECKOUT_CONFIRM') as HTMLElement

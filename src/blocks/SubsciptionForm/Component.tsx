@@ -6,6 +6,7 @@ import SectionWrapper from '@/components/Wrappers/SectionWrapper'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { Media, SubscriptionForm } from '@/payload-types'
 import { setNotification } from '@/store/features/notifications'
+import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
 import React, { useState, useTransition } from 'react'
@@ -39,6 +40,9 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
               type: 'success',
             }),
           )
+          if (!user) {
+            addSubscribeValueToCookie('add')
+          }
         } else {
           setMessage(res.fieldErrors?.email ?? res.message)
         }

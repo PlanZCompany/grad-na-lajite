@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, PayloadRequest } from 'payload'
 
 export const DiscountCodeAttempt: CollectionConfig = {
   slug: 'discount-code-attempt',
@@ -70,6 +70,40 @@ export const DiscountCodeAttempt: CollectionConfig = {
       defaultValue: () => new Date().toISOString(),
       index: true,
       admin: { date: { pickerAppearance: 'dayAndTime' } },
+    },
+  ],
+  endpoints: [
+    {
+      path: '/clear-all',
+      method: 'post',
+      handler: async (req: PayloadRequest) => {
+        if (!req.user)
+          return new Response(JSON.stringify({ ok: false }), {
+            status: 200,
+            headers: {
+              'content-type': 'application/x-ndjson; charset=utf-8',
+              'cache-control': 'no-cache',
+            },
+          })
+
+        const payload = req.payload
+
+        // Option A: one big delete (if supported in your version)
+        await payload.delete({
+          collection: 'discount-code-attempt',
+          where: {
+            id: { exists: true },
+          },
+        })
+
+        return new Response(JSON.stringify({ ok: true }), {
+          status: 200,
+          headers: {
+            'content-type': 'application/x-ndjson; charset=utf-8',
+            'cache-control': 'no-cache',
+          },
+        })
+      },
     },
   ],
 }

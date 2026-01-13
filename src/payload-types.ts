@@ -126,6 +126,7 @@ export interface Config {
     'footer-checkout': FooterCheckout;
     shipping: Shipping;
     'email-settings': EmailSetting;
+    'discount-maintenance': DiscountMaintenance;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -135,6 +136,7 @@ export interface Config {
     'footer-checkout': FooterCheckoutSelect<false> | FooterCheckoutSelect<true>;
     shipping: ShippingSelect<false> | ShippingSelect<true>;
     'email-settings': EmailSettingsSelect<false> | EmailSettingsSelect<true>;
+    'discount-maintenance': DiscountMaintenanceSelect<false> | DiscountMaintenanceSelect<true>;
   };
   locale: null;
   user: User & {
@@ -4100,6 +4102,15 @@ export interface EmailSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-maintenance".
+ */
+export interface DiscountMaintenance {
+  id: number;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -4288,6 +4299,15 @@ export interface EmailSettingsSelect<T extends boolean = true> {
   termsUrl?: T;
   privacyUrl?: T;
   flavorText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "discount-maintenance_select".
+ */
+export interface DiscountMaintenanceSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

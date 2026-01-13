@@ -13,6 +13,7 @@ import ErrorMessageBox from '../Generic/ErrorMessage'
 import { useCheckout } from '@/hooks/useCheckout'
 import { roundMoney } from '@/utils/roundMoney'
 import { subscribeAction } from '@/action/subscribe'
+import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
 
 const PaymentFormSection = () => {
   const dispatch = useAppDispatch()
@@ -133,6 +134,9 @@ const PaymentFormSection = () => {
 
         if (!!userWantSubscription) {
           subscribeAction(formData.email)
+          if (!userId) {
+            addSubscribeValueToCookie('add')
+          }
         }
 
         const nextTarget = document.querySelector('.REF_CHECKOUT_CONFIRM') as HTMLElement

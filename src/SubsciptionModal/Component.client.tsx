@@ -3,9 +3,10 @@
 import { subscribeAction } from '@/action/subscribe'
 import { CloseCircle, DiscountIcon } from '@/assets/icons'
 import { GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
-import { useAppDispatch } from '@/hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { Media, SubscriptionModal } from '@/payload-types'
 import { setNotification } from '@/store/features/notifications'
+import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState, useTransition } from 'react'
@@ -15,6 +16,7 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
   const [openModal, setOpenModal] = useState(false)
   const { heading, description, media } = data
   const timeOut = useRef<NodeJS.Timeout | null>(null)
+  const user = useAppSelector((state) => state.root.user)
 
   const [email, setEmail] = useState<string>('')
   const [message, setMessage] = useState<string | null>(null)
@@ -40,6 +42,10 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
               type: 'success',
             }),
           )
+
+          if (!user) {
+            addSubscribeValueToCookie('add')
+          }
 
           timeOut.current = setTimeout(() => {
             setOpenModal(false)

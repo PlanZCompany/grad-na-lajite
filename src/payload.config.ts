@@ -30,6 +30,7 @@ import { DiscountCodeAttempt } from './collections/DiscountCodeAttempt/DiscountC
 import { EmailTemplates } from './collections/EmailTemplates/config'
 import { EmailSettings } from './EmailSettings/config'
 import { EmailSendRequests } from './collections/EmailSendRequest/config'
+import { DiscountMaintenance } from './DiscountMaintenance'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -79,7 +80,16 @@ export default buildConfig({
     EmailTemplates,
     EmailSendRequests,
   ],
-  globals: [Header, Footer, Aside, SubscriptionModal, FooterCheckout, Shipping, EmailSettings],
+  globals: [
+    Header,
+    Footer,
+    Aside,
+    SubscriptionModal,
+    FooterCheckout,
+    Shipping,
+    EmailSettings,
+    DiscountMaintenance,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   cors: [getServerSideURL()].filter(Boolean),
