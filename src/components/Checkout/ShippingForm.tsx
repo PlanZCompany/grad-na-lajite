@@ -71,7 +71,7 @@ const ShippingForm = ({
   const dispatch = useAppDispatch()
   const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
   const couriers = useAppSelector((state) => state.checkout.shippingOptions)
-  const { calculateTotalPrice, calculateTotalPriceWithoutDiscount } = useCheckout()
+  const { calculateTotalPriceWithoutDiscount } = useCheckout()
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
   const [activeShippingInner, setActiveShippingInner] = useState<InnerShippingProps>(null)

@@ -36,7 +36,7 @@ const InfoModal = () => {
         clearTimeout(timeOut.current)
       }
     }
-  }, [])
+  }, [dispatch])
 
   const textMessage =
     infoModalStatus === 'order' ? 'Успешно отменихте поръчката си' : 'Успешно отписване'
@@ -81,7 +81,7 @@ const InfoModal = () => {
             </GenericHeading>
 
             <GenericParagraph extraClass="text-center" pType="small">
-              Съобщението ще се премахне автоматично след 3 секунди или натиснете "X"
+              Съобщението ще се премахне автоматично след 3 секунди или натиснете `X`
             </GenericParagraph>
           </article>
         </div>
