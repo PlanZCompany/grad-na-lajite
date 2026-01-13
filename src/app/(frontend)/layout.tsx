@@ -25,6 +25,7 @@ import { Blog } from '@/payload-types'
 import Search from '@/components/Search/Search'
 import CookieBanner from '@/components/CookieContent/CookieBanner'
 import ComingParamsHandler from '@/components/Setters/CommingParamsHandler'
+import InfoModal from '@/components/Custom/ModalInfo'
 
 const SITE_NAME = 'Град на Лъжите'
 
@@ -205,6 +206,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <Suspense>
               <ComingParamsHandler />
             </Suspense>
+            <InfoModal />
             {/* <AnalyticsManager /> */}
           </main>
         </body>

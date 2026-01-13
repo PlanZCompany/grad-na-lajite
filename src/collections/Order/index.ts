@@ -1,6 +1,7 @@
 import { buildEmailCustom } from '@/lib/email/buildEmailCustom'
 import { getPayload, type CollectionConfig } from 'payload'
 import configPromise from '@payload-config'
+import { Order as OrderType } from '@/payload-types'
 
 export const Order: CollectionConfig = {
   slug: 'order',
@@ -171,11 +172,34 @@ export const Order: CollectionConfig = {
         if (operation !== 'create') return doc
 
         try {
-          const { email, id } = doc
+          const resource = doc as OrderType
+          const {
+            email,
+            id,
+            orderNumber,
+            createdAt,
+            totalAmount,
+            paymentMethod,
+            paymentStatus,
+            shippingAddressLine1,
+          } = resource
+
+          const confirmDetailsData = {
+            orderNumber: orderNumber ? orderNumber : '',
+            createdAt: createdAt ? createdAt : '',
+            total: totalAmount ? totalAmount.toFixed(2) : '',
+            paymentMethod:
+              paymentMethod === 'cash_on_delivery' ? 'Наличен платеж' : 'Плащане с карта',
+            paymentStatus: paymentStatus === 'paid' ? 'платена' : 'неплатена',
+            shippingAddress: shippingAddressLine1 ? shippingAddressLine1 : '',
+            shippingStatus: 'Обработва се',
+          }
+
           const { subject, html } = await buildEmailCustom({
             templateSlug: 'order_confirmation',
             orderId: id,
             userEmail: email,
+            confirmDetailsData: confirmDetailsData,
           })
           const payload = await getPayload({ config: configPromise })
           await payload.sendEmail({
@@ -183,7 +207,6 @@ export const Order: CollectionConfig = {
             subject,
             html,
             text: html,
-            from: 'no-reply@anilevisoulwalkswear.com',
           })
         } catch (error) {
           console.error(error)

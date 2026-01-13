@@ -68,7 +68,7 @@ export function GooglePayButton({ products, clientSecret }: GooglePayButtonProps
   const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
   const [paymentRequest, setPaymentRequest] = useState<PaymentRequest | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const { calculateTotalPrice } = useCheckout()
+  const { calculateTotalPriceWithoutDiscount } = useCheckout()
 
   const calculateShippingPrice = () => {
     let method = 'locker'
@@ -84,7 +84,7 @@ export function GooglePayButton({ products, clientSecret }: GooglePayButtonProps
       return (shippingPrice = 0)
     }
     const isEnoughForFreeShipping =
-      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+      !!match?.free_over_amount && calculateTotalPriceWithoutDiscount() >= match?.free_over_amount
     if (isEnoughForFreeShipping) {
       return (shippingPrice = 0)
     }

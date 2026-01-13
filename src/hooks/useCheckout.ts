@@ -142,5 +142,6 @@ export function useCheckout() {
     calculateRemainSum,
     addProductToShoppingCartFullProcess,
     removeFromCartFullProcess,
+    calculateTotalPriceWithoutDiscount,
   }
 }

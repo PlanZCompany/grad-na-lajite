@@ -71,7 +71,7 @@ const ShippingForm = ({
   const dispatch = useAppDispatch()
   const passedStep = useAppSelector((state) => state.checkout.stageCompleted)
   const couriers = useAppSelector((state) => state.checkout.shippingOptions)
-  const { calculateTotalPrice } = useCheckout()
+  const { calculateTotalPrice, calculateTotalPriceWithoutDiscount } = useCheckout()
   const [error, setError] = useState<string | null>(null)
   const [pending, start] = useTransition()
   const [activeShippingInner, setActiveShippingInner] = useState<InnerShippingProps>(null)
@@ -112,7 +112,7 @@ const ShippingForm = ({
       return (shippingPrice = 0)
     }
     const isEnoughForFreeShipping =
-      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+      !!match?.free_over_amount && calculateTotalPriceWithoutDiscount() >= match?.free_over_amount
     if (isEnoughForFreeShipping) {
       return (shippingPrice = 0)
     }

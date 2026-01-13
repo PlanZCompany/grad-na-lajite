@@ -17,7 +17,7 @@ const CheckoutConfirm = () => {
   const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
   const formData = useAppSelector((state) => state.checkout.checkoutFormData)
   const { products, checkoutFormData, stageCompleted } = useAppSelector((state) => state.checkout)
-  const { calculateTotalPrice } = useCheckout()
+  const { calculateTotalPrice, calculateTotalPriceWithoutDiscount } = useCheckout()
   const isPassed = stageCompleted === 3
 
   const calculateShippingPrice = (shippingName: 'econt' | 'speedy' | 'boxnow') => {
@@ -34,7 +34,7 @@ const CheckoutConfirm = () => {
       return (shippingPrice = 0)
     }
     const isEnoughForFreeShipping =
-      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+      !!match?.free_over_amount && calculateTotalPriceWithoutDiscount() >= match?.free_over_amount
     if (isEnoughForFreeShipping) {
       return (shippingPrice = 0)
     }

@@ -23,6 +23,13 @@ export async function GET(request: NextRequest) {
       collection: 'subscriptions',
       id: subscription.docs[0].id,
     })
+
+    //need to update user
+    await payload.update({
+      collection: 'users',
+      where: { email: { equals: email.toLowerCase() } },
+      data: { subscribed: false },
+    })
   }
 
   const redirectUrl = new URL('/', request.url)

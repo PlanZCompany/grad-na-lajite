@@ -5,6 +5,16 @@ import configPromise from '../../payload.config'
 
 type Data = Record<string, any>
 
+type confirmDetailsData = {
+  orderNumber: string
+  createdAt: string
+  total: string
+  paymentMethod: string
+  paymentStatus: string
+  shippingAddress: string
+  shippingStatus: string
+}
+
 function getByPath(obj: any, path: string) {
   return path.split('.').reduce((acc, k) => (acc == null ? undefined : acc[k]), obj)
 }
@@ -25,8 +35,9 @@ function resolveMediaUrl(media: any): string {
 export async function buildEmailCustom(args: {
   templateSlug: EmailTemplate['slug']
   verifyUrl?: string
-  orderId?: string
+  orderId?: number
   userEmail: string
+  confirmDetailsData?: confirmDetailsData
 }): Promise<{ subject: string; html: string }> {
   const payload = await getPayload({ config: configPromise })
   const { templateSlug } = args
@@ -58,7 +69,14 @@ export async function buildEmailCustom(args: {
   const subject = interpolate(template.subject ?? '')
   const preheader = template.preheader ? interpolate(template.preheader, {}) : ''
 
-  const bodyHTML = renderTemplateSections(template, settings, {}, args.verifyUrl, args.orderId)
+  const bodyHTML = renderTemplateSections(
+    template,
+    settings,
+    {},
+    args.verifyUrl,
+    args.orderId,
+    args.confirmDetailsData,
+  )
 
   const html = wrapEmailLayout({
     settings,
@@ -76,7 +94,8 @@ function renderTemplateSections(
   settings: any,
   data: Data,
   verifyUrl?: string,
-  orderId?: string,
+  orderId?: number,
+  confirmDetailsData?: confirmDetailsData,
 ): string {
   const parts: string[] = []
 
@@ -106,6 +125,68 @@ function renderTemplateSections(
           ${interpolate(template.hero.text, data).replace(/\n/g, '<br>')}
         </p>
       `)
+    }
+
+    if (!!confirmDetailsData) {
+      parts.push(`
+      <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+          🧾 Детайли за поръчката:
+        </p>
+      `)
+
+      parts.push(`
+      <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+          Поръчка номер: ${confirmDetailsData.orderNumber}
+        </p>
+      `)
+
+      parts.push(`
+      <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+          Поръчана на: ${confirmDetailsData.createdAt}
+        </p>
+      `)
+
+      parts.push(`
+      <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+          Обща сума: ${confirmDetailsData.total} €
+        </p>
+      `)
+
+      parts.push(`
+      <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+         Начин на плащане: ${confirmDetailsData.paymentMethod}
+        </p>
+      `)
+
+      parts.push(`
+      <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+         Статус на плащане: ${confirmDetailsData.paymentStatus}
+        </p>
+      `)
+
+      if (confirmDetailsData.shippingAddress) {
+        parts.push(`
+        <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+           Адрес за доставка: ${confirmDetailsData.shippingAddress}
+          </p>
+        `)
+      }
+
+      parts.push(`
+        <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+           Статус на изпълнение: ${confirmDetailsData.shippingStatus}
+          </p>
+        `)
+
+      parts.push(`
+        <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;"></p>
+        `)
+
+      parts.push(`
+        <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
+           Ако имаш въпроси или искаш да добавиш промяна, просто ни пиши на gradnalajite@gmail.com - ние ще те намерим.
+          </p>
+        `)
     }
 
     if (template.hero.primaryCta?.label && template.hero.primaryCta?.url) {
@@ -357,9 +438,9 @@ function renderCommunityBlock(settings: any, data: Data): string {
 
   const linksHtml = links.length
     ? links
-        .map((l: any) => {
-          const url = interpolate(l.url ?? '', data)
-          const label = (l.platform ?? '').toString()
+        .map((link: { url: string; platform: string }) => {
+          const url = interpolate(link.url ?? '', data)
+          const label = (link.platform ?? '').toString()
           return `<a href="${url}" target="_blank" style="color:#F5C34D;text-decoration:underline;margin:0 10px;font-family:'Merriweather',Georgia,serif;font-size:12px;">${label}</a>`
         })
         .join('')
@@ -367,8 +448,10 @@ function renderCommunityBlock(settings: any, data: Data): string {
 
   return `
     ${renderDivider()}
-    ${intro ? `<div style="font-family:'Merriweather',Georgia,serif;font-size:14px;color:#B9ACC8;line-height:1.6;margin:0 0 12px;">${intro}</div>` : ''}
-    ${linksHtml ? `<div style="text-align:center;margin:0 0 14px;">${linksHtml}</div>` : ''}
+    ${`<div style="display:flex;align-items:center;gap:10px;width:100%;padding:4px;">
+      ${intro ? `<div style="font-family:'Merriweather',Georgia,serif;font-size:14px;color:#B9ACC8;line-height:1.6;">${intro}</div>` : ''}
+      ${linksHtml ? `<div style="text-align:center;margin:0 0 14px;display:inline;width:fit-content;">${linksHtml}</div>` : ''}
+      </div>`}
     ${
       ugc
         ? `

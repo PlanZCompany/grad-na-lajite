@@ -35,7 +35,6 @@ export default async function subscribeEmail(
       subject,
       html,
       text,
-      from: supportEmail,
     })
   } catch (emailErr) {
     console.error('subscription email error:', emailErr)

@@ -1,7 +1,7 @@
 'use client'
 
 import { useAppDispatch } from '@/hooks/redux-hooks'
-import { setNotification } from '@/store/features/notifications'
+import { setInfoModalStatus } from '@/store/features/root'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 
@@ -12,13 +12,7 @@ const ComingParamsHandler = () => {
     const unsubscribed = params.get('unsubscribed')
 
     if (unsubscribed) {
-      dispatch(
-        setNotification({
-          showNotification: true,
-          message: 'Успешно премахнат абонамент',
-          type: 'success',
-        }),
-      )
+      dispatch(setInfoModalStatus('subscription'))
     }
   }, [])
 
@@ -26,13 +20,7 @@ const ComingParamsHandler = () => {
     const cancelled = params.get('cancelled')
 
     if (cancelled) {
-      dispatch(
-        setNotification({
-          showNotification: true,
-          message: 'Успешно канселирана поръчка',
-          type: 'success',
-        }),
-      )
+      dispatch(setInfoModalStatus('order'))
     }
   }, [])
 

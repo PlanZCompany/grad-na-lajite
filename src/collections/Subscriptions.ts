@@ -58,7 +58,6 @@ export const Subscriptions: CollectionConfig = {
             subject,
             html,
             text: html,
-            from: 'no-reply@anilevisoulwalkswear.com',
           })
 
           console.log(mailSended)

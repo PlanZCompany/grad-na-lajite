@@ -298,7 +298,7 @@ function renderCommunityBlock(settings: EmailSetting, data: Data): string {
     ${renderDivider()}
     ${`<div style="display:flex;align-items:center;gap:10px;width:100%;padding:4px;">
       ${intro ? `<div style="font-family:'Merriweather',Georgia,serif;font-size:14px;color:#B9ACC8;line-height:1.6;">${intro}</div>` : ''}
-      ${linksHtml ? `<div style="text-align:center;margin:0 0 14px;display:inline;width:fit-content;margin-top:10px;">${linksHtml}</div>` : ''}
+      ${linksHtml ? `<div style="text-align:center;margin:0 0 14px;display:inline;width:fit-content;">${linksHtml}</div>` : ''}
       </div>`}
     ${
       ugc

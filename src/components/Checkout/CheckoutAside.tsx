@@ -15,6 +15,21 @@ import Link from 'next/link'
 import { validateDiscountCode } from '@/action/discountCode/validateAndPreviewDiscountCode'
 import { roundMoney } from '@/utils/roundMoney'
 
+export const errorCodes = {
+  INVALID_CODE: 'Невалиден код',
+  TOO_MANY_ATTEMPTS_TRY_LATER: 'Твърде много опити, пробвайте отново по-късно',
+  CODE_NOT_FOUND: 'Кодът не е намерен',
+  CODE_INACTIVE: 'Кодът не е активен',
+  CODE_NOT_STARTED_YET: 'Кодът не е започнат',
+  CODE_EXPIRED: 'Кодът е изтекъл',
+  CODE_GLOBAL_LIMIT_REACHED: 'Глобалният лимит за кодът е достигнат',
+  USER_IDENTIFICATION_REQUIRED: 'Потребителят трябва да се идентифицира',
+  CODE_USER_LIMIT_REACHED: 'Лимитът за потребителят е достигнат',
+}
+
+export const getErrorCodeMessage = (code: string): string =>
+  errorCodes[code as keyof typeof errorCodes]
+
 const CheckoutAside = () => {
   const dispatch = useAppDispatch()
   const couriers = useAppSelector((state) => state.checkout.shippingOptions)
@@ -23,12 +38,14 @@ const CheckoutAside = () => {
   const checkOutFormData = useAppSelector((state) => state.checkout.checkoutFormData)
   const [pending, start] = useTransition()
   const [startVoucherCodeAnimation, setVoucherCodeAnimation] = useState(false)
+  const [codeError, setCodeError] = useState<string | null>(null)
 
   const innerActiveShipping = useAppSelector(
     (state) => state.checkout.checkoutFormData.innerShipping,
   )
   const formData = useAppSelector((state) => state.checkout.checkoutFormData)
-  const { calculateTotalPrice, calculateRemainSum } = useCheckout()
+  const { calculateTotalPrice, calculateRemainSum, calculateTotalPriceWithoutDiscount } =
+    useCheckout()
   const products = useAppSelector((state) => state.checkout.products)
 
   const [formValues, setFormValues] = useState({ code: '' })
@@ -56,7 +73,7 @@ const CheckoutAside = () => {
       return (shippingPrice = 0)
     }
     const isEnoughForFreeShipping =
-      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+      !!match?.free_over_amount && calculateTotalPriceWithoutDiscount() >= match?.free_over_amount
     if (isEnoughForFreeShipping) {
       return (shippingPrice = 0)
     }
@@ -77,6 +94,7 @@ const CheckoutAside = () => {
   }
 
   const checkDiscountCodeHandler = async () => {
+    setCodeError(null)
     if (!formValues.code) return
 
     start(async () => {
@@ -85,6 +103,8 @@ const CheckoutAside = () => {
         checkOutFormData.email ?? null,
         user?.id ?? null,
       )
+
+      console.log(result, 'result')
 
       if (result.ok) {
         dispatch(
@@ -99,19 +119,23 @@ const CheckoutAside = () => {
         )
       }
 
-      console.log('validateDiscountCode result:', result)
+      console.log(result.ok, 'result.ok')
+
+      if (result.ok === false) {
+        setCodeError(getErrorCodeMessage(result.reason))
+      }
     })
   }
 
-  const calculateProductsDiscountPrice = (productsPrice: number) => {
-    if (checkOutFormData.discountCode?.code) {
-      if (checkOutFormData.discountCode?.discountType === 'percent') {
-        return productsPrice * (1 - checkOutFormData.discountCode?.discountValue / 100)
-      } else {
-        return productsPrice - checkOutFormData.discountCode?.discountValue
-      }
-    } else return productsPrice
-  }
+  // const calculateProductsDiscountPrice = (productsPrice: number) => {
+  //   if (checkOutFormData.discountCode?.code) {
+  //     if (checkOutFormData.discountCode?.discountType === 'percent') {
+  //       return productsPrice * (1 - checkOutFormData.discountCode?.discountValue / 100)
+  //     } else {
+  //       return productsPrice - checkOutFormData.discountCode?.discountValue
+  //     }
+  //   } else return productsPrice
+  // }
 
   const sumWithoutDiscount = products.reduce(
     (acc, { price, orderQuantity }) => acc + price * orderQuantity,
@@ -198,10 +222,7 @@ const CheckoutAside = () => {
               >
                 <>
                   <span className="text-white/90">Цена артикули: </span>
-                  {calculateProductsDiscountPrice(product.price! * product.orderQuantity).toFixed(
-                    2,
-                  )}
-                  €
+                  {(product.price! * product.orderQuantity).toFixed(2)}€
                 </>
               </GenericParagraph>
 
@@ -277,6 +298,16 @@ const CheckoutAside = () => {
                       </GenericParagraph>
                     </div>
                   )}
+                  {codeError && (
+                    <div className="absolute bottom-0 left-0 translate-y-[120%]">
+                      <GenericParagraph
+                        pType="custom"
+                        extraClass="pl-1 !leading-[110%] text-[14px] text-red-500"
+                      >
+                        {codeError}
+                      </GenericParagraph>
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (
@@ -315,6 +346,8 @@ const CheckoutAside = () => {
   })
 
   const remain = Number(calculateRemainSum().toFixed(2))
+
+  console.log(codeError, 'codeError')
 
   return (
     <div className="lg:fixed lg:top-[170px] lg:rounded-[16px] lg:right-4 w-full lg:max-w-[50%] bg-purpleLight">

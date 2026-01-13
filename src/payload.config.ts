@@ -96,7 +96,7 @@ export default buildConfig({
   plugins: [payloadCloudPlugin(), ...plugins],
   email: nodemailerAdapter({
     defaultFromAddress: 'no-reply@anilevisoulwalkswear.com',
-    defaultFromName: 'Град на лъжите',
+    defaultFromName: 'Град на Лъжите',
     transportOptions: {
       host: 'mail.anilevisoulwalkswear.com',
       port: 465,

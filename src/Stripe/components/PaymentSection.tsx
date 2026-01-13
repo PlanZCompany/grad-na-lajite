@@ -32,7 +32,7 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
-  const { calculateTotalPrice } = useCheckout()
+  const { calculateTotalPriceWithoutDiscount } = useCheckout()
 
   const calculateShippingPrice = () => {
     let method = 'locker'
@@ -48,7 +48,7 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
       return (shippingPrice = 0)
     }
     const isEnoughForFreeShipping =
-      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+      !!match?.free_over_amount && calculateTotalPriceWithoutDiscount() >= match?.free_over_amount
     if (isEnoughForFreeShipping) {
       return (shippingPrice = 0)
     }

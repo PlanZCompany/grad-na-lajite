@@ -17,7 +17,7 @@ import { subscribeAction } from '@/action/subscribe'
 const PaymentFormSection = () => {
   const dispatch = useAppDispatch()
   const userWantSubscription = useAppSelector((state) => state.checkout.userWantSubscription)
-  const { calculateTotalPrice } = useCheckout()
+  const { calculateTotalPrice, calculateTotalPriceWithoutDiscount } = useCheckout()
 
   const formData = useAppSelector((state) => state.checkout.checkoutFormData)
   const couriers = useAppSelector((state) => state.checkout.shippingOptions)
@@ -56,7 +56,7 @@ const PaymentFormSection = () => {
       return (shippingPrice = 0)
     }
     const isEnoughForFreeShipping =
-      !!match?.free_over_amount && calculateTotalPrice() >= match?.free_over_amount
+      !!match?.free_over_amount && calculateTotalPriceWithoutDiscount() >= match?.free_over_amount
     if (isEnoughForFreeShipping) {
       return (shippingPrice = 0)
     }

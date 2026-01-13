@@ -12,6 +12,7 @@ export interface RootInitialState {
   extraComments: { name: string; comment: string }[]
   mainProduct: Product | null
   blogs: Blog[]
+  infoModalStatus: 'hidden' | 'order' | 'subscription'
 }
 
 const rootInitialState: RootInitialState = {
@@ -25,6 +26,7 @@ const rootInitialState: RootInitialState = {
   extraComments: [],
   mainProduct: null,
   blogs: [],
+  infoModalStatus: 'hidden',
 }
 
 export const rootSlice = createSlice({
@@ -61,6 +63,12 @@ export const rootSlice = createSlice({
     setBlogs: (state, { payload }: PayloadAction<Blog[]>) => {
       state.blogs = payload
     },
+    setInfoModalStatus: (
+      state,
+      { payload }: PayloadAction<'hidden' | 'order' | 'subscription'>,
+    ) => {
+      state.infoModalStatus = payload
+    },
   },
 })
 
@@ -75,6 +83,7 @@ export const {
   setExtraComments,
   setMainProduct,
   setBlogs,
+  setInfoModalStatus,
 } = rootSlice.actions
 
 export default rootSlice.reducer
