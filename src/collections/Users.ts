@@ -100,12 +100,11 @@ export const Users: CollectionConfig = {
       name: 'firstName',
       type: 'text',
       access: {
-        read: () => true,
-        update: () => true,
-        create: () => true,
+        read: ({ req }) => !!req.user, // or () => true if you want public read
+        create: ({ req }) => req.user?.role === 'admin',
+        update: ({ req }) => req.user?.role === 'admin',
       },
       admin: {
-        readOnly: true,
         condition: (data) => data.role === 'user',
       },
     },
@@ -118,7 +117,6 @@ export const Users: CollectionConfig = {
         create: () => true,
       },
       admin: {
-        readOnly: true,
         condition: (data) => data.role === 'user',
       },
     },
@@ -131,7 +129,6 @@ export const Users: CollectionConfig = {
         create: () => true,
       },
       admin: {
-        readOnly: true,
         condition: (data) => data.role === 'user',
       },
     },

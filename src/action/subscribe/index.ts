@@ -76,6 +76,7 @@ export async function subscribeAction(
         updates.marketing_consent = true
         updates.marketing_consent_date = new Date().toISOString()
         updates.marketing_consent_source = sourceForm
+        updates.newsletter_status = 'subscribed'
 
         await payload.update({
           collection: 'users',
