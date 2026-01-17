@@ -29,7 +29,7 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
 
     startTransition(async () => {
       try {
-        const res = await subscribeAction(email)
+        const res = await subscribeAction(email, 'other')
 
         if (res.ok) {
           setMessage(res.message)

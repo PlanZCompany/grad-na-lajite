@@ -89,7 +89,7 @@ const PaymentFormSection = () => {
           phone: formData.phoneNumber,
           termsAccepted: true,
           termsIpAddress: 'test-ip-address', //TODO ORDER after release
-          shippingAddressLine1: !!formData.address ? formData.address : 'Няма адрес',
+          shippingAddressLine1: !!formData.address ? formData.address : '',
           shippingAddressLine2: '',
           shippingCity: formData.city as string,
           shippingPostcode: 'Test-postcode', //TODO ORDER?
@@ -133,7 +133,7 @@ const PaymentFormSection = () => {
         )
 
         if (!!userWantSubscription) {
-          subscribeAction(formData.email)
+          subscribeAction(formData.email, 'checkout')
           if (!userId) {
             addSubscribeValueToCookie('add')
           }

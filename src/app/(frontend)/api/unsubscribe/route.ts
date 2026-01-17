@@ -28,7 +28,14 @@ export async function GET(request: NextRequest) {
     await payload.update({
       collection: 'users',
       where: { email: { equals: email.toLowerCase() } },
-      data: { subscribed: false },
+      data: {
+        subscribed: false,
+        marketing_consent: false,
+        marketing_consent_date: null,
+        marketing_consent_source: null,
+        newsletter_status: 'unsubscribed',
+        newsletter_unsubscribed_at: new Date().toISOString(),
+      },
     })
   }
 

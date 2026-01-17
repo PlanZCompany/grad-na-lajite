@@ -101,8 +101,8 @@ export const Users: CollectionConfig = {
       type: 'text',
       access: {
         read: () => true,
-        update: () => false,
-        create: () => false,
+        update: () => true,
+        create: () => true,
       },
       admin: {
         readOnly: true,
@@ -114,8 +114,8 @@ export const Users: CollectionConfig = {
       type: 'text',
       access: {
         read: () => true,
-        update: () => false,
-        create: () => false,
+        update: () => true,
+        create: () => true,
       },
       admin: {
         readOnly: true,
@@ -127,8 +127,8 @@ export const Users: CollectionConfig = {
       type: 'text',
       access: {
         read: () => true,
-        update: () => false,
-        create: () => false,
+        update: () => true,
+        create: () => true,
       },
       admin: {
         readOnly: true,
@@ -243,8 +243,8 @@ export const Users: CollectionConfig = {
       hasMany: true,
       access: {
         read: () => true,
-        update: () => false,
-        create: () => false,
+        update: () => true,
+        create: () => true,
       },
       admin: {
         readOnly: true,
