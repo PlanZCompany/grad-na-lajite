@@ -250,65 +250,69 @@ export async function makeOrder(
       computedSubtotalAmount - computedDiscountAmount + computedShippingFinalAmount,
     )
 
+    const orderDTO = {
+      // order number
+      orderNumber,
+
+      //user
+      user: input.userId ?? null,
+
+      //discount (computed)
+      discountCode: appliedDiscountCodeId ?? null,
+      discountAmount: computedDiscountAmount,
+
+      currency: input.currency ?? 'EUR',
+      subtotalAmount: computedSubtotalAmount,
+      shippingFinalAmount: computedShippingFinalAmount,
+      totalAmount: computedTotalAmount,
+
+      // user info
+      email: input.email,
+      firstName: input.firstName,
+      lastName: input.lastName,
+      phone: input.phone,
+
+      // terms
+      termsAccepted: input.termsAccepted,
+      termsAcceptedAt: input.termsAccepted ? now.toISOString() : null,
+      termsVersion: 'v1',
+      termsIpAddress: input.termsIpAddress ?? '',
+
+      // shipping
+      shippingAddressLine1: !!input.shippingAddressLine1
+        ? input.shippingAddressLine1
+        : 'Доставката е към офис/автомат',
+      shippingAddressLine2: input.shippingAddressLine2 ?? '',
+      shippingCity: input.shippingCity,
+      shippingPostcode: input.shippingPostcode,
+      shippingCountry: input.shippingCountry ?? 'Bulgaria',
+
+      shippingMethod: input.shippingMethod,
+      shippingProvider: input.shippingProvider,
+      trackingNumber: '',
+
+      // status + payment
+      paymentMethod: input.paymentMethod,
+      paymentStatus: input.paymentStatus,
+      status: input.status,
+
+      legalRetentionUntil: legalRetentionUntilDate.toISOString(),
+
+      paidAt: null,
+      shippedAt: null,
+      deliveredAt: null,
+      cancelledAt: null,
+
+      emailShippedSentAt: null,
+      emailPostDeliverySentAt: null,
+      emailReviewSentAt: null,
+      emailWinbackSentAt: null,
+    }
+
     //Order create now uses computed values (not client-provided)
     const order = await payload.create({
       collection: 'order',
-      data: {
-        // order number
-        orderNumber,
-
-        //user
-        user: input.userId ?? null,
-
-        //discount (computed)
-        discountCode: appliedDiscountCodeId ?? null,
-        discountAmount: computedDiscountAmount,
-
-        currency: input.currency ?? 'EUR',
-        subtotalAmount: computedSubtotalAmount,
-        shippingFinalAmount: computedShippingFinalAmount,
-        totalAmount: computedTotalAmount,
-
-        // user info
-        email: input.email,
-        firstName: input.firstName,
-        lastName: input.lastName,
-        phone: input.phone,
-
-        // terms
-        termsAccepted: input.termsAccepted,
-        termsAcceptedAt: input.termsAccepted ? now.toISOString() : null,
-        termsVersion: 'v1',
-        termsIpAddress: input.termsIpAddress ?? '',
-
-        // shipping
-        shippingAddressLine1: input.shippingAddressLine1 ?? 'Доставката е към офис/автомат',
-        shippingAddressLine2: input.shippingAddressLine2 ?? '',
-        shippingCity: input.shippingCity,
-        shippingPostcode: input.shippingPostcode,
-        shippingCountry: input.shippingCountry ?? 'Bulgaria',
-
-        shippingMethod: input.shippingMethod,
-        shippingProvider: input.shippingProvider,
-        trackingNumber: '',
-
-        // status + payment
-        paymentMethod: input.paymentMethod,
-        paymentStatus: input.paymentStatus,
-        status: input.status,
-
-        legalRetentionUntil: legalRetentionUntilDate.toISOString(),
-
-        paidAt: null,
-        shippedAt: null,
-        deliveredAt: null,
-        cancelledAt: null,
-
-        emailShippedSentAt: null,
-        emailPostDeliverySentAt: null,
-        emailReviewSentAt: null,
-        emailWinbackSentAt: null,
-      },
+      data: orderDTO,
     })
 
     //Create order-items from snapshots (no client price)
