@@ -280,8 +280,8 @@ export async function makeOrder(
 
       // shipping
       shippingAddressLine1: !!input.shippingAddressLine1
-        ? input.shippingAddressLine1
-        : 'Доставката е към офис/автомат',
+        ? `${input.shippingCity}, ${input.shippingAddressLine1}`
+        : `${input.shippingCity}`,
       shippingAddressLine2: input.shippingAddressLine2 ?? '',
       shippingCity: input.shippingCity,
       shippingPostcode: input.shippingPostcode,
