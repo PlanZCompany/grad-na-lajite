@@ -31,7 +31,7 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
 
     startTransition(async () => {
       try {
-        const res = await subscribeAction(email)
+        const res = await subscribeAction(email, 'popup')
 
         if (res.ok) {
           setMessage(res.message)

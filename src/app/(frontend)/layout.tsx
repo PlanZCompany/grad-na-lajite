@@ -30,7 +30,7 @@ import InfoModal from '@/components/Custom/ModalInfo'
 const SITE_NAME = 'Град на Лъжите'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://grad-na-lajite-dun.vercel.app/'),
+  metadataBase: new URL('https://gradnalajite.bg/'),
   applicationName: SITE_NAME,
   title: {
     default: SITE_NAME,
@@ -150,7 +150,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 
           {/* TODO prefetch to domain */}
-          <link rel="preconnect prefetch" href="https://grad-na-lajite-dun.vercel.app/" />
+          <link rel="preconnect prefetch" href="https://gradnalajite.bg/" />
 
           <script id="default-consent">
             {`window.dataLayer = window.dataLayer || [];

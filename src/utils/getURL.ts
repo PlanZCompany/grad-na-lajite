@@ -25,5 +25,5 @@ export const getClientSideURL = () => {
 
   return process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : process.env.NEXT_PUBLIC_APP_URL || 'https://grad-na-lajite-dun.vercel.app' //TODO! change to below logic when the envs are added to vercel
+    : process.env.NEXT_PUBLIC_APP_URL || 'https://gradnalajite.bg/' //TODO! change to below logic when the envs are added to vercel
 }

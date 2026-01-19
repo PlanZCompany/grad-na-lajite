@@ -189,7 +189,7 @@ export const Order: CollectionConfig = {
             createdAt: createdAt ? createdAt : '',
             total: totalAmount ? totalAmount.toFixed(2) : '',
             paymentMethod:
-              paymentMethod === 'cash_on_delivery' ? 'Наличен платеж' : 'Плащане с карта',
+              paymentMethod === 'cash_on_delivery' ? 'Наложен платеж' : 'Плащане с карта',
             paymentStatus: paymentStatus === 'paid' ? 'платена' : 'неплатена',
             shippingAddress: shippingAddressLine1 ? shippingAddressLine1 : '',
             shippingStatus: 'Обработва се',

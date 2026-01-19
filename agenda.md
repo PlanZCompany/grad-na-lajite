@@ -87,3 +87,8 @@ https://docs.google.com/document/d/1lSHQziZ3I3PDKE5y0hPOsI0zybFr2aL6bL7i29dSlQo/
 
 - personal neon to client
 - personal vercel to client
+
+- migrate the database to new Neon
+- change all keys in the existing Vercel (stripe, neon)
+
+- change all url with vercel to gradnalajite

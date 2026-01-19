@@ -298,7 +298,7 @@ function renderTemplateSections(
   if (orderId) {
     parts.push(
       `<p style="margin:0 0 14px;font-family:'Merriweather',Georgia,serif;font-size:14px;line-height:1.6;color:#B9ACC8;">
-        <a href=${`https://grad-na-lajite-dun.vercel.app/api/cancel-order?id=${orderId}`}>Отмени поръчка</a>
+        <a href=${`https://gradnalajite.bg/api/cancel-order?id=${orderId}`}>Отмени поръчка</a>
       </p>  
       `,
     )

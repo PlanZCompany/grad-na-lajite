@@ -27,7 +27,10 @@ async function createUniqueDiscountCode(
   throw new Error('Unable to generate a unique discount code.')
 }
 
-export async function subscribeAction(userEmail: string): Promise<SubscribeResult> {
+export async function subscribeAction(
+  userEmail: string,
+  sourceForm: User['marketing_consent_source'] | null = 'other',
+): Promise<SubscribeResult> {
   try {
     const parsed = userEmail.trim().toLowerCase()
 
@@ -72,7 +75,8 @@ export async function subscribeAction(userEmail: string): Promise<SubscribeResul
       if (Object.keys(updates).length > 0) {
         updates.marketing_consent = true
         updates.marketing_consent_date = new Date().toISOString()
-        updates.marketing_consent_source = 'checkout'
+        updates.marketing_consent_source = sourceForm
+        updates.newsletter_status = 'subscribed'
 
         await payload.update({
           collection: 'users',
