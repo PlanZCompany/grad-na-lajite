@@ -164,7 +164,7 @@ function renderTemplateSections(
         </p>
       `)
 
-      if (confirmDetailsData.shippingAddress) {
+      if (confirmDetailsData.shippingAddress !== 'Доставката е към офис/автомат') {
         parts.push(`
         <p style="margin:0 0 20px;font-family:'Merriweather',Georgia,serif;font-size:16px;line-height:1.6;color:#EDE8F5;">
            Адрес за доставка: ${confirmDetailsData.shippingAddress}

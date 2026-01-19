@@ -282,7 +282,7 @@ export async function makeOrder(
         termsIpAddress: input.termsIpAddress ?? '',
 
         // shipping
-        shippingAddressLine1: input.shippingAddressLine1,
+        shippingAddressLine1: input.shippingAddressLine1 ?? 'Доставката е към офис/автомат',
         shippingAddressLine2: input.shippingAddressLine2 ?? '',
         shippingCity: input.shippingCity,
         shippingPostcode: input.shippingPostcode,
