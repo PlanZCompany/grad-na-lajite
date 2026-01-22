@@ -210,16 +210,17 @@ export const Order: CollectionConfig = {
             confirmDetailsData: confirmDetailsData,
           })
 
-          void Promise.all([
-            payload.sendEmail({ to: email, subject, html, text: html }),
-            payload.sendEmail({
-              to: 'gradnalajite@gmail.com',
-              subject: adminSubject,
-              html: adminHtml,
-              text: adminHtml,
-            }),
-          ]).catch((err) => {
-            console.error('Email send failed:', err)
+          await payload.sendEmail({
+            to: email,
+            subject,
+            html,
+            text: html,
+          })
+          await payload.sendEmail({
+            to: 'gradnalajite@gmail.com',
+            subject: adminSubject,
+            html: adminHtml,
+            text: adminHtml,
           })
         } catch (error) {
           console.error(error)
