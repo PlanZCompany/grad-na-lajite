@@ -202,12 +202,6 @@ export const Order: CollectionConfig = {
             confirmDetailsData: confirmDetailsData,
           })
           const payload = await getPayload({ config: configPromise })
-          await payload.sendEmail({
-            to: email,
-            subject,
-            html,
-            text: html,
-          })
 
           const { html: adminHtml, subject: adminSubject } = await buildEmailCustom({
             templateSlug: 'order_admin_success',
@@ -216,11 +210,16 @@ export const Order: CollectionConfig = {
             confirmDetailsData: confirmDetailsData,
           })
 
-          await payload.sendEmail({
-            to: 'gradnalajite@gmail.com',
-            subject: adminSubject,
-            html: adminHtml,
-            text: adminHtml,
+          void Promise.all([
+            payload.sendEmail({ to: email, subject, html, text: html }),
+            payload.sendEmail({
+              to: 'gradnalajite@gmail.com',
+              subject: adminSubject,
+              html: adminHtml,
+              text: adminHtml,
+            }),
+          ]).catch((err) => {
+            console.error('Email send failed:', err)
           })
         } catch (error) {
           console.error(error)
