@@ -19,6 +19,7 @@ const VARIANTS = [
   { label: 'Смяна на парола', value: 'password_reset' },
   { label: 'Паролата е сменена', value: 'password_changed' },
   { label: 'Отмяна на поръчка', value: 'order_cancelled' },
+  { label: 'Успешна поръчка към Админ', value: 'order_admin_success' },
 ] as const
 
 export const EmailTemplates: CollectionConfig = {

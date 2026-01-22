@@ -2416,7 +2416,8 @@ export interface EmailTemplate {
     | 'email_verification'
     | 'password_reset'
     | 'password_changed'
-    | 'order_cancelled';
+    | 'order_cancelled'
+    | 'order_admin_success';
   category: 'marketing' | 'transactional';
   delivery: 'auto' | 'manual';
   isActive?: boolean | null;
