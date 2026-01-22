@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { roundMoney } from '@/utils/roundMoney'
 import type { Where } from 'payload' // ✅ ADDED: needed for typed where clauses in usages checks
+import { headers } from 'next/headers'
 
 const MAX_GLOBAL_DISCOUNT_PERCENT = 50 // ✅ ADDED: per requirements (≤ 50%)
 
@@ -250,6 +251,13 @@ export async function makeOrder(
       computedSubtotalAmount - computedDiscountAmount + computedShippingFinalAmount,
     )
 
+    const requestHeaders = await headers()
+    const forwardedForHeader = (requestHeaders.get('x-forwarded-for') ?? '').trim()
+    const ipFromForwardedFor = (forwardedForHeader.split(',')[0] ?? '').trim()
+    const ipFromRealIp = (requestHeaders.get('x-real-ip') ?? '').trim()
+
+    const clientIp = ipFromForwardedFor || ipFromRealIp || 'unknown-ip'
+
     const orderDTO = {
       // order number
       orderNumber,
@@ -276,7 +284,7 @@ export async function makeOrder(
       termsAccepted: input.termsAccepted,
       termsAcceptedAt: input.termsAccepted ? now.toISOString() : null,
       termsVersion: 'v1',
-      termsIpAddress: input.termsIpAddress ?? '',
+      termsIpAddress: clientIp,
 
       // shipping
       shippingAddressLine1: !!input.shippingAddressLine1
