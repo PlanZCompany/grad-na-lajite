@@ -27,6 +27,33 @@ export const Aside: GlobalConfig = {
         },
       ],
     },
+    {
+      label: 'AI',
+      name: 'ai',
+      type: 'group',
+      fields: [
+        link({
+          appearances: false,
+        }),
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          maxDepth: 2,
+        },
+        {
+          name: 'desktopText',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'mobileText',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
   ],
   hooks: {
     afterChange: [revalidateAside],

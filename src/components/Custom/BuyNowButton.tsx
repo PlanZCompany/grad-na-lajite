@@ -11,22 +11,16 @@ const BuyNowButton = ({ product }: { product: Product }) => {
   return (
     <div className="fixed bottom-4 md:bottom-4 right-[12px] md:right-[16px] z-[10]">
       <div
-        className={`absolute z-[10] right-0 transition-[transform,opacity] duration-500 ease-in-out ${
+        className={`absolute z-[10] right-12 bottom-0 transition-[transform,opacity] duration-500 ease-in-out ${
           activeButton
             ? 'translate-x-0 opacity-100 pointer-events-auto'
             : 'translate-x-[50%] opacity-0 pointer-events-none'
         }`}
       >
+        <div className="bg-gradient-to-br from-[#d4af37] to-[#b7952b] absolute top-[50%] translate-y-[-50%] w-4 h-4 right-0 translate-x-[50%] rotate-45"></div>
+
         <button
-          title="прибери меню"
-          className="absolute translate-x-[-100%] left-0 top-[50%] translate-y-[-50%] flex justify-center items-center w-[32px] h-[32px] 
-          md:w-[32px] md:h-[32px]"
-          onClick={() => setActiveButton(false)}
-        >
-          <CloseCircle />
-        </button>
-        <button
-          className="bg-gradient-to-br from-[#d4af37] to-[#b7952b] text-[#FFD700]
+          className="bg-gradient-to-br from-[#d4af37] to-[#b7952b] text-[#200226]
             transition-all duration-300 ease-in-out
             shadow-[0_0_15px_rgba(212,175,55,0.4)]
             hover:from-[#e8c85c] hover:to-[#d4af37]

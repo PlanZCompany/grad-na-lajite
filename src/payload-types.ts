@@ -3979,6 +3979,21 @@ export interface Aside {
         id?: string | null;
       }[]
     | null;
+  ai: {
+    link: {
+      type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+      newTab?: boolean | null;
+      reference?: {
+        relationTo: 'pages';
+        value: number | Page;
+      } | null;
+      url?: string | null;
+      label: string;
+    };
+    media?: (number | null) | Media;
+    desktopText: string;
+    mobileText: string;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -4223,6 +4238,22 @@ export interface AsideSelect<T extends boolean = true> {
             };
         media?: T;
         id?: T;
+      };
+  ai?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        media?: T;
+        desktopText?: T;
+        mobileText?: T;
       };
   updatedAt?: T;
   createdAt?: T;
