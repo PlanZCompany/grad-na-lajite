@@ -44,13 +44,16 @@ const AsideClient = ({ asideData }: { asideData: Aside }) => {
       <>
         <div className="flex flex-col gap-m">
           <button
-            className="hover:scale-105 transition-transform duration-300 ease-in-out relative w-10 h-10"
-            onClick={() => setShowNetwork(!showNetwork)}
+            className="hover:scale-105 transition-transform duration-300 ease-in-out relative w-10 h-10 z-[12]"
+            onClick={() => {
+              setShowAiContent(false)
+              setShowNetwork(!showNetwork)
+            }}
           >
             <AllSocialIcon />
           </button>
 
-          <ul className="flex flex-col-reverse gap-4 absolute bottom-[52px] md:bottom-[102px]">
+          <ul className="flex flex-col-reverse gap-4 absolute bottom-[102px] md:bottom-[102px]">
             {linksContent}
           </ul>
         </div>
