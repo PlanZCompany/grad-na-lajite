@@ -1,6 +1,6 @@
 'use client'
 
-import { BuyNowIcon, CloseCircle } from '@/assets/icons'
+import { BuyNowIcon } from '@/assets/icons'
 import { useCheckout } from '@/hooks/useCheckout'
 import { Product } from '@/payload-types'
 import React, { useState } from 'react'
