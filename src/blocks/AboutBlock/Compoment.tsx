@@ -1,4 +1,4 @@
-import { RichText } from '@/components/Custom'
+import { RichText, RichTextFull } from '@/components/Custom'
 import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '@/components/Generic'
 import { SectionWrapper } from '@/components/Wrappers'
 import { AboutBlock, Media } from '@/payload-types'
@@ -48,7 +48,7 @@ export const AboutBlockComponent: React.FC<AboutBlock> = (props) => {
                   )}
                   {hero.description && (
                     <GenericParagraph extraClass="text-center md:text-left">
-                      <RichText data={hero.description} />
+                      <RichTextFull description={hero.description} />
                     </GenericParagraph>
                   )}
                 </article>

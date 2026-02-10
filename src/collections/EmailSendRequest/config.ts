@@ -39,6 +39,17 @@ export const EmailSendRequests: CollectionConfig = {
       fields: [{ name: 'email', type: 'email', required: true }],
     },
     {
+      name: 'recipientsSync',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: {
+            path: '@/admin/RecipientsSyncButton#RecipientsSyncButton',
+          },
+        },
+      },
+    },
+    {
       name: 'status',
       type: 'select',
       required: true,
@@ -165,6 +176,52 @@ export const EmailSendRequests: CollectionConfig = {
             'cache-control': 'no-cache',
           },
         })
+      },
+    },
+    {
+      path: '/:id/sync-recipients',
+      method: 'post',
+      handler: async (req) => {
+        if (req.user?.role !== 'admin') {
+          return Response.json({ error: 'Forbidden' }, { status: 403 })
+        }
+
+        const id = req.routeParams?.id as string
+
+        const emails = new Set<string>()
+        let page = 1
+        const limit = 200
+
+        while (true) {
+          const res = await req.payload.find({
+            collection: 'subscriptions',
+            req,
+            depth: 0,
+            limit,
+            page,
+          })
+
+          for (const doc of res.docs ?? []) {
+            const email = String(doc.email ?? '')
+              .trim()
+              .toLowerCase()
+            if (email) emails.add(email)
+          }
+
+          if (!res.hasNextPage) break
+          page += 1
+        }
+
+        const recipients = Array.from(emails).map((email) => ({ email }))
+
+        await req.payload.update({
+          collection: 'email-send-requests',
+          id,
+          req,
+          data: { recipients }, // OVERWRITE
+        })
+
+        return Response.json({ count: recipients.length }, { status: 200 })
       },
     },
   ],

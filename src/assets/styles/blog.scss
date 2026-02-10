@@ -160,3 +160,27 @@
     line-height: 130%;
   }
 }
+
+.blog_post_richtext {
+  blockquote {
+    background-color: #eeeeee50;
+    width: fit-content;
+    padding: 10px 20px;
+    position: relative;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  blockquote::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background-color: #eee;
+  }
+}
