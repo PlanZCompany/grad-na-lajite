@@ -103,10 +103,12 @@ export async function subscribeAction(
         })
       }
       return {
-        ok: false,
+        ok: true,
         message: userId
           ? 'Вече сте абонирани. Профилът е синхронизиран със записа за абонамент.'
           : 'Вече сте абонирани с този имейл.',
+        discountCode: sub.discountCode ?? discountCodeToReturn, // ако имаш поле discountCode в subscriptions
+        userName: userId ? ((userRes.docs[0] as User).firstName as string) : 'Играч',
       }
     } else {
       const annommousDiscountCode = await createUniqueDiscountCode(() => Promise.resolve(true))
@@ -130,7 +132,7 @@ export async function subscribeAction(
   } catch (error: unknown) {
     const err = error as { data: { errors: { message: string }[] } }
     if (err?.data?.errors?.[0]?.message?.includes('unique')) {
-      return { ok: false, message: 'Вече сте абонирани с този имейл.' }
+      return { ok: true, message: 'Вече сте абонирани с този имейл.', userName: 'Играч' }
     }
     console.error('subscribeAction error:', err)
     return { ok: false, message: 'Нещо се обърка. Опитайте отново след малко.' }

@@ -11,6 +11,7 @@ import { CreateOrderInput, makeOrder } from '@/action/orders'
 import { useCheckout } from '@/hooks/useCheckout'
 import { subscribeAction } from '@/action/subscribe'
 import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
+import { LS_SUBSCRIBED, setForDays, SUB_DAYS } from '@/utils/newsletterPopup'
 
 export function PaymentForm() {
   const dispatch = useAppDispatch()
@@ -141,6 +142,9 @@ export function PaymentForm() {
 
           if (!!userWantSubscription) {
             subscribeAction(formData.email, 'checkout')
+
+            setForDays(LS_SUBSCRIBED, SUB_DAYS) // ✅ 365 дни suppression
+
             if (!userId) {
               addSubscribeValueToCookie('add')
             }

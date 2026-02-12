@@ -6,6 +6,7 @@ import SectionWrapper from '@/components/Wrappers/SectionWrapper'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { Media, SubscriptionForm } from '@/payload-types'
 import { setNotification } from '@/store/features/notifications'
+import { LS_SUBSCRIBED, setForDays, SUB_DAYS } from '@/utils/newsletterPopup'
 import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
@@ -33,23 +34,21 @@ export const SubscriptionFormBlock: React.FC<SubscriptionForm> = (props) => {
 
         if (res.ok) {
           setMessage(res.message)
+
           dispatch(
             setNotification({
               showNotification: true,
-              message: 'Успешен абонамент',
+              message: res.message,
               type: 'success',
             }),
           )
-          if (!user) {
-            addSubscribeValueToCookie('add')
-          }
+
+          if (!user) addSubscribeValueToCookie('add')
+
+          setForDays(LS_SUBSCRIBED, SUB_DAYS) // ✅ 365 дни suppression
         } else {
           setMessage(res.fieldErrors?.email ?? res.message)
         }
-
-        // if (res.ok && !!res.discountCode) {
-        //   subscribeEmail(email, res.userName, res.discountCode)
-        // }
       } catch (err) {
         console.log(err)
       }

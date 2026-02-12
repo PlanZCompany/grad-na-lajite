@@ -9,18 +9,41 @@ import { setNotification } from '@/store/features/notifications'
 import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
-import React, { useEffect, useRef, useState, useTransition } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
+import {
+  setForDays,
+  LS_DISMISSED,
+  DISMISS_DAYS,
+  SUB_DAYS,
+  LS_SUBSCRIBED,
+} from '@/utils/newsletterPopup'
 
 const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
   const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState(false)
   const { heading, description, media } = data
-  const timeOut = useRef<NodeJS.Timeout | null>(null)
   const user = useAppSelector((state) => state.root.user)
 
   const [email, setEmail] = useState<string>('')
   const [message, setMessage] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
+
+  const dismissHandler = () => {
+    setForDays(LS_DISMISSED, DISMISS_DAYS)
+    setOpenModal(false)
+  }
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== LS_SUBSCRIBED && e.key !== LS_DISMISSED) return
+
+      const next = Number(e.newValue ?? 0)
+      if (Date.now() < next) setOpenModal(false)
+    }
+
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [])
 
   const subscriptionHandler = () => {
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -34,38 +57,32 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
         const res = await subscribeAction(email, 'popup')
 
         if (res.ok) {
+          // IMPORTANT: write suppression immediately (prevents multi-tab race)
+          setForDays(LS_SUBSCRIBED, SUB_DAYS)
+
           setMessage(res.message)
           dispatch(
             setNotification({
               showNotification: true,
-              message: 'Успешен абонамент',
+              message: res.message, // вместо твърдо "Успешен абонамент"
               type: 'success',
             }),
           )
 
-          if (!user) {
-            addSubscribeValueToCookie('add')
-          }
+          if (!user) addSubscribeValueToCookie('add')
 
-          timeOut.current = setTimeout(() => {
-            setOpenModal(false)
-          }, 1000)
-        } else {
-          setMessage(res.fieldErrors?.email ?? res.message)
+          // Spec: close immediately
+          setOpenModal(false)
+          return
         }
+
+        setMessage(res.fieldErrors?.email ?? res.message)
       } catch (err) {
         console.log(err)
+        setMessage('Нещо се обърка. Опитайте отново.')
       }
     })
   }
-
-  useEffect(() => {
-    return () => {
-      if (timeOut.current) {
-        clearTimeout(timeOut.current)
-      }
-    }
-  }, [])
 
   return (
     <>
@@ -91,7 +108,7 @@ const SubscriptionModalClient = ({ data }: { data: SubscriptionModal }) => {
             aria-label="Close Modal"
             className="flex justify-center items-center absolute top-2 right-2 z-[3] w-[32px] h-[32px] md:w-[36px] md:h-[36px]
              bg-primaryYellow/80 hover:bg-primaryYellow rounded-full"
-            onClick={() => setOpenModal(false)}
+            onClick={dismissHandler}
           >
             <CloseCircle />
           </button>
