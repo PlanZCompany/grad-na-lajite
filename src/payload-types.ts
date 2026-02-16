@@ -80,6 +80,7 @@ export interface Config {
     'discount-code-attempt': DiscountCodeAttempt;
     'email-templates': EmailTemplate;
     'email-send-requests': EmailSendRequest;
+    headerBanner: HeaderBanner;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -107,6 +108,7 @@ export interface Config {
     'discount-code-attempt': DiscountCodeAttemptSelect<false> | DiscountCodeAttemptSelect<true>;
     'email-templates': EmailTemplatesSelect<false> | EmailTemplatesSelect<true>;
     'email-send-requests': EmailSendRequestsSelect<false> | EmailSendRequestsSelect<true>;
+    headerBanner: HeaderBannerSelect<false> | HeaderBannerSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -2499,6 +2501,40 @@ export interface EmailSendRequest {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "headerBanner".
+ */
+export interface HeaderBanner {
+  id: number;
+  /**
+   * Име на банера за административни цели. Няма да е видимо за потребителите.
+   */
+  title: string;
+  placement: 'header_static' | 'header_rotating';
+  order: number;
+  textContent: string;
+  icon?: (number | null) | Media;
+  link: {
+    type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+    label: string;
+  };
+  textColor: string;
+  backgroundColor: string;
+  isActive?: boolean | null;
+  showOnMobile?: boolean | null;
+  showOnDesktop?: boolean | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2693,6 +2729,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'email-send-requests';
         value: number | EmailSendRequest;
+      } | null)
+    | ({
+        relationTo: 'headerBanner';
+        value: number | HeaderBanner;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3679,6 +3719,35 @@ export interface EmailSendRequestsSelect<T extends boolean = true> {
       };
   status?: T;
   sentAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "headerBanner_select".
+ */
+export interface HeaderBannerSelect<T extends boolean = true> {
+  title?: T;
+  placement?: T;
+  order?: T;
+  textContent?: T;
+  icon?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  textColor?: T;
+  backgroundColor?: T;
+  isActive?: T;
+  showOnMobile?: T;
+  showOnDesktop?: T;
+  startDate?: T;
+  endDate?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -31,6 +31,7 @@ import { EmailTemplates } from './collections/EmailTemplates/config'
 import { EmailSettings } from './EmailSettings/config'
 import { EmailSendRequests } from './collections/EmailSendRequest/config'
 import { DiscountMaintenance } from './DiscountMaintenance'
+import { HeaderBanner } from './collections/HeaderBanner/HeaderBanner'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -79,6 +80,7 @@ export default buildConfig({
     DiscountCodeAttempt,
     EmailTemplates,
     EmailSendRequests,
+    HeaderBanner,
   ],
   globals: [
     Header,
