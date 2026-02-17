@@ -1,5 +1,9 @@
 ﻿import type { CollectionConfig, TextFieldSingleValidation } from 'payload'
 import { link } from '@/fields/link'
+import {
+  revalidateDeleteHeaderBanner,
+  revalidateHeaderBanner,
+} from './hooks/revalidateHeaderBanner'
 
 const HEX3_OR_6 = /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
 
@@ -122,5 +126,8 @@ export const HeaderBanner: CollectionConfig = {
       admin: { date: { pickerAppearance: 'dayAndTime' }, position: 'sidebar' },
     },
   ],
-  hooks: {},
+  hooks: {
+    afterChange: [revalidateHeaderBanner],
+    afterDelete: [revalidateDeleteHeaderBanner],
+  },
 }
