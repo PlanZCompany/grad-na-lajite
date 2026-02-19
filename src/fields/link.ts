@@ -17,10 +17,16 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false
   disableLabel?: boolean
+  required?: boolean
   overrides?: Partial<GroupField>
 }) => Field
 
-export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
+export const link: LinkType = ({
+  appearances,
+  disableLabel = false,
+  required = true,
+  overrides = {},
+} = {}) => {
   const linkResult: GroupField = {
     label: 'Линк',
     name: 'link',
@@ -81,7 +87,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       label: 'Документа сочи към',
       maxDepth: 2,
       relationTo: ['pages'], //TODO Add support for other collections
-      required: true,
+      required,
     },
     {
       name: 'url',
@@ -90,7 +96,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
         condition: (_, siblingData) => ['custom', 'anchorSectionId'].includes(siblingData?.type),
       },
       label: 'Външен Линк URL',
-      required: true,
+      required,
     },
   ]
 
@@ -114,7 +120,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
             width: '50%',
           },
           label: 'Текст на Линк',
-          required: true,
+          required,
         },
       ],
     })

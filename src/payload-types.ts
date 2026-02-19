@@ -2513,7 +2513,7 @@ export interface HeaderBanner {
   order: number;
   textContent: string;
   icon?: (number | null) | Media;
-  link: {
+  link?: {
     type?: ('reference' | 'custom' | 'anchorSectionId') | null;
     newTab?: boolean | null;
     reference?: {
@@ -2521,7 +2521,7 @@ export interface HeaderBanner {
       value: number | Page;
     } | null;
     url?: string | null;
-    label: string;
+    label?: string | null;
   };
   textColor: string;
   backgroundColor: string;

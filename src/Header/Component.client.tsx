@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 
-import { Header, Media } from '@/payload-types'
+import { Header, Media, HeaderBanner } from '@/payload-types'
 import { generateHref, LinkObject } from '@/utils/generateHref'
 import Link from 'next/link'
 import { DataFromGlobalSlug } from 'payload'
@@ -13,16 +13,35 @@ import { setShoppingCardOpen } from '@/store/features/checkout'
 import { useTransition } from 'react'
 import { logout } from '@/action/auth/logout'
 import Menu from './Menu'
+import HeaderBannersClient from '@/collections/HeaderBanner/Component.client'
 
-const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'> }) => {
+const HeaderClient = ({
+  headerData,
+  staticBannerMobile,
+  staticBannerDesktop,
+  rotatingBannersMobile,
+  rotatingBannersDesktop,
+}: {
+  headerData: DataFromGlobalSlug<'header'>
+  staticBannerMobile?: HeaderBanner
+  staticBannerDesktop?: HeaderBanner
+  rotatingBannersMobile?: HeaderBanner[]
+  rotatingBannersDesktop?: HeaderBanner[]
+}) => {
   const dispatch = useAppDispatch()
   const shoppingCartProducts = useAppSelector((state) => state.checkout.products)
   const user = useAppSelector((state) => state.root.user)
   const { categoryItems, logo } = headerData as Header
   const [pending, start] = useTransition()
   const [openUserMenu, setOpenUserMenu] = useState(false)
-
   const [openMenu, setOpenMenu] = useState(false)
+
+  const anyBannerMobile = Boolean(
+    staticBannerMobile || (rotatingBannersMobile?.length && rotatingBannersMobile?.length > 0),
+  )
+  const anyBannerDesktop = Boolean(
+    staticBannerDesktop || (rotatingBannersDesktop?.length && rotatingBannersDesktop?.length > 0),
+  )
 
   useEffect(() => {
     if (openMenu) {
@@ -57,7 +76,16 @@ const HeaderClient = ({ headerData }: { headerData: DataFromGlobalSlug<'header'>
       <aside className="landscape:hidden portrait:block">
         <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} categoryItems={categoryItems} />
       </aside>
-      <header className="fixed backdrop_blur top-0 left-0 right-0 w-full bg-black/70 z-[12] py-[4px] md:py-[15px] px-4 lg:px-[40px] flex justify-center items-center">
+      <header
+        className={`fixed backdrop_blur top-0 left-0 right-0 w-full bg-black/70 z-[12] ${anyBannerMobile ? 'max:md:pb-[4px]' : 'max-md:py-[4px] '} ${anyBannerDesktop ? 'md:pb-[15px] ' : 'md:py-[15px] '} px-4 lg:px-[40px] flex flex-col justify-center items-center`}
+      >
+        <HeaderBannersClient
+          staticBannerMobile={staticBannerMobile}
+          staticBannerDesktop={staticBannerDesktop}
+          rotatingBannersMobile={rotatingBannersMobile}
+          rotatingBannersDesktop={rotatingBannersDesktop}
+        />
+
         <nav className="w-full flex justify-between items-center content_wrapper_mobile-full relative z-[2]">
           <Link href={'/'} aria-label="Отиди на начална страница">
             <GenericImage

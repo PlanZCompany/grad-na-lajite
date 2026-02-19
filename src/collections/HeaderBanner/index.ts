@@ -68,6 +68,7 @@ export const HeaderBanner: CollectionConfig = {
 
     link({
       appearances: false,
+      required: false,
     }),
 
     {
