@@ -2,39 +2,27 @@ import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'paylo
 
 import { revalidatePath } from 'next/cache'
 
+const ROOT_LAYOUT_PATH = '/'
+
 export const revalidateHeaderBanner: CollectionAfterChangeHook = ({
   doc,
-  previousDoc,
   req: { payload, context },
 }) => {
   if (!context.disableRevalidate) {
-    if (doc._status === 'published') {
-      const path = `/headerBanner/${doc.slug}`
-
-      payload.logger.info(`Revalidating post at path: ${path}`)
-
-      revalidatePath(path)
-    }
-
-    if (previousDoc._status === 'published' && doc._status !== 'published') {
-      const oldPath = `/headerBanner/${previousDoc.slug}`
-
-      payload.logger.info(`Revalidating old post at path: ${oldPath}`)
-
-      revalidatePath(oldPath)
-    }
+    payload.logger.info('Revalidating root layout after header banner change')
+    revalidatePath(ROOT_LAYOUT_PATH, 'layout')
   }
+
   return doc
 }
 
 export const revalidateDeleteHeaderBanner: CollectionAfterDeleteHook = ({
   doc,
-  req: { context },
+  req: { payload, context },
 }) => {
   if (!context.disableRevalidate) {
-    const path = `/headerBanner/${doc?.slug}`
-
-    revalidatePath(path)
+    payload.logger.info('Revalidating root layout after header banner delete')
+    revalidatePath(ROOT_LAYOUT_PATH, 'layout')
   }
 
   return doc
