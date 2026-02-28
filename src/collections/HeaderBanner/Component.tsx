@@ -1,7 +1,5 @@
-import React from 'react'
-
 const HeaderBanners = () => {
-  console.log('HeaderBanners server component')
+  return null
 }
 
 export default HeaderBanners
