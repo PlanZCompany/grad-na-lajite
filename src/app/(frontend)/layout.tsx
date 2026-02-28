@@ -142,6 +142,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   //need to make function with cache about to 5 minutes to get blogs to avoid flickering
   const blogsForSearch = await getPublishedBlogsCached()
 
+  console.log('build')
+
   return (
     <StoreProvider>
       <html lang="bg" className={`${kolka.variable} ${sansation.variable}`}>
