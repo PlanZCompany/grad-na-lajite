@@ -13,7 +13,7 @@ import { setShoppingCardOpen } from '@/store/features/checkout'
 import { useTransition } from 'react'
 import { logout } from '@/action/auth/logout'
 import Menu from './Menu'
-// import HeaderBannersClient from '@/collections/HeaderBanner/Component.client'
+import HeaderBannersClient from '@/collections/HeaderBanner/Component.client'
 
 const HeaderClient = ({
   headerData,
@@ -79,12 +79,12 @@ const HeaderClient = ({
       <header
         className={`fixed backdrop_blur top-0 left-0 right-0 w-full bg-black/70 z-[12] ${anyBannerMobile ? 'max:md:pb-[4px]' : 'max-md:py-[4px] '} ${anyBannerDesktop ? 'md:pb-[15px] ' : 'md:py-[15px] '} px-4 lg:px-[40px] flex flex-col justify-center items-center`}
       >
-        {/* <HeaderBannersClient
+        <HeaderBannersClient
           staticBannerMobile={staticBannerMobile}
           staticBannerDesktop={staticBannerDesktop}
           rotatingBannersMobile={rotatingBannersMobile}
           rotatingBannersDesktop={rotatingBannersDesktop}
-        /> */}
+        />
 
         <nav className="w-full flex justify-between items-center content_wrapper_mobile-full relative z-[2]">
           <Link href={'/'} aria-label="Отиди на начална страница">
