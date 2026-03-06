@@ -5,7 +5,7 @@ import type { Metadata } from 'next/types'
 import econtCities from '../../../Econt/json/econt-cities.json'
 import speedySites from '../../../Speedy/json/speedy-cities.json'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import ContentHolder from '@/components/Checkout/ContentHolder'
 import { FooterCheckoutComponent } from '@/FooterCheckout/Component'
 import SetCouriers from '@/components/Setters/SetCouriers'
@@ -40,11 +40,13 @@ export default async function CheckoutPage() {
 
       <ConfirmHolder />
 
-      <ContentHolder
-        boxNowCities={boxNowCities}
-        econtCities={econtCities}
-        speedySites={speedySites}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ContentHolder
+          boxNowCities={boxNowCities}
+          econtCities={econtCities}
+          speedySites={speedySites}
+        />
+      </Suspense>
 
       <FooterCheckoutComponent />
     </div>

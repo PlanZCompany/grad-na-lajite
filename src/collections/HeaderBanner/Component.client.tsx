@@ -72,13 +72,15 @@ const renderBannerContent = (banner: HeaderBanner, mode: BannerMode) => {
         </div>
       )}
 
-      <p className="font-georgia font-[400] leading-[120%]">{banner.textContent}</p>
+      <p className="text-[14px] md:text-base font-georgia font-[400] leading-[120%]">
+        {banner.textContent}
+      </p>
 
       {hasLink && (
         <Link
           href={generateHref(banner as unknown as LinkObject)}
           target={banner.link?.newTab ? '_blank' : '_self'}
-          className="font-georgia font-[700] underline underline-offset-[2px] opacity-90 hover:opacity-100 transition-opacity duration-300 ease-in-out"
+          className="font-georgia font-[700] text-[12px] md:text-base underline underline-offset-[2px] opacity-90 hover:opacity-100 transition-opacity duration-300 ease-in-out"
           prefetch={false}
         >
           {banner.link?.label}
@@ -99,7 +101,8 @@ const renderTickerItem = (
   )
   const iconData = getBannerIconData(banner)
   const isMeasureOnly = Boolean(options?.measureOnly)
-  const paragraphClass = 'font-georgia font-[400] whitespace-nowrap leading-[120%] text-[13px] md:text-[14px]'
+  const paragraphClass =
+    'font-georgia font-[400] whitespace-nowrap leading-[120%] text-[13px] md:text-[14px]'
   const linkClass =
     'font-georgia font-[700] whitespace-nowrap underline underline-offset-[2px] opacity-90'
 

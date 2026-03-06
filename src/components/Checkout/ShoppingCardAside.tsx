@@ -77,7 +77,7 @@ const ShoppingCardAside = () => {
                   <GenericParagraph
                     fontStyle="font-georgia font-[400]"
                     pType="regular"
-                    extraClass="text-center text-purpleLight"
+                    extraClass="text-center !text-purpleLight"
                   >
                     {product.orderQuantity}
                   </GenericParagraph>
