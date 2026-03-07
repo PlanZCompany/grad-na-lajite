@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import CheckoutAside from './CheckoutAside'
 import CheckoutForms from './CheckoutForms'
 import { SpeedySite } from '@/Speedy/types'
@@ -68,7 +68,9 @@ const ContentHolder = ({
     <div
       className={`w-full h-full flex flex-col lg:flex-row lg:justify-stretch lg:items-stretch ${extraClass}`}
     >
-      <CheckoutAside />
+      <Suspense fallback={<div>Loading...</div>}>
+        <CheckoutAside />
+      </Suspense>
       <CheckoutForms
         econtCities={econtCities}
         speedySites={speedySites}
