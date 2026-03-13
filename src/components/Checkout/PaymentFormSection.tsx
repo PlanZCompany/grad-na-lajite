@@ -3,7 +3,7 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 
 import React, { useState, useTransition } from 'react'
-import { GenericButton, GenericHeading, RadioSelect } from '../Generic'
+import { GenericButton, GenericHeading, GenericParagraph, RadioSelect } from '../Generic'
 import { PaymentSection } from '@/Stripe/components'
 import { createPaymentIntentAction } from '@/Stripe/action'
 import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
@@ -177,7 +177,7 @@ const PaymentFormSection = () => {
         <RadioSelect
           options={[
             {
-              label: 'Плащане при доставка - казваш "здрасти" на куриера и му даваш сумата.',
+              label: 'Плащане при доставка (наложен платеж), Плащате на куриера при получаване.',
               value: 'cash',
             },
             {
@@ -192,6 +192,18 @@ const PaymentFormSection = () => {
           name="paymentMethod"
           required={true}
         />
+      </div>
+
+      <div className="w-full flex flex-col md:flex-row gap-2">
+        <GenericParagraph pType="small" textColor="text-white" extraClass="w-full md:w-auto">
+          🔒 Сигурно плащане чрез Stripe
+        </GenericParagraph>
+        <GenericParagraph pType="small" textColor="text-white" extraClass="w-full md:w-auto">
+          📦 Бърза доставка 1-2 дни
+        </GenericParagraph>
+        <GenericParagraph pType="small" textColor="text-white" extraClass="w-full md:w-auto">
+          ↩️ 14 дни право на връщане
+        </GenericParagraph>
       </div>
 
       {formValues.paymentMethod === 'card' && (
@@ -209,6 +221,7 @@ const PaymentFormSection = () => {
             click={() => {
               cashSubmit()
             }}
+            disabled={pending}
           >
             {pending ? <span className="animate-pulse">Зареждане</span> : 'Продължи'}
           </GenericButton>

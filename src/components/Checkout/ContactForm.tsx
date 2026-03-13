@@ -166,11 +166,11 @@ const ContactForm = () => {
           </button>
 
           <GenericParagraph pType="custom" extraClass="text-[12px] md:text-[14px] text-white/80">
-            Да, съгласен/на съм с{' '}
+            Съгласявам се с{' '}
             <Link className="underline" href="/terms-and-conditions">
               Общите условия
             </Link>
-            . Да, съгласен/на съм с{' '}
+            . и
             <Link className="underline" href="/privacy-policy">
               {' '}
               Политиката за поверителност
