@@ -5,6 +5,7 @@ import { SectionWrapper } from '@/components/Wrappers'
 import { useAppSelector } from '@/hooks/redux-hooks'
 import { useCheckout } from '@/hooks/useCheckout'
 import { Media, ProductBlock } from '@/payload-types'
+import { ADD_TO_CART } from '@/services/anatilitics'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import React from 'react'
 
@@ -67,6 +68,7 @@ const BoxSection = ({ box }: { box: ProductBlock['box'] }) => {
             click={() => {
               if (mainProduct) {
                 addProductToShoppingCartFullProcess(mainProduct)
+                ADD_TO_CART('EUR', mainProduct, 1)
               }
             }}
           >

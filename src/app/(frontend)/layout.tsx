@@ -138,6 +138,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     },
   })
 
+  console.log('BUILD 19.03.2026')
+
   const currentProduct = product?.docs?.[0]
   //need to make function with cache about to 5 minutes to get blogs to avoid flickering
   const blogsForSearch = await getPublishedBlogsCached()

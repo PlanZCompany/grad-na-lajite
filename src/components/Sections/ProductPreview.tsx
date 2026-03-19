@@ -5,6 +5,7 @@ import HeadingPlusDescription from '../Generic/HeadingPlusDescription'
 import { GenericButton, GenericImage } from '../Generic'
 import { useCheckout } from '@/hooks/useCheckout'
 import { useAppSelector } from '@/hooks/redux-hooks'
+import { ADD_TO_CART } from '@/services/anatilitics'
 
 export default function ProductPreview({ data }: { data: HomeBlock['singlePreview'] }) {
   const media = data?.media as Media
@@ -47,6 +48,7 @@ export default function ProductPreview({ data }: { data: HomeBlock['singlePrevie
               click={() => {
                 if (!mainProduct) return
                 addProductToShoppingCartFullProcess(mainProduct)
+                ADD_TO_CART('EUR', mainProduct, 1)
               }}
               variant="colored"
             >

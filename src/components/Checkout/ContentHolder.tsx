@@ -10,6 +10,7 @@ import { useSearchParams } from 'next/navigation'
 import { ExtendedProduct, setProducts } from '@/store/features/checkout'
 import { GlobalLoader } from '../Loader'
 import { COLORS } from '@/cssVariables'
+import { INITIATE_CHECKOUT } from '@/services/anatilitics'
 
 const ContentHolder = ({
   econtCities,
@@ -56,6 +57,11 @@ const ContentHolder = ({
   useEffect(() => {
     setIsClient(true)
   }, [])
+
+  useEffect(() => {
+    if (!mainProduct) return
+    INITIATE_CHECKOUT('BGN', mainProduct, products?.[0]?.orderQuantity ?? 1)
+  }, [mainProduct, products])
 
   if (!isClient)
     return (

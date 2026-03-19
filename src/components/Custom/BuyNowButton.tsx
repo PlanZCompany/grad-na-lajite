@@ -3,6 +3,7 @@
 import { BuyNowIcon } from '@/assets/icons'
 import { useCheckout } from '@/hooks/useCheckout'
 import { Product } from '@/payload-types'
+import { ADD_TO_CART } from '@/services/anatilitics'
 import React, { useState } from 'react'
 const BuyNowButton = ({ product }: { product: Product }) => {
   const [activeButton, setActiveButton] = useState(false)
@@ -29,6 +30,7 @@ const BuyNowButton = ({ product }: { product: Product }) => {
           onClick={() => {
             setActiveButton(false)
             addProductToShoppingCartFullProcess(product)
+            ADD_TO_CART('EUR', product, 1)
           }}
         >
           <span>Добави в количка</span>

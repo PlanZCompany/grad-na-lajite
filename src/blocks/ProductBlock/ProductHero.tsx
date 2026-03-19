@@ -11,14 +11,20 @@ import {
 import { useAppSelector } from '@/hooks/redux-hooks'
 import { useCheckout } from '@/hooks/useCheckout'
 import { Media, ProductBlock } from '@/payload-types'
+import { ADD_TO_CART, VIEW_CONTENT } from '@/services/anatilitics'
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
   const [isActive, setIsActive] = useState(false)
   const [videoSrc, setVideoSrc] = useState('')
   const mainProduct = useAppSelector((state) => state.root.mainProduct)
   const { addProductToShoppingCartFullProcess } = useCheckout()
+
+  useEffect(() => {
+    if (!mainProduct) return
+    VIEW_CONTENT('EUR', mainProduct)
+  }, [mainProduct])
 
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0)
   const productMedia = mainProduct?.mediaArray?.[currentMediaIndex]?.file as Media
@@ -179,6 +185,7 @@ const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
                   click={() => {
                     if (!mainProduct) return
                     addProductToShoppingCartFullProcess(mainProduct)
+                    ADD_TO_CART('EUR', mainProduct, 1)
                   }}
                 >
                   {hero.links?.[0]?.link?.label || 'КУПИ СЕГА'}

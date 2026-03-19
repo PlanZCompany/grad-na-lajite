@@ -15,6 +15,7 @@ import { roundMoney } from '@/utils/roundMoney'
 import { subscribeAction } from '@/action/subscribe'
 import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
 import { LS_SUBSCRIBED, setForDays, SUB_DAYS } from '@/utils/newsletterPopup'
+import { PURCHASE } from '@/services/anatilitics'
 
 const PaymentFormSection = () => {
   const dispatch = useAppDispatch()
@@ -119,6 +120,10 @@ const PaymentFormSection = () => {
         }
 
         const orderStatus = await makeOrder(orderData)
+
+        if (orderStatus.orderNumber && !!products?.[0]) {
+          PURCHASE('EUR', orderStatus.orderNumber, products?.[0], products?.[0].orderQuantity ?? 1)
+        }
 
         if (orderStatus.status === 'error') {
           setError(ROOT.global_error_message)

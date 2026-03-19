@@ -12,6 +12,7 @@ import { useCheckout } from '@/hooks/useCheckout'
 import { subscribeAction } from '@/action/subscribe'
 import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
 import { LS_SUBSCRIBED, setForDays, SUB_DAYS } from '@/utils/newsletterPopup'
+import { ADD_PAYMENT_INFO, PURCHASE } from '@/services/anatilitics'
 
 export function PaymentForm() {
   const dispatch = useAppDispatch()
@@ -130,6 +131,16 @@ export function PaymentForm() {
             // setError(ROOT.global_error_message)
             console.log('error', orderStatus)
             return
+          }
+
+          if (orderStatus.orderNumber && !!products?.[0]) {
+            ADD_PAYMENT_INFO('EUR', products?.[0], products?.[0].orderQuantity ?? 1)
+            PURCHASE(
+              'EUR',
+              orderStatus.orderNumber,
+              products?.[0],
+              products?.[0].orderQuantity ?? 1,
+            )
           }
 
           dispatch(setCompletedStage(3))
