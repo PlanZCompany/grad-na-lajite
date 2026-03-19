@@ -61,7 +61,7 @@ const ContentHolder = ({
 
   useEffect(() => {
     if (!mainProduct) return
-    INITIATE_CHECKOUT('BGN', mainProduct, products?.[0]?.orderQuantity ?? 1)
+    INITIATE_CHECKOUT('EUR', mainProduct, products?.[0]?.orderQuantity ?? 1)
   }, [mainProduct, products])
 
   if (!isClient)
