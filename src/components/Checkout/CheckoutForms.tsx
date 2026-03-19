@@ -22,7 +22,9 @@ const CheckoutForms = ({
 }) => {
   return (
     <div className="w-full lg:max-w-[50%] flex flex-col gap-m p-4 md:p-10">
-      <ContactForm />
+      <div className="hidden xl:block">
+        <ContactForm />
+      </div>
       <ShippingForm
         econtCities={econtCities}
         speedySites={speedySites}

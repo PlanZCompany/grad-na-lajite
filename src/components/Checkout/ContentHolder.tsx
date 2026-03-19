@@ -11,6 +11,7 @@ import { ExtendedProduct, setProducts } from '@/store/features/checkout'
 import { GlobalLoader } from '../Loader'
 import { COLORS } from '@/cssVariables'
 import { INITIATE_CHECKOUT } from '@/services/anatilitics'
+import ContactForm from './ContactForm'
 
 const ContentHolder = ({
   econtCities,
@@ -75,6 +76,9 @@ const ContentHolder = ({
       className={`w-full h-full flex flex-col lg:flex-row lg:justify-stretch lg:items-stretch ${extraClass}`}
     >
       <Suspense fallback={<div>Loading...</div>}>
+        <div className="xl:hidden content_wrapper my-8">
+          <ContactForm scrollToCode={true} />
+        </div>
         <CheckoutAside />
       </Suspense>
       <CheckoutForms

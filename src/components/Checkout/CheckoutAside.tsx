@@ -357,7 +357,7 @@ const CheckoutAside = () => {
   const remain = Number(calculateRemainSum().toFixed(2))
 
   return (
-    <div className="lg:fixed lg:top-[170px] lg:rounded-[16px] lg:right-4 w-full lg:max-w-[50%] bg-purpleLight">
+    <div className="lg:fixed lg:top-[170px] lg:rounded-[16px] lg:right-4 w-full lg:max-w-[50%] bg-purpleLight REF_CHECKOUT_ASIDE">
       <div className="w-full flex relative justify-center items-center py-2">
         <GenericParagraph
           fontStyle="custom"

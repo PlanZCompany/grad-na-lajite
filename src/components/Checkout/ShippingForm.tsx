@@ -31,18 +31,6 @@ const shippingVariants = [
     parent: 'box-now',
   },
   {
-    name: 'econt-office',
-    text: 'До офис Econt',
-    image: '/static/econt.png',
-    parent: 'econt',
-  },
-  {
-    name: 'econt-address',
-    text: 'До адрес Econt',
-    image: '/static/econt.png',
-    parent: 'econt',
-  },
-  {
     name: 'speedy-office',
     text: 'До офис Speedy',
     image: '/static/speedy.png',
@@ -53,6 +41,18 @@ const shippingVariants = [
     text: 'До адрес Speedy',
     image: '/static/speedy.png',
     parent: 'speedy',
+  },
+  {
+    name: 'econt-office',
+    text: 'До офис Econt',
+    image: '/static/econt.png',
+    parent: 'econt',
+  },
+  {
+    name: 'econt-address',
+    text: 'До адрес Econt',
+    image: '/static/econt.png',
+    parent: 'econt',
   },
 ]
 

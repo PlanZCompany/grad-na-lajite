@@ -14,7 +14,7 @@ import { CheckIcon } from '@/assets/icons'
 import Link from 'next/link'
 import { setNotification } from '@/store/features/notifications'
 
-const ContactForm = () => {
+const ContactForm = ({ scrollToCode = false }: { scrollToCode?: boolean }) => {
   const dispatch = useAppDispatch()
 
   const user = useAppSelector((state) => state.root.user)
@@ -76,7 +76,8 @@ const ContactForm = () => {
           }),
         )
 
-        const nextTarget = document.querySelector('.REF_CHECKOUT_SHIPPING') as HTMLElement
+        const htmlKey = scrollToCode ? 'REF_CHECKOUT_ASIDE' : 'REF_CHECKOUT_SHIPPING'
+        const nextTarget = document.querySelector(`.${htmlKey}`) as HTMLElement
 
         if (nextTarget) {
           nextTarget.scrollIntoView({ behavior: 'smooth' })
