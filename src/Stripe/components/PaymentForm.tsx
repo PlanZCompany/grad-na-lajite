@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { GenericButton } from '@/components/Generic'
-import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
+import { setCheckoutFormData, setCompletedStage, setOrderLoader } from '@/store/features/checkout'
 import { roundMoney } from '@/utils/roundMoney'
 import { CreateOrderInput, makeOrder } from '@/action/orders'
 // import { ROOT } from '@/cssVariables'
@@ -58,6 +58,10 @@ export function PaymentForm() {
   }
 
   const handlePayment = async () => {
+    const priceForCheck = calculateTotalPrice()
+
+    if (!priceForCheck) return
+
     setErrorMessage(null)
 
     if (!stripe || !elements) {
@@ -65,18 +69,18 @@ export function PaymentForm() {
     }
 
     startTransition(async () => {
+      dispatch(setOrderLoader(true))
       const result = await stripe.confirmPayment({
         elements,
         redirect: 'if_required',
       })
 
-      if (result.error) {
+      if (result.error || !result) {
+        dispatch(setOrderLoader(false))
         setErrorMessage(result.error.message ?? 'Плащането не беше успешно.')
         return
       } else if (result.paymentIntent?.status === 'succeeded') {
         try {
-          console.log('START SUBMIT')
-
           const totalWithoutShipping = calculateTotalPrice()
           const shippingPrice = calculateShippingPrice(
             formData.shipping as 'econt' | 'speedy' | 'boxnow',
@@ -170,6 +174,8 @@ export function PaymentForm() {
           localStorage.removeItem('cartProductsGradNaLajite')
         } catch (err) {
           console.log(err)
+        } finally {
+          dispatch(setOrderLoader(false))
         }
       }
     })

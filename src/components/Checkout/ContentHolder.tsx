@@ -12,6 +12,7 @@ import { GlobalLoader } from '../Loader'
 import { COLORS } from '@/cssVariables'
 import { INITIATE_CHECKOUT } from '@/services/anatilitics'
 import ContactForm from './ContactForm'
+import CheckoutLoader from '../Loader/CheckoutLoader'
 
 const ContentHolder = ({
   econtCities,
@@ -29,6 +30,7 @@ const ContentHolder = ({
   const stage = useAppSelector((state) => state.checkout.stageCompleted)
   const products = useAppSelector((state) => state.checkout.products)
   const mainProduct = useAppSelector((state) => state.root.mainProduct)
+  const orderLoader = useAppSelector((state) => state.checkout.orderLoader)
 
   const [isClient, setIsClient] = useState(false)
 
@@ -72,21 +74,28 @@ const ContentHolder = ({
     )
 
   return (
-    <div
-      className={`w-full h-full flex flex-col lg:flex-row lg:justify-stretch lg:items-stretch ${extraClass}`}
-    >
-      <Suspense fallback={<div>Loading...</div>}>
-        <div className="xl:hidden content_wrapper my-8">
-          <ContactForm scrollToCode={true} />
+    <>
+      {orderLoader && (
+        <div className="fixed inset-0 z-[20] bg-purpleBackground/50 backdrop-blur-sm">
+          <CheckoutLoader color={COLORS.primaryYellow} />
         </div>
-        <CheckoutAside />
-      </Suspense>
-      <CheckoutForms
-        econtCities={econtCities}
-        speedySites={speedySites}
-        boxNowCities={boxNowCities}
-      />
-    </div>
+      )}
+      <div
+        className={`w-full h-full flex flex-col lg:flex-row lg:justify-stretch lg:items-stretch ${extraClass}`}
+      >
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className="xl:hidden content_wrapper my-8">
+            <ContactForm scrollToCode={true} />
+          </div>
+          <CheckoutAside />
+        </Suspense>
+        <CheckoutForms
+          econtCities={econtCities}
+          speedySites={speedySites}
+          boxNowCities={boxNowCities}
+        />
+      </div>
+    </>
   )
 }
 

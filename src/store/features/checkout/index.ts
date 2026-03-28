@@ -45,6 +45,7 @@ export interface CheckoutInitialState {
   }
   userWantSubscription: boolean
   shippingOptions: CourierOption[]
+  orderLoader: boolean
 }
 
 const checkoutInitialState: CheckoutInitialState = {
@@ -67,6 +68,7 @@ const checkoutInitialState: CheckoutInitialState = {
   },
   userWantSubscription: false,
   shippingOptions: [],
+  orderLoader: false,
 }
 
 export const checkoutSlice = createSlice({
@@ -123,6 +125,9 @@ export const checkoutSlice = createSlice({
     setCourierOptions: (state, { payload }: PayloadAction<CourierOption[]>) => {
       state.shippingOptions = payload
     },
+    setOrderLoader: (state, { payload }: PayloadAction<boolean>) => {
+      state.orderLoader = payload
+    },
     resetToInitialState: () => {
       return checkoutInitialState
     },
@@ -141,6 +146,7 @@ export const {
   setCheckoutFormData,
   resetToInitialState,
   setUserWantSubscription,
+  setOrderLoader,
   setCourierOptions,
 } = checkoutSlice.actions
 

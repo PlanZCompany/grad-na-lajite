@@ -6,7 +6,7 @@ import React, { useState, useTransition } from 'react'
 import { GenericButton, GenericHeading, GenericParagraph, RadioSelect } from '../Generic'
 import { PaymentSection } from '@/Stripe/components'
 import { createPaymentIntentAction } from '@/Stripe/action'
-import { setCheckoutFormData, setCompletedStage } from '@/store/features/checkout'
+import { setCheckoutFormData, setCompletedStage, setOrderLoader } from '@/store/features/checkout'
 import { CreateOrderInput, makeOrder } from '@/action/orders'
 import { ROOT } from '@/constant'
 import ErrorMessageBox from '../Generic/ErrorMessage'
@@ -69,13 +69,15 @@ const PaymentFormSection = () => {
   const cashSubmit = () => {
     start(async () => {
       try {
-        console.log('START SUBMIT')
+        dispatch(setOrderLoader(true))
 
         const totalWithoutShipping = calculateTotalPrice()
         const shippingPrice = calculateShippingPrice(
           formData.shipping as 'econt' | 'speedy' | 'boxnow',
         )
         const total = roundMoney(totalWithoutShipping + shippingPrice)
+
+        if (!totalWithoutShipping) return
 
         // calculate discount amount
         const sumWithoutDiscount = products.reduce(
@@ -157,6 +159,8 @@ const PaymentFormSection = () => {
         localStorage.removeItem('cartProductsGradNaLajite')
       } catch (err) {
         console.log(err)
+      } finally {
+        dispatch(setOrderLoader(false))
       }
     })
   }
