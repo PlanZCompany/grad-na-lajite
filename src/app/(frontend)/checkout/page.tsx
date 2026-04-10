@@ -32,6 +32,8 @@ export default async function CheckoutPage() {
     couriers = couriersData.courierOptions as CourierOption[]
   }
 
+  const
+
   return (
     <div className="fixed w-full inset-0 h-screen overflow-y-auto bg-purpleBackground z-[30]">
       <SetCouriers couriers={couriers} />

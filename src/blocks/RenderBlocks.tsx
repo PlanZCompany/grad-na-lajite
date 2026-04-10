@@ -3,56 +3,69 @@ import type { FC } from 'react'
 
 import type {
   AboutBlock,
+  AboutHeroBlock,
+  CTABlock,
   ContactBlock,
   ContentBlock as ContentBlockType,
   FaqBlock,
   HomeBlock,
+  HomeGalleryPreviewBlock,
+  HomeGameRules2Block,
+  HomeHistoriesBlock,
+  HomePartnersBlock,
+  HomeShBlock,
+  HomeSinglePreviewBlock,
+  HomeTestimonialsBlock,
+  HomeWhatIsTheGameBlock,
+  HomeWhyToChoseUsBlock,
+  HowToPlayBlock,
   InfoAndImageBlock,
   MediaBlock as MediaBlockType,
+  MissionBlock,
+  NestedBlocks,
   PDFBlock,
   ProductBlock,
+  ProductBoxBlock,
+  ProductHeroBlock,
   RegulatoryBlock,
   SubscriptionForm,
   TableBlock,
+  ValuesBlock,
 } from '@/payload-types'
 
 import { blockComponents } from '@/blocks/blockComponents'
 
-type CTABlockType = {
-  id?: string | null
-  blockType: 'cta'
-  content: string
-  buttonText: string
-  buttonLink?:
-    | string
-    | {
-        slug?: string | null
-      }
-    | null
-}
-
 type BaseRenderableBlock =
   | ContentBlockType
-  | CTABlockType
+  | CTABlock
   | MediaBlockType
   | HomeBlock
+  | HomeShBlock
+  | HomeWhyToChoseUsBlock
+  | HomeWhatIsTheGameBlock
+  | HomeGameRules2Block
+  | HomeSinglePreviewBlock
+  | HomeGalleryPreviewBlock
+  | HomeHistoriesBlock
+  | HomePartnersBlock
+  | HomeTestimonialsBlock
   | SubscriptionForm
   | ProductBlock
+  | ProductHeroBlock
+  | ProductBoxBlock
   | AboutBlock
+  | AboutHeroBlock
   | ContactBlock
   | FaqBlock
+  | HowToPlayBlock
+  | MissionBlock
   | RegulatoryBlock
   | InfoAndImageBlock
   | TableBlock
   | PDFBlock
+  | ValuesBlock
 
-type NestedBlocksBlock = {
-  id?: string | null
-  blockType: 'nestedBlocks'
-  items?: RenderableBlocks
-}
-
-type RenderableBlock = BaseRenderableBlock | NestedBlocksBlock
+type RenderableBlock = BaseRenderableBlock | NestedBlocks
 type RenderableBlocks = RenderableBlock[] | null | undefined
 
 type RenderBlocksProps = {
