@@ -25,12 +25,18 @@ export type LinkObject = {
       | undefined
     url?: string | null
     label: string
+    searchParams?: string | null
   }
   id?: string | null
 }
 
 export const generateHref = (linkObject: LinkObject) => {
   const linkValue = linkObject?.link?.reference?.value as Page
+
+  if (!!linkObject.link.searchParams) {
+    return `/checkout?${linkObject.link.searchParams}`
+  }
+
   if (!linkObject || linkValue?.slug === 'home') {
     return '/'
   }

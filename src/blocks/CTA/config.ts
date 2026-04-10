@@ -1,3 +1,4 @@
+import { linkGroup } from '@/fields/linkGroup'
 import type { Block } from 'payload'
 
 export const CTABlock: Block = {
@@ -14,19 +15,10 @@ export const CTABlock: Block = {
       label: 'Text',
       required: true,
     },
-    {
-      name: 'buttonText',
-      type: 'text',
-      label: 'Button text',
-      required: true,
-    },
-    {
-      name: 'buttonLink',
-      type: 'relationship',
-      label: 'Internal link',
-      relationTo: 'pages',
-      required: true,
-      hasMany: false,
-    },
+    linkGroup({
+      overrides: {
+        maxRows: 1,
+      },
+    }),
   ],
 }

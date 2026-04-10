@@ -1,40 +1,23 @@
+import { GenericButton, GenericParagraph } from '@/components/Generic'
+import { CTABlock } from '@/payload-types'
+import { generateHref, LinkObject } from '@/utils/generateHref'
 import Link from 'next/link'
 
-type PageRelation =
-  | string
-  | {
-      slug?: string | null
-    }
-  | null
-  | undefined
-
-export type CTABlockProps = {
-  id?: string | null
-  blockType: 'cta'
-  content: string
-  buttonText: string
-  buttonLink: PageRelation
-}
-
-function getHref(page: PageRelation): string | null {
-  if (!page || typeof page === 'string') return null
-  if (!page.slug) return null
-
-  return page.slug === 'home' ? '/' : `/${page.slug}`
-}
-
-export function CTABlockComponent(block: CTABlockProps) {
-  const href = getHref(block.buttonLink)
-
-  if (!href) return null
-
+export function CTABlockComponent(block: CTABlock) {
+  const { links, content } = block
   return (
-    <section className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <div>{block.content}</div>
+    <section className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between content_wrapper py-10 md:py-20">
+      {content && (
+        <div>
+          <GenericParagraph>{content}</GenericParagraph>
+        </div>
+      )}
 
-      <Link href={href} className="inline-flex">
-        {block.buttonText}
-      </Link>
+      {links && links.length && (
+        <Link href={generateHref(links[0] as LinkObject)} className="inline-flex">
+          <GenericButton>{links[0].link.label}</GenericButton>
+        </Link>
+      )}
     </section>
   )
 }

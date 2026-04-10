@@ -360,6 +360,10 @@ export interface CommonHero {
           url?: string | null;
           label: string;
           /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
            * Дизайн на линк
            */
           appearance?: ('default' | 'outline') | null;
@@ -414,8 +418,29 @@ export interface ContentBlock {
  */
 export interface CTABlock {
   content: string;
-  buttonText: string;
-  buttonLink: number | Page;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
+           * Дизайн на линк
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -473,6 +498,10 @@ export interface HomeBlock {
             } | null;
             url?: string | null;
             label: string;
+            /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
             /**
              * Дизайн на линк
              */
@@ -1173,6 +1202,10 @@ export interface ProductBlock {
             url?: string | null;
             label: string;
             /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
+            /**
              * Дизайн на линк
              */
             appearance?: ('default' | 'outline') | null;
@@ -1299,6 +1332,10 @@ export interface ProductBlock {
             } | null;
             url?: string | null;
             label: string;
+            /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
             /**
              * Дизайн на линк
              */
@@ -1633,6 +1670,10 @@ export interface ProductBlock {
             url?: string | null;
             label: string;
             /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
+            /**
              * Дизайн на линк
              */
             appearance?: ('default' | 'outline') | null;
@@ -1699,6 +1740,10 @@ export interface AboutBlock {
             } | null;
             url?: string | null;
             label: string;
+            /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
             /**
              * Дизайн на линк
              */
@@ -2565,6 +2610,10 @@ export interface HeaderBanner {
     } | null;
     url?: string | null;
     label?: string | null;
+    /**
+     * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+     */
+    searchParams?: string | null;
   };
   textColor: string;
   backgroundColor: string;
@@ -2959,6 +3008,7 @@ export interface CommonHeroSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
               appearance?: T;
             };
         id?: T;
@@ -2991,8 +3041,22 @@ export interface ContentBlockSelect<T extends boolean = true> {
  */
 export interface CTABlockSelect<T extends boolean = true> {
   content?: T;
-  buttonText?: T;
-  buttonLink?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              searchParams?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -3017,6 +3081,7 @@ export interface HomeBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3208,6 +3273,7 @@ export interface ProductBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3250,6 +3316,7 @@ export interface ProductBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3342,6 +3409,7 @@ export interface ProductBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3372,6 +3440,7 @@ export interface AboutBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3824,6 +3893,7 @@ export interface HeaderBannerSelect<T extends boolean = true> {
         reference?: T;
         url?: T;
         label?: T;
+        searchParams?: T;
       };
   textColor?: T;
   backgroundColor?: T;
@@ -4014,6 +4084,10 @@ export interface Header {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         id?: string | null;
       }[]
@@ -4039,6 +4113,10 @@ export interface Footer {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         id?: string | null;
       }[]
@@ -4054,6 +4132,10 @@ export interface Footer {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         media?: (number | null) | Media;
         id?: string | null;
@@ -4070,6 +4152,10 @@ export interface Footer {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         media?: (number | null) | Media;
         id?: string | null;
@@ -4086,6 +4172,10 @@ export interface Footer {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         media?: (number | null) | Media;
         id?: string | null;
@@ -4127,6 +4217,10 @@ export interface Aside {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         media?: (number | null) | Media;
         id?: string | null;
@@ -4142,6 +4236,10 @@ export interface Aside {
       } | null;
       url?: string | null;
       label: string;
+      /**
+       * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+       */
+      searchParams?: string | null;
     };
     media?: (number | null) | Media;
     desktopText: string;
@@ -4294,6 +4392,7 @@ export interface HeaderSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         id?: T;
       };
@@ -4318,6 +4417,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         id?: T;
       };
@@ -4332,6 +4432,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         id?: T;
@@ -4347,6 +4448,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         id?: T;
@@ -4362,6 +4464,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         id?: T;
@@ -4388,6 +4491,7 @@ export interface AsideSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         id?: T;
@@ -4403,6 +4507,7 @@ export interface AsideSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         desktopText?: T;
