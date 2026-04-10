@@ -276,6 +276,7 @@ export interface Page {
     | (
         | MediaBlock
         | ContentBlock
+        | CTABlock
         | HomeBlock
         | SubscriptionForm
         | ProductBlock
@@ -285,6 +286,9 @@ export interface Page {
         | FormBlock
         | RegulatoryBlock
         | PDFBlock
+        | InfoAndImageBlock
+        | TableBlock
+        | NestedBlocks
       )[]
     | null;
   meta?: {
@@ -403,6 +407,18 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock".
+ */
+export interface CTABlock {
+  content: string;
+  buttonText: string;
+  buttonLink: number | Page;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2079,78 +2095,6 @@ export interface PDFBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscriptions".
- */
-export interface Subscription {
-  id: number;
-  email: string;
-  /**
-   * Абонаментът може да е свързан с потребител
-   */
-  user?: (number | null) | User;
-  discountCode?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog".
- */
-export interface Blog {
-  id: number;
-  title: string;
-  heading?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Основна снимка на блога
-   */
-  media: number | Media;
-  layout?: (ContentBlock | InfoAndImageBlock | TableBlock)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InfoAndImageBlock".
  */
 export interface InfoAndImageBlock {
@@ -2239,6 +2183,105 @@ export interface TableBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'tableBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NestedBlocks".
+ */
+export interface NestedBlocks {
+  items?:
+    | (
+        | MediaBlock
+        | ContentBlock
+        | CTABlock
+        | HomeBlock
+        | SubscriptionForm
+        | ProductBlock
+        | AboutBlock
+        | ContactBlock
+        | FaqBlock
+        | FormBlock
+        | RegulatoryBlock
+        | PDFBlock
+        | InfoAndImageBlock
+        | TableBlock
+      )[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'nestedBlocks';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: number;
+  email: string;
+  /**
+   * Абонаментът може да е свързан с потребител
+   */
+  user?: (number | null) | User;
+  discountCode?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog".
+ */
+export interface Blog {
+  id: number;
+  title: string;
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Основна снимка на блога
+   */
+  media: number | Media;
+  layout?: (ContentBlock | InfoAndImageBlock | TableBlock)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2869,6 +2912,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         mediaBlock?: T | MediaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
         homeBlock?: T | HomeBlockSelect<T>;
         subscriptionForm?: T | SubscriptionFormSelect<T>;
         productBlock?: T | ProductBlockSelect<T>;
@@ -2878,6 +2922,9 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         regulatoryBlock?: T | RegulatoryBlockSelect<T>;
         pdfBlock?: T | PDFBlockSelect<T>;
+        infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
+        tableBlock?: T | TableBlockSelect<T>;
+        nestedBlocks?: T | NestedBlocksSelect<T>;
       };
   meta?:
     | T
@@ -2935,6 +2982,17 @@ export interface MediaBlockSelect<T extends boolean = true> {
  */
 export interface ContentBlockSelect<T extends boolean = true> {
   content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock_select".
+ */
+export interface CTABlockSelect<T extends boolean = true> {
+  content?: T;
+  buttonText?: T;
+  buttonLink?: T;
   id?: T;
   blockName?: T;
 }
@@ -3406,6 +3464,70 @@ export interface PDFBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InfoAndImageBlock_select".
+ */
+export interface InfoAndImageBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  reverse?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableBlock_select".
+ */
+export interface TableBlockSelect<T extends boolean = true> {
+  heading?: T;
+  tableHeadings?:
+    | T
+    | {
+        heading?: T;
+        id?: T;
+      };
+  tableRows?:
+    | T
+    | {
+        row?:
+          | T
+          | {
+              cell?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NestedBlocks_select".
+ */
+export interface NestedBlocksSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        mediaBlock?: T | MediaBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
+        homeBlock?: T | HomeBlockSelect<T>;
+        subscriptionForm?: T | SubscriptionFormSelect<T>;
+        productBlock?: T | ProductBlockSelect<T>;
+        aboutBlock?: T | AboutBlockSelect<T>;
+        contactBlock?: T | ContactBlockSelect<T>;
+        faqBlock?: T | FaqBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        regulatoryBlock?: T | RegulatoryBlockSelect<T>;
+        pdfBlock?: T | PDFBlockSelect<T>;
+        infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
+        tableBlock?: T | TableBlockSelect<T>;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "subscriptions_select".
  */
 export interface SubscriptionsSelect<T extends boolean = true> {
@@ -3466,44 +3588,6 @@ export interface BlogSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InfoAndImageBlock_select".
- */
-export interface InfoAndImageBlockSelect<T extends boolean = true> {
-  heading?: T;
-  description?: T;
-  media?: T;
-  reverse?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TableBlock_select".
- */
-export interface TableBlockSelect<T extends boolean = true> {
-  heading?: T;
-  tableHeadings?:
-    | T
-    | {
-        heading?: T;
-        id?: T;
-      };
-  tableRows?:
-    | T
-    | {
-        row?:
-          | T
-          | {
-              cell?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

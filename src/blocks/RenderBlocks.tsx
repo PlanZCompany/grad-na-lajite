@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react'
+import type { FC } from 'react'
 
 import type {
   AboutBlock,
+  ContactBlock,
   ContentBlock as ContentBlockType,
   FaqBlock,
   HomeBlock,
@@ -14,55 +16,51 @@ import type {
   TableBlock,
 } from '@/payload-types'
 
-import { MediaBlock } from '@/blocks/MediaBlock/Component'
-import { ContentBlock } from './Content/Component'
-import { HomeBlockComponent } from './HomeBlock/HomeBlockComponent'
-import { SubscriptionFormBlock } from './SubsciptionForm/Component'
-import { AboutBlockComponent } from './AboutBlock/Compoment'
-import { ContactBlockComponent } from './ContactBlock/Component'
-import { FaqBlockComponent } from './FaqBlock/Component'
-import { FormBlock } from './Form/Component'
-import { RegulatoryBlockComponent } from './RegulatoryBlock/Component'
-import ProductBlockComponent from './ProductBlock/Component'
-import { InfoAndImageBlockComponent } from './InfoAndImageBlock/Component'
-import { TableBLockComponent } from './TableBlock/Component'
-import { PDFBlockComponent } from './PDFBlock/Component'
+import { blockComponents } from '@/blocks/blockComponents'
 
-const blockComponents = {
-  mediaBlock: MediaBlock,
-  content: ContentBlock,
-  homeBlock: HomeBlockComponent,
-  subscriptionForm: SubscriptionFormBlock,
-  productBlock: ProductBlockComponent,
-  aboutBlock: AboutBlockComponent,
-  contactBlock: ContactBlockComponent,
-  faqBlock: FaqBlockComponent,
-  formBlock: FormBlock,
-  regulatoryBlock: RegulatoryBlockComponent,
-  infoAndImageBlock: InfoAndImageBlockComponent,
-  tableBlock: TableBLockComponent,
-  pdfBlock: PDFBlockComponent,
+type CTABlockType = {
+  id?: string | null
+  blockType: 'cta'
+  content: string
+  buttonText: string
+  buttonLink?:
+    | string
+    | {
+        slug?: string | null
+      }
+    | null
 }
 
-export const RenderBlocks: React.FC<{
-  blocks:
-    | (
-        | ContentBlockType
-        | MediaBlockType
-        | HomeBlock
-        | SubscriptionForm
-        | ProductBlock
-        | AboutBlock
-        | FaqBlock
-        | RegulatoryBlock
-        | InfoAndImageBlock
-        | TableBlock
-        | PDFBlock
-      )[]
-    | null
-    | undefined
+type BaseRenderableBlock =
+  | ContentBlockType
+  | CTABlockType
+  | MediaBlockType
+  | HomeBlock
+  | SubscriptionForm
+  | ProductBlock
+  | AboutBlock
+  | ContactBlock
+  | FaqBlock
+  | RegulatoryBlock
+  | InfoAndImageBlock
+  | TableBlock
+  | PDFBlock
+
+type NestedBlocksBlock = {
+  id?: string | null
+  blockType: 'nestedBlocks'
+  items?: RenderableBlocks
+}
+
+type RenderableBlock = BaseRenderableBlock | NestedBlocksBlock
+type RenderableBlocks = RenderableBlock[] | null | undefined
+
+type RenderBlocksProps = {
+  blocks: RenderableBlocks
   observe?: boolean
-}> = (props) => {
+}
+
+export const RenderBlocks: FC<RenderBlocksProps> = (props) => {
   const { blocks } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
