@@ -276,15 +276,34 @@ export interface Page {
     | (
         | MediaBlock
         | ContentBlock
+        | CTABlock
         | HomeBlock
+        | HomeShBlock
+        | HomeWhyToChoseUsBlock
+        | HomeWhatIsTheGameBlock
+        | HomeGameRules2Block
+        | HomeSinglePreviewBlock
+        | HomeGalleryPreviewBlock
+        | HomeHistoriesBlock
+        | HomePartnersBlock
+        | HomeTestimonialsBlock
         | SubscriptionForm
         | ProductBlock
+        | ProductHeroBlock
+        | ProductBoxBlock
         | AboutBlock
+        | AboutHeroBlock
         | ContactBlock
         | FaqBlock
         | FormBlock
+        | HowToPlayBlock
+        | MissionBlock
         | RegulatoryBlock
         | PDFBlock
+        | InfoAndImageBlock
+        | TableBlock
+        | ValuesBlock
+        | NestedBlocks
       )[]
     | null;
   meta?: {
@@ -356,6 +375,10 @@ export interface CommonHero {
           url?: string | null;
           label: string;
           /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
            * Дизайн на линк
            */
           appearance?: ('default' | 'outline') | null;
@@ -403,6 +426,39 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock".
+ */
+export interface CTABlock {
+  content: string;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
+           * Дизайн на линк
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -457,6 +513,10 @@ export interface HomeBlock {
             } | null;
             url?: string | null;
             label: string;
+            /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
             /**
              * Дизайн на линк
              */
@@ -1046,6 +1106,582 @@ export interface HomeBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeShBlock".
+ */
+export interface HomeShBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
+           * Дизайн на линк
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  media?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeShBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeWhyToChoseUsBlock".
+ */
+export interface HomeWhyToChoseUsBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeWhyToChoseUsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeWhatIsTheGameBlock".
+ */
+export interface HomeWhatIsTheGameBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeWhatIsTheGameBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeGameRules2Block".
+ */
+export interface HomeGameRules2Block {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Включва пълна свобода в richtext полето.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeGameRules2Block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeSinglePreviewBlock".
+ */
+export interface HomeSinglePreviewBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: (number | null) | Media;
+  price?: string | null;
+  buttonText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeSinglePreviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeGalleryPreviewBlock".
+ */
+export interface HomeGalleryPreviewBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  mediaArray?:
+    | {
+        media?: (number | null) | Media;
+        externalVideo?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeGalleryPreviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeHistoriesBlock".
+ */
+export interface HomeHistoriesBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeHistoriesBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomePartnersBlock".
+ */
+export interface HomePartnersBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        media?: (number | null) | Media;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homePartnersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeTestimonialsBlock".
+ */
+export interface HomeTestimonialsBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeTestimonialsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SubscriptionForm".
  */
 export interface SubscriptionForm {
@@ -1156,6 +1792,10 @@ export interface ProductBlock {
             } | null;
             url?: string | null;
             label: string;
+            /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
             /**
              * Дизайн на линк
              */
@@ -1283,6 +1923,10 @@ export interface ProductBlock {
             } | null;
             url?: string | null;
             label: string;
+            /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
             /**
              * Дизайн на линк
              */
@@ -1617,6 +2261,10 @@ export interface ProductBlock {
             url?: string | null;
             label: string;
             /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
+            /**
              * Дизайн на линк
              */
             appearance?: ('default' | 'outline') | null;
@@ -1628,6 +2276,225 @@ export interface ProductBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'productBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductHeroBlock".
+ */
+export interface ProductHeroBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: (number | null) | Media;
+  /**
+   * Пример: (4.9/5 от 128 отзива)
+   */
+  reviews: string;
+  /**
+   * Пример: 49.99лв. | 25.12€.
+   */
+  price: string;
+  /**
+   * * Абонирай се за новини и получи -10% код
+   */
+  discountText: string;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
+           * Дизайн на линк
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Пример: 🚚 Доставка 2-3 дни със Спиди – 4.90 лв....
+   */
+  extraDescription?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  conditions?:
+    | {
+        condition: string;
+        icon: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'productHeroBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductBoxBlock".
+ */
+export interface ProductBoxBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  orderButton?: boolean | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
+           * Дизайн на линк
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'productBoxBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1683,6 +2550,10 @@ export interface AboutBlock {
             } | null;
             url?: string | null;
             label: string;
+            /**
+             * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+             */
+            searchParams?: string | null;
             /**
              * Дизайн на линк
              */
@@ -1773,6 +2644,75 @@ export interface AboutBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'aboutBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutHeroBlock".
+ */
+export interface AboutHeroBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: (number | null) | Media;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
+           * Дизайн на линк
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutHeroBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2004,6 +2944,147 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HowToPlayBlock".
+ */
+export interface HowToPlayBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  orderButton?: boolean | null;
+  pdf: {
+    pdfFile: number | Media;
+    button: string;
+    url: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'howToPlayBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MissionBlock".
+ */
+export interface MissionBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'missionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RegulatoryBlock".
  */
 export interface RegulatoryBlock {
@@ -2076,78 +3157,6 @@ export interface PDFBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'pdfBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscriptions".
- */
-export interface Subscription {
-  id: number;
-  email: string;
-  /**
-   * Абонаментът може да е свързан с потребител
-   */
-  user?: (number | null) | User;
-  discountCode?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog".
- */
-export interface Blog {
-  id: number;
-  title: string;
-  heading?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Основна снимка на блога
-   */
-  media: number | Media;
-  layout?: (ContentBlock | InfoAndImageBlock | TableBlock)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2239,6 +3248,166 @@ export interface TableBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'tableBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesBlock".
+ */
+export interface ValuesBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'valuesBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NestedBlocks".
+ */
+export interface NestedBlocks {
+  items?:
+    | (
+        | MediaBlock
+        | ContentBlock
+        | CTABlock
+        | HomeBlock
+        | HomeShBlock
+        | HomeWhyToChoseUsBlock
+        | HomeWhatIsTheGameBlock
+        | HomeGameRules2Block
+        | HomeSinglePreviewBlock
+        | HomeGalleryPreviewBlock
+        | HomeHistoriesBlock
+        | HomePartnersBlock
+        | HomeTestimonialsBlock
+        | SubscriptionForm
+        | ProductBlock
+        | ProductHeroBlock
+        | ProductBoxBlock
+        | AboutBlock
+        | AboutHeroBlock
+        | ContactBlock
+        | FaqBlock
+        | FormBlock
+        | HowToPlayBlock
+        | MissionBlock
+        | RegulatoryBlock
+        | PDFBlock
+        | InfoAndImageBlock
+        | TableBlock
+        | ValuesBlock
+      )[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'nestedBlocks';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: number;
+  email: string;
+  /**
+   * Абонаментът може да е свързан с потребител
+   */
+  user?: (number | null) | User;
+  discountCode?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog".
+ */
+export interface Blog {
+  id: number;
+  title: string;
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Основна снимка на блога
+   */
+  media: number | Media;
+  layout?: (ContentBlock | InfoAndImageBlock | TableBlock)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2522,6 +3691,10 @@ export interface HeaderBanner {
     } | null;
     url?: string | null;
     label?: string | null;
+    /**
+     * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+     */
+    searchParams?: string | null;
   };
   textColor: string;
   backgroundColor: string;
@@ -2869,15 +4042,34 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         mediaBlock?: T | MediaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
         homeBlock?: T | HomeBlockSelect<T>;
+        homeShBlock?: T | HomeShBlockSelect<T>;
+        homeWhyToChoseUsBlock?: T | HomeWhyToChoseUsBlockSelect<T>;
+        homeWhatIsTheGameBlock?: T | HomeWhatIsTheGameBlockSelect<T>;
+        homeGameRules2Block?: T | HomeGameRules2BlockSelect<T>;
+        homeSinglePreviewBlock?: T | HomeSinglePreviewBlockSelect<T>;
+        homeGalleryPreviewBlock?: T | HomeGalleryPreviewBlockSelect<T>;
+        homeHistoriesBlock?: T | HomeHistoriesBlockSelect<T>;
+        homePartnersBlock?: T | HomePartnersBlockSelect<T>;
+        homeTestimonialsBlock?: T | HomeTestimonialsBlockSelect<T>;
         subscriptionForm?: T | SubscriptionFormSelect<T>;
         productBlock?: T | ProductBlockSelect<T>;
+        productHeroBlock?: T | ProductHeroBlockSelect<T>;
+        productBoxBlock?: T | ProductBoxBlockSelect<T>;
         aboutBlock?: T | AboutBlockSelect<T>;
+        aboutHeroBlock?: T | AboutHeroBlockSelect<T>;
         contactBlock?: T | ContactBlockSelect<T>;
         faqBlock?: T | FaqBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        howToPlayBlock?: T | HowToPlayBlockSelect<T>;
+        missionBlock?: T | MissionBlockSelect<T>;
         regulatoryBlock?: T | RegulatoryBlockSelect<T>;
         pdfBlock?: T | PDFBlockSelect<T>;
+        infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
+        tableBlock?: T | TableBlockSelect<T>;
+        valuesBlock?: T | ValuesBlockSelect<T>;
+        nestedBlocks?: T | NestedBlocksSelect<T>;
       };
   meta?:
     | T
@@ -2912,6 +4104,7 @@ export interface CommonHeroSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
               appearance?: T;
             };
         id?: T;
@@ -2940,6 +4133,31 @@ export interface ContentBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock_select".
+ */
+export interface CTABlockSelect<T extends boolean = true> {
+  content?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              searchParams?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "HomeBlock_select".
  */
 export interface HomeBlockSelect<T extends boolean = true> {
@@ -2959,6 +4177,7 @@ export interface HomeBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3116,6 +4335,185 @@ export interface HomeBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeShBlock_select".
+ */
+export interface HomeShBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              searchParams?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeWhyToChoseUsBlock_select".
+ */
+export interface HomeWhyToChoseUsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeWhatIsTheGameBlock_select".
+ */
+export interface HomeWhatIsTheGameBlockSelect<T extends boolean = true> {
+  heading?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeGameRules2Block_select".
+ */
+export interface HomeGameRules2BlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeSinglePreviewBlock_select".
+ */
+export interface HomeSinglePreviewBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  price?: T;
+  buttonText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeGalleryPreviewBlock_select".
+ */
+export interface HomeGalleryPreviewBlockSelect<T extends boolean = true> {
+  heading?: T;
+  mediaArray?:
+    | T
+    | {
+        media?: T;
+        externalVideo?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeHistoriesBlock_select".
+ */
+export interface HomeHistoriesBlockSelect<T extends boolean = true> {
+  heading?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomePartnersBlock_select".
+ */
+export interface HomePartnersBlockSelect<T extends boolean = true> {
+  heading?: T;
+  cardsArray?:
+    | T
+    | {
+        media?: T;
+        url?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeTestimonialsBlock_select".
+ */
+export interface HomeTestimonialsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SubscriptionForm_select".
  */
 export interface SubscriptionFormSelect<T extends boolean = true> {
@@ -3150,6 +4548,7 @@ export interface ProductBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3192,6 +4591,7 @@ export interface ProductBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3284,10 +4684,88 @@ export interface ProductBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
             };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductHeroBlock_select".
+ */
+export interface ProductHeroBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  reviews?: T;
+  price?: T;
+  discountText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              searchParams?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  extraDescription?: T;
+  conditions?:
+    | T
+    | {
+        condition?: T;
+        icon?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductBoxBlock_select".
+ */
+export interface ProductBoxBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
+  orderButton?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              searchParams?: T;
+              appearance?: T;
+            };
+        id?: T;
       };
   id?: T;
   blockName?: T;
@@ -3314,6 +4792,7 @@ export interface AboutBlockSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    searchParams?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -3332,6 +4811,33 @@ export interface AboutBlockSelect<T extends boolean = true> {
         heading?: T;
         description?: T;
         media?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutHeroBlock_select".
+ */
+export interface AboutHeroBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              searchParams?: T;
+              appearance?: T;
+            };
+        id?: T;
       };
   id?: T;
   blockName?: T;
@@ -3384,6 +4890,47 @@ export interface FormBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HowToPlayBlock_select".
+ */
+export interface HowToPlayBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
+  orderButton?: T;
+  pdf?:
+    | T
+    | {
+        pdfFile?: T;
+        button?: T;
+        url?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MissionBlock_select".
+ */
+export interface MissionBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RegulatoryBlock_select".
  */
 export interface RegulatoryBlockSelect<T extends boolean = true> {
@@ -3401,6 +4948,96 @@ export interface PDFBlockSelect<T extends boolean = true> {
   pdfFile?: T;
   button?: T;
   showPDF?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InfoAndImageBlock_select".
+ */
+export interface InfoAndImageBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  reverse?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableBlock_select".
+ */
+export interface TableBlockSelect<T extends boolean = true> {
+  heading?: T;
+  tableHeadings?:
+    | T
+    | {
+        heading?: T;
+        id?: T;
+      };
+  tableRows?:
+    | T
+    | {
+        row?:
+          | T
+          | {
+              cell?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesBlock_select".
+ */
+export interface ValuesBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NestedBlocks_select".
+ */
+export interface NestedBlocksSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        mediaBlock?: T | MediaBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
+        homeBlock?: T | HomeBlockSelect<T>;
+        homeShBlock?: T | HomeShBlockSelect<T>;
+        homeWhyToChoseUsBlock?: T | HomeWhyToChoseUsBlockSelect<T>;
+        homeWhatIsTheGameBlock?: T | HomeWhatIsTheGameBlockSelect<T>;
+        homeGameRules2Block?: T | HomeGameRules2BlockSelect<T>;
+        homeSinglePreviewBlock?: T | HomeSinglePreviewBlockSelect<T>;
+        homeGalleryPreviewBlock?: T | HomeGalleryPreviewBlockSelect<T>;
+        homeHistoriesBlock?: T | HomeHistoriesBlockSelect<T>;
+        homePartnersBlock?: T | HomePartnersBlockSelect<T>;
+        homeTestimonialsBlock?: T | HomeTestimonialsBlockSelect<T>;
+        subscriptionForm?: T | SubscriptionFormSelect<T>;
+        productBlock?: T | ProductBlockSelect<T>;
+        productHeroBlock?: T | ProductHeroBlockSelect<T>;
+        productBoxBlock?: T | ProductBoxBlockSelect<T>;
+        aboutBlock?: T | AboutBlockSelect<T>;
+        aboutHeroBlock?: T | AboutHeroBlockSelect<T>;
+        contactBlock?: T | ContactBlockSelect<T>;
+        faqBlock?: T | FaqBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        howToPlayBlock?: T | HowToPlayBlockSelect<T>;
+        missionBlock?: T | MissionBlockSelect<T>;
+        regulatoryBlock?: T | RegulatoryBlockSelect<T>;
+        pdfBlock?: T | PDFBlockSelect<T>;
+        infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
+        tableBlock?: T | TableBlockSelect<T>;
+        valuesBlock?: T | ValuesBlockSelect<T>;
+      };
   id?: T;
   blockName?: T;
 }
@@ -3466,44 +5103,6 @@ export interface BlogSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InfoAndImageBlock_select".
- */
-export interface InfoAndImageBlockSelect<T extends boolean = true> {
-  heading?: T;
-  description?: T;
-  media?: T;
-  reverse?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TableBlock_select".
- */
-export interface TableBlockSelect<T extends boolean = true> {
-  heading?: T;
-  tableHeadings?:
-    | T
-    | {
-        heading?: T;
-        id?: T;
-      };
-  tableRows?:
-    | T
-    | {
-        row?:
-          | T
-          | {
-              cell?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3740,6 +5339,7 @@ export interface HeaderBannerSelect<T extends boolean = true> {
         reference?: T;
         url?: T;
         label?: T;
+        searchParams?: T;
       };
   textColor?: T;
   backgroundColor?: T;
@@ -3930,6 +5530,10 @@ export interface Header {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         id?: string | null;
       }[]
@@ -3955,6 +5559,10 @@ export interface Footer {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         id?: string | null;
       }[]
@@ -3970,6 +5578,10 @@ export interface Footer {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         media?: (number | null) | Media;
         id?: string | null;
@@ -3986,6 +5598,10 @@ export interface Footer {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         media?: (number | null) | Media;
         id?: string | null;
@@ -4002,6 +5618,10 @@ export interface Footer {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         media?: (number | null) | Media;
         id?: string | null;
@@ -4043,6 +5663,10 @@ export interface Aside {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
         };
         media?: (number | null) | Media;
         id?: string | null;
@@ -4058,6 +5682,10 @@ export interface Aside {
       } | null;
       url?: string | null;
       label: string;
+      /**
+       * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+       */
+      searchParams?: string | null;
     };
     media?: (number | null) | Media;
     desktopText: string;
@@ -4210,6 +5838,7 @@ export interface HeaderSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         id?: T;
       };
@@ -4234,6 +5863,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         id?: T;
       };
@@ -4248,6 +5878,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         id?: T;
@@ -4263,6 +5894,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         id?: T;
@@ -4278,6 +5910,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         id?: T;
@@ -4304,6 +5937,7 @@ export interface AsideSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         id?: T;
@@ -4319,6 +5953,7 @@ export interface AsideSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              searchParams?: T;
             };
         media?: T;
         desktopText?: T;

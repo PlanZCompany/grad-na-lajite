@@ -14,6 +14,7 @@ import { GenericButton, GenericHeading, GenericImage, GenericParagraph } from '.
 import Link from 'next/link'
 import { validateDiscountCode } from '@/action/discountCode/validateAndPreviewDiscountCode'
 import { roundMoney } from '@/utils/roundMoney'
+import { useSearchParams } from 'next/navigation'
 
 export const errorCodes = {
   INVALID_CODE: 'Невалиден код',
@@ -39,6 +40,7 @@ const CheckoutAside = () => {
   const [pending, start] = useTransition()
   const [startVoucherCodeAnimation, setVoucherCodeAnimation] = useState(false)
   const [codeError, setCodeError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
 
   const innerActiveShipping = useAppSelector(
     (state) => state.checkout.checkoutFormData.innerShipping,
@@ -48,7 +50,14 @@ const CheckoutAside = () => {
     useCheckout()
   const products = useAppSelector((state) => state.checkout.products)
 
-  const [formValues, setFormValues] = useState({ code: '' })
+  const [formValues, setFormValues] = useState(() => {
+    const voucherCode = searchParams.get('voucher-code')
+    if (!!voucherCode) {
+      return { code: voucherCode }
+    }
+
+    return { code: '' }
+  })
 
   useEffect(() => {
     if (!formData.email) return
@@ -348,7 +357,7 @@ const CheckoutAside = () => {
   const remain = Number(calculateRemainSum().toFixed(2))
 
   return (
-    <div className="lg:fixed lg:top-[170px] lg:rounded-[16px] lg:right-4 w-full lg:max-w-[50%] bg-purpleLight">
+    <div className="lg:fixed lg:top-[170px] lg:rounded-[16px] lg:right-4 w-full lg:max-w-[50%] bg-purpleLight REF_CHECKOUT_ASIDE">
       <div className="w-full flex relative justify-center items-center py-2">
         <GenericParagraph
           fontStyle="custom"

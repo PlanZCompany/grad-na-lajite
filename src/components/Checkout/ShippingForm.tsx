@@ -31,18 +31,6 @@ const shippingVariants = [
     parent: 'box-now',
   },
   {
-    name: 'econt-office',
-    text: 'До офис Econt',
-    image: '/static/econt.png',
-    parent: 'econt',
-  },
-  {
-    name: 'econt-address',
-    text: 'До адрес Econt',
-    image: '/static/econt.png',
-    parent: 'econt',
-  },
-  {
     name: 'speedy-office',
     text: 'До офис Speedy',
     image: '/static/speedy.png',
@@ -53,6 +41,18 @@ const shippingVariants = [
     text: 'До адрес Speedy',
     image: '/static/speedy.png',
     parent: 'speedy',
+  },
+  {
+    name: 'econt-office',
+    text: 'До офис Econt',
+    image: '/static/econt.png',
+    parent: 'econt',
+  },
+  {
+    name: 'econt-address',
+    text: 'До адрес Econt',
+    image: '/static/econt.png',
+    parent: 'econt',
   },
 ]
 
@@ -269,6 +269,9 @@ const ShippingForm = ({
             </div>
             <GenericParagraph textColor="text-black" pType="small">
               {variant.text}:{' '}
+              {variant.name === 'box-now' && (
+                <span className="hidden md:block">★ Най-предпочитан</span>
+              )}
             </GenericParagraph>
 
             <div className="px-[4px] py-[2px] rounded-[4px]">
@@ -287,6 +290,9 @@ const ShippingForm = ({
             />
           </div>
         </button>
+        {variant.name === 'box-now' && (
+          <p className="md:hidden w-full text-center text-[12px]">★ Най-предпочитан</p>
+        )}
 
         {activeShippingInner === variant.name && (
           <div className="w-full py-3 md:px-4 md:py-3 bg-white">{currentComponent()}</div>

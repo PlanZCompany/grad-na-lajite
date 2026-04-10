@@ -5,7 +5,6 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
 import { slugField } from '@/fields/slug'
-import { MediaBlock } from '@/blocks/MediaBlock/config'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -14,17 +13,9 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { generatePreviewPath } from '@/utils/generatePreviewPath'
-import { Content } from '@/blocks/Content/config'
 import { heroCommon } from '@/Hero/Common/config'
-import { HomeBlock } from '@/blocks/HomeBlock/config'
-import { SubscriptionForm } from '@/blocks/SubsciptionForm/config'
-import { ProductBlock } from '@/blocks/ProductBlock/config'
-import { AboutBlock } from '@/blocks/AboutBlock/config'
-import { ContactBlock } from '@/blocks/ContactBlock/config'
-import { FaqBlock } from '@/blocks/FaqBlock/config'
-import { FormBlock } from '@/blocks/Form/config'
-import { RegulatoryBlock } from '@/blocks/RegulatoryBlock/config'
-import { PDFBlock } from '@/blocks/PDFBlock/config'
+import { NestedBlocks } from '@/blocks/NestedBlocks/config'
+import { availableLayoutBlocks } from '@/blocks/sharedBlocks'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -81,19 +72,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [
-                MediaBlock,
-                Content,
-                HomeBlock,
-                SubscriptionForm,
-                ProductBlock,
-                AboutBlock,
-                ContactBlock,
-                FaqBlock,
-                FormBlock,
-                RegulatoryBlock,
-                PDFBlock,
-              ],
+              blocks: [...availableLayoutBlocks, NestedBlocks],
               defaultValue: [],
               required: false,
               admin: {

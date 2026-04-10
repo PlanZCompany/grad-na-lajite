@@ -1,10 +1,11 @@
 'use client'
 
 import { useAppSelector } from '@/hooks/redux-hooks'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CheckoutConfirm from './CheckoutConfirm'
 
 const ConfirmHolder = () => {
+  const [isClient, setIsClient] = useState(false)
   const stage = useAppSelector((state) => state.checkout.stageCompleted)
 
   useEffect(() => {
@@ -14,6 +15,10 @@ const ConfirmHolder = () => {
       document.body.style.overflow = ''
     }
   }, [stage])
+
+  useEffect(() => setIsClient(true), [])
+
+  if (!isClient) return null
 
   return (
     <div

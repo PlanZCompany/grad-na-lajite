@@ -1,68 +1,79 @@
 import React, { Fragment } from 'react'
+import type { FC } from 'react'
 
 import type {
   AboutBlock,
+  AboutHeroBlock,
+  CTABlock,
+  ContactBlock,
   ContentBlock as ContentBlockType,
   FaqBlock,
   HomeBlock,
+  HomeGalleryPreviewBlock,
+  HomeGameRules2Block,
+  HomeHistoriesBlock,
+  HomePartnersBlock,
+  HomeShBlock,
+  HomeSinglePreviewBlock,
+  HomeTestimonialsBlock,
+  HomeWhatIsTheGameBlock,
+  HomeWhyToChoseUsBlock,
+  HowToPlayBlock,
   InfoAndImageBlock,
   MediaBlock as MediaBlockType,
+  MissionBlock,
+  NestedBlocks,
   PDFBlock,
   ProductBlock,
+  ProductBoxBlock,
+  ProductHeroBlock,
   RegulatoryBlock,
   SubscriptionForm,
   TableBlock,
+  ValuesBlock,
 } from '@/payload-types'
 
-import { MediaBlock } from '@/blocks/MediaBlock/Component'
-import { ContentBlock } from './Content/Component'
-import { HomeBlockComponent } from './HomeBlock/HomeBlockComponent'
-import { SubscriptionFormBlock } from './SubsciptionForm/Component'
-import { AboutBlockComponent } from './AboutBlock/Compoment'
-import { ContactBlockComponent } from './ContactBlock/Component'
-import { FaqBlockComponent } from './FaqBlock/Component'
-import { FormBlock } from './Form/Component'
-import { RegulatoryBlockComponent } from './RegulatoryBlock/Component'
-import ProductBlockComponent from './ProductBlock/Component'
-import { InfoAndImageBlockComponent } from './InfoAndImageBlock/Component'
-import { TableBLockComponent } from './TableBlock/Component'
-import { PDFBlockComponent } from './PDFBlock/Component'
+import { blockComponents } from '@/blocks/blockComponents'
 
-const blockComponents = {
-  mediaBlock: MediaBlock,
-  content: ContentBlock,
-  homeBlock: HomeBlockComponent,
-  subscriptionForm: SubscriptionFormBlock,
-  productBlock: ProductBlockComponent,
-  aboutBlock: AboutBlockComponent,
-  contactBlock: ContactBlockComponent,
-  faqBlock: FaqBlockComponent,
-  formBlock: FormBlock,
-  regulatoryBlock: RegulatoryBlockComponent,
-  infoAndImageBlock: InfoAndImageBlockComponent,
-  tableBlock: TableBLockComponent,
-  pdfBlock: PDFBlockComponent,
+type BaseRenderableBlock =
+  | ContentBlockType
+  | CTABlock
+  | MediaBlockType
+  | HomeBlock
+  | HomeShBlock
+  | HomeWhyToChoseUsBlock
+  | HomeWhatIsTheGameBlock
+  | HomeGameRules2Block
+  | HomeSinglePreviewBlock
+  | HomeGalleryPreviewBlock
+  | HomeHistoriesBlock
+  | HomePartnersBlock
+  | HomeTestimonialsBlock
+  | SubscriptionForm
+  | ProductBlock
+  | ProductHeroBlock
+  | ProductBoxBlock
+  | AboutBlock
+  | AboutHeroBlock
+  | ContactBlock
+  | FaqBlock
+  | HowToPlayBlock
+  | MissionBlock
+  | RegulatoryBlock
+  | InfoAndImageBlock
+  | TableBlock
+  | PDFBlock
+  | ValuesBlock
+
+type RenderableBlock = BaseRenderableBlock | NestedBlocks
+type RenderableBlocks = RenderableBlock[] | null | undefined
+
+type RenderBlocksProps = {
+  blocks: RenderableBlocks
+  observe?: boolean
 }
 
-export const RenderBlocks: React.FC<{
-  blocks:
-    | (
-        | ContentBlockType
-        | MediaBlockType
-        | HomeBlock
-        | SubscriptionForm
-        | ProductBlock
-        | AboutBlock
-        | FaqBlock
-        | RegulatoryBlock
-        | InfoAndImageBlock
-        | TableBlock
-        | PDFBlock
-      )[]
-    | null
-    | undefined
-  observe?: boolean
-}> = (props) => {
+export const RenderBlocks: FC<RenderBlocksProps> = (props) => {
   const { blocks } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
