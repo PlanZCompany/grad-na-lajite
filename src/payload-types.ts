@@ -3393,7 +3393,7 @@ export interface Blog {
    * Основна снимка на блога
    */
   media: number | Media;
-  layout?: (ContentBlock | InfoAndImageBlock | TableBlock)[] | null;
+  layout?: (ContentBlock | InfoAndImageBlock | TableBlock | NestedBlocks)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -5089,6 +5089,7 @@ export interface BlogSelect<T extends boolean = true> {
         content?: T | ContentBlockSelect<T>;
         infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
         tableBlock?: T | TableBlockSelect<T>;
+        nestedBlocks?: T | NestedBlocksSelect<T>;
       };
   meta?:
     | T

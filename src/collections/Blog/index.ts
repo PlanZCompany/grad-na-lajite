@@ -20,6 +20,7 @@ import {
 import { Content } from '@/blocks/Content/config'
 import { InfoAndImageBlock } from '@/blocks/InfoAndImageBlock/config'
 import { TableBlock } from '@/blocks/TableBlock/config'
+import { NestedBlocks } from '@/blocks/NestedBlocks/config'
 
 export const Blog: CollectionConfig = {
   slug: 'blog',
@@ -123,7 +124,7 @@ export const Blog: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [Content, InfoAndImageBlock, TableBlock],
+              blocks: [Content, InfoAndImageBlock, TableBlock, NestedBlocks],
               required: false,
               admin: {
                 initCollapsed: true,
