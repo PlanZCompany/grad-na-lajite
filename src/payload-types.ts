@@ -298,6 +298,7 @@ export interface Page {
         | FormBlock
         | HowToPlayBlock
         | MissionBlock
+        | SimpleDividerBlock
         | RegulatoryBlock
         | PDFBlock
         | InfoAndImageBlock
@@ -3085,6 +3086,16 @@ export interface MissionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SimpleDividerBlock".
+ */
+export interface SimpleDividerBlock {
+  color?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'simpleDividerBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RegulatoryBlock".
  */
 export interface RegulatoryBlock {
@@ -3326,6 +3337,7 @@ export interface NestedBlocks {
         | FormBlock
         | HowToPlayBlock
         | MissionBlock
+        | SimpleDividerBlock
         | RegulatoryBlock
         | PDFBlock
         | InfoAndImageBlock
@@ -3393,7 +3405,7 @@ export interface Blog {
    * Основна снимка на блога
    */
   media: number | Media;
-  layout?: (ContentBlock | InfoAndImageBlock | TableBlock | NestedBlocks)[] | null;
+  layout?: (ContentBlock | InfoAndImageBlock | SimpleDividerBlock | TableBlock | NestedBlocks)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -4064,6 +4076,7 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         howToPlayBlock?: T | HowToPlayBlockSelect<T>;
         missionBlock?: T | MissionBlockSelect<T>;
+        simpleDividerBlock?: T | SimpleDividerBlockSelect<T>;
         regulatoryBlock?: T | RegulatoryBlockSelect<T>;
         pdfBlock?: T | PDFBlockSelect<T>;
         infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
@@ -4931,6 +4944,15 @@ export interface MissionBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SimpleDividerBlock_select".
+ */
+export interface SimpleDividerBlockSelect<T extends boolean = true> {
+  color?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RegulatoryBlock_select".
  */
 export interface RegulatoryBlockSelect<T extends boolean = true> {
@@ -5032,6 +5054,7 @@ export interface NestedBlocksSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         howToPlayBlock?: T | HowToPlayBlockSelect<T>;
         missionBlock?: T | MissionBlockSelect<T>;
+        simpleDividerBlock?: T | SimpleDividerBlockSelect<T>;
         regulatoryBlock?: T | RegulatoryBlockSelect<T>;
         pdfBlock?: T | PDFBlockSelect<T>;
         infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
@@ -5088,6 +5111,7 @@ export interface BlogSelect<T extends boolean = true> {
     | {
         content?: T | ContentBlockSelect<T>;
         infoAndImageBlock?: T | InfoAndImageBlockSelect<T>;
+        simpleDividerBlock?: T | SimpleDividerBlockSelect<T>;
         tableBlock?: T | TableBlockSelect<T>;
         nestedBlocks?: T | NestedBlocksSelect<T>;
       };

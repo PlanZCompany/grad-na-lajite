@@ -66,8 +66,9 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
           shippingPrice,
         )
 
-        if (!result.clientSecret) {
-          setError('Грешка при създаване на плащането. Моля, опитайте отново по-късно.')
+        if (result.error || !result.clientSecret) {
+          setError(result.error ?? 'Грешка при създаване на плащането. Моля, опитайте отново по-късно.')
+          return
         }
 
         setClientSecret(result.clientSecret)

@@ -7,7 +7,7 @@ import { GenericButton } from '@/components/Generic'
 import { setCheckoutFormData, setCompletedStage, setOrderLoader } from '@/store/features/checkout'
 import { roundMoney } from '@/utils/roundMoney'
 import { CreateOrderInput, makeOrder } from '@/action/orders'
-// import { ROOT } from '@/cssVariables'
+import { ROOT } from '@/constant'
 import { useCheckout } from '@/hooks/useCheckout'
 import { subscribeAction } from '@/action/subscribe'
 import { addSubscribeValueToCookie } from '@/utils/subscribeToCookie'
@@ -132,8 +132,7 @@ export function PaymentForm() {
           const orderStatus = await makeOrder(orderData)
 
           if (orderStatus.status === 'error') {
-            // setError(ROOT.global_error_message)
-            console.log('error', orderStatus)
+            setErrorMessage(ROOT.global_error_message)
             return
           }
 
@@ -193,6 +192,7 @@ export function PaymentForm() {
           click={() => {
             handlePayment()
           }}
+          disabled={pending}
         >
           {pending ? <span className="animate-pulse">Зареждане</span> : 'Продължи'}
         </GenericButton>

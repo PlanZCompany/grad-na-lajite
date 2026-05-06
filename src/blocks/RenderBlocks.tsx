@@ -28,6 +28,7 @@ import type {
   ProductBoxBlock,
   ProductHeroBlock,
   RegulatoryBlock,
+  SimpleDividerBlock,
   SubscriptionForm,
   TableBlock,
   ValuesBlock,
@@ -59,6 +60,7 @@ type BaseRenderableBlock =
   | FaqBlock
   | HowToPlayBlock
   | MissionBlock
+  | SimpleDividerBlock
   | RegulatoryBlock
   | InfoAndImageBlock
   | TableBlock

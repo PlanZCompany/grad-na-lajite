@@ -203,6 +203,79 @@
     0 0 12px rgba(255, 215, 0, 0.8);
 }
 
+.flip-card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.flip-card__surface {
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.flip-card__face {
+  transition: opacity 250ms ease;
+}
+
+.flip-card__face--front {
+  opacity: 1;
+}
+
+.flip-card__face--back {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.flip-card.is-flipped .flip-card__face--front {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.flip-card.is-flipped .flip-card__face--back {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .flip-card {
+    perspective: 1000px;
+  }
+
+  .flip-card__surface {
+    cursor: default;
+  }
+
+  .flip-card__inner {
+    transform-style: preserve-3d;
+  }
+
+  .flip-card:hover .flip-card__inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card__face {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    opacity: 1;
+    transition: none;
+  }
+
+  .flip-card__face--front,
+  .flip-card.is-flipped .flip-card__face--front {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .flip-card__face--back,
+  .flip-card.is-flipped .flip-card__face--back {
+    opacity: 1;
+    pointer-events: auto;
+    transform: rotateY(180deg);
+  }
+}
+
 .backdrop_blur {
   backdrop-filter: blur(6px);
 }

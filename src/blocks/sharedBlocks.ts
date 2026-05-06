@@ -26,6 +26,7 @@ import { ProductBlock } from '@/blocks/ProductBlock/config'
 import { ProductBoxBlock } from '@/blocks/ProductBoxBlock/config'
 import { ProductHeroBlock } from '@/blocks/ProductHeroBlock/config'
 import { RegulatoryBlock } from '@/blocks/RegulatoryBlock/config'
+import { SimpleDividerBlock } from '@/blocks/SimpleDividerBlock/config'
 import { SubscriptionForm } from '@/blocks/SubsciptionForm/config'
 import { TableBlock } from '@/blocks/TableBlock/config'
 import { ValuesBlock } from '@/blocks/ValuesBlock/config'
@@ -55,6 +56,7 @@ export const availableLayoutBlocks: Block[] = [
   FormBlock,
   HowToPlayBlock,
   MissionBlock,
+  SimpleDividerBlock,
   RegulatoryBlock,
   PDFBlock,
   InfoAndImageBlock,

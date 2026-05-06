@@ -8,6 +8,17 @@ import Link from 'next/link'
 import React from 'react'
 
 const HowToPlay = ({ play }: { play: ProductBlock['play'] }) => {
+  const playCardsLength = play?.cardsArray?.length
+
+  let gridClassName = 'xl:grid-cols-2'
+  if (playCardsLength === 3 && !!playCardsLength) {
+    gridClassName = 'xl:grid-cols-3'
+  }
+
+  if (!!playCardsLength && playCardsLength >= 4) {
+    gridClassName = 'xl:grid-cols-4'
+  }
+
   return (
     <SectionWrapper>
       <div className="m-auto content_wrapper flex flex-col gap-6 md:gap-12">
@@ -22,7 +33,7 @@ const HowToPlay = ({ play }: { play: ProductBlock['play'] }) => {
           </GenericHeading>
         )}
 
-        <ul className="w-full grid md:grid-cols-2 gap-8 xl:grid-cols-4">
+        <ul className={`w-full grid md:grid-cols-2 gap-8 ${gridClassName}`}>
           {play.cardsArray?.map((card) => {
             const media = card?.basicComponent?.media as Media
             return (

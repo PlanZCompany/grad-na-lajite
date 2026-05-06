@@ -4,6 +4,8 @@ import { CheckoutInitialState, ExtendedProduct } from '@/store/features/checkout
 import { stripe } from '..'
 import { roundMoney } from '@/utils/roundMoney'
 
+const STRIPE_EUR_MINIMUM_CENTS = 50
+
 function calculateTotalAmount(
   items: ExtendedProduct[],
   discount: CheckoutInitialState['checkoutFormData']['discountCode'] | null = null,
@@ -20,7 +22,7 @@ function calculateTotalAmount(
   }
 
   if (total <= 0) {
-    return 0
+    throw new Error('Количката е празна или съдържа невалидни продукти.')
   }
 
   let discountAmount = 0
@@ -32,7 +34,7 @@ function calculateTotalAmount(
       : 0
   }
   if (discountAmount > 0) {
-    total = total - discountAmount
+    total = Math.max(0, total - discountAmount)
   }
 
   if (shipping > 0) {
@@ -41,6 +43,12 @@ function calculateTotalAmount(
 
   total = Math.round(total * 100)
 
+  if (total < STRIPE_EUR_MINIMUM_CENTS) {
+    throw new Error(
+      `Минималната сума за плащане с карта е €${(STRIPE_EUR_MINIMUM_CENTS / 100).toFixed(2)}.`,
+    )
+  }
+
   return total
 }
 
@@ -48,8 +56,16 @@ export async function createPaymentIntentAction(
   products: ExtendedProduct[],
   discount: CheckoutInitialState['checkoutFormData']['discountCode'] | null = null,
   shipping: number = 0,
-) {
-  const amount = calculateTotalAmount(products, discount, shipping)
+): Promise<{ clientSecret: string | null; error: string | null }> {
+  let amount: number
+  try {
+    amount = calculateTotalAmount(products, discount, shipping)
+  } catch (err) {
+    return {
+      clientSecret: null,
+      error: err instanceof Error ? err.message : 'Грешка при изчисляване на сумата.',
+    }
+  }
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
@@ -64,5 +80,6 @@ export async function createPaymentIntentAction(
 
   return {
     clientSecret: paymentIntent.client_secret,
+    error: null,
   }
 }

@@ -1,75 +1,80 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { GenericButton, GenericImage } from '../Generic'
 import Link from 'next/link'
 import cookieConsent from '@/action/cookieConsent'
 
+const COOKIE_CONSENT_MAX_AGE = 15552000
+
+const updateGoogleConsent = (consent: Record<string, 'granted' | 'denied'>) => {
+  window.dataLayer = window.dataLayer || []
+
+  const gtag = (...args: unknown[]) => {
+    window.dataLayer?.push(args)
+  }
+
+  gtag('consent', 'update', consent)
+}
+
 const CookieBanner = () => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
-  const handleCookieConsent = async () => {
-    const cookieConsentValue = await cookieConsent()
-
-    if (cookieConsentValue === 'granted') {
-      consentGrantedAdStorage()
-      setIsOpen(false)
-
-      return
-    } else if (cookieConsentValue === 'necessary') {
-      consentDeniedNonEssential()
-      setIsOpen(true)
-    }
-  }
-
-  const handleAccept = () => {
-    document.cookie = 'cookie-consent=granted; path=/; max-age=15552000'
-    handleCookieConsent()
-  }
-
-  function consentGrantedAdStorage() {
-    // eslint-disable-next-line
-    function gtag() {
-      // eslint-disable-next-line
-      window.dataLayer.push(arguments)
-    }
-    // @ts-ignore
-    gtag('consent', 'update', {
+  const consentGrantedAdStorage = useCallback(() => {
+    updateGoogleConsent({
       ad_storage: 'granted',
       ad_user_data: 'granted',
       ad_personalization: 'granted',
       analytics_storage: 'granted',
     })
 
-    const dataLayer = window.dataLayer || []
-    dataLayer.push({ event: 'consent_granted' })
-  }
+    window.dataLayer?.push({ event: 'consent_granted' })
+  }, [])
 
-  function consentDeniedNonEssential() {
-    // eslint-disable-next-line
-    function gtag() {
-      // eslint-disable-next-line
-      window.dataLayer.push(arguments)
-    }
-
-    // @ts-ignore
-    gtag('consent', 'update', {
+  const consentDeniedNonEssential = useCallback(() => {
+    updateGoogleConsent({
       ad_storage: 'denied',
       ad_user_data: 'denied',
       ad_personalization: 'denied',
       analytics_storage: 'denied',
     })
+  }, [])
+
+  const handleCookieConsent = useCallback(async () => {
+    try {
+      const cookieConsentValue = await cookieConsent()
+
+      if (cookieConsentValue === 'granted') {
+        consentGrantedAdStorage()
+        setIsOpen(false)
+      } else if (cookieConsentValue === 'necessary') {
+        consentDeniedNonEssential()
+        setIsOpen(false)
+      } else {
+        consentDeniedNonEssential()
+        setIsOpen(true)
+      }
+    } catch {
+      consentDeniedNonEssential()
+      setIsOpen(true)
+    }
+  }, [consentDeniedNonEssential, consentGrantedAdStorage])
+
+  const handleAccept = () => {
+    document.cookie = `cookie-consent=granted; path=/; max-age=${COOKIE_CONSENT_MAX_AGE}`
+    consentGrantedAdStorage()
+    setIsOpen(false)
   }
 
   const handleAcceptNecessary = () => {
-    document.cookie = 'cookie-consent=necessary; path=/; max-age=15552000'
+    document.cookie = `cookie-consent=necessary; path=/; max-age=${COOKIE_CONSENT_MAX_AGE}`
     consentDeniedNonEssential()
     setIsOpen(false)
   }
 
   useEffect(() => {
-    handleCookieConsent()
-  }, [])
+    void handleCookieConsent()
+  }, [handleCookieConsent])
 
   return (
     <>

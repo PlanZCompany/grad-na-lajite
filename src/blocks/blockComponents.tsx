@@ -25,6 +25,7 @@ import ProductBlockComponent from '@/blocks/ProductBlock/Component'
 import { ProductBoxBlockComponent } from '@/blocks/ProductBoxBlock/Component'
 import { ProductHeroBlockComponent } from '@/blocks/ProductHeroBlock/Component'
 import { RegulatoryBlockComponent } from '@/blocks/RegulatoryBlock/Component'
+import { SimpleDividerBlockComponent } from '@/blocks/SimpleDividerBlock/Component'
 import { SubscriptionFormBlock } from '@/blocks/SubsciptionForm/Component'
 import { TableBLockComponent } from '@/blocks/TableBlock/Component'
 import { ValuesBlockComponent } from '@/blocks/ValuesBlock/Component'
@@ -54,6 +55,7 @@ export const blockComponents = {
   faqBlock: FaqBlockComponent,
   formBlock: FormBlock,
   missionBlock: MissionBlockComponent,
+  simpleDividerBlock: SimpleDividerBlockComponent,
   regulatoryBlock: RegulatoryBlockComponent,
   infoAndImageBlock: InfoAndImageBlockComponent,
   tableBlock: TableBLockComponent,
