@@ -13,6 +13,7 @@ import { useAppSelector } from '@/hooks/redux-hooks'
 import { GooglePayButton } from '../GooglePay/GooglePayButton'
 import { useCheckout } from '@/hooks/useCheckout'
 import { GenericParagraph } from '@/components/Generic'
+import { logCheckoutFailure } from '@/action/orders'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 type PaymentSectionProps = {
@@ -28,6 +29,7 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
   const formData = useAppSelector((state) => state.checkout.checkoutFormData)
   const couriers = useAppSelector((state) => state.checkout.shippingOptions)
   const courier = useAppSelector((state) => state.checkout.checkoutFormData.shipping)
+  const userId = useAppSelector((state) => state.root.user?.id)
   const [clientSecret, setClientSecret] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -67,13 +69,37 @@ export default function PaymentSection({ items }: PaymentSectionProps) {
         )
 
         if (result.error || !result.clientSecret) {
+          await logCheckoutFailure({
+            stage: 'stripe_payment_intent_create_failed',
+            paymentMethod: 'card_pending',
+            errorMessage: result.error ?? 'Missing Stripe client secret',
+            userId: userId ?? null,
+            email: formData.email,
+            shippingProvider: formData.shipping,
+            shippingMethod: formData.innerShipping,
+            shippingFinalAmount: shippingPrice,
+            discountCodeId: formData.discountCode?.discountCodeId ?? null,
+            itemCount: items.length,
+            productIds: items.map((item) => item.id),
+          })
           setError(result.error ?? 'Грешка при създаване на плащането. Моля, опитайте отново по-късно.')
           return
         }
 
         setClientSecret(result.clientSecret)
       } catch (err) {
-        console.error(err)
+        await logCheckoutFailure({
+          stage: 'stripe_payment_intent_create_exception',
+          paymentMethod: 'card_pending',
+          errorMessage: err instanceof Error ? err.message : 'Unknown Stripe intent create error',
+          userId: userId ?? null,
+          email: formData.email,
+          shippingProvider: formData.shipping,
+          shippingMethod: formData.innerShipping,
+          discountCodeId: formData.discountCode?.discountCodeId ?? null,
+          itemCount: items.length,
+          productIds: items.map((item) => item.id),
+        })
         setError(err instanceof Error ? err.message : 'Грешка при създаване на плащането.')
       }
     })

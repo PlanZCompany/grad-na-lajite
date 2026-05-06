@@ -291,6 +291,8 @@ export interface Page {
         | ProductBlock
         | ProductHeroBlock
         | ProductBoxBlock
+        | ProductFaqBlock
+        | ProductReviewsBlock
         | AboutBlock
         | AboutHeroBlock
         | ContactBlock
@@ -2499,6 +2501,147 @@ export interface ProductBoxBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductFaqBlock".
+ */
+export interface ProductFaqBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Моля, придържайте се към конвенцията за описанията.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: (number | null) | Media;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'anchorSectionId') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Когато има сърч добавени сърч параметри полето (Документа сочи към) няма значение, винаги потребителя ще бъде насочен към чекаут с добавени сърч параметри. Важно!!! Пример за добявени на сърч параметри -> order-count=1 пример с повече от едно -> order-count=1&voucher-code=1234 и т.н. да няма въпрос (?) преди тях.
+           */
+          searchParams?: string | null;
+          /**
+           * Дизайн на линк
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'productFaqBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductReviewsBlock".
+ */
+export interface ProductReviewsBlock {
+  /**
+   * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+   */
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cardsArray?:
+    | {
+        basicComponent?: {
+          /**
+           * Моля, придържайте се към конвенцията за заглавията. (2 или 3 разделени редове)
+           */
+          heading?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Моля, придържайте се към конвенцията за описанията.
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (number | null) | Media;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  orderButton?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'productReviewsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "AboutBlock".
  */
 export interface AboutBlock {
@@ -3330,6 +3473,8 @@ export interface NestedBlocks {
         | ProductBlock
         | ProductHeroBlock
         | ProductBoxBlock
+        | ProductFaqBlock
+        | ProductReviewsBlock
         | AboutBlock
         | AboutHeroBlock
         | ContactBlock
@@ -4069,6 +4214,8 @@ export interface PagesSelect<T extends boolean = true> {
         productBlock?: T | ProductBlockSelect<T>;
         productHeroBlock?: T | ProductHeroBlockSelect<T>;
         productBoxBlock?: T | ProductBoxBlockSelect<T>;
+        productFaqBlock?: T | ProductFaqBlockSelect<T>;
+        productReviewsBlock?: T | ProductReviewsBlockSelect<T>;
         aboutBlock?: T | AboutBlockSelect<T>;
         aboutHeroBlock?: T | AboutHeroBlockSelect<T>;
         contactBlock?: T | ContactBlockSelect<T>;
@@ -4785,6 +4932,55 @@ export interface ProductBoxBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductFaqBlock_select".
+ */
+export interface ProductFaqBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  media?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              searchParams?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductReviewsBlock_select".
+ */
+export interface ProductReviewsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  cardsArray?:
+    | T
+    | {
+        basicComponent?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              media?: T;
+            };
+        id?: T;
+      };
+  orderButton?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "AboutBlock_select".
  */
 export interface AboutBlockSelect<T extends boolean = true> {
@@ -5047,6 +5243,8 @@ export interface NestedBlocksSelect<T extends boolean = true> {
         productBlock?: T | ProductBlockSelect<T>;
         productHeroBlock?: T | ProductHeroBlockSelect<T>;
         productBoxBlock?: T | ProductBoxBlockSelect<T>;
+        productFaqBlock?: T | ProductFaqBlockSelect<T>;
+        productReviewsBlock?: T | ProductReviewsBlockSelect<T>;
         aboutBlock?: T | AboutBlockSelect<T>;
         aboutHeroBlock?: T | AboutHeroBlockSelect<T>;
         contactBlock?: T | ContactBlockSelect<T>;

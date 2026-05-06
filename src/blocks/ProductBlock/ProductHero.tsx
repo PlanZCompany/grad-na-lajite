@@ -53,6 +53,7 @@ const ProductHero = ({ hero }: { hero: ProductBlock['hero'] }) => {
             <GenericVideo
               src={!!currentMedia.externalVideo ? currentMedia.externalVideo : image?.url || ''}
               wrapperClassName="w-[60px] h-[60px] relative rounded-[16px] overflow-hidden"
+              autoplay={false}
             />
           ) : (
             <GenericImage

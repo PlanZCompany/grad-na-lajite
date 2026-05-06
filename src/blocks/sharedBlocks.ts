@@ -24,7 +24,9 @@ import { MissionBlock } from '@/blocks/MissionBlock/config'
 import { PDFBlock } from '@/blocks/PDFBlock/config'
 import { ProductBlock } from '@/blocks/ProductBlock/config'
 import { ProductBoxBlock } from '@/blocks/ProductBoxBlock/config'
+import { ProductFaqBlock } from '@/blocks/ProductFaqBlock/config'
 import { ProductHeroBlock } from '@/blocks/ProductHeroBlock/config'
+import { ProductReviewsBlock } from '@/blocks/ProductReviewsBlock/config'
 import { RegulatoryBlock } from '@/blocks/RegulatoryBlock/config'
 import { SimpleDividerBlock } from '@/blocks/SimpleDividerBlock/config'
 import { SubscriptionForm } from '@/blocks/SubsciptionForm/config'
@@ -49,6 +51,8 @@ export const availableLayoutBlocks: Block[] = [
   ProductBlock,
   ProductHeroBlock,
   ProductBoxBlock,
+  ProductFaqBlock,
+  ProductReviewsBlock,
   AboutBlock,
   AboutHeroBlock,
   ContactBlock,

@@ -46,6 +46,81 @@ export type CreateOrderInput = {
   discountAmount: number | null
 }
 
+type CheckoutFailureStage =
+  | 'cash_submit_invalid_total'
+  | 'cash_order_create_failed'
+  | 'cash_order_submit_exception'
+  | 'stripe_payment_intent_create_failed'
+  | 'stripe_payment_intent_create_exception'
+  | 'stripe_confirm_payment_failed'
+  | 'stripe_confirm_payment_unexpected_status'
+  | 'stripe_order_create_failed'
+  | 'stripe_order_submit_exception'
+  | 'make_order_exception'
+  | 'make_order_create_returned_empty'
+
+type CheckoutFailureLogInput = {
+  stage: CheckoutFailureStage
+  paymentMethod?: CreateOrderInput['paymentMethod'] | 'card_pending'
+  errorMessage?: string | null
+  errorCode?: string | null
+  stripePaymentIntentId?: string | null
+  stripePaymentIntentStatus?: string | null
+  orderNumber?: string | null
+  userId?: number | null
+  email?: string | null
+  shippingProvider?: CreateOrderInput['shippingProvider'] | string | null
+  shippingMethod?: string | null
+  subtotalAmount?: number | null
+  shippingFinalAmount?: number | null
+  totalAmount?: number | null
+  discountCodeId?: number | string | null
+  itemCount?: number | null
+  productIds?: Array<number | string>
+}
+
+const getEmailDomain = (email?: string | null) => {
+  const domain = email?.split('@')[1]?.trim().toLowerCase()
+  return domain || null
+}
+
+export async function logCheckoutFailure(input: CheckoutFailureLogInput) {
+  try {
+    const requestHeaders = await headers()
+
+    const payload = {
+      event: 'checkout_failure',
+      stage: input.stage,
+      paymentMethod: input.paymentMethod ?? null,
+      errorMessage: input.errorMessage ?? null,
+      errorCode: input.errorCode ?? null,
+      stripePaymentIntentId: input.stripePaymentIntentId ?? null,
+      stripePaymentIntentStatus: input.stripePaymentIntentStatus ?? null,
+      orderNumber: input.orderNumber ?? null,
+      userId: input.userId ?? null,
+      emailDomain: getEmailDomain(input.email),
+      shippingProvider: input.shippingProvider ?? null,
+      shippingMethod: input.shippingMethod ?? null,
+      subtotalAmount: input.subtotalAmount ?? null,
+      shippingFinalAmount: input.shippingFinalAmount ?? null,
+      totalAmount: input.totalAmount ?? null,
+      discountCodeId: input.discountCodeId ?? null,
+      itemCount: input.itemCount ?? null,
+      productIds: input.productIds ?? [],
+      path: requestHeaders.get('referer') ?? null,
+      userAgent: requestHeaders.get('user-agent') ?? null,
+      loggedAt: new Date().toISOString(),
+    }
+
+    console.warn('[checkout_failure]', JSON.stringify(payload))
+  } catch (error) {
+    console.warn(
+      '[checkout_failure_logger_error]',
+      error instanceof Error ? error.message : 'Unknown checkout failure logger error',
+    )
+  }
+}
+
 export async function makeOrder(
   input: CreateOrderInput,
 ): Promise<{ status: 'success' | 'error'; orderNumber?: string }> {
@@ -359,10 +434,41 @@ export async function makeOrder(
     if (!!order) {
       return { status: 'success', orderNumber }
     } else {
+      await logCheckoutFailure({
+        stage: 'make_order_create_returned_empty',
+        paymentMethod: input.paymentMethod,
+        orderNumber,
+        userId: input.userId,
+        email: input.email,
+        shippingProvider: input.shippingProvider,
+        shippingMethod: input.shippingMethod,
+        subtotalAmount: computedSubtotalAmount,
+        shippingFinalAmount: computedShippingFinalAmount,
+        totalAmount: computedTotalAmount,
+        discountCodeId: appliedDiscountCodeId,
+        itemCount: input.items.length,
+        productIds: input.items.map((item) => item.productId),
+      })
       return { status: 'error' }
     }
   } catch (error) {
-    console.error(error)
+    await logCheckoutFailure({
+      stage: 'make_order_exception',
+      paymentMethod: input.paymentMethod,
+      orderNumber,
+      userId: input.userId,
+      email: input.email,
+      shippingProvider: input.shippingProvider,
+      shippingMethod: input.shippingMethod,
+      subtotalAmount: input.subtotalAmount,
+      shippingFinalAmount: input.shippingFinalAmount,
+      totalAmount: input.totalAmount,
+      discountCodeId: input.discountCodeId,
+      itemCount: input.items.length,
+      productIds: input.items.map((item) => item.productId),
+      errorMessage:
+        error instanceof Error ? error.message : 'Unknown makeOrder error',
+    })
     return { status: 'error' }
   }
 }

@@ -7,7 +7,7 @@ import { GenericButton, GenericHeading, GenericParagraph, RadioSelect } from '..
 import { PaymentSection } from '@/Stripe/components'
 import { createPaymentIntentAction } from '@/Stripe/action'
 import { setCheckoutFormData, setCompletedStage, setOrderLoader } from '@/store/features/checkout'
-import { CreateOrderInput, makeOrder } from '@/action/orders'
+import { CreateOrderInput, logCheckoutFailure, makeOrder } from '@/action/orders'
 import { ROOT } from '@/constant'
 import ErrorMessageBox from '../Generic/ErrorMessage'
 import { useCheckout } from '@/hooks/useCheckout'
@@ -77,7 +77,23 @@ const PaymentFormSection = () => {
         )
         const total = roundMoney(totalWithoutShipping + shippingPrice)
 
-        if (!totalWithoutShipping) return
+        if (!totalWithoutShipping) {
+          await logCheckoutFailure({
+            stage: 'cash_submit_invalid_total',
+            paymentMethod: 'cash_on_delivery',
+            userId: userId ?? null,
+            email: formData.email,
+            shippingProvider: formData.shipping,
+            shippingMethod: formData.innerShipping,
+            subtotalAmount: totalWithoutShipping,
+            shippingFinalAmount: shippingPrice,
+            totalAmount: total,
+            discountCodeId: discount?.discountCodeId ?? null,
+            itemCount: products.length,
+            productIds: products.map((product) => product.id),
+          })
+          return
+        }
 
         // calculate discount amount
         const sumWithoutDiscount = products.reduce(
@@ -128,6 +144,20 @@ const PaymentFormSection = () => {
         }
 
         if (orderStatus.status === 'error') {
+          await logCheckoutFailure({
+            stage: 'cash_order_create_failed',
+            paymentMethod: 'cash_on_delivery',
+            userId: userId ?? null,
+            email: formData.email,
+            shippingProvider: orderData.shippingProvider,
+            shippingMethod: orderData.shippingMethod,
+            subtotalAmount: orderData.subtotalAmount,
+            shippingFinalAmount: orderData.shippingFinalAmount,
+            totalAmount: orderData.totalAmount,
+            discountCodeId: orderData.discountCodeId,
+            itemCount: orderData.items.length,
+            productIds: orderData.items.map((item) => item.productId),
+          })
           setError(ROOT.global_error_message)
           return
         }
@@ -158,7 +188,19 @@ const PaymentFormSection = () => {
 
         localStorage.removeItem('cartProductsGradNaLajite')
       } catch (err) {
-        console.log(err)
+        await logCheckoutFailure({
+          stage: 'cash_order_submit_exception',
+          paymentMethod: 'cash_on_delivery',
+          userId: userId ?? null,
+          email: formData.email,
+          shippingProvider: formData.shipping,
+          shippingMethod: formData.innerShipping,
+          discountCodeId: discount?.discountCodeId ?? null,
+          itemCount: products.length,
+          productIds: products.map((product) => product.id),
+          errorMessage: err instanceof Error ? err.message : 'Unknown cash order submit error',
+        })
+        setError(ROOT.global_error_message)
       } finally {
         dispatch(setOrderLoader(false))
       }

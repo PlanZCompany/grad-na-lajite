@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks'
 import { GenericButton } from '@/components/Generic'
 import { setCheckoutFormData, setCompletedStage, setOrderLoader } from '@/store/features/checkout'
 import { roundMoney } from '@/utils/roundMoney'
-import { CreateOrderInput, makeOrder } from '@/action/orders'
+import { CreateOrderInput, logCheckoutFailure, makeOrder } from '@/action/orders'
 import { ROOT } from '@/constant'
 import { useCheckout } from '@/hooks/useCheckout'
 import { subscribeAction } from '@/action/subscribe'
@@ -60,11 +60,37 @@ export function PaymentForm() {
   const handlePayment = async () => {
     const priceForCheck = calculateTotalPrice()
 
-    if (!priceForCheck) return
+    if (!priceForCheck) {
+      await logCheckoutFailure({
+        stage: 'stripe_confirm_payment_failed',
+        paymentMethod: 'card',
+        errorMessage: 'Stripe payment submit blocked because total price is zero',
+        userId: userId ?? null,
+        email: formData.email,
+        shippingProvider: formData.shipping,
+        shippingMethod: formData.innerShipping,
+        discountCodeId: discount?.discountCodeId ?? null,
+        itemCount: products.length,
+        productIds: products.map((product) => product.id),
+      })
+      return
+    }
 
     setErrorMessage(null)
 
     if (!stripe || !elements) {
+      await logCheckoutFailure({
+        stage: 'stripe_confirm_payment_failed',
+        paymentMethod: 'card',
+        errorMessage: 'Stripe or Stripe Elements is not ready',
+        userId: userId ?? null,
+        email: formData.email,
+        shippingProvider: formData.shipping,
+        shippingMethod: formData.innerShipping,
+        discountCodeId: discount?.discountCodeId ?? null,
+        itemCount: products.length,
+        productIds: products.map((product) => product.id),
+      })
       return
     }
 
@@ -75,9 +101,22 @@ export function PaymentForm() {
         redirect: 'if_required',
       })
 
-      if (result.error || !result) {
+      if (!result || result.error) {
+        await logCheckoutFailure({
+          stage: 'stripe_confirm_payment_failed',
+          paymentMethod: 'card',
+          errorMessage: result?.error?.message ?? 'Stripe confirmPayment returned no result',
+          errorCode: result?.error?.code ?? null,
+          userId: userId ?? null,
+          email: formData.email,
+          shippingProvider: formData.shipping,
+          shippingMethod: formData.innerShipping,
+          discountCodeId: discount?.discountCodeId ?? null,
+          itemCount: products.length,
+          productIds: products.map((product) => product.id),
+        })
         dispatch(setOrderLoader(false))
-        setErrorMessage(result.error.message ?? 'Плащането не беше успешно.')
+        setErrorMessage(result?.error?.message ?? 'Плащането не беше успешно.')
         return
       } else if (result.paymentIntent?.status === 'succeeded') {
         try {
@@ -132,6 +171,22 @@ export function PaymentForm() {
           const orderStatus = await makeOrder(orderData)
 
           if (orderStatus.status === 'error') {
+            await logCheckoutFailure({
+              stage: 'stripe_order_create_failed',
+              paymentMethod: 'card',
+              stripePaymentIntentId: result.paymentIntent.id,
+              stripePaymentIntentStatus: result.paymentIntent.status,
+              userId: userId ?? null,
+              email: formData.email,
+              shippingProvider: orderData.shippingProvider,
+              shippingMethod: orderData.shippingMethod,
+              subtotalAmount: orderData.subtotalAmount,
+              shippingFinalAmount: orderData.shippingFinalAmount,
+              totalAmount: orderData.totalAmount,
+              discountCodeId: orderData.discountCodeId,
+              itemCount: orderData.items.length,
+              productIds: orderData.items.map((item) => item.productId),
+            })
             setErrorMessage(ROOT.global_error_message)
             return
           }
@@ -172,10 +227,40 @@ export function PaymentForm() {
 
           localStorage.removeItem('cartProductsGradNaLajite')
         } catch (err) {
-          console.log(err)
+          await logCheckoutFailure({
+            stage: 'stripe_order_submit_exception',
+            paymentMethod: 'card',
+            stripePaymentIntentId: result.paymentIntent.id,
+            stripePaymentIntentStatus: result.paymentIntent.status,
+            userId: userId ?? null,
+            email: formData.email,
+            shippingProvider: formData.shipping,
+            shippingMethod: formData.innerShipping,
+            discountCodeId: discount?.discountCodeId ?? null,
+            itemCount: products.length,
+            productIds: products.map((product) => product.id),
+            errorMessage: err instanceof Error ? err.message : 'Unknown Stripe order submit error',
+          })
+          setErrorMessage(ROOT.global_error_message)
         } finally {
           dispatch(setOrderLoader(false))
         }
+      } else {
+        await logCheckoutFailure({
+          stage: 'stripe_confirm_payment_unexpected_status',
+          paymentMethod: 'card',
+          stripePaymentIntentId: result.paymentIntent?.id ?? null,
+          stripePaymentIntentStatus: result.paymentIntent?.status ?? null,
+          userId: userId ?? null,
+          email: formData.email,
+          shippingProvider: formData.shipping,
+          shippingMethod: formData.innerShipping,
+          discountCodeId: discount?.discountCodeId ?? null,
+          itemCount: products.length,
+          productIds: products.map((product) => product.id),
+        })
+        dispatch(setOrderLoader(false))
+        setErrorMessage(ROOT.global_error_message)
       }
     })
   }

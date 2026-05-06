@@ -23,7 +23,9 @@ import { NestedBlocksComponent } from '@/blocks/NestedBlocks/Component'
 import { PDFBlockComponent } from '@/blocks/PDFBlock/Component'
 import ProductBlockComponent from '@/blocks/ProductBlock/Component'
 import { ProductBoxBlockComponent } from '@/blocks/ProductBoxBlock/Component'
+import { ProductFaqBlockComponent } from '@/blocks/ProductFaqBlock/Component'
 import { ProductHeroBlockComponent } from '@/blocks/ProductHeroBlock/Component'
+import { ProductReviewsBlockComponent } from '@/blocks/ProductReviewsBlock/Component'
 import { RegulatoryBlockComponent } from '@/blocks/RegulatoryBlock/Component'
 import { SimpleDividerBlockComponent } from '@/blocks/SimpleDividerBlock/Component'
 import { SubscriptionFormBlock } from '@/blocks/SubsciptionForm/Component'
@@ -49,6 +51,8 @@ export const blockComponents = {
   productBlock: ProductBlockComponent,
   productHeroBlock: ProductHeroBlockComponent,
   productBoxBlock: ProductBoxBlockComponent,
+  productFaqBlock: ProductFaqBlockComponent,
+  productReviewsBlock: ProductReviewsBlockComponent,
   aboutBlock: AboutBlockComponent,
   aboutHeroBlock: AboutHeroBlockComponent,
   contactBlock: ContactBlockComponent,

@@ -10,12 +10,14 @@ const GenericVideo = ({
   },
   videoClassName = 'w-full h-full object-cover',
   muted = true,
+  autoplay = true,
 }: {
   wrapperClassName: string
   src: string
   style?: React.CSSProperties
   videoClassName?: string
   muted?: boolean
+  autoplay?: boolean
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -30,7 +32,7 @@ const GenericVideo = ({
       <video
         width={'100%'}
         height={'100%'}
-        autoPlay={true}
+        autoPlay={autoplay}
         loop={true}
         src={src}
         muted={true}
