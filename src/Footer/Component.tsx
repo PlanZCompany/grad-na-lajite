@@ -155,7 +155,10 @@ export async function Footer() {
               {securityContent}
             </ul>
 
-            <div className="font-georgia font-[400] text-[16px] leading-[120%] text-primaryYellow flex items-center gap-2">
+            <Link
+              href={`tel:+359877757765`}
+              className="font-georgia font-[400] text-[16px] leading-[120%] text-primaryYellow flex items-center gap-2"
+            >
               <p>Executed by: </p>
               <div className="flex justify-center items-center">
                 <svg
@@ -197,7 +200,7 @@ export async function Footer() {
                   </defs>
                 </svg>
               </div>{' '}
-            </div>
+            </Link>
           </section>
 
           {/* Right */}
